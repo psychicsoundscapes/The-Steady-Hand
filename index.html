@@ -35,7 +35,7 @@
         html, body {
             position: fixed;
             width: 100%;
-            height: 100dvh; /* Dynamic viewport height fixes iOS bottom gap */
+            height: 100dvh;
             margin: 0;
             padding: 0;
             overflow: hidden;
@@ -45,7 +45,6 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Scroller allows content to move behind the fixed nav bar */
         #app-scroller {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -87,7 +86,6 @@
             backdrop-filter: blur(12px);
         }
 
-        /* Vertical Video Constraints */
         video {
             border-radius: 1rem;
             background: #1e293b;
@@ -123,7 +121,6 @@
             filter: drop-shadow(0 0 8px rgba(255,255,255,0.8));
         }
 
-        /* Chat bubbles */
         .chat-bubble-ai {
             background: rgba(255, 255, 255, 0.7);
             border: 1px solid rgba(255, 255, 255, 0.9);
@@ -137,15 +134,17 @@
             color: #f8fafc;
         }
 
-        /* Safe area helpers for iOS */
-        .pb-safe { padding-bottom: max(env(safe-area-inset-bottom), 1rem); }
-        .pt-safe { padding-top: max(env(safe-area-inset-top), 1rem); }
+        /* MASSIVE iOS SAFE AREA FIXES - Guaranteed Pull Down */
+        .pt-safe { padding-top: max(env(safe-area-inset-top), 3.5rem) !important; }
+        .pb-safe { padding-bottom: max(env(safe-area-inset-bottom), 1.5rem) !important; }
+        .top-safe { top: max(env(safe-area-inset-top), 3.5rem) !important; }
     </style>
 </head>
 <body>
 
     <div id="app-scroller">
-        <div id="app" class="max-w-md w-full mx-auto relative flex flex-col flex-1 pb-24">
+        <!-- Increased pb-32 so scrolling clears the navigation bar at the bottom -->
+        <div id="app" class="max-w-md w-full mx-auto relative flex flex-col flex-1 pb-32">
             
             <!-- 1. GATEWAY (Ritual) -->
             <div id="screen-gateway" class="fixed inset-0 z-[100] flex flex-col items-center justify-center p-8 text-center" style="background: linear-gradient(180deg, #b4c7d9 0%, #b5ba8b 100%);">
@@ -169,7 +168,7 @@
                     <span class="font-cinzel text-2xl text-slate-800 font-bold group-active:scale-90 transition-transform">Amen</span>
                 </button>
 
-                <div class="mt-12 w-full">
+                <div class="mt-12 w-full pb-safe">
                     <a href="tel:988" class="text-[10px] uppercase tracking-widest text-slate-600 font-bold border-b border-slate-400 pb-1 inline-flex items-center gap-2">
                         <i data-lucide="phone" class="w-3 h-3"></i> Emergency Support
                     </a>
@@ -178,19 +177,27 @@
 
             <!-- 2. SETUP -->
             <div id="screen-setup" class="hidden fixed inset-0 z-[90] overflow-y-auto p-6 flex flex-col pt-safe" style="background: linear-gradient(180deg, #b4c7d9 0%, #b5ba8b 100%);">
-                <div class="flex items-center gap-4 mb-6 mt-4">
-                    <img src="picture/tsh.PNG" class="w-12 h-12 rounded-full border border-white/50" onerror="this.src='https://via.placeholder.com/50/ffffff/334155?text=TSH'">
+                <div class="flex items-center gap-4 mb-6 mt-2">
+                    <img src="picture/tsh.PNG" class="w-12 h-12 rounded-full border border-white/50 shadow-sm" onerror="this.src='https://via.placeholder.com/50/ffffff/334155?text=TSH'">
                     <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase">Sanctuary Setup</h2>
                 </div>
                 
-                <div class="bg-white/40 border border-white/60 p-4 rounded-xl mb-6 flex gap-3 items-start shadow-sm">
+                <div class="bg-white/40 border border-white/60 p-4 rounded-xl mb-4 flex gap-3 items-start shadow-sm">
                     <i data-lucide="info" class="w-5 h-5 text-slate-800 mt-1 shrink-0"></i>
                     <p class="text-[10px] text-slate-800 leading-normal font-semibold">
                         <strong>IMPORTANT:</strong> TSH stores your videos and history locally. Clearing your browser history or site data will permanently delete your progress.
                     </p>
                 </div>
 
-                <div id="habit-inputs" class="space-y-4 mb-6 w-full"></div>
+                <!-- Custom Error Box -->
+                <div id="setup-error" class="hidden text-red-700 text-xs font-bold bg-white/60 border border-red-400 p-3 rounded-xl mb-4 text-center shadow-sm"></div>
+
+                <div id="habit-inputs" class="space-y-4 mb-6 w-full">
+                    <div class="card-glass p-4 space-y-3 relative w-full">
+                        <input type="text" placeholder="Struggle (e.g. Nicotine)" class="habit-name w-full rounded-lg p-3 text-sm uppercase font-bold tracking-wider shadow-inner">
+                        <input type="number" placeholder="Daily Financial Cost ($)" class="habit-cost w-full rounded-lg p-3 text-sm shadow-inner">
+                    </div>
+                </div>
 
                 <button onclick="addHabitField()" class="flex items-center gap-2 text-slate-800 mb-8 text-xs font-bold uppercase tracking-widest bg-white/40 px-5 py-3 rounded-full w-max border border-white/60 shadow-sm hover:bg-white/60 transition-colors">
                     <i data-lucide="plus-circle" class="w-4 h-4"></i> Add Struggle
@@ -213,14 +220,14 @@
                     </div>
                 </div>
 
-                <button onclick="saveInitialSetup()" class="w-full bg-white/60 hover:bg-white/80 text-slate-800 font-bold py-4 rounded-xl shadow-md transition-all mt-auto mb-12 uppercase tracking-widest text-sm border border-white">
+                <button onclick="saveInitialSetup()" class="w-full bg-white/60 hover:bg-white/80 text-slate-800 font-bold py-4 rounded-xl shadow-md transition-all mt-auto mb-12 uppercase tracking-widest text-sm border border-white pb-safe">
                     Confirm Commitment
                 </button>
             </div>
 
             <!-- 3. DASHBOARD -->
             <main id="screen-main" class="hidden flex-1 p-6 space-y-8 pt-safe">
-                <header class="flex justify-between items-center mt-2">
+                <header class="flex justify-between items-center">
                     <div class="flex items-center gap-3">
                         <img src="picture/tsh.PNG" class="w-10 h-10 rounded-full border border-white/50 shadow-sm" onerror="this.src='https://via.placeholder.com/40/ffffff/334155?text=TSH'">
                         <div>
@@ -228,7 +235,7 @@
                             <p id="date-display" class="text-[9px] uppercase tracking-widest text-slate-600 font-bold"></p>
                         </div>
                     </div>
-                    <button onclick="toggleSettings()" class="p-2 text-slate-700 hover:text-slate-900 bg-white/40 rounded-full shadow-sm border border-white/60">
+                    <button onclick="toggleSettings()" class="p-2 text-slate-700 hover:text-slate-900 bg-white/40 rounded-full shadow-sm border border-white/60 transition-colors">
                         <i data-lucide="settings" class="w-5 h-5"></i>
                     </button>
                 </header>
@@ -254,11 +261,10 @@
 
             <!-- 4. VAULT -->
             <div id="screen-vault" class="hidden flex-1 p-6 overflow-y-auto pt-safe">
-                <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-2 mt-4">The Vault</h2>
+                <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-2">The Vault</h2>
                 <p class="text-slate-700 text-xs mb-8 italic font-medium">Your voice is your weapon. Record when your light is brightest.</p>
                 
                 <div class="card-glass p-6 space-y-4 mb-8 w-full">
-                    <!-- Vertical Video Preview Container -->
                     <div id="video-preview-box" class="relative bg-slate-800 rounded-2xl overflow-hidden vertical-video flex items-center justify-center border-4 border-white shadow-inner mx-auto w-3/4 max-w-[280px]">
                         <video id="record-preview" autoplay muted playsinline webkit-playsinline class="hidden w-full h-full object-cover"></video>
                         <div id="record-placeholder" class="text-slate-400 flex flex-col items-center z-10">
@@ -304,7 +310,7 @@
             <!-- 6. ACTIVE CHAT SCREEN -->
             <div id="screen-chat" class="hidden fixed inset-0 z-[110] flex flex-col" style="background: linear-gradient(180deg, #b4c7d9 0%, #b5ba8b 100%);">
                 
-                <!-- Chat Header -->
+                <!-- Chat Header is pulled down by pt-safe -->
                 <header class="flex justify-between items-center p-4 bg-white/40 backdrop-blur-md border-b border-white/50 shrink-0 pt-safe shadow-sm">
                     <button onclick="showScreen('companion')" class="p-2 text-slate-800 bg-white/50 rounded-full shadow-sm hover:bg-white/70 transition-colors">
                         <i data-lucide="chevron-left" class="w-6 h-6"></i>
@@ -318,10 +324,9 @@
                     </button>
                 </header>
 
-                <!-- Chat Messages Area -->
                 <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4 scroll-smooth flex flex-col"></div>
 
-                <!-- Chat Input (Pushing up safely past iOS Home Indicator) -->
+                <!-- Chat Input is pulled up by pb-safe -->
                 <div class="p-4 bg-white/40 backdrop-blur-md border-t border-white/50 shrink-0 pb-safe">
                     <form id="chat-form" onsubmit="handleChatSubmit(event)" class="flex gap-2">
                         <input type="text" id="chat-input" placeholder="Type your thoughts..." class="flex-1 rounded-full p-4 text-sm shadow-inner bg-white/70 text-slate-800 placeholder-slate-500 border-white/80 focus:bg-white focus:border-white" required autocomplete="off">
@@ -332,7 +337,7 @@
                 </div>
             </div>
 
-            <!-- NAVIGATION (Fixed to bottom, padding for iOS Home Indicator) -->
+            <!-- NAVIGATION -->
             <nav id="app-nav" class="hidden fixed bottom-0 left-0 right-0 max-w-md mx-auto h-auto min-h-[5rem] bg-white/40 backdrop-blur-2xl border-t border-white/50 flex items-center justify-around px-4 z-[80] shadow-[0_-10px_20px_rgba(0,0,0,0.05)] pb-safe pt-2">
                 <button onclick="showScreen('main')" class="nav-link flex flex-col items-center gap-1 text-slate-500" data-nav="main">
                     <i data-lucide="layout-dashboard" class="w-6 h-6"></i>
@@ -358,7 +363,8 @@
 
             <!-- URGE ENGINE OVERLAY -->
             <div id="urge-overlay" class="hidden fixed inset-0 z-[150] flex flex-col p-8 overflow-y-auto" style="background: linear-gradient(180deg, #b4c7d9 0%, #b5ba8b 100%);">
-                <button onclick="closeUrgeEngine()" class="absolute right-6 text-slate-700 bg-white/40 p-2 rounded-full z-[160] hover:bg-white/60 transition-colors shadow-sm pt-safe" style="top: max(env(safe-area-inset-top), 1.5rem);"><i data-lucide="x" class="w-6 h-6"></i></button>
+                <!-- Close Button pushed down by top-safe -->
+                <button onclick="closeUrgeEngine()" class="absolute right-6 text-slate-700 bg-white/40 p-2 rounded-full z-[160] hover:bg-white/60 transition-colors shadow-sm top-safe"><i data-lucide="x" class="w-6 h-6"></i></button>
                 <div id="urge-content" class="flex-1 flex flex-col items-center justify-center text-center space-y-8 mt-16 w-full"></div>
             </div>
 
@@ -366,7 +372,7 @@
             <div id="modal-settings" class="hidden fixed inset-0 z-[300] bg-slate-800/70 backdrop-blur-md flex items-center justify-center p-6">
                 <div class="card-glass w-full p-8 space-y-6 max-h-[80vh] overflow-y-auto">
                     <div class="flex items-center gap-3 border-b border-slate-400 pb-4">
-                        <img src="picture/tsh.PNG" class="w-8 h-8 rounded-full border border-white" onerror="this.src='https://via.placeholder.com/32/ffffff/334155?text=T'">
+                        <img src="picture/tsh.PNG" class="w-8 h-8 rounded-full border border-white shadow-sm" onerror="this.src='https://via.placeholder.com/32/ffffff/334155?text=T'">
                         <h3 class="font-cinzel text-lg dark-gradient font-bold uppercase tracking-widest">TSH Sanctum</h3>
                     </div>
                     <div class="space-y-4">
@@ -387,6 +393,26 @@
     </div>
 
     <script>
+        // --- Dynamic Manifest Generation ---
+        function setupManifest() {
+            const iconUrl = new URL('picture/tsh.PNG', window.location.href).href;
+            const startUrl = window.location.pathname;
+            const manifestData = {
+                name: "The Steady Hand",
+                short_name: "TSH",
+                start_url: startUrl,
+                display: "standalone",
+                background_color: "#b4c7d9",
+                theme_color: "#b4c7d9",
+                icons: [
+                    { src: iconUrl, sizes: "192x192", type: "image/png" },
+                    { src: iconUrl, sizes: "512x512", type: "image/png" }
+                ]
+            };
+            const blob = new Blob([JSON.stringify(manifestData)], {type: 'application/manifest+json'});
+            document.getElementById('manifest-link').href = URL.createObjectURL(blob);
+        }
+
         // --- Core State & DB ---
         let db;
         const dbRequest = indexedDB.open("TSH_Database", 4);
@@ -429,15 +455,18 @@
 
         // --- Initialization ---
         function init() {
+            setupManifest();
             lucide.createIcons();
             const savedState = localStorage.getItem('steady_hand_state');
             if (savedState) {
                 state = JSON.parse(savedState);
-                if (state.setupComplete) showScreen('gateway');
-                else showScreen('setup');
+                if (state.setupComplete && state.habits && state.habits.length > 0) {
+                    showScreen('gateway');
+                } else {
+                    showScreen('setup');
+                }
             } else {
                 showScreen('setup');
-                addHabitField();
             }
             updateDate();
             renderDashboard();
@@ -473,6 +502,16 @@
                 startTutorial();
             }
             lucide.createIcons();
+        }
+
+        // --- Error Handling UI ---
+        function showSetupError(msg) {
+            const errBox = document.getElementById('setup-error');
+            errBox.innerText = msg;
+            errBox.classList.remove('hidden');
+            setTimeout(() => {
+                errBox.classList.add('hidden');
+            }, 4000);
         }
 
         // --- Tutorial Logic ---
@@ -519,18 +558,30 @@
         async function saveInitialSetup() {
             const habitEls = document.querySelectorAll('#habit-inputs > div');
             state.habits = [];
+            
             habitEls.forEach(el => {
-                const name = el.querySelector('.habit-name').value;
+                const name = el.querySelector('.habit-name').value.trim();
                 const cost = el.querySelector('.habit-cost').value || 0;
-                if (name) state.habits.push({ id: Date.now() + Math.random(), name, costPerDay: parseFloat(cost), startDate: new Date().toISOString(), slips: [] });
+                if (name) {
+                    state.habits.push({ id: Date.now() + Math.random(), name, costPerDay: parseFloat(cost), startDate: new Date().toISOString(), slips: [] });
+                }
             });
 
-            const rawKey = document.getElementById('api-key').value;
-            const passcode = document.getElementById('passcode').value;
-            if (rawKey && passcode) {
-                state.encryptedApiKey = btoa(crypt(rawKey.trim(), passcode)); 
-                localStorage.setItem('steady_hand_pass', passcode);
+            if (state.habits.length === 0) {
+                showSetupError("Please input at least one struggle to continue.");
+                return;
             }
+
+            const rawKey = document.getElementById('api-key').value.trim();
+            const passcode = document.getElementById('passcode').value.trim();
+            
+            if (!rawKey || !passcode) {
+                showSetupError("Both Gemini API Key and Vault Passcode are required.");
+                return;
+            }
+
+            state.encryptedApiKey = btoa(crypt(rawKey, passcode)); 
+            localStorage.setItem('steady_hand_pass', passcode);
 
             state.setupComplete = true;
             state.tutorialStep = 0; 
@@ -605,13 +656,13 @@
                 mediaRecorder.start();
                 document.getElementById('btn-start-record').classList.add('hidden');
                 document.getElementById('btn-stop-record').classList.remove('hidden');
-            } catch (err) { alert("Camera access required for the Vault. Please ensure permissions are granted."); }
+            } catch (err) { alert("Camera access required for the Vault. Please ensure permissions are granted in your browser settings."); }
         }
         function stopRecording() {
             if(!mediaRecorder) return;
             mediaRecorder.stop();
             const v = document.getElementById('record-preview');
-            v.srcObject.getTracks().forEach(t => t.stop());
+            if (v.srcObject) v.srcObject.getTracks().forEach(t => t.stop());
             v.classList.add('hidden');
             document.getElementById('record-placeholder').classList.remove('hidden');
             document.getElementById('btn-start-record').classList.remove('hidden');
@@ -744,7 +795,6 @@
             }
 
             try {
-                // Using gemini-1.5-flash for compatibility with normal API keys
                 const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`, {
                     method: 'POST', 
                     headers: { 'Content-Type': 'application/json' },
@@ -772,7 +822,7 @@
             } catch(error) { 
                 document.getElementById(loadingId).remove();
                 console.error("AI Fetch Error:", error);
-                appendChatMessageUI('model', `Connection Error. Please ensure your API key is valid and has permissions. [Error: ${error.message}]`);
+                appendChatMessageUI('model', `Connection Error. Please ensure your API key is valid. [Error: ${error.message}]`);
             }
         }
 
