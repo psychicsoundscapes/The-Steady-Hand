@@ -13,7 +13,6 @@
     
     <link rel="icon" type="image/png" href="picture/tsh.PNG">
     <link rel="apple-touch-icon" href="picture/tsh.PNG">
-    
     <link rel="manifest" href="manifest.json">
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -135,15 +134,15 @@
                 <p class="text-slate-700 text-xs mb-8 italic font-medium">Your voice is your weapon. Record when your light is brightest.</p>
                 
                 <div class="card-glass p-6 space-y-4 mb-8">
-                    <div id="video-preview-box" class="relative bg-slate-300 rounded-2xl overflow-hidden aspect-video flex items-center justify-center border-2 border-white shadow-inner">
+                    <div id="video-preview-box" class="relative bg-slate-800 rounded-2xl overflow-hidden aspect-[9/16] max-w-[280px] mx-auto flex items-center justify-center border-2 border-white shadow-inner">
                         <video id="record-preview" autoplay muted playsinline class="hidden w-full h-full object-cover"></video>
-                        <div id="record-placeholder" class="text-slate-500 flex flex-col items-center">
+                        <div id="record-placeholder" class="text-slate-400 flex flex-col items-center">
                             <img src="picture/tsh.PNG" class="w-12 h-12 opacity-40 mb-2 grayscale" onerror="this.style.display='none'">
-                            <p class="text-[9px] uppercase font-bold tracking-widest text-slate-600">Awaiting Capture</p>
+                            <p class="text-[9px] uppercase font-bold tracking-widest">Awaiting Capture</p>
                         </div>
                     </div>
                     
-                    <div class="flex justify-center gap-4">
+                    <div class="flex justify-center gap-4 max-w-[280px] mx-auto">
                         <button id="btn-start-record" onclick="startRecording()" class="flex-1 bg-white/60 py-4 rounded-2xl flex items-center justify-center gap-2 font-bold text-xs uppercase tracking-widest text-slate-800 border border-white shadow-sm hover:bg-white/80 transition-colors">
                             <i data-lucide="circle" class="w-3 h-3 text-red-600 fill-red-600"></i> Record
                         </button>
@@ -153,7 +152,7 @@
                     </div>
                 </div>
 
-                <div id="vault-list" class="space-y-6 pb-12"></div>
+                <div id="vault-list" class="space-y-6 pb-12 max-w-[280px] mx-auto"></div>
             </div>
 
             <div id="screen-companion" class="hidden flex-1 p-6 flex flex-col items-center justify-center text-center space-y-4 mt-8" style="padding-top: max(env(safe-area-inset-top), 1.5rem);">
@@ -162,10 +161,6 @@
                 </div>
                 <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase tracking-widest">The Steady Hand</h2>
                 <p class="text-slate-800 italic px-4 text-sm leading-relaxed font-semibold">"I watch your victories. Every clip in the Vault helps me learn the sound of your strength."</p>
-                
-                <div class="bg-white/40 p-4 rounded-2xl border border-white/60 text-[10px] text-slate-700 font-bold uppercase tracking-widest leading-relaxed max-w-xs shadow-sm mt-4">
-                    Your Companion is ready. Trigger the Urge Engine or Start a Chat.
-                </div>
                 
                 <button onclick="showScreen('chat')" class="w-full max-w-xs bg-slate-800 hover:bg-slate-700 text-white font-bold py-4 rounded-2xl shadow-lg transition-all uppercase tracking-widest text-xs border border-slate-600 mt-4 flex items-center justify-center gap-2 shrink-0">
                     <i data-lucide="message-circle" class="w-4 h-4"></i> Start Conversation
@@ -190,8 +185,7 @@
                     </button>
                 </header>
 
-                <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4 pb-4 scroll-smooth">
-                    </div>
+                <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4 pb-4 scroll-smooth"></div>
 
                 <div class="p-4 bg-white/40 backdrop-blur-md border-t border-white/50 shrink-0" style="padding-bottom: max(env(safe-area-inset-bottom), 1.5rem);">
                     <form id="chat-form" onsubmit="handleChatSubmit(event)" class="flex gap-2">
