@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TSH - The Steady Hand</title>
     
-    <!-- Branding & PWA -->
+    <!-- Branding & Icons -->
     <link rel="icon" type="image/png" href="picture/tsh.PNG">
-    <link rel="manifest" href='data:application/manifest+json,{"name":"The Steady Hand","short_name":"TSH","start_url":".","display":"standalone","background_color":"#b4c7d9","theme_color":"#b4c7d9","icons":[{"src":"picture/tsh.PNG","sizes":"512x512","type":"image/png"}]}'>
+    <link rel="apple-touch-icon" href="picture/tsh.PNG"> <!-- CRITICAL FOR iOS HOME SCREEN -->
+    <link id="manifest-link" rel="manifest" href="">
     
     <!-- External Resources -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -100,7 +101,6 @@
             filter: drop-shadow(0 0 8px rgba(255,255,255,0.8));
         }
 
-        /* Prevent overscroll on mobile */
         html, body {
             position: fixed;
             width: 100%;
@@ -319,6 +319,29 @@
     </div>
 
     <script>
+        // --- Dynamic Manifest Generation (Fixes iOS/PWA Icon Issues) ---
+        function setupManifest() {
+            // Generates absolute path for icon so the browser always finds it
+            const iconUrl = new URL('picture/tsh.PNG', window.location.href).href;
+            const startUrl = window.location.pathname;
+            
+            const manifestData = {
+                name: "The Steady Hand",
+                short_name: "TSH",
+                start_url: startUrl,
+                display: "standalone",
+                background_color: "#b4c7d9",
+                theme_color: "#b4c7d9",
+                icons: [
+                    { src: iconUrl, sizes: "192x192", type: "image/png" },
+                    { src: iconUrl, sizes: "512x512", type: "image/png" }
+                ]
+            };
+            
+            const blob = new Blob([JSON.stringify(manifestData)], {type: 'application/manifest+json'});
+            document.getElementById('manifest-link').href = URL.createObjectURL(blob);
+        }
+
         // --- Core State & Encryption ---
         let db;
         const dbRequest = indexedDB.open("TSH_Database", 3);
@@ -339,6 +362,7 @@
 
         // --- Initialization ---
         function init() {
+            setupManifest();
             lucide.createIcons();
             const savedState = localStorage.getItem('steady_hand_state');
             if (savedState) {
