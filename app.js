@@ -1,6 +1,5 @@
 // --- Core State & DB ---
 let db;
-// Keeping "videos" object store name for backwards compatibility, but it holds audio now.
 const dbRequest = indexedDB.open("TSH_Database", 4);
 dbRequest.onupgradeneeded = (e) => {
     db = e.target.result;
@@ -174,7 +173,6 @@ function setupAudioUpload() {
         const file = e.target.files[0];
         if (!file) return;
         
-        // Save the uploaded file directly as a Blob into IndexedDB
         const t = db.transaction(["videos"], "readwrite");
         t.objectStore("videos").add({ 
             blob: file, 
@@ -184,9 +182,8 @@ function setupAudioUpload() {
         });
         
         t.oncomplete = () => {
-            alert("Audio file safely vaulted.");
             loadVault();
-            uploader.value = ''; // reset input
+            uploader.value = ''; 
         };
         t.onerror = () => alert("Failed to save audio file.");
     });
@@ -241,7 +238,6 @@ function loadVault() {
             const url = URL.createObjectURL(cur.value.blob);
             const d = document.createElement('div'); d.className = 'card-glass p-4 relative';
             
-            // Differentiate UI slightly if it was an uploaded file
             const iconName = cur.value.isUpload ? 'upload-cloud' : 'mic';
             const labelText = cur.value.isUpload ? `Uploaded ${new Date(cur.value.date).toLocaleDateString()}` : `Captured ${new Date(cur.value.date).toLocaleDateString()}`;
 
@@ -261,8 +257,7 @@ function loadVault() {
 
 function deleteVideo(id) { if(confirm("Purge this audio file permanently?")) db.transaction("videos", "readwrite").objectStore("videos").delete(id).onsuccess = loadVault; }
 
-
-// --- Smarter Urge Engine Algorithm ---
+// --- Urge Engine Algorithm ---
 let lastUrgeType = null;
 let lastVerseIndex = -1;
 let lastAudioId = -1;
@@ -279,14 +274,10 @@ async function triggerUrgeEngine() {
     
     let choice = 'scripture';
     
-    // Algorithm: Balances audio vs scripture. 
-    // Prevents playing audio back-to-back too frequently to keep it fresh.
     if (vaultAudios.length > 0) {
         if (lastUrgeType === 'audio') {
-            // If the last one was audio, only a 20% chance to play audio again
             choice = Math.random() > 0.8 ? 'audio' : 'scripture';
         } else {
-            // Otherwise, a 50/50 flip between your personal audio and a verse
             choice = Math.random() > 0.5 ? 'audio' : 'scripture';
         }
     }
@@ -294,7 +285,6 @@ async function triggerUrgeEngine() {
     lastUrgeType = choice;
 
     if (choice === 'audio') {
-        // Pick random audio, try not to repeat the exact same one immediately
         let audioMatch = vaultAudios[Math.floor(Math.random() * vaultAudios.length)];
         let safetyCounter = 0;
         while (audioMatch.id === lastAudioId && vaultAudios.length > 1 && safetyCounter < 10) {
@@ -315,7 +305,6 @@ async function triggerUrgeEngine() {
             <p class="text-[10px] text-slate-600 uppercase font-bold tracking-widest mt-8">Breathe and Listen</p>
         `;
     } else {
-        // Scripture Algorithm: Ensure we never pull the exact same verse twice in a row
         let nextIndex = Math.floor(Math.random() * scriptures.length);
         while (nextIndex === lastVerseIndex && scriptures.length > 1) {
             nextIndex = Math.floor(Math.random() * scriptures.length);
@@ -334,7 +323,6 @@ async function triggerUrgeEngine() {
 }
 
 // --- Logic Utils ---
-
 function calculateTotalSaved(habit) {
     const msPerDay = 86400000;
     const totalDaysElapsed = Math.floor(Math.max(0, new Date() - new Date(habit.startDate)) / msPerDay);
