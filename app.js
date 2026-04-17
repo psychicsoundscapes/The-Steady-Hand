@@ -1,5 +1,7 @@
 // --- Core State & DB ---
 let db;
+// Note: We are keeping the database store name as "videos" so we don't accidentally
+// wipe any existing recordings you might already have saved. It will safely store audio.
 const dbRequest = indexedDB.open("TSH_Database", 4);
 dbRequest.onupgradeneeded = (e) => {
     db = e.target.result;
@@ -19,8 +21,8 @@ let chatHistory = [];
 
 const tutorialSteps = [
     { title: "The War Room", desc: "This is TSH Command. Track your financial freedom and healing milestones here.", icon: "layout-dashboard" },
-    { title: "The Urge Engine", desc: "In moments of crisis, trigger the Engine for highly specific scripture or your own recorded testimony.", icon: "shield-alert" },
-    { title: "The Vault", desc: "Record clips in portrait mode when you are strong. These become your shield during future urges.", icon: "lock" },
+    { title: "The Urge Engine", desc: "In moments of crisis, trigger the Engine for highly specific scripture or your own recorded voice notes.", icon: "shield-alert" },
+    { title: "The Vault", desc: "Record your voice when you are strong. These voice notes become your shield during future urges.", icon: "lock" },
     { title: "Ritual Entry", desc: "Vocalizing the Serenity Prayer is the first step to reclaiming your space. Speak it every time.", icon: "volume-2" }
 ];
 
@@ -130,7 +132,6 @@ async function saveInitialSetup() {
     habitEls.forEach(el => {
         const name = el.querySelector('.habit-name').value;
         const cost = el.querySelector('.habit-cost').value || 0;
-        // FIX: Generated ID is now a solid string to prevent button breaking
         if (name) state.habits.push({ 
             id: 'habit_' + Date.now() + '_' + Math.floor(Math.random() * 1000), 
             name, 
@@ -168,7 +169,6 @@ function getDecryptedKey() {
     try { return crypt(atob(state.encryptedApiKey), cp); } catch (e) { return null; }
 }
 
-// FIX: Separated Total Saved Money from Current Streak
 function renderDashboard() {
     const container = document.getElementById('dashboard-habits');
     if (!container) return; container.innerHTML = '';
@@ -176,10 +176,7 @@ function renderDashboard() {
     let totalSavedValue = 0;
     
     state.habits.forEach(habit => {
-        // Streak is Days Won (resets on slip)
         const streakDays = calculateStreak(habit);
-        
-        // Total saved is total lifetime days MINUS slip days
         totalSavedValue += calculateTotalSaved(habit);
         
         const div = document.createElement('div');
@@ -201,23 +198,27 @@ function renderDashboard() {
     document.getElementById('financial-progress').style.width = `${Math.min(100, (totalSavedValue / 5000) * 100)}%`;
 }
 
+// --- Audio Logic (Only requests Mic) ---
 let mediaRecorder; let chunks = [];
+let audioStream;
+
 async function startRecording() {
     try {
-        const s = await navigator.mediaDevices.getUserMedia({ 
-            video: { facingMode: "user", width: { ideal: 720 }, height: { ideal: 1280 } }, 
-            audio: true 
-        });
-        const v = document.getElementById('record-preview');
-        v.srcObject = s; v.classList.remove('hidden');
+        // Request audio only
+        const s = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+        audioStream = s;
+        
+        // Update UI to show recording state
         document.getElementById('record-placeholder').classList.add('hidden');
+        document.getElementById('recording-active').classList.remove('hidden');
+        document.getElementById('recording-active').classList.add('flex');
         
         mediaRecorder = new MediaRecorder(s); 
         chunks = [];
         
         mediaRecorder.ondataavailable = e => { if(e.data.size > 0) chunks.push(e.data); };
         mediaRecorder.onstop = () => {
-            const mimeType = mediaRecorder.mimeType || 'video/mp4';
+            const mimeType = mediaRecorder.mimeType || 'audio/webm';
             const b = new Blob(chunks, { type: mimeType });
             const t = db.transaction(["videos"], "readwrite");
             t.objectStore("videos").add({ blob: b, date: new Date().toISOString() });
@@ -227,16 +228,19 @@ async function startRecording() {
         mediaRecorder.start();
         document.getElementById('btn-start-record').classList.add('hidden');
         document.getElementById('btn-stop-record').classList.remove('hidden');
-    } catch (err) { alert("Camera access required for the Vault."); }
+    } catch (err) { alert("Microphone access required for the Vault."); }
 }
 
 function stopRecording() {
     if(!mediaRecorder) return;
     mediaRecorder.stop();
-    const v = document.getElementById('record-preview');
-    v.srcObject.getTracks().forEach(t => t.stop());
-    v.classList.add('hidden');
+    if(audioStream) audioStream.getTracks().forEach(t => t.stop());
+    
+    // Reset UI to placeholder
     document.getElementById('record-placeholder').classList.remove('hidden');
+    document.getElementById('recording-active').classList.add('hidden');
+    document.getElementById('recording-active').classList.remove('flex');
+    
     document.getElementById('btn-start-record').classList.remove('hidden');
     document.getElementById('btn-stop-record').classList.add('hidden');
 }
@@ -248,16 +252,24 @@ function loadVault() {
         const cur = e.target.result;
         if(cur) {
             const url = URL.createObjectURL(cur.value.blob);
-            const d = document.createElement('div'); d.className = 'card-glass p-3 relative';
-            d.innerHTML = `<video src="${url}" playsinline controls class="mb-3 rounded-lg shadow-md w-full aspect-[9/16] object-cover bg-black"></video>
-                <div class="flex justify-between items-center text-[10px] uppercase font-bold text-slate-700 px-2 pb-1">
+            const d = document.createElement('div'); d.className = 'card-glass p-4 relative';
+            // Render native audio player instead of video
+            d.innerHTML = `
+                <div class="flex items-center gap-3 mb-4 bg-white/50 p-2 rounded-xl border border-white/60 shadow-inner">
+                    <i data-lucide="mic" class="w-5 h-5 text-slate-700 shrink-0 ml-2"></i>
+                    <audio src="${url}" controls class="w-full h-8 outline-none bg-transparent"></audio>
+                </div>
+                <div class="flex justify-between items-center text-[10px] uppercase font-bold text-slate-700 px-2">
                 <span>Captured ${new Date(cur.value.date).toLocaleDateString()}</span>
                 <button onclick="deleteVideo(${cur.value.id})" class="text-red-600 bg-white/50 px-3 py-1 rounded-full shadow-sm hover:bg-red-50 transition-colors">Purge</button></div>`;
             c.appendChild(d); cur.continue();
         }
     };
+    // Re-initialize icons for newly added elements
+    setTimeout(() => lucide.createIcons(), 50);
 }
-function deleteVideo(id) { if(confirm("Purge this clip?")) db.transaction("videos", "readwrite").objectStore("videos").delete(id).onsuccess = loadVault; }
+
+function deleteVideo(id) { if(confirm("Purge this voice note?")) db.transaction("videos", "readwrite").objectStore("videos").delete(id).onsuccess = loadVault; }
 
 function loadChatFromDB() {
     if(!db) return;
@@ -365,7 +377,6 @@ async function handleChatSubmit(e) {
     }
 
     try {
-        // FIX: Using the highly stable gemini-1.5-flash model
         const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`, {
             method: 'POST', 
             headers: { 'Content-Type': 'application/json' },
@@ -409,14 +420,19 @@ async function triggerUrgeEngine() {
         };
     });
     
-    if(videos.length > 0) choices.push('video');
+    if(videos.length > 0) choices.push('audio');
     
     const choice = choices[Math.floor(Math.random() * choices.length)];
 
-    if(choice === 'video') {
+    if(choice === 'audio') {
         const url = URL.createObjectURL(videos[Math.floor(Math.random() * videos.length)].blob);
-        c.innerHTML = `<h2 class="font-cinzel text-slate-800 mb-6 uppercase font-bold tracking-widest text-xl">Speak to Yourself</h2>
-            <video src="${url}" playsinline autoplay controls class="shadow-2xl border-4 border-white w-full max-w-sm rounded-2xl aspect-[9/16] object-cover bg-black"></video>`;
+        c.innerHTML = `
+            <i data-lucide="mic" class="w-16 h-16 text-slate-700 drop-shadow-sm mx-auto mb-6"></i>
+            <h2 class="font-cinzel text-slate-800 mb-6 uppercase font-bold tracking-widest text-xl">Listen to Your Strength</h2>
+            <div class="bg-white/60 p-4 rounded-2xl w-full max-w-sm shadow-xl border-2 border-white">
+                <audio src="${url}" autoplay controls class="w-full outline-none"></audio>
+            </div>
+        `;
     } else {
         const randomScripture = scriptures[Math.floor(Math.random() * scriptures.length)];
         c.innerHTML = `<i data-lucide="sun" class="w-16 h-16 text-slate-700 drop-shadow-sm mx-auto mb-8"></i>
@@ -431,19 +447,13 @@ async function triggerUrgeEngine() {
 
 // --- Logic Utils ---
 
-// Financial Tracker (Lifetime saved minus the cost of slip days)
 function calculateTotalSaved(habit) {
     const msPerDay = 86400000;
-    // Total days since they created the tracker
     const totalDaysElapsed = Math.floor(Math.max(0, new Date() - new Date(habit.startDate)) / msPerDay);
-    
-    // Subtract the number of slips to get total clean days over their lifetime
     const totalCleanDays = Math.max(0, totalDaysElapsed - habit.slips.length);
-    
     return totalCleanDays * habit.costPerDay;
 }
 
-// Current Streak Tracker (Resets to 0 upon a slip)
 function calculateStreak(habit) { 
     const msPerDay = 86400000;
     const lastDate = habit.slips.length > 0 ? new Date(habit.slips[habit.slips.length-1]) : new Date(habit.startDate); 
@@ -471,7 +481,7 @@ function updateDate() {
     document.getElementById('date-display').innerText = new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }); 
 }
 function resetApp() { 
-    if(confirm("DELETE ALL DATA? This erases all progress and videos permanently.")) { 
+    if(confirm("DELETE ALL DATA? This erases all progress and voice notes permanently.")) { 
         localStorage.clear(); 
         indexedDB.deleteDatabase("TSH_Database"); 
         window.location.reload(); 
