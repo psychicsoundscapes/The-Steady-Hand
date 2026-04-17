@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Steady Hand (TSH)</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="picture/tsh.PNG">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href='data:application/manifest+json,{"name":"The Steady Hand","short_name":"TSH","start_url":".","display":"standalone","background_color":"#0f172a","theme_color":"#1e3a8a","icons":[{"src":"picture/tsh.PNG","sizes":"512x512","type":"image/png"}]}'>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap');
+
+        :root {
+            --gold: #D4AF37;
+            --silver: #C0C0C0;
+            --healing-green: #10B981;
+            --peace-blue: #1e3a8a;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617;
+            color: #f8fafc;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .font-cinzel { font-family: 'Cinzel', serif; }
+
+        .gold-gradient {
+            background: linear-gradient(135deg, #fde047 0%, #D4AF37 50%, #a16207 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .card-glass {
+            background: rgba(30, 58, 138, 0.2);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 1.5rem;
+        }
+
+        .amen-pulse {
+            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse-ring {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        .scroll-hide::-webkit-scrollbar { display: none; }
+        .scroll-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .tutorial-overlay {
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(8px);
+        }
+
+        video {
+            border-radius: 1rem;
+            background: #000;
+            width: 100%;
+            max-height: 50vh;
+        }
+
+        .logo-glow {
+            filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.4));
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <div id="app" class="max-w-md mx-auto min-h-screen relative flex flex-col">
+        
+        <!-- 1. Gateway (The Ritual) -->
+        <div id="screen-gateway" class="fixed inset-0 z-50 bg-slate-950 flex flex-col items-center justify-center p-8 text-center">
+            <div class="mb-6">
+                <img src="picture/tsh.PNG" alt="TSH Logo" class="w-32 h-32 mx-auto mb-6 logo-glow rounded-full" onerror="this.src='https://via.placeholder.com/150?text=TSH'">
+                <h1 class="font-cinzel text-2xl gold-gradient mb-6 tracking-widest uppercase">The Steady Hand</h1>
+                
+                <div class="p-6 card-glass border-yellow-500/30 mb-8">
+                    <p class="text-[10px] text-yellow-500/70 font-bold uppercase tracking-[0.2em] mb-4">Spoken Ritual</p>
+                    <p id="prayer-text" class="text-lg italic text-slate-200 leading-relaxed font-light">
+                        "God, grant me the serenity to accept the things I cannot change, courage to change the things I can, and wisdom to know the difference."
+                    </p>
+                </div>
+                
+                <p class="text-sm text-emerald-400 font-semibold animate-pulse mb-8">
+                    Speak the prayer aloud to unlock the way.
+                </p>
+            </div>
+            
+            <button id="btn-amen" class="amen-pulse group relative flex items-center justify-center w-32 h-32 rounded-full border-2 border-yellow-500 bg-blue-900/40 shadow-[0_0_40px_rgba(212,175,55,0.2)]">
+                <span class="font-cinzel text-2xl text-yellow-500 group-active:scale-90 transition-transform">Amen</span>
+            </button>
+
+            <div class="mt-12 w-full">
+                <a href="tel:988" class="text-[10px] uppercase tracking-widest text-slate-500 border-b border-slate-800 pb-1 flex items-center justify-center gap-2">
+                    <i data-lucide="phone" class="w-3 h-3"></i> Emergency Support
+                </a>
+            </div>
+        </div>
+
+        <!-- 2. Setup Screen -->
+        <div id="screen-setup" class="hidden fixed inset-0 z-40 bg-slate-900 overflow-y-auto p-6 flex flex-col">
+            <div class="flex items-center gap-4 mb-6">
+                <img src="picture/tsh.PNG" class="w-12 h-12 rounded-full border border-yellow-500/50" onerror="this.style.display='none'">
+                <h2 class="font-cinzel text-2xl text-yellow-500">Foundation</h2>
+            </div>
+            
+            <div class="bg-red-950/20 border border-red-900/40 p-4 rounded-xl mb-6 flex gap-3 items-start">
+                <i data-lucide="shield-alert" class="w-5 h-5 text-red-500 mt-1"></i>
+                <p class="text-[10px] text-red-200 leading-normal">
+                    <strong>LOCAL STORAGE POLICY:</strong> Your Personal Videos and Data never leave this phone. If you clear browser cookies or reset site data, your progress will be erased forever.
+                </p>
+            </div>
+
+            <div id="habit-inputs" class="space-y-4 mb-6"></div>
+
+            <button onclick="addHabitField()" class="flex items-center gap-2 text-blue-400 mb-8 text-xs font-bold uppercase tracking-widest">
+                <i data-lucide="plus-circle" class="w-4 h-4"></i> Add Struggle
+            </button>
+
+            <div class="card-glass p-5 mb-8 space-y-4">
+                <div>
+                    <div class="flex justify-between items-center mb-1">
+                        <label class="block text-[10px] text-yellow-500 font-bold uppercase">Gemini API Key</label>
+                        <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-[10px] text-blue-400 underline flex items-center gap-1">
+                            Get Free Key <i data-lucide="external-link" class="w-3 h-3"></i>
+                        </a>
+                    </div>
+                    <input type="password" id="api-key" placeholder="Paste Key Here" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 text-white focus:border-yellow-500 outline-none text-sm">
+                </div>
+                <div>
+                    <label class="block text-[10px] text-yellow-500 font-bold uppercase mb-1">Vault Passcode</label>
+                    <input type="password" id="passcode" placeholder="Create a secret code" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 text-white focus:border-yellow-500 outline-none text-sm">
+                    <p class="text-[9px] text-slate-500 mt-2 italic">Encrypts your key within this device.</p>
+                </div>
+            </div>
+
+            <button onclick="saveInitialSetup()" class="w-full bg-yellow-600 hover:bg-yellow-500 text-white font-bold py-4 rounded-xl shadow-lg transition-all mt-auto mb-12 uppercase tracking-widest text-sm">
+                Commit to TSH
+            </button>
+        </div>
+
+        <!-- 3. Main Dashboard -->
+        <main id="screen-main" class="hidden flex-1 p-6 pb-24 space-y-8 overflow-y-auto scroll-hide">
+            <header class="flex justify-between items-center mt-4">
+                <div class="flex items-center gap-3">
+                    <img src="picture/tsh.PNG" class="w-10 h-10 rounded-full border border-yellow-500/30" onerror="this.style.display='none'">
+                    <div>
+                        <h1 class="font-cinzel text-lg gold-gradient">War Room</h1>
+                        <p id="date-display" class="text-[9px] uppercase tracking-widest text-slate-500"></p>
+                    </div>
+                </div>
+                <button onclick="toggleSettings()" class="p-2 text-slate-400 hover:text-yellow-500">
+                    <i data-lucide="settings" class="w-5 h-5"></i>
+                </button>
+            </header>
+
+            <div class="card-glass p-6 bg-gradient-to-br from-blue-900/40 to-emerald-900/40 border-emerald-500/30">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-2 bg-emerald-500/20 rounded-lg">
+                        <i data-lucide="trending-up" class="w-6 h-6 text-emerald-400"></i>
+                    </div>
+                    <h2 class="font-bold text-xs uppercase tracking-widest text-emerald-400">Financial War Chest</h2>
+                </div>
+                <div class="text-4xl font-bold mb-2 font-mono" id="total-saved">$0.00</div>
+                <div class="w-full bg-slate-800 h-1 rounded-full overflow-hidden">
+                    <div id="financial-progress" class="bg-emerald-500 h-full w-0 transition-all duration-1000"></div>
+                </div>
+            </div>
+
+            <div id="dashboard-habits" class="space-y-4"></div>
+
+            <button onclick="triggerUrgeEngine()" class="w-full py-6 rounded-2xl bg-red-950/40 border border-red-500/50 flex flex-col items-center justify-center gap-2 active:bg-red-900/60 transition-colors">
+                <i data-lucide="shield-alert" class="w-8 h-8 text-red-500 animate-pulse"></i>
+                <span class="font-bold text-red-100 uppercase tracking-[0.2em] text-xs">I Have an Urge</span>
+            </button>
+        </main>
+
+        <!-- 4. The Vault -->
+        <div id="screen-vault" class="hidden flex-1 p-6 pb-24 overflow-y-auto">
+            <h2 class="font-cinzel text-2xl text-yellow-500 mb-2">Inspiration Vault</h2>
+            <p class="text-slate-400 text-xs mb-8 italic">Your voice is your weapon. Record when your light is brightest.</p>
+            
+            <div class="card-glass p-6 space-y-4 mb-8 border-blue-500/30">
+                <div id="video-preview-box" class="relative bg-black rounded-xl overflow-hidden aspect-video flex items-center justify-center border border-slate-800 shadow-2xl">
+                    <video id="record-preview" autoplay muted playsinline class="hidden w-full h-full object-cover"></video>
+                    <div id="record-placeholder" class="text-slate-700 flex flex-col items-center">
+                        <img src="picture/tsh.PNG" class="w-12 h-12 opacity-30 mb-2 grayscale" onerror="this.style.display='none'">
+                        <p class="text-[9px] uppercase font-bold tracking-widest">Vision Standby</p>
+                    </div>
+                </div>
+                
+                <div class="flex justify-center gap-4">
+                    <button id="btn-start-record" onclick="startRecording()" class="flex-1 bg-blue-700 py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-xs uppercase tracking-widest">
+                        <i data-lucide="circle" class="w-3 h-3 text-red-500 fill-red-500"></i> Start Recording
+                    </button>
+                    <button id="btn-stop-record" onclick="stopRecording()" class="hidden flex-1 bg-red-600 py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-xs uppercase tracking-widest">
+                        <i data-lucide="square" class="w-3 h-3 text-white fill-white"></i> Stop
+                    </button>
+                </div>
+            </div>
+
+            <div id="vault-list" class="space-y-4 pb-12"></div>
+        </div>
+
+        <!-- 5. Companion -->
+        <div id="screen-companion" class="hidden flex-1 p-6 pb-24 flex flex-col items-center justify-center text-center space-y-8">
+            <div class="w-28 h-28 bg-blue-900/40 rounded-full border-2 border-yellow-500 flex items-center justify-center amen-pulse shadow-[0_0_30px_rgba(212,175,55,0.2)] overflow-hidden">
+                <img src="picture/tsh.PNG" class="w-full h-full object-cover">
+            </div>
+            <h2 class="font-cinzel text-xl gold-gradient uppercase tracking-widest">Steady Hand AI</h2>
+            <p class="text-slate-300 italic px-8 text-sm leading-relaxed">"I am watching your victories. Every video in the Vault helps me learn the resonance of your strength."</p>
+        </div>
+
+        <!-- Tutorial Overlay -->
+        <div id="tutorial-step" class="hidden fixed inset-0 z-[100] tutorial-overlay flex flex-col items-center justify-center p-8 text-center">
+            <img src="picture/tsh.PNG" class="w-20 h-20 rounded-full border border-yellow-500 mb-6">
+            <h2 id="tut-title" class="font-cinzel text-2xl text-yellow-500 mb-4">Welcome, Pilgrim</h2>
+            <p id="tut-desc" class="text-slate-200 leading-relaxed mb-10 text-sm"></p>
+            <button onclick="nextTutorialStep()" class="w-full bg-yellow-600 py-4 rounded-xl font-bold uppercase tracking-widest text-xs">Understood</button>
+        </div>
+
+        <!-- Urge Content Overlay -->
+        <div id="urge-overlay" class="hidden fixed inset-0 z-[60] bg-slate-950/98 flex flex-col p-8 overflow-y-auto">
+            <button onclick="closeUrgeEngine()" class="absolute top-6 right-6 text-slate-500 z-10"><i data-lucide="x" class="w-8 h-8"></i></button>
+            <div id="urge-content" class="flex-1 flex flex-col items-center justify-center text-center space-y-8"></div>
+        </div>
+
+        <!-- Settings Modal -->
+        <div id="modal-settings" class="hidden fixed inset-0 z-[70] bg-black/95 flex items-center justify-center p-6">
+            <div class="card-glass w-full p-8 space-y-6 max-h-[80vh] overflow-y-auto">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-4">
+                    <img src="picture/tsh.PNG" class="w-8 h-8 rounded-full border border-yellow-500/50">
+                    <h3 class="font-cinzel text-lg text-yellow-500">TSH Settings</h3>
+                </div>
+                <div class="space-y-4">
+                    <button onclick="resetApp()" class="w-full text-left p-4 bg-red-900/20 border border-red-900/50 rounded-xl text-red-400 flex items-center justify-between">
+                        <span>Reset Sanctuary</span>
+                        <i data-lucide="trash-2" class="w-5 h-5"></i>
+                    </button>
+                    <button onclick="toggleSettings()" class="w-full py-3 bg-slate-800 rounded-xl text-white">Return</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav id="app-nav" class="hidden fixed bottom-0 left-0 right-0 max-w-md mx-auto h-20 bg-slate-950/80 backdrop-blur-xl border-t border-slate-800/50 flex items-center justify-around px-4 z-30">
+            <button onclick="showScreen('main')" class="nav-link flex flex-col items-center gap-1 text-yellow-500" data-nav="main">
+                <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+                <span class="text-[9px] uppercase font-bold tracking-tighter">War Room</span>
+            </button>
+            <button onclick="showScreen('vault')" class="nav-link flex flex-col items-center gap-1 text-slate-500" data-nav="vault">
+                <i data-lucide="lock" class="w-5 h-5"></i>
+                <span class="text-[9px] uppercase font-bold tracking-tighter">Vault</span>
+            </button>
+            <button onclick="showScreen('companion')" class="nav-link flex flex-col items-center gap-1 text-slate-500" data-nav="companion">
+                <i data-lucide="sparkles" class="w-5 h-5"></i>
+                <span class="text-[9px] uppercase font-bold tracking-tighter">Companion</span>
+            </button>
+        </nav>
+    </div>
+
+    <script>
+        // --- Core State & DB ---
+        let db;
+        const request = indexedDB.open("SteadyHandDB", 2);
+        request.onupgradeneeded = (e) => {
+            db = e.target.result;
+            if(!db.objectStoreNames.contains("videos")) db.createObjectStore("videos", { keyPath: "id", autoIncrement: true });
+        };
+        request.onsuccess = (e) => { db = e.target.result; };
+
+        let state = { setupComplete: false, tutorialStep: 0, habits: [], encryptedApiKey: '' };
+
+        const tutorialSteps = [
+            { title: "TSH: War Room", desc: "This is TSH Command. Track your Financial War Chest and healing milestones in real-time.", icon: "layout-dashboard" },
+            { title: "The Urge Engine", desc: "If cravings spike, trigger the Engine. It will serve Scripture, AI advice, or your own recorded testimony.", icon: "shield-alert" },
+            { title: "Inspiration Vault", desc: "Record clips when you are strong. These become your defensive armor within the Urge Engine.", icon: "lock" },
+            { title: "Ritual Practice", desc: "Always speak the Serenity Prayer aloud before clicking 'Amen'. Your own voice creates the boundary.", icon: "volume-2" }
+        ];
+
+        // --- Initialization ---
+        function init() {
+            lucide.createIcons();
+            const savedState = localStorage.getItem('steady_hand_state');
+            if (savedState) {
+                state = JSON.parse(savedState);
+                if (state.setupComplete) showScreen('gateway');
+                else showScreen('setup');
+            } else {
+                showScreen('setup');
+                addHabitField();
+            }
+            updateDate();
+            renderDashboard();
+        }
+
+        function showScreen(screen) {
+            document.querySelectorAll('[id^="screen-"]').forEach(s => s.classList.add('hidden'));
+            document.getElementById(`screen-${screen}`).classList.remove('hidden');
+            
+            const nav = document.getElementById('app-nav');
+            if (screen === 'setup' || screen === 'gateway') nav.classList.add('hidden');
+            else nav.classList.remove('hidden');
+
+            document.querySelectorAll('.nav-link').forEach(l => {
+                l.classList.replace('text-yellow-500', 'text-slate-500');
+                if(l.dataset.nav === screen) l.classList.replace('text-slate-500', 'text-yellow-500');
+            });
+            
+            if (screen === 'vault') loadVault();
+            if (screen === 'main' && state.tutorialStep === 0) startTutorial();
+            lucide.createIcons();
+        }
+
+        function startTutorial() {
+            document.getElementById('tutorial-step').classList.remove('hidden');
+            nextTutorialStep();
+        }
+
+        function nextTutorialStep() {
+            if (state.tutorialStep >= tutorialSteps.length) {
+                document.getElementById('tutorial-step').classList.add('hidden');
+                state.tutorialStep = 99;
+                localStorage.setItem('steady_hand_state', JSON.stringify(state));
+                return;
+            }
+            const step = tutorialSteps[state.tutorialStep];
+            document.getElementById('tut-title').innerText = step.title;
+            document.getElementById('tut-desc').innerText = step.desc;
+            state.tutorialStep++;
+            lucide.createIcons();
+        }
+
+        function addHabitField() {
+            const container = document.getElementById('habit-inputs');
+            const div = document.createElement('div');
+            div.className = 'card-glass p-4 border-slate-700 space-y-3 relative';
+            div.innerHTML = `
+                <button onclick="this.parentElement.remove()" class="absolute -top-1 -right-1 bg-red-900 text-white rounded-full p-1"><i data-lucide="x" class="w-3 h-3"></i></button>
+                <input type="text" placeholder="Struggle Name" class="habit-name w-full bg-slate-800 border-none rounded p-2 text-white text-xs uppercase font-bold tracking-wider">
+                <input type="number" placeholder="Daily Financial Loss ($)" class="habit-cost w-full bg-slate-800 border-none rounded p-2 text-white text-xs">
+            `;
+            container.appendChild(div);
+            lucide.createIcons();
+        }
+
+        async function saveInitialSetup() {
+            const habitEls = document.querySelectorAll('#habit-inputs > div');
+            state.habits = [];
+            habitEls.forEach(el => {
+                const name = el.querySelector('.habit-name').value;
+                const cost = el.querySelector('.habit-cost').value || 0;
+                if (name) state.habits.push({ id: Date.now() + Math.random(), name, costPerDay: parseFloat(cost), startDate: new Date().toISOString(), slips: [] });
+            });
+
+            const rawKey = document.getElementById('api-key').value;
+            const passcode = document.getElementById('passcode').value;
+            if (rawKey && passcode) {
+                state.encryptedApiKey = btoa(crypt(rawKey, passcode));
+                localStorage.setItem('steady_hand_pass', passcode);
+            }
+
+            state.setupComplete = true;
+            localStorage.setItem('steady_hand_state', JSON.stringify(state));
+            showScreen('gateway');
+            renderDashboard();
+        }
+
+        document.getElementById('btn-amen').addEventListener('click', () => {
+            if (navigator.vibrate) navigator.vibrate([40, 60, 40]);
+            showScreen('main');
+        });
+
+        const crypt = (t, k) => Array.from(t).map((c, i) => String.fromCharCode(c.charCodeAt(0) ^ k.charCodeAt(i % k.length))).join('');
+        function getDecryptedKey() {
+            const cp = localStorage.getItem('steady_hand_pass');
+            if (!cp || !state.encryptedApiKey) return null;
+            try { return crypt(atob(state.encryptedApiKey), cp); } catch (e) { return null; }
+        }
+
+        function renderDashboard() {
+            const container = document.getElementById('dashboard-habits');
+            if (!container) return; container.innerHTML = '';
+            let totalSavedValue = 0;
+            state.habits.forEach(habit => {
+                const daysClean = calculateDaysClean(habit.startDate, habit.slips);
+                totalSavedValue += (daysClean * habit.costPerDay);
+                const div = document.createElement('div');
+                div.className = 'card-glass p-5 border-blue-900/30';
+                div.innerHTML = `
+                    <div class="flex justify-between items-start mb-4">
+                        <div><h3 class="text-yellow-500 font-cinzel text-xs uppercase tracking-widest">${habit.name}</h3><p class="text-2xl font-bold">${daysClean} <span class="text-[9px] text-slate-500 uppercase tracking-tighter ml-1">Days Healing</span></p></div>
+                        <button onclick="logSlip('${habit.id}')" class="text-[9px] uppercase font-bold text-slate-500 border border-slate-800 px-3 py-1 rounded-full">Report Slip</button>
+                    </div>
+                    <div class="bg-slate-900 h-1 rounded-full overflow-hidden"><div class="bg-blue-600 h-full" style="width: ${calculateSuccessRate(habit)}%"></div></div>
+                `;
+                container.appendChild(div);
+            });
+            document.getElementById('total-saved').innerText = `$${totalSavedValue.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
+            document.getElementById('financial-progress').style.width = `${Math.min(100, (totalSavedValue / 5000) * 100)}%`;
+        }
+
+        let mediaRecorder; let chunks = [];
+        async function startRecording() {
+            try {
+                const s = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                const v = document.getElementById('record-preview');
+                v.srcObject = s; v.classList.remove('hidden');
+                document.getElementById('record-placeholder').classList.add('hidden');
+                mediaRecorder = new MediaRecorder(s); chunks = [];
+                mediaRecorder.ondataavailable = e => { if(e.data.size > 0) chunks.push(e.data); };
+                mediaRecorder.onstop = () => {
+                    const b = new Blob(chunks, { type: 'video/webm' });
+                    const t = db.transaction(["videos"], "readwrite");
+                    t.objectStore("videos").add({ blob: b, date: new Date().toISOString() });
+                    t.oncomplete = loadVault;
+                };
+                mediaRecorder.start();
+                document.getElementById('btn-start-record').classList.add('hidden');
+                document.getElementById('btn-stop-record').classList.remove('hidden');
+            } catch (err) { alert("Camera access required for TSH Vault."); }
+        }
+        function stopRecording() {
+            mediaRecorder.stop();
+            const v = document.getElementById('record-preview');
+            v.srcObject.getTracks().forEach(t => t.stop());
+            v.classList.add('hidden');
+            document.getElementById('record-placeholder').classList.remove('hidden');
+            document.getElementById('btn-start-record').classList.remove('hidden');
+            document.getElementById('btn-stop-record').classList.add('hidden');
+        }
+        function loadVault() {
+            if(!db) return;
+            const c = document.getElementById('vault-list'); c.innerHTML = '';
+            db.transaction("videos", "readonly").objectStore("videos").openCursor(null, 'prev').onsuccess = e => {
+                const cur = e.target.result;
+                if(cur) {
+                    const d = document.createElement('div'); d.className = 'card-glass p-3 border-slate-800';
+                    d.innerHTML = `<video src="${URL.createObjectURL(cur.value.blob)}" controls class="mb-2"></video>
+                        <div class="flex justify-between items-center text-[9px] uppercase font-bold text-slate-500">
+                        <span>Captured ${new Date(cur.value.date).toLocaleDateString()}</span>
+                        <button onclick="deleteVideo(${cur.value.id})" class="text-red-900">Purge</button></div>`;
+                    c.appendChild(d); cur.continue();
+                }
+            };
+        }
+        function deleteVideo(id) { if(confirm("Purge this clip?")) db.transaction("videos", "readwrite").objectStore("videos").delete(id).onsuccess = loadVault; }
+
+        async function triggerUrgeEngine() {
+            const o = document.getElementById('urge-overlay'); o.classList.remove('hidden');
+            const c = document.getElementById('urge-content');
+            const choices = ['scripture', 'ai'];
+            const videos = await new Promise(r => {
+                const res = []; db.transaction("videos").objectStore("videos").openCursor().onsuccess = e => {
+                    if(e.target.result) { res.push(e.target.result.value); e.target.result.continue(); } else r(res);
+                };
+            });
+            if(videos.length > 0) choices.push('video');
+            const choice = choices[Math.floor(Math.random() * choices.length)];
+
+            if(choice === 'video') {
+                c.innerHTML = `<h2 class="font-cinzel text-yellow-500 mb-4 uppercase">Speak to Yourself</h2>
+                    <video src="${URL.createObjectURL(videos[Math.floor(Math.random() * videos.length)].blob)}" autoplay controls></video>`;
+            } else if(choice === 'ai') {
+                c.innerHTML = `<div class="w-16 h-16 bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4 border border-yellow-500"><img src="picture/tsh.PNG" class="w-8 h-8 rounded-full"></div>
+                    <div id="ai-res" class="text-lg italic text-slate-200 px-4 animate-pulse">Consulting the Hand...</div>`;
+                fetchAI();
+            } else {
+                c.innerHTML = `<i data-lucide="sun" class="w-12 h-12 text-yellow-500 mx-auto mb-6"></i>
+                    <h2 class="text-2xl font-cinzel text-red-500 leading-tight px-6 italic">"I can do all things through Christ who strengthens me."</h2>
+                    <p class="text-xs text-slate-500 uppercase mt-8 tracking-widest">Breathe for 60 seconds.</p>`;
+            }
+            lucide.createIcons();
+        }
+
+        async function fetchAI() {
+            const key = getDecryptedKey();
+            const resEl = document.getElementById('ai-res');
+            if(!key) { resEl.innerText = "Breathe. I am here in the silence. Enter your Key in settings for full guidance."; resEl.classList.remove('animate-pulse'); return; }
+            try {
+                const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${key}`, {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: `The user has an urge. Struggles: ${state.habits.map(h=>h.name).join(', ')}. Speak as 'The Steady Hand' with radical grace. Keep it short.` }] }] })
+                });
+                const j = await r.json();
+                resEl.innerText = j.candidates[0].content.parts[0].text;
+                resEl.classList.remove('animate-pulse');
+            } catch(e) { resEl.innerText = "Hold firm. You are loved beyond measure."; resEl.classList.remove('animate-pulse'); }
+        }
+
+        function calculateDaysClean(s, l) { const last = l.length > 0 ? new Date(l[l.length-1]) : new Date(s); return Math.floor(Math.abs(new Date() - last) / 86400000); }
+        function calculateSuccessRate(h) { const t = Math.max(1, Math.floor((new Date() - new Date(h.startDate)) / 86400000)); return Math.min(100, ((t - h.slips.length)/t)*100); }
+        function logSlip(id) { const h = state.habits.find(x=>x.id==id); if(h) { h.slips.push(new Date().toISOString()); localStorage.setItem('steady_hand_state', JSON.stringify(state)); renderDashboard(); showScreen('gateway'); } }
+        function closeUrgeEngine() { document.getElementById('urge-overlay').classList.add('hidden'); }
+        function toggleSettings() { document.getElementById('modal-settings').classList.toggle('hidden'); lucide.createIcons(); }
+        function updateDate() { document.getElementById('date-display').innerText = new Date().toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }); }
+        function resetApp() { if(confirm("PERMANENTLY DELETE ALL TSH DATA?")) { localStorage.clear(); indexedDB.deleteDatabase("SteadyHandDB"); window.location.reload(); } }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
