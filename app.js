@@ -16,8 +16,8 @@ let state = { setupComplete: false, tutorialStep: 0, habits: [] };
 
 const tutorialSteps = [
     { title: "The War Room", desc: "This is TSH Command. Track your financial freedom and healing milestones here.", icon: "layout-dashboard" },
-    { title: "The Urge Engine", desc: "In moments of crisis, trigger the Engine to draw upon the Word or your personal vault.", icon: "shield-alert" },
-    { title: "The Vault", desc: "Record your own voice when you are strong, or upload audio files sent by loved ones to be played when you need them most.", icon: "lock" },
+    { title: "The Urge Engine", desc: "In moments of crisis, trigger the Engine to draw upon the Word or your personal vault recordings.", icon: "shield-alert" },
+    { title: "The Vault", desc: "Record your own voice when you are strong. These notes become your shield during future urges.", icon: "lock" },
     { title: "Ritual Entry", desc: "Vocalizing the Serenity Prayer is the first step to reclaiming your space. Speak it every time.", icon: "volume-2" }
 ];
 
@@ -35,7 +35,6 @@ function init() {
     }
     updateDate();
     renderDashboard();
-    setupAudioUpload();
 }
 
 function showScreen(screen) {
@@ -161,33 +160,9 @@ function renderDashboard() {
     document.getElementById('financial-progress').style.width = `${Math.min(100, (totalSavedValue / 5000) * 100)}%`;
 }
 
-// --- Audio Recording & Upload Logic ---
+// --- Audio Recording Logic ---
 let mediaRecorder; let chunks = [];
 let audioStream;
-
-function setupAudioUpload() {
-    const uploader = document.getElementById('audio-upload');
-    if (!uploader) return;
-    
-    uploader.addEventListener('change', async (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-        
-        const t = db.transaction(["videos"], "readwrite");
-        t.objectStore("videos").add({ 
-            blob: file, 
-            date: new Date().toISOString(),
-            isUpload: true,
-            name: file.name
-        });
-        
-        t.oncomplete = () => {
-            loadVault();
-            uploader.value = ''; 
-        };
-        t.onerror = () => alert("Failed to save audio file.");
-    });
-}
 
 async function startRecording() {
     try {
@@ -206,7 +181,7 @@ async function startRecording() {
             const mimeType = mediaRecorder.mimeType || 'audio/webm';
             const b = new Blob(chunks, { type: mimeType });
             const t = db.transaction(["videos"], "readwrite");
-            t.objectStore("videos").add({ blob: b, date: new Date().toISOString(), isUpload: false });
+            t.objectStore("videos").add({ blob: b, date: new Date().toISOString() });
             t.oncomplete = loadVault;
         };
         
@@ -238,16 +213,13 @@ function loadVault() {
             const url = URL.createObjectURL(cur.value.blob);
             const d = document.createElement('div'); d.className = 'card-glass p-4 relative';
             
-            const iconName = cur.value.isUpload ? 'upload-cloud' : 'mic';
-            const labelText = cur.value.isUpload ? `Uploaded ${new Date(cur.value.date).toLocaleDateString()}` : `Captured ${new Date(cur.value.date).toLocaleDateString()}`;
-
             d.innerHTML = `
                 <div class="flex items-center gap-3 mb-4 bg-white/50 p-2 rounded-xl border border-white/60 shadow-inner">
-                    <i data-lucide="${iconName}" class="w-5 h-5 text-slate-700 shrink-0 ml-2"></i>
+                    <i data-lucide="mic" class="w-5 h-5 text-slate-700 shrink-0 ml-2"></i>
                     <audio src="${url}" controls class="w-full h-8 outline-none bg-transparent"></audio>
                 </div>
                 <div class="flex justify-between items-center text-[10px] uppercase font-bold text-slate-700 px-2">
-                <span class="truncate max-w-[150px]">${labelText}</span>
+                <span class="truncate max-w-[150px]">Captured ${new Date(cur.value.date).toLocaleDateString()}</span>
                 <button onclick="deleteVideo(${cur.value.id})" class="text-red-600 bg-white/50 px-3 py-1 rounded-full shadow-sm hover:bg-red-50 transition-colors">Purge</button></div>`;
             c.appendChild(d); cur.continue();
         }
@@ -255,9 +227,10 @@ function loadVault() {
     setTimeout(() => lucide.createIcons(), 50);
 }
 
-function deleteVideo(id) { if(confirm("Purge this audio file permanently?")) db.transaction("videos", "readwrite").objectStore("videos").delete(id).onsuccess = loadVault; }
+function deleteVideo(id) { if(confirm("Purge this voice recording permanently?")) db.transaction("videos", "readwrite").objectStore("videos").delete(id).onsuccess = loadVault; }
 
-// --- Urge Engine Algorithm ---
+
+// --- Smarter Urge Engine Algorithm ---
 let lastUrgeType = null;
 let lastVerseIndex = -1;
 let lastAudioId = -1;
@@ -294,11 +267,10 @@ async function triggerUrgeEngine() {
         lastAudioId = audioMatch.id;
 
         const url = URL.createObjectURL(audioMatch.blob);
-        const headlineText = audioMatch.isUpload ? "A Voice in the Dark" : "Listen to Your Strength";
 
         c.innerHTML = `
-            <i data-lucide="headphones" class="w-16 h-16 text-slate-700 drop-shadow-sm mx-auto mb-6"></i>
-            <h2 class="font-cinzel text-slate-800 mb-6 uppercase font-bold tracking-widest text-xl">${headlineText}</h2>
+            <i data-lucide="mic" class="w-16 h-16 text-slate-700 drop-shadow-sm mx-auto mb-6"></i>
+            <h2 class="font-cinzel text-slate-800 mb-6 uppercase font-bold tracking-widest text-xl">Listen to Your Strength</h2>
             <div class="bg-white/60 p-4 rounded-2xl w-full max-w-sm shadow-xl border-2 border-white">
                 <audio src="${url}" autoplay controls class="w-full outline-none"></audio>
             </div>
