@@ -82,14 +82,9 @@
                                 Get Key <i data-lucide="external-link" class="w-3 h-3"></i>
                             </a>
                         </div>
-                        <input type="password" id="api-key" placeholder="Enter API Key" class="w-full rounded-lg p-3 text-sm shadow-inner">
+                        <input type="password" id="api-key" placeholder="Paste API Key Here" class="w-full rounded-lg p-3 text-sm shadow-inner">
                     </div>
-                    <div>
-                        <label class="block text-[10px] text-slate-700 font-bold uppercase mb-1">Vault Passcode</label>
-                        <input type="password" id="passcode" placeholder="Create secret code" class="w-full rounded-lg p-3 text-sm shadow-inner">
-                        <p class="text-[9px] text-slate-600 mt-2 font-medium italic">This code stays on your device to securely unlock AI features.</p>
                     </div>
-                </div>
 
                 <button onclick="saveInitialSetup()" class="w-full bg-white/60 hover:bg-white/80 text-slate-800 font-bold py-4 rounded-xl shadow-md transition-all mt-auto mb-12 uppercase tracking-widest text-sm border border-white">
                     Confirm Commitment
@@ -179,33 +174,36 @@
                 </p>
             </div>
 
-            <div id="screen-chat" class="hidden fixed inset-0 z-[110] flex flex-col" style="background: linear-gradient(180deg, #b4c7d9 0%, #b5ba8b 100%);">
-                <header class="flex justify-between items-center p-4 bg-white/40 backdrop-blur-md border-b border-white/50 shrink-0 sticky top-0" style="padding-top: max(env(safe-area-inset-top), 3rem);">
-                    <button onclick="showScreen('companion')" class="p-2 text-slate-800 bg-white/50 rounded-full shadow-sm hover:bg-white/70 transition-colors">
-                        <i data-lucide="chevron-left" class="w-5 h-5"></i>
-                    </button>
-                    <div class="flex items-center gap-3">
-                        <img src="picture/tsh.PNG" class="w-8 h-8 rounded-full border border-white shadow-sm" onerror="this.src='https://via.placeholder.com/32/ffffff/334155?text=TSH'">
-                        <h2 class="font-cinzel text-md dark-gradient font-bold uppercase tracking-widest truncate max-w-[150px]">The Steady Hand</h2>
-                    </div>
-                    <button onclick="clearChat()" class="p-2 text-red-600 bg-white/50 rounded-full shadow-sm hover:bg-red-50 transition-colors" title="Clear Chat">
-                        <i data-lucide="trash-2" class="w-5 h-5"></i>
-                    </button>
-                </header>
-
-                <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4 pb-4 scroll-smooth"></div>
-
-                <div class="p-4 bg-white/40 backdrop-blur-md border-t border-white/50 shrink-0" style="padding-bottom: env(safe-area-inset-bottom);">
-                    <form id="chat-form" onsubmit="handleChatSubmit(event)" class="flex gap-2">
-                        <input type="text" id="chat-input" placeholder="Speak your mind..." class="flex-1 rounded-full p-3 px-5 text-sm shadow-inner bg-white/70 text-slate-800 placeholder-slate-500 border-white/80 focus:bg-white focus:border-white" required autocomplete="off">
-                        <button type="submit" class="bg-slate-800 text-white p-3 rounded-full shadow-lg flex items-center justify-center hover:bg-slate-700 transition-colors shrink-0">
-                            <i data-lucide="send" class="w-5 h-5 ml-0.5"></i>
+            <div id="screen-chat" class="hidden fixed inset-0 z-[110] bg-transparent pointer-events-none">
+                <div class="flex flex-col h-full w-full pointer-events-auto" style="background: linear-gradient(180deg, #b4c7d9 0%, #b5ba8b 100%);">
+                    
+                    <header class="flex justify-between items-center p-4 bg-white/40 backdrop-blur-md border-b border-white/50 shrink-0 sticky top-0 z-10" style="padding-top: max(env(safe-area-inset-top), 1.5rem);">
+                        <button onclick="showScreen('companion')" class="p-2 text-slate-800 bg-white/50 rounded-full shadow-sm hover:bg-white/70 transition-colors">
+                            <i data-lucide="chevron-left" class="w-5 h-5"></i>
                         </button>
-                    </form>
+                        <div class="flex items-center gap-3">
+                            <img src="picture/tsh.PNG" class="w-8 h-8 rounded-full border border-white shadow-sm" onerror="this.src='https://via.placeholder.com/32/ffffff/334155?text=TSH'">
+                            <h2 class="font-cinzel text-md dark-gradient font-bold uppercase tracking-widest truncate max-w-[150px]">The Steady Hand</h2>
+                        </div>
+                        <button onclick="clearChat()" class="p-2 text-red-600 bg-white/50 rounded-full shadow-sm hover:bg-red-50 transition-colors" title="Clear Chat">
+                            <i data-lucide="trash-2" class="w-5 h-5"></i>
+                        </button>
+                    </header>
+
+                    <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4 pb-[120px] scroll-smooth"></div>
+
+                    <div class="absolute bottom-0 left-0 right-0 w-full p-4 bg-white/40 backdrop-blur-md border-t border-white/50 z-10" style="padding-bottom: max(env(safe-area-inset-bottom), 24px);">
+                        <form id="chat-form" onsubmit="handleChatSubmit(event)" class="flex gap-2 max-w-md mx-auto">
+                            <input type="text" id="chat-input" placeholder="Speak your mind..." class="flex-1 rounded-full p-3 px-5 text-sm shadow-inner bg-white/70 text-slate-800 placeholder-slate-500 border-white/80 focus:bg-white focus:border-white" required autocomplete="off">
+                            <button type="submit" class="bg-slate-800 text-white p-3 rounded-full shadow-lg flex items-center justify-center hover:bg-slate-700 transition-colors shrink-0">
+                                <i data-lucide="send" class="w-5 h-5 ml-0.5"></i>
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
 
-            <nav id="app-nav" class="hidden fixed bottom-0 left-0 right-0 max-w-md mx-auto h-20 bg-white/40 backdrop-blur-2xl border-t border-white/50 flex items-center justify-around px-4 z-[80] shadow-[0_-10px_20px_rgba(0,0,0,0.05)]" style="padding-bottom: env(safe-area-inset-bottom);">
+            <nav id="app-nav" class="hidden fixed bottom-0 left-0 right-0 max-w-md mx-auto h-20 bg-white/40 backdrop-blur-2xl border-t border-white/50 flex items-center justify-around px-4 z-[80] shadow-[0_-10px_20px_rgba(0,0,0,0.05)]" style="padding-bottom: max(env(safe-area-inset-bottom), 12px);">
                 <button onclick="showScreen('main')" class="nav-link flex flex-col items-center gap-1 text-slate-500" data-nav="main">
                     <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
                     <span class="text-[9px] uppercase font-bold tracking-tighter">War Room</span>
