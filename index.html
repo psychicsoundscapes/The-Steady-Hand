@@ -175,6 +175,8 @@
 
             <!-- 2. SETUP -->
             <div id="screen-setup" class="hidden fixed inset-0 z-[90] overflow-y-auto p-6 flex flex-col" style="background: linear-gradient(180deg, #b4c7d9 0%, #b5ba8b 100%);">
+                <!-- Padding Top to clear notch if opened directly -->
+                <div style="padding-top: max(env(safe-area-inset-top), 1rem);"></div>
                 <div class="flex items-center gap-4 mb-6 mt-4">
                     <img src="picture/tsh.PNG" class="w-12 h-12 rounded-full border border-white/50" onerror="this.src='https://via.placeholder.com/50/ffffff/334155?text=TSH'">
                     <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase">Sanctuary Setup</h2>
@@ -216,7 +218,7 @@
             </div>
 
             <!-- 3. DASHBOARD -->
-            <main id="screen-main" class="hidden flex-1 p-6 space-y-8">
+            <main id="screen-main" class="hidden flex-1 p-6 space-y-8" style="padding-top: max(env(safe-area-inset-top), 1.5rem);">
                 <header class="flex justify-between items-center mt-4">
                     <div class="flex items-center gap-3">
                         <img src="picture/tsh.PNG" class="w-10 h-10 rounded-full border border-white/50 shadow-sm" onerror="this.src='https://via.placeholder.com/40/ffffff/334155?text=TSH'">
@@ -225,7 +227,7 @@
                             <p id="date-display" class="text-[9px] uppercase tracking-widest text-slate-600 font-bold"></p>
                         </div>
                     </div>
-                    <button onclick="toggleSettings()" class="p-2 text-slate-700 hover:text-slate-900 bg-white/30 rounded-full">
+                    <button onclick="toggleSettings()" class="p-2 text-slate-700 hover:text-slate-900 bg-white/30 rounded-full shadow-sm">
                         <i data-lucide="settings" class="w-5 h-5"></i>
                     </button>
                 </header>
@@ -250,7 +252,7 @@
             </main>
 
             <!-- 4. VAULT -->
-            <div id="screen-vault" class="hidden flex-1 p-6 overflow-y-auto">
+            <div id="screen-vault" class="hidden flex-1 p-6 overflow-y-auto" style="padding-top: max(env(safe-area-inset-top), 1.5rem);">
                 <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-2 mt-4">The Vault</h2>
                 <p class="text-slate-700 text-xs mb-8 italic font-medium">Your voice is your weapon. Record when your light is brightest.</p>
                 
@@ -264,7 +266,7 @@
                     </div>
                     
                     <div class="flex justify-center gap-4">
-                        <button id="btn-start-record" onclick="startRecording()" class="flex-1 bg-white/60 py-4 rounded-2xl flex items-center justify-center gap-2 font-bold text-xs uppercase tracking-widest text-slate-800 border border-white shadow-sm">
+                        <button id="btn-start-record" onclick="startRecording()" class="flex-1 bg-white/60 py-4 rounded-2xl flex items-center justify-center gap-2 font-bold text-xs uppercase tracking-widest text-slate-800 border border-white shadow-sm hover:bg-white/80 transition-colors">
                             <i data-lucide="circle" class="w-3 h-3 text-red-600 fill-red-600"></i> Record
                         </button>
                         <button id="btn-stop-record" onclick="stopRecording()" class="hidden flex-1 bg-white/80 py-4 rounded-2xl flex items-center justify-center gap-2 font-bold text-xs uppercase tracking-widest text-red-700 border border-white shadow-sm">
@@ -277,8 +279,8 @@
             </div>
 
             <!-- 5. COMPANION -->
-            <div id="screen-companion" class="hidden flex-1 p-6 flex flex-col items-center justify-center text-center space-y-4 mt-8">
-                <div class="w-32 h-32 bg-white/40 rounded-full border-4 border-white flex items-center justify-center amen-pulse shadow-2xl overflow-hidden mb-4">
+            <div id="screen-companion" class="hidden flex-1 p-6 flex flex-col items-center justify-center text-center space-y-4 mt-8" style="padding-top: max(env(safe-area-inset-top), 1.5rem);">
+                <div class="w-32 h-32 bg-white/40 rounded-full border-4 border-white flex items-center justify-center amen-pulse shadow-2xl overflow-hidden mb-4 shrink-0">
                     <img src="picture/tsh.PNG" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/150/ffffff/334155?text=TSH'">
                 </div>
                 <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase tracking-widest">The Steady Hand</h2>
@@ -288,54 +290,52 @@
                     Your Companion is ready. Trigger the Urge Engine or Start a Chat.
                 </div>
                 
-                <!-- Chat & Disclaimer -->
-                <button onclick="showScreen('chat')" class="w-full max-w-xs bg-slate-800 hover:bg-slate-700 text-white font-bold py-4 rounded-2xl shadow-lg transition-all uppercase tracking-widest text-xs border border-slate-600 mt-4 flex items-center justify-center gap-2">
+                <!-- Chat Interface Trigger -->
+                <button onclick="showScreen('chat')" class="w-full max-w-xs bg-slate-800 hover:bg-slate-700 text-white font-bold py-4 rounded-2xl shadow-lg transition-all uppercase tracking-widest text-xs border border-slate-600 mt-4 flex items-center justify-center gap-2 shrink-0">
                     <i data-lucide="message-circle" class="w-4 h-4"></i> Start Conversation
                 </button>
                 
-                <p class="text-[9px] text-slate-600 font-medium italic max-w-xs leading-relaxed px-2 mt-4">
+                <!-- Health Disclaimer -->
+                <p class="text-[9px] text-slate-600 font-medium italic max-w-xs leading-relaxed px-2 mt-4 pb-12">
                     <strong class="font-bold">Please remember:</strong> I am an AI companion walking this path with you, not a medical professional. I may occasionally stumble in my understanding. If you are in crisis, please use the Emergency Support line.
                 </p>
             </div>
 
             <!-- 6. ACTIVE CHAT SCREEN -->
-            <div id="screen-chat" class="hidden fixed inset-0 z-[110] flex flex-col bg-slate-100" style="background: linear-gradient(180deg, #b4c7d9 0%, #b5ba8b 100%);">
-                <!-- Chat Header -->
-                <header class="flex justify-between items-center p-4 bg-white/40 backdrop-blur-md border-b border-white/50 pt-safe">
-                    <button onclick="showScreen('companion')" class="p-2 text-slate-800 bg-white/50 rounded-full shadow-sm">
+            <div id="screen-chat" class="hidden fixed inset-0 z-[110] flex flex-col" style="background: linear-gradient(180deg, #b4c7d9 0%, #b5ba8b 100%);">
+                <!-- Chat Header (Pushing down safely past the iOS Notch) -->
+                <header class="flex justify-between items-center p-4 bg-white/40 backdrop-blur-md border-b border-white/50 shrink-0 sticky top-0" style="padding-top: max(env(safe-area-inset-top), 3rem);">
+                    <button onclick="showScreen('companion')" class="p-2 text-slate-800 bg-white/50 rounded-full shadow-sm hover:bg-white/70 transition-colors">
                         <i data-lucide="chevron-left" class="w-5 h-5"></i>
                     </button>
                     <div class="flex items-center gap-3">
                         <img src="picture/tsh.PNG" class="w-8 h-8 rounded-full border border-white shadow-sm" onerror="this.src='https://via.placeholder.com/32/ffffff/334155?text=TSH'">
-                        <h2 class="font-cinzel text-md dark-gradient font-bold uppercase tracking-widest">The Steady Hand</h2>
+                        <h2 class="font-cinzel text-md dark-gradient font-bold uppercase tracking-widest truncate max-w-[150px]">The Steady Hand</h2>
                     </div>
-                    <div class="w-9"></div> <!-- Spacer -->
+                    <!-- Clear Chat Button -->
+                    <button onclick="clearChat()" class="p-2 text-red-600 bg-white/50 rounded-full shadow-sm hover:bg-red-50 transition-colors" title="Clear Chat">
+                        <i data-lucide="trash-2" class="w-5 h-5"></i>
+                    </button>
                 </header>
 
                 <!-- Chat Messages Area -->
-                <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4 pb-4">
-                    <!-- Initial AI Greeting -->
-                    <div class="flex items-start gap-2">
-                        <img src="picture/tsh.PNG" class="w-8 h-8 rounded-full border border-white shadow-sm mt-1" onerror="this.src='https://via.placeholder.com/32/ffffff/334155?text=TSH'">
-                        <div class="p-3 shadow-sm chat-bubble-ai max-w-[80%] text-sm font-medium leading-relaxed">
-                            Peace be with you. What burden is heavy on your heart today? I am here to listen.
-                        </div>
-                    </div>
+                <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4 pb-4 scroll-smooth">
+                    <!-- Messages dynamically injected here -->
                 </div>
 
-                <!-- Chat Input -->
-                <div class="p-4 bg-white/40 backdrop-blur-md border-t border-white/50 pb-safe">
+                <!-- Chat Input (Pushing up safely past iOS Home Indicator) -->
+                <div class="p-4 bg-white/40 backdrop-blur-md border-t border-white/50 shrink-0" style="padding-bottom: max(env(safe-area-inset-bottom), 1.5rem);">
                     <form id="chat-form" onsubmit="handleChatSubmit(event)" class="flex gap-2">
-                        <input type="text" id="chat-input" placeholder="Type your thoughts..." class="flex-1 rounded-full p-3 px-5 text-sm shadow-inner" required autocomplete="off">
-                        <button type="submit" class="bg-slate-800 text-white p-3 rounded-full shadow-lg flex items-center justify-center hover:bg-slate-700 transition-colors">
-                            <svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                        <input type="text" id="chat-input" placeholder="Speak your mind..." class="flex-1 rounded-full p-3 px-5 text-sm shadow-inner bg-white/70 text-slate-800 placeholder-slate-500 border-white/80 focus:bg-white focus:border-white" required autocomplete="off">
+                        <button type="submit" class="bg-slate-800 text-white p-3 rounded-full shadow-lg flex items-center justify-center hover:bg-slate-700 transition-colors shrink-0">
+                            <i data-lucide="send" class="w-5 h-5 ml-0.5"></i>
                         </button>
                     </form>
                 </div>
             </div>
 
             <!-- NAVIGATION -->
-            <nav id="app-nav" class="hidden fixed bottom-0 left-0 right-0 max-w-md mx-auto h-20 bg-white/40 backdrop-blur-2xl border-t border-white/50 flex items-center justify-around px-4 z-[80] shadow-[0_-10px_20px_rgba(0,0,0,0.05)]">
+            <nav id="app-nav" class="hidden fixed bottom-0 left-0 right-0 max-w-md mx-auto h-20 bg-white/40 backdrop-blur-2xl border-t border-white/50 flex items-center justify-around px-4 z-[80] shadow-[0_-10px_20px_rgba(0,0,0,0.05)]" style="padding-bottom: env(safe-area-inset-bottom);">
                 <button onclick="showScreen('main')" class="nav-link flex flex-col items-center gap-1 text-slate-500" data-nav="main">
                     <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
                     <span class="text-[9px] uppercase font-bold tracking-tighter">War Room</span>
@@ -355,12 +355,12 @@
                 <img src="picture/tsh.PNG" class="w-24 h-24 rounded-full border-4 border-white mb-6 shadow-2xl" onerror="this.src='https://via.placeholder.com/150/ffffff/334155?text=TSH'">
                 <h2 id="tut-title" class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-4">Welcome</h2>
                 <p id="tut-desc" class="text-slate-800 leading-relaxed mb-10 text-sm font-semibold"></p>
-                <button onclick="nextTutorialStep()" class="w-full bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg">Continue</button>
+                <button onclick="nextTutorialStep()" class="w-full bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg hover:bg-white transition-colors">Continue</button>
             </div>
 
             <!-- URGE ENGINE OVERLAY -->
             <div id="urge-overlay" class="hidden fixed inset-0 z-[150] flex flex-col p-8 overflow-y-auto" style="background: linear-gradient(180deg, #b4c7d9 0%, #b5ba8b 100%);">
-                <button onclick="closeUrgeEngine()" class="absolute top-6 right-6 text-slate-700 bg-white/40 p-2 rounded-full z-[160]"><i data-lucide="x" class="w-6 h-6"></i></button>
+                <button onclick="closeUrgeEngine()" class="absolute top-6 right-6 text-slate-700 bg-white/40 p-2 rounded-full z-[160] hover:bg-white/60 transition-colors shadow-sm" style="margin-top: env(safe-area-inset-top);"><i data-lucide="x" class="w-6 h-6"></i></button>
                 <div id="urge-content" class="flex-1 flex flex-col items-center justify-center text-center space-y-8 mt-12"></div>
             </div>
 
@@ -368,19 +368,19 @@
             <div id="modal-settings" class="hidden fixed inset-0 z-[300] bg-slate-800/60 backdrop-blur-md flex items-center justify-center p-6">
                 <div class="card-glass w-full p-8 space-y-6 max-h-[80vh] overflow-y-auto">
                     <div class="flex items-center gap-3 border-b border-slate-400 pb-4">
-                        <img src="picture/tsh.PNG" class="w-8 h-8 rounded-full border border-white" onerror="this.src='https://via.placeholder.com/32/ffffff/334155?text=T'">
+                        <img src="picture/tsh.PNG" class="w-8 h-8 rounded-full border border-white shadow-sm" onerror="this.src='https://via.placeholder.com/32/ffffff/334155?text=T'">
                         <h3 class="font-cinzel text-lg dark-gradient font-bold uppercase tracking-widest">TSH Sanctum</h3>
                     </div>
                     <div class="space-y-4">
-                        <button onclick="resetTutorial()" class="w-full text-left p-4 bg-white/40 border border-white/60 rounded-xl text-slate-800 flex items-center justify-between font-bold">
+                        <button onclick="resetTutorial()" class="w-full text-left p-4 bg-white/40 border border-white/60 rounded-xl text-slate-800 flex items-center justify-between font-bold hover:bg-white/60 transition-colors shadow-sm">
                             <span>Watch Tutorial Again</span>
                             <i data-lucide="help-circle" class="w-5 h-5"></i>
                         </button>
-                        <button onclick="resetApp()" class="w-full text-left p-4 bg-red-100/80 border border-red-300 rounded-xl text-red-800 flex items-center justify-between font-bold">
+                        <button onclick="resetApp()" class="w-full text-left p-4 bg-red-100/80 border border-red-300 rounded-xl text-red-800 flex items-center justify-between font-bold hover:bg-red-200 transition-colors shadow-sm">
                             <span>Reset Sanctuary</span>
                             <i data-lucide="trash-2" class="w-5 h-5"></i>
                         </button>
-                        <button onclick="toggleSettings()" class="w-full py-4 bg-slate-800 rounded-xl text-white font-bold uppercase tracking-widest text-xs shadow-lg">Return</button>
+                        <button onclick="toggleSettings()" class="w-full py-4 bg-slate-800 hover:bg-slate-700 rounded-xl text-white font-bold uppercase tracking-widest text-xs shadow-lg transition-colors">Return</button>
                     </div>
                 </div>
             </div>
@@ -391,12 +391,20 @@
     <script>
         // --- Core State & DB ---
         let db;
-        const dbRequest = indexedDB.open("TSH_Database", 3);
+        // UPGRADED TO VERSION 4 to support Chat History ObjectStore
+        const dbRequest = indexedDB.open("TSH_Database", 4);
         dbRequest.onupgradeneeded = (e) => {
             db = e.target.result;
             if(!db.objectStoreNames.contains("videos")) db.createObjectStore("videos", { keyPath: "id", autoIncrement: true });
+            if(!db.objectStoreNames.contains("chat")) db.createObjectStore("chat", { keyPath: "id" });
         };
-        dbRequest.onsuccess = (e) => { db = e.target.result; };
+        dbRequest.onsuccess = (e) => { 
+            db = e.target.result; 
+            if(document.getElementById('vault-list')) {
+                loadVault();
+                loadChatFromDB();
+            }
+        };
 
         let state = { setupComplete: false, tutorialStep: 0, habits: [], encryptedApiKey: '' };
         let chatHistory = [];
@@ -436,6 +444,7 @@
             }
             updateDate();
             renderDashboard();
+            if(db) loadChatFromDB(); // Ensure chat loads if DB initiated fast
         }
 
         function showScreen(screen) {
@@ -460,6 +469,10 @@
             });
             
             if (screen === 'vault') loadVault();
+            if (screen === 'chat') {
+                const c = document.getElementById('chat-messages');
+                c.scrollTop = c.scrollHeight;
+            }
             if (screen === 'main' && (state.tutorialStep === 0 || state.tutorialStep === undefined)) {
                 startTutorial();
             }
@@ -499,7 +512,7 @@
             const div = document.createElement('div');
             div.className = 'card-glass p-4 space-y-3 relative';
             div.innerHTML = `
-                <button onclick="this.parentElement.remove()" class="absolute -top-2 -right-2 bg-slate-700 text-white rounded-full p-1.5 shadow-md"><i data-lucide="x" class="w-3 h-3"></i></button>
+                <button onclick="this.parentElement.remove()" class="absolute -top-2 -right-2 bg-slate-700 text-white rounded-full p-1.5 shadow-md hover:bg-red-600 transition-colors"><i data-lucide="x" class="w-3 h-3"></i></button>
                 <input type="text" placeholder="Struggle (e.g. Nicotine)" class="habit-name w-full rounded-lg p-3 text-sm uppercase font-bold tracking-wider shadow-inner">
                 <input type="number" placeholder="Daily Financial Cost ($)" class="habit-cost w-full rounded-lg p-3 text-sm shadow-inner">
             `;
@@ -614,7 +627,7 @@
                     d.innerHTML = `<video src="${url}" controls class="mb-3 rounded-lg shadow-md"></video>
                         <div class="flex justify-between items-center text-[10px] uppercase font-bold text-slate-700 px-2 pb-1">
                         <span>Captured ${new Date(cur.value.date).toLocaleDateString()}</span>
-                        <button onclick="deleteVideo(${cur.value.id})" class="text-red-600 bg-white/50 px-3 py-1 rounded-full shadow-sm">Purge</button></div>`;
+                        <button onclick="deleteVideo(${cur.value.id})" class="text-red-600 bg-white/50 px-3 py-1 rounded-full shadow-sm hover:bg-red-50">Purge</button></div>`;
                     c.appendChild(d); cur.continue();
                 }
             };
@@ -622,7 +635,52 @@
         function deleteVideo(id) { if(confirm("Purge this clip?")) db.transaction("videos", "readwrite").objectStore("videos").delete(id).onsuccess = loadVault; }
 
         // --- Chat Interface Logic ---
-        function appendChatMessage(role, text) {
+        function loadChatFromDB() {
+            if(!db) return;
+            try {
+                db.transaction("chat", "readonly").objectStore("chat").get("history").onsuccess = (e) => {
+                    const res = e.target.result;
+                    if(res && res.messages) chatHistory = res.messages;
+                    renderChatHistory();
+                };
+            } catch(e) { renderChatHistory(); }
+        }
+
+        function saveChatToDB() {
+            if(!db) return;
+            db.transaction("chat", "readwrite").objectStore("chat").put({ id: "history", messages: chatHistory });
+        }
+
+        function clearChat() {
+            if(confirm("Clear conversation history? The Steady Hand will forget this session.")) {
+                chatHistory = [];
+                saveChatToDB();
+                renderChatHistory();
+            }
+        }
+
+        function renderChatHistory() {
+            const container = document.getElementById('chat-messages');
+            container.innerHTML = '';
+            
+            // The Permanent Greeting
+            container.innerHTML = `
+                <div class="flex items-start gap-2">
+                    <img src="picture/tsh.PNG" class="w-8 h-8 rounded-full border border-white shadow-sm mt-1 shrink-0" onerror="this.src='https://via.placeholder.com/32/ffffff/334155?text=TSH'">
+                    <div class="p-3 shadow-sm chat-bubble-ai max-w-[85%] text-sm font-medium leading-relaxed">
+                        Peace be with you. What burden is heavy on your heart today? I am here to listen.
+                    </div>
+                </div>
+            `;
+
+            chatHistory.forEach(msg => {
+                const role = msg.role === 'user' ? 'user' : 'model';
+                appendChatMessageUI(role, msg.parts[0].text);
+            });
+            setTimeout(() => container.scrollTop = container.scrollHeight, 50);
+        }
+
+        function appendChatMessageUI(role, text) {
             const container = document.getElementById('chat-messages');
             const div = document.createElement('div');
             div.className = `flex items-start gap-2 ${role === 'user' ? 'flex-row-reverse' : ''}`;
@@ -635,7 +693,7 @@
 
             div.innerHTML = `
                 ${avatar}
-                <div class="p-3 shadow-sm ${bubbleClass} max-w-[80%] text-sm font-medium leading-relaxed whitespace-pre-wrap">${text}</div>
+                <div class="p-3 shadow-sm ${bubbleClass} max-w-[85%] text-sm font-medium leading-relaxed whitespace-pre-wrap">${text}</div>
             `;
             container.appendChild(div);
             container.scrollTop = container.scrollHeight;
@@ -647,7 +705,7 @@
             div.id = id;
             div.className = `flex items-start gap-2`;
             div.innerHTML = `
-                <img src="picture/tsh.PNG" class="w-8 h-8 rounded-full border border-white shadow-sm mt-1" onerror="this.src='https://via.placeholder.com/32/ffffff/334155?text=TSH'">
+                <img src="picture/tsh.PNG" class="w-8 h-8 rounded-full border border-white shadow-sm mt-1 shrink-0" onerror="this.src='https://via.placeholder.com/32/ffffff/334155?text=TSH'">
                 <div class="p-4 shadow-sm chat-bubble-ai flex items-center gap-2">
                     <div class="w-2 h-2 bg-slate-500 rounded-full animate-bounce"></div>
                     <div class="w-2 h-2 bg-slate-500 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
@@ -665,8 +723,11 @@
             if (!text) return;
 
             input.value = '';
-            appendChatMessage('user', text);
+            
+            // Immediately render User Message and Save
+            appendChatMessageUI('user', text);
             chatHistory.push({ role: 'user', parts: [{ text }] });
+            saveChatToDB();
 
             const loadingId = 'loading-' + Date.now();
             appendLoadingIndicator(loadingId);
@@ -674,7 +735,9 @@
             const key = getDecryptedKey();
             if (!key) {
                 document.getElementById(loadingId).remove();
-                appendChatMessage('model', "I am here, but I cannot speak fully without your API Key. Please return to the settings to provide it.");
+                const errMsg = "I am here, but I cannot speak fully without your API Key. Please return to the Sanctum Settings to provide it.";
+                appendChatMessageUI('model', errMsg);
+                // We don't strictly save error messages to context history to keep it clean
                 return;
             }
 
@@ -693,14 +756,15 @@
 
                 if (data.candidates && data.candidates[0]) {
                     const reply = data.candidates[0].content.parts[0].text;
-                    appendChatMessage('model', reply);
+                    appendChatMessageUI('model', reply);
                     chatHistory.push({ role: 'model', parts: [{ text: reply }] });
+                    saveChatToDB();
                 } else {
                     throw new Error("No response");
                 }
             } catch(error) { 
                 document.getElementById(loadingId).remove();
-                appendChatMessage('model', "The connection is heavy right now. Take a deep breath. I am still here with you.");
+                appendChatMessageUI('model', "The storm is heavy right now. Take a deep breath. I am still here with you, even in the silence.");
             }
         }
 
