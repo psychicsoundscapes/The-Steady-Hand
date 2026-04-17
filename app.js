@@ -1,7 +1,5 @@
 // --- Core State & DB ---
 let db;
-// Note: We are keeping the database store name as "videos" so we don't accidentally
-// wipe any existing recordings you might already have saved. It will safely store audio.
 const dbRequest = indexedDB.open("TSH_Database", 4);
 dbRequest.onupgradeneeded = (e) => {
     db = e.target.result;
@@ -16,7 +14,8 @@ dbRequest.onsuccess = (e) => {
     }
 };
 
-let state = { setupComplete: false, tutorialStep: 0, habits: [], encryptedApiKey: '' };
+// FIX: Removed encryptedApiKey entirely. Storing the raw key securely in local memory.
+let state = { setupComplete: false, tutorialStep: 0, habits: [], apiKey: '' };
 let chatHistory = [];
 
 const tutorialSteps = [
@@ -126,6 +125,7 @@ function addHabitField() {
     lucide.createIcons();
 }
 
+// FIX: Completely stripped out the broken XOR encryption. 
 async function saveInitialSetup() {
     const habitEls = document.querySelectorAll('#habit-inputs > div');
     state.habits = [];
@@ -141,11 +141,9 @@ async function saveInitialSetup() {
         });
     });
 
-    const rawKey = document.getElementById('api-key').value;
-    const passcode = document.getElementById('passcode').value;
-    if (rawKey && passcode) {
-        state.encryptedApiKey = btoa(crypt(rawKey, passcode));
-        localStorage.setItem('steady_hand_pass', passcode);
+    const rawKey = document.getElementById('api-key').value.trim();
+    if (rawKey) {
+        state.apiKey = rawKey;
     }
 
     state.setupComplete = true;
@@ -161,12 +159,9 @@ document.getElementById('btn-amen').addEventListener('click', () => {
     showScreen('main');
 });
 
-const crypt = (t, k) => Array.from(t).map((c, i) => String.fromCharCode(c.charCodeAt(0) ^ k.charCodeAt(i % k.length))).join('');
-
+// Helper to safely get the uncorrupted key
 function getDecryptedKey() {
-    const cp = localStorage.getItem('steady_hand_pass');
-    if (!cp || !state.encryptedApiKey) return null;
-    try { return crypt(atob(state.encryptedApiKey), cp); } catch (e) { return null; }
+    return state.apiKey || null;
 }
 
 function renderDashboard() {
@@ -198,17 +193,15 @@ function renderDashboard() {
     document.getElementById('financial-progress').style.width = `${Math.min(100, (totalSavedValue / 5000) * 100)}%`;
 }
 
-// --- Audio Logic (Only requests Mic) ---
+// --- Audio Logic ---
 let mediaRecorder; let chunks = [];
 let audioStream;
 
 async function startRecording() {
     try {
-        // Request audio only
         const s = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
         audioStream = s;
         
-        // Update UI to show recording state
         document.getElementById('record-placeholder').classList.add('hidden');
         document.getElementById('recording-active').classList.remove('hidden');
         document.getElementById('recording-active').classList.add('flex');
@@ -236,7 +229,6 @@ function stopRecording() {
     mediaRecorder.stop();
     if(audioStream) audioStream.getTracks().forEach(t => t.stop());
     
-    // Reset UI to placeholder
     document.getElementById('record-placeholder').classList.remove('hidden');
     document.getElementById('recording-active').classList.add('hidden');
     document.getElementById('recording-active').classList.remove('flex');
@@ -253,7 +245,6 @@ function loadVault() {
         if(cur) {
             const url = URL.createObjectURL(cur.value.blob);
             const d = document.createElement('div'); d.className = 'card-glass p-4 relative';
-            // Render native audio player instead of video
             d.innerHTML = `
                 <div class="flex items-center gap-3 mb-4 bg-white/50 p-2 rounded-xl border border-white/60 shadow-inner">
                     <i data-lucide="mic" class="w-5 h-5 text-slate-700 shrink-0 ml-2"></i>
@@ -265,7 +256,6 @@ function loadVault() {
             c.appendChild(d); cur.continue();
         }
     };
-    // Re-initialize icons for newly added elements
     setTimeout(() => lucide.createIcons(), 50);
 }
 
@@ -371,8 +361,7 @@ async function handleChatSubmit(e) {
         const loader = document.getElementById(loadingId);
         if(loader) loader.remove();
         
-        const errMsg = "I am here, but I cannot speak fully without your API Key. Please return to the Sanctum Settings to provide it.";
-        appendChatMessageUI('model', errMsg);
+        appendChatMessageUI('model', "System Error: Missing API Key. Please click the Settings gear icon, select 'Reset Sanctuary', and paste your key.");
         return;
     }
 
@@ -391,6 +380,11 @@ async function handleChatSubmit(e) {
         const loader = document.getElementById(loadingId);
         if(loader) loader.remove();
 
+        if (data.error) {
+            // Explicit error handling so you know EXACTLY what Google rejected
+            throw new Error(`API Rejected: ${data.error.message}`);
+        }
+
         if (data.candidates && data.candidates[0]) {
             const reply = data.candidates[0].content.parts[0].text;
             appendChatMessageUI('model', reply);
@@ -404,7 +398,8 @@ async function handleChatSubmit(e) {
         const loader = document.getElementById(loadingId);
         if(loader) loader.remove();
         
-        appendChatMessageUI('model', "The storm is heavy right now. Take a deep breath. I am still here with you, even in the silence.");
+        // FIX: Displaying the actual error in the UI so you aren't guessing
+        appendChatMessageUI('model', `[Diagnostic Error: ${error.message}]\n\nThe storm is heavy right now. Take a deep breath. I am still here with you, even in the silence.`);
     }
 }
 
