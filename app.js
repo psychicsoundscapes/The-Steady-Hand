@@ -24,7 +24,6 @@ const tutorialSteps = [
     { title: "Ritual Entry", desc: "Vocalizing the Serenity Prayer is the first step to reclaiming your space. Speak it every time.", icon: "volume-2" }
 ];
 
-// UPDATED: Highly targeted, empowering scriptures focused on victory over struggles.
 const scriptures = [
     { text: "No temptation has overtaken you except what is common to mankind. And God is faithful; he will not let you be tempted beyond what you can bear. But when you are tempted, he will also provide a way out so that you can endure it.", ref: "1 Corinthians 10:13" },
     { text: "For the Spirit God gave us does not make us timid, but gives us power, love and self-discipline.", ref: "2 Timothy 1:7" },
@@ -131,7 +130,14 @@ async function saveInitialSetup() {
     habitEls.forEach(el => {
         const name = el.querySelector('.habit-name').value;
         const cost = el.querySelector('.habit-cost').value || 0;
-        if (name) state.habits.push({ id: Date.now() + Math.random(), name, costPerDay: parseFloat(cost), startDate: new Date().toISOString(), slips: [] });
+        // FIX: Generated ID is now a solid string to prevent button breaking
+        if (name) state.habits.push({ 
+            id: 'habit_' + Date.now() + '_' + Math.floor(Math.random() * 1000), 
+            name, 
+            costPerDay: parseFloat(cost), 
+            startDate: new Date().toISOString(), 
+            slips: [] 
+        });
     });
 
     const rawKey = document.getElementById('api-key').value;
@@ -162,20 +168,27 @@ function getDecryptedKey() {
     try { return crypt(atob(state.encryptedApiKey), cp); } catch (e) { return null; }
 }
 
+// FIX: Separated Total Saved Money from Current Streak
 function renderDashboard() {
     const container = document.getElementById('dashboard-habits');
     if (!container) return; container.innerHTML = '';
+    
     let totalSavedValue = 0;
+    
     state.habits.forEach(habit => {
-        const daysClean = calculateDaysClean(habit.startDate, habit.slips);
-        totalSavedValue += (daysClean * habit.costPerDay);
+        // Streak is Days Won (resets on slip)
+        const streakDays = calculateStreak(habit);
+        
+        // Total saved is total lifetime days MINUS slip days
+        totalSavedValue += calculateTotalSaved(habit);
+        
         const div = document.createElement('div');
         div.className = 'card-glass p-5';
         div.innerHTML = `
             <div class="flex justify-between items-start mb-4">
                 <div>
                     <h3 class="text-slate-800 font-cinzel text-sm uppercase tracking-widest font-bold mb-1">${habit.name}</h3>
-                    <p class="text-3xl font-bold text-slate-800">${daysClean} <span class="text-[10px] text-slate-600 uppercase tracking-tighter ml-1 font-semibold">Days Won</span></p>
+                    <p class="text-3xl font-bold text-slate-800">${streakDays} <span class="text-[10px] text-slate-600 uppercase tracking-tighter ml-1 font-semibold">Days Won</span></p>
                 </div>
                 <button onclick="logSlip('${habit.id}')" class="text-[10px] uppercase font-bold text-slate-700 border border-slate-400 bg-white/50 px-3 py-2 rounded-full active:bg-slate-200 transition-colors shadow-sm">Log Slip</button>
             </div>
@@ -183,15 +196,14 @@ function renderDashboard() {
         `;
         container.appendChild(div);
     });
+    
     document.getElementById('total-saved').innerText = `$${totalSavedValue.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
     document.getElementById('financial-progress').style.width = `${Math.min(100, (totalSavedValue / 5000) * 100)}%`;
 }
 
-// --- Video Logic (FIXED: Portrait Enforcement & Safe Blob Saving) ---
 let mediaRecorder; let chunks = [];
 async function startRecording() {
     try {
-        // Force portrait and front-facing camera on mobile
         const s = await navigator.mediaDevices.getUserMedia({ 
             video: { facingMode: "user", width: { ideal: 720 }, height: { ideal: 1280 } }, 
             audio: true 
@@ -205,7 +217,6 @@ async function startRecording() {
         
         mediaRecorder.ondataavailable = e => { if(e.data.size > 0) chunks.push(e.data); };
         mediaRecorder.onstop = () => {
-            // Safely create Blob with the recorder's specific mimeType so iOS plays it nicely
             const mimeType = mediaRecorder.mimeType || 'video/mp4';
             const b = new Blob(chunks, { type: mimeType });
             const t = db.transaction(["videos"], "readwrite");
@@ -238,7 +249,6 @@ function loadVault() {
         if(cur) {
             const url = URL.createObjectURL(cur.value.blob);
             const d = document.createElement('div'); d.className = 'card-glass p-3 relative';
-            // Rendered videos are forced into portrait bounds
             d.innerHTML = `<video src="${url}" playsinline controls class="mb-3 rounded-lg shadow-md w-full aspect-[9/16] object-cover bg-black"></video>
                 <div class="flex justify-between items-center text-[10px] uppercase font-bold text-slate-700 px-2 pb-1">
                 <span>Captured ${new Date(cur.value.date).toLocaleDateString()}</span>
@@ -249,7 +259,6 @@ function loadVault() {
 }
 function deleteVideo(id) { if(confirm("Purge this clip?")) db.transaction("videos", "readwrite").objectStore("videos").delete(id).onsuccess = loadVault; }
 
-// --- Chat Interface Logic (FIXED: Disappearance Bug) ---
 function loadChatFromDB() {
     if(!db) return;
     try {
@@ -347,7 +356,6 @@ async function handleChatSubmit(e) {
 
     const key = getDecryptedKey();
     if (!key) {
-        // Safe removal to prevent crash
         const loader = document.getElementById(loadingId);
         if(loader) loader.remove();
         
@@ -357,7 +365,8 @@ async function handleChatSubmit(e) {
     }
 
     try {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${key}`, {
+        // FIX: Using the highly stable gemini-1.5-flash model
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`, {
             method: 'POST', 
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
@@ -380,7 +389,7 @@ async function handleChatSubmit(e) {
             throw new Error("No response or Model failed");
         }
     } catch(error) { 
-        // FIX: Verify loader exists before trying to remove it, preventing the silent crash
+        console.error("Chat API Error:", error);
         const loader = document.getElementById(loadingId);
         if(loader) loader.remove();
         
@@ -388,12 +397,10 @@ async function handleChatSubmit(e) {
     }
 }
 
-// --- Urge Engine Integration (FIXED: Targeted Scripture & Videos ONLY) ---
 async function triggerUrgeEngine() {
     const o = document.getElementById('urge-overlay'); o.classList.remove('hidden');
     const c = document.getElementById('urge-content');
     
-    // Only two pure options: Scripture or Vault Video
     let choices = ['scripture'];
     
     const videos = await new Promise(r => {
@@ -423,17 +430,33 @@ async function triggerUrgeEngine() {
 }
 
 // --- Logic Utils ---
-function calculateDaysClean(s, l) { 
-    const last = l.length > 0 ? new Date(l[l.length-1]) : new Date(s); 
-    const diff = Math.floor(Math.abs(new Date() - last) / 86400000);
-    return diff;
+
+// Financial Tracker (Lifetime saved minus the cost of slip days)
+function calculateTotalSaved(habit) {
+    const msPerDay = 86400000;
+    // Total days since they created the tracker
+    const totalDaysElapsed = Math.floor(Math.max(0, new Date() - new Date(habit.startDate)) / msPerDay);
+    
+    // Subtract the number of slips to get total clean days over their lifetime
+    const totalCleanDays = Math.max(0, totalDaysElapsed - habit.slips.length);
+    
+    return totalCleanDays * habit.costPerDay;
 }
+
+// Current Streak Tracker (Resets to 0 upon a slip)
+function calculateStreak(habit) { 
+    const msPerDay = 86400000;
+    const lastDate = habit.slips.length > 0 ? new Date(habit.slips[habit.slips.length-1]) : new Date(habit.startDate); 
+    return Math.floor(Math.max(0, new Date() - lastDate) / msPerDay);
+}
+
 function calculateSuccessRate(h) { 
     const t = Math.max(1, Math.floor((new Date() - new Date(h.startDate)) / 86400000)); 
     return Math.min(100, ((t - h.slips.length)/t)*100); 
 }
+
 function logSlip(id) { 
-    const h = state.habits.find(x=>x.id==id); 
+    const h = state.habits.find(x=>x.id === id); 
     if(h) { 
         h.slips.push(new Date().toISOString()); 
         localStorage.setItem('steady_hand_state', JSON.stringify(state)); 
@@ -441,6 +464,7 @@ function logSlip(id) {
         document.getElementById('screen-gateway').classList.remove('hidden'); 
     } 
 }
+
 function closeUrgeEngine() { document.getElementById('urge-overlay').classList.add('hidden'); }
 function toggleSettings() { document.getElementById('modal-settings').classList.toggle('hidden'); lucide.createIcons(); }
 function updateDate() { 
