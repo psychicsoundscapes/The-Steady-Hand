@@ -64,7 +64,7 @@
                 <div class="bg-white/40 border border-white/60 p-4 rounded-xl mb-6 flex gap-3 items-start shadow-sm">
                     <i data-lucide="info" class="w-5 h-5 text-slate-800 mt-1"></i>
                     <p class="text-[10px] text-slate-800 leading-normal font-semibold">
-                        <strong>IMPORTANT:</strong> TSH stores your videos and history locally on this device. Clearing your browser history or site data will permanently delete your progress.
+                        <strong>IMPORTANT:</strong> TSH stores your data locally on this device. Clearing your browser history or site data will permanently delete your progress.
                     </p>
                 </div>
 
@@ -131,15 +131,23 @@
 
             <div id="screen-vault" class="hidden flex-1 p-6 overflow-y-auto" style="padding-top: max(env(safe-area-inset-top), 1.5rem);">
                 <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-2 mt-4">The Vault</h2>
-                <p class="text-slate-700 text-xs mb-8 italic font-medium">Your voice is your weapon. Record when your light is brightest.</p>
+                <p class="text-slate-700 text-xs mb-8 italic font-medium">Your voice is your weapon. Record your strength.</p>
                 
                 <div class="card-glass p-6 space-y-4 mb-8">
-                    <div id="video-preview-box" class="relative bg-slate-800 rounded-2xl overflow-hidden aspect-[9/16] max-w-[280px] mx-auto flex items-center justify-center border-2 border-white shadow-inner">
-                        <video id="record-preview" autoplay muted playsinline class="hidden w-full h-full object-cover"></video>
+                    <div class="relative bg-slate-800 rounded-2xl overflow-hidden h-32 max-w-[280px] mx-auto flex items-center justify-center border-2 border-white shadow-inner">
+                        
                         <div id="record-placeholder" class="text-slate-400 flex flex-col items-center">
-                            <img src="picture/tsh.PNG" class="w-12 h-12 opacity-40 mb-2 grayscale" onerror="this.style.display='none'">
+                            <i data-lucide="mic" class="w-8 h-8 opacity-50 mb-2"></i>
                             <p class="text-[9px] uppercase font-bold tracking-widest">Awaiting Capture</p>
                         </div>
+
+                        <div id="recording-active" class="hidden flex-col items-center">
+                            <div class="w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center animate-pulse mb-2">
+                                <i data-lucide="mic" class="w-6 h-6 text-red-500"></i>
+                            </div>
+                            <p class="text-[9px] uppercase font-bold tracking-widest text-red-400 animate-pulse">Recording...</p>
+                        </div>
+
                     </div>
                     
                     <div class="flex justify-center gap-4 max-w-[280px] mx-auto">
@@ -160,7 +168,7 @@
                     <img src="picture/tsh.PNG" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/150/ffffff/334155?text=TSH'">
                 </div>
                 <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase tracking-widest">The Steady Hand</h2>
-                <p class="text-slate-800 italic px-4 text-sm leading-relaxed font-semibold">"I watch your victories. Every clip in the Vault helps me learn the sound of your strength."</p>
+                <p class="text-slate-800 italic px-4 text-sm leading-relaxed font-semibold">"I watch your victories. Every voice note in the Vault helps me learn the sound of your strength."</p>
                 
                 <button onclick="showScreen('chat')" class="w-full max-w-xs bg-slate-800 hover:bg-slate-700 text-white font-bold py-4 rounded-2xl shadow-lg transition-all uppercase tracking-widest text-xs border border-slate-600 mt-4 flex items-center justify-center gap-2 shrink-0">
                     <i data-lucide="message-circle" class="w-4 h-4"></i> Start Conversation
