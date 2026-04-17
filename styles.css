@@ -7,23 +7,21 @@
     --muted-slate: #475569;
 }
 
-/* * FIX: Using 100dvh and removing 'background-attachment: fixed' 
- * prevents the solid white bar glitch at the bottom of iOS Safari.
- */
+/* FIX: Setting the html background explicitly destroys the iOS white bar issue */
+html {
+    background-color: var(--sage-green);
+    height: 100%;
+}
+
 body {
     font-family: 'Inter', sans-serif;
     background: linear-gradient(180deg, #b4c7d9 0%, #cbd9e0 40%, #c4cdbc 70%, #b5ba8b 100%);
     color: var(--deep-slate);
-    height: 100dvh;
+    height: 100%;
+    min-height: -webkit-fill-available;
     margin: 0;
     overflow: hidden;
     -webkit-tap-highlight-color: transparent;
-}
-
-html, body {
-    position: fixed;
-    width: 100%;
-    height: 100dvh;
 }
 
 .font-cinzel { font-family: 'Cinzel', serif; }
