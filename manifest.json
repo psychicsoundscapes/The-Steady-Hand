@@ -1,0 +1,15 @@
+{
+  "name": "The Steady Hand",
+  "short_name": "TSH",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#b4c7d9",
+  "theme_color": "#b4c7d9",
+  "icons": [
+    {
+      "src": "picture/tsh.PNG",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
