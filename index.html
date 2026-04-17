@@ -5,10 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TSH - The Steady Hand</title>
     
+    <!-- PWA & Standalone App Meta Tags (CRITICAL FOR FULLSCREEN) -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="TSH">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#b4c7d9">
+    
     <!-- Branding & Icons -->
     <link rel="icon" type="image/png" href="picture/tsh.PNG">
-    <link rel="apple-touch-icon" href="picture/tsh.PNG"> <!-- CRITICAL FOR iOS HOME SCREEN -->
-    <link id="manifest-link" rel="manifest" href="">
+    <link rel="apple-touch-icon" href="picture/tsh.PNG">
+    
+    <!-- Static Encoded Manifest (Ensures browsers read it immediately on Add to Home Screen) -->
+    <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22The%20Steady%20Hand%22%2C%22short_name%22%3A%22TSH%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23b4c7d9%22%2C%22theme_color%22%3A%22%23b4c7d9%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22picture%2Ftsh.PNG%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D">
     
     <!-- External Resources -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -319,29 +328,6 @@
     </div>
 
     <script>
-        // --- Dynamic Manifest Generation (Fixes iOS/PWA Icon Issues) ---
-        function setupManifest() {
-            // Generates absolute path for icon so the browser always finds it
-            const iconUrl = new URL('picture/tsh.PNG', window.location.href).href;
-            const startUrl = window.location.pathname;
-            
-            const manifestData = {
-                name: "The Steady Hand",
-                short_name: "TSH",
-                start_url: startUrl,
-                display: "standalone",
-                background_color: "#b4c7d9",
-                theme_color: "#b4c7d9",
-                icons: [
-                    { src: iconUrl, sizes: "192x192", type: "image/png" },
-                    { src: iconUrl, sizes: "512x512", type: "image/png" }
-                ]
-            };
-            
-            const blob = new Blob([JSON.stringify(manifestData)], {type: 'application/manifest+json'});
-            document.getElementById('manifest-link').href = URL.createObjectURL(blob);
-        }
-
         // --- Core State & Encryption ---
         let db;
         const dbRequest = indexedDB.open("TSH_Database", 3);
@@ -362,7 +348,6 @@
 
         // --- Initialization ---
         function init() {
-            setupManifest();
             lucide.createIcons();
             const savedState = localStorage.getItem('steady_hand_state');
             if (savedState) {
