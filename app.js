@@ -12,13 +12,23 @@ dbRequest.onsuccess = (e) => {
     }
 };
 
-let state = { setupComplete: false, tutorialStep: 0, habits: [] };
+let state = { setupComplete: false, tutorialStep: 0, habits: [], urgeClicks: 0, voiceMemos: 0 };
 
 const tutorialSteps = [
-    { title: "The War Room", desc: "This is TSH Command. Track your financial freedom and healing milestones here.", icon: "layout-dashboard" },
+    { title: "The War Room", desc: "This is TSH Command. Level up through ranks and earn trophies as you rebuild your life.", icon: "layout-dashboard" },
     { title: "The Urge Engine", desc: "In moments of crisis, trigger the Engine to draw upon the Word or your personal vault recordings.", icon: "shield-alert" },
     { title: "The Vault", desc: "Record your own voice when you are strong. These notes become your shield during future urges.", icon: "lock" },
     { title: "Ritual Entry", desc: "Vocalizing the Serenity Prayer is the first step to reclaiming your space. Speak it every time.", icon: "volume-2" }
+];
+
+const rankTiers = [
+    { name: "Initiate", daysReq: 0 },
+    { name: "Fighter", daysReq: 30 },
+    { name: "Warrior", daysReq: 90 },
+    { name: "Vanguard", daysReq: 365 },
+    { name: "Champion", daysReq: 730 },
+    { name: "Titan", daysReq: 1095 },
+    { name: "Legend", daysReq: 1825 }
 ];
 
 // --- Initialization ---
@@ -27,11 +37,15 @@ function init() {
     const savedState = localStorage.getItem('steady_hand_state');
     if (savedState) {
         state = JSON.parse(savedState);
+        state.urgeClicks = state.urgeClicks || 0;
+        state.voiceMemos = state.voiceMemos || 0;
+        state.habits.forEach(h => { if(h.isMain === undefined) h.isMain = true; });
+        
         if (state.setupComplete) showScreen('gateway');
-        else showScreen('setup');
+        else showScreen('welcome');
     } else {
-        showScreen('setup');
-        addHabitField();
+        showScreen('welcome');
+        addHabitField(); // Prep the setup screen in the background
     }
     updateDate();
     renderDashboard();
@@ -42,7 +56,8 @@ function showScreen(screen) {
     document.getElementById(`screen-${screen}`).classList.remove('hidden');
     
     const nav = document.getElementById('app-nav');
-    if (screen === 'setup' || screen === 'gateway') {
+    // Hide nav on all onboarding/setup screens
+    if (screen === 'welcome' || screen === 'explanation' || screen === 'setup' || screen === 'gateway') {
         nav.classList.add('hidden');
     } else {
         nav.classList.remove('hidden');
@@ -94,10 +109,17 @@ function addHabitField() {
     const container = document.getElementById('habit-inputs');
     const div = document.createElement('div');
     div.className = 'card-glass p-4 space-y-3 relative';
+    
     div.innerHTML = `
         <button onclick="this.parentElement.remove()" class="absolute -top-2 -right-2 bg-slate-700 text-white rounded-full p-1.5 shadow-md hover:bg-red-600 transition-colors"><i data-lucide="x" class="w-3 h-3"></i></button>
         <input type="text" placeholder="Struggle (e.g. Nicotine)" class="habit-name w-full rounded-lg p-3 text-sm uppercase font-bold tracking-wider shadow-inner">
         <input type="number" placeholder="Daily Financial Cost ($)" class="habit-cost w-full rounded-lg p-3 text-sm shadow-inner">
+        <div class="flex items-center justify-between mt-2 px-1">
+            <label class="text-[10px] uppercase font-bold text-slate-700 flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" class="habit-main w-4 h-4 rounded border-slate-400 text-slate-800 focus:ring-slate-800" checked>
+                Main Struggle (Affects Rank)
+            </label>
+        </div>
     `;
     container.appendChild(div);
     lucide.createIcons();
@@ -109,12 +131,15 @@ async function saveInitialSetup() {
     habitEls.forEach(el => {
         const name = el.querySelector('.habit-name').value;
         const cost = el.querySelector('.habit-cost').value || 0;
+        const isMain = el.querySelector('.habit-main').checked;
+        
         if (name) state.habits.push({ 
             id: 'habit_' + Date.now() + '_' + Math.floor(Math.random() * 1000), 
             name, 
             costPerDay: parseFloat(cost), 
             startDate: new Date().toISOString(), 
-            slips: [] 
+            slips: [],
+            isMain: isMain
         });
     });
 
@@ -132,7 +157,6 @@ document.getElementById('btn-amen').addEventListener('click', () => {
 });
 
 // --- DEV TESTING TOOL ---
-// Physically shifts the internal clock of all habits and slips back 24 hours to simulate a day passing.
 function devPassDay() {
     const ONE_DAY = 86400000;
     state.habits.forEach(h => {
@@ -150,17 +174,26 @@ function renderDashboard() {
     if (!container) return; container.innerHTML = '';
     
     let totalSavedValue = 0;
+    let activeStrugglesCount = 0;
     
     state.habits.forEach(habit => {
         const streakDays = calculateStreak(habit);
-        totalSavedValue += calculateTotalSaved(habit);
+        const cleanDays = calculateTotalCleanDays(habit);
+        const saved = cleanDays * habit.costPerDay;
         
+        totalSavedValue += saved;
+        if (streakDays > 0) activeStrugglesCount++;
+        
+        const tagHTML = habit.isMain 
+            ? `<span class="text-[8px] bg-slate-800 text-white px-2 py-0.5 rounded-full tracking-widest ml-2 align-middle">MAIN</span>`
+            : `<span class="text-[8px] bg-slate-400 text-white px-2 py-0.5 rounded-full tracking-widest ml-2 align-middle">SECONDARY</span>`;
+
         const div = document.createElement('div');
         div.className = 'card-glass p-5';
         div.innerHTML = `
             <div class="flex justify-between items-start mb-4">
                 <div>
-                    <h3 class="text-slate-800 font-cinzel text-sm uppercase tracking-widest font-bold mb-1">${habit.name}</h3>
+                    <h3 class="text-slate-800 font-cinzel text-sm uppercase tracking-widest font-bold mb-1 flex items-center">${habit.name} ${tagHTML}</h3>
                     <p class="text-3xl font-bold text-slate-800">${streakDays} <span class="text-[10px] text-slate-600 uppercase tracking-tighter ml-1 font-semibold">Days Won</span></p>
                 </div>
                 <button onclick="logSlip('${habit.id}')" class="text-[10px] uppercase font-bold text-slate-700 border border-slate-400 bg-white/50 px-3 py-2 rounded-full active:bg-slate-200 transition-colors shadow-sm">Log Slip</button>
@@ -170,8 +203,66 @@ function renderDashboard() {
         container.appendChild(div);
     });
     
+    // --- TIMELINE MATH ---
+    const mainHabits = state.habits.filter(h => h.isMain);
+    let currentMainStreak = 0;
+    
+    if (mainHabits.length > 0) {
+        currentMainStreak = Math.min(...mainHabits.map(h => calculateStreak(h)));
+    } else if (state.habits.length > 0) {
+        currentMainStreak = Math.min(...state.habits.map(h => calculateStreak(h)));
+    }
+    
+    let currentRank = rankTiers[0];
+    let nextRank = rankTiers[1];
+    
+    for(let i=0; i<rankTiers.length; i++) {
+        if (currentMainStreak >= rankTiers[i].daysReq) {
+            currentRank = rankTiers[i];
+            nextRank = rankTiers[i+1] || rankTiers[i];
+        }
+    }
+    
+    let progressPct = 100;
+    let daysText = `${currentMainStreak} Days (MAX)`;
+    if (currentRank !== nextRank) {
+        const daysIntoLevel = currentMainStreak - currentRank.daysReq;
+        const daysNeededForNext = nextRank.daysReq - currentRank.daysReq;
+        progressPct = (daysIntoLevel / daysNeededForNext) * 100;
+        daysText = `${currentMainStreak} / ${nextRank.daysReq} Days`;
+    }
+
+    document.getElementById('rank-name').innerText = currentRank.name;
+    document.getElementById('xp-text').innerText = daysText;
+    document.getElementById('rank-progress').style.width = `${progressPct}%`;
     document.getElementById('total-saved').innerText = `$${totalSavedValue.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
-    document.getElementById('financial-progress').style.width = `${Math.min(100, (totalSavedValue / 5000) * 100)}%`;
+
+    // --- TIMELINE & ACTION TROPHY SYSTEM ---
+    const trophies = [
+        { title: 'First Step', desc: '1 Day Clean', icon: 'footprints', earned: currentMainStreak >= 1 },
+        { title: 'Iron Will', desc: '7 Days Clean', icon: 'shield', earned: currentMainStreak >= 7 },
+        { title: 'The Forge', desc: '30 Days Clean', icon: 'swords', earned: currentMainStreak >= 30 },
+        { title: 'Unbroken', desc: '90 Days Clean', icon: 'flame', earned: currentMainStreak >= 90 },
+        { title: 'One Year', desc: '365 Days Clean', icon: 'sun', earned: currentMainStreak >= 365 },
+        { title: 'Living Legend', desc: '1825 Days Clean', icon: 'crown', earned: currentMainStreak >= 1825 },
+        { title: 'Piggy Bank', desc: '$100 Saved', icon: 'coins', earned: totalSavedValue >= 100 },
+        { title: 'Dual Wielder', desc: '2+ Struggles', icon: 'layers', earned: activeStrugglesCount >= 2 },
+        { title: 'Seeking Light', desc: 'Urge Button 5x', icon: 'bell-ring', earned: state.urgeClicks >= 5 },
+        { title: 'Shield Wall', desc: 'Urge Button 25x', icon: 'bell-electric', earned: state.urgeClicks >= 25 },
+        { title: 'Inner Voice', desc: '1 Voice Memo', icon: 'mic', earned: state.voiceMemos >= 1 },
+        { title: 'War Cry', desc: '5 Voice Memos', icon: 'mic-vocal', earned: state.voiceMemos >= 5 }
+    ];
+
+    const trophyContainer = document.getElementById('trophy-case');
+    trophyContainer.innerHTML = trophies.map(t => `
+        <div class="flex-shrink-0 w-[84px] h-24 rounded-2xl bg-white/${t.earned ? '60' : '20'} border ${t.earned ? 'border-yellow-400/50 shadow-md' : 'border-white/30'} flex flex-col items-center justify-center p-2 text-center transition-all duration-500">
+            <i data-lucide="${t.icon}" class="w-6 h-6 mb-2 ${t.earned ? 'text-yellow-600 drop-shadow-sm' : 'text-slate-400 opacity-50'}"></i>
+            <p class="text-[8px] font-bold uppercase tracking-tighter ${t.earned ? 'text-slate-800' : 'text-slate-500'} leading-tight mb-0.5">${t.title}</p>
+            <p class="text-[7px] text-slate-500 font-medium leading-tight">${t.desc}</p>
+        </div>
+    `).join('');
+    
+    lucide.createIcons();
 }
 
 // --- Audio Recording Logic ---
@@ -196,7 +287,14 @@ async function startRecording() {
             const b = new Blob(chunks, { type: mimeType });
             const t = db.transaction(["videos"], "readwrite");
             t.objectStore("videos").add({ blob: b, date: new Date().toISOString() });
-            t.oncomplete = loadVault;
+            
+            state.voiceMemos = (state.voiceMemos || 0) + 1;
+            localStorage.setItem('steady_hand_state', JSON.stringify(state));
+            
+            t.oncomplete = () => {
+                loadVault();
+                renderDashboard();
+            };
         };
         
         mediaRecorder.start();
@@ -249,6 +347,10 @@ let lastVerseIndex = -1;
 let lastAudioId = -1;
 
 async function triggerUrgeEngine() {
+    state.urgeClicks = (state.urgeClicks || 0) + 1;
+    localStorage.setItem('steady_hand_state', JSON.stringify(state));
+    renderDashboard();
+    
     const o = document.getElementById('urge-overlay'); o.classList.remove('hidden');
     const c = document.getElementById('urge-content');
     
@@ -307,27 +409,26 @@ async function triggerUrgeEngine() {
     lucide.createIcons();
 }
 
-// --- NEW STRICT CALENDAR DATE LOGIC ---
+// --- STRICT CALENDAR DATE LOGIC ---
 function getStartOfDay(dateStr) {
     const d = new Date(dateStr);
     d.setHours(0, 0, 0, 0);
     return d;
 }
 
-function calculateTotalSaved(habit) {
+function calculateTotalCleanDays(habit) {
     const today = getStartOfDay(new Date());
     const start = getStartOfDay(habit.startDate);
     
-    // Total days completed (does not include the current active day)
     const totalDaysElapsed = Math.floor(Math.max(0, today - start) / 86400000);
-
-    // Only count slips that occurred BEFORE today. 
-    // If you slip today, it doesn't rob you of the money you saved yesterday!
     const pastSlips = habit.slips.filter(s => getStartOfDay(s).getTime() < today.getTime());
     const uniquePastSlipDays = new Set(pastSlips.map(s => getStartOfDay(s).getTime())).size;
     
-    const totalCleanDays = Math.max(0, totalDaysElapsed - uniquePastSlipDays);
-    return totalCleanDays * habit.costPerDay;
+    return Math.max(0, totalDaysElapsed - uniquePastSlipDays);
+}
+
+function calculateTotalSaved(habit) {
+    return calculateTotalCleanDays(habit) * habit.costPerDay;
 }
 
 function calculateStreak(habit) { 
@@ -336,8 +437,6 @@ function calculateStreak(habit) {
     
     if (habit.slips.length > 0) {
         const lastSlipDate = getStartOfDay(habit.slips[habit.slips.length - 1]);
-        // The clean streak begins the DAY AFTER the slip.
-        // This ensures the current day remains at 0 when midnight strikes.
         streakStart = new Date(lastSlipDate.getTime() + 86400000);
     } else {
         streakStart = getStartOfDay(habit.startDate);
