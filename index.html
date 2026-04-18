@@ -62,7 +62,29 @@
                 <p class="text-slate-800 font-semibold mb-12 leading-relaxed text-sm">
                     You have taken the first step. The Steady Hand is a private sanctuary designed to track your victories, build your financial war chest, and forge a shield against your darkest moments.
                 </p>
-                <button onclick="showScreen('explanation')" class="w-full max-w-xs bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg hover:bg-white transition-colors">Continue</button>
+                <button onclick="showScreen('creator-note')" class="w-full max-w-xs bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg hover:bg-white transition-colors">Continue</button>
+            </div>
+
+            <div id="screen-creator-note" class="hidden fixed inset-0 z-[95] flex flex-col items-center justify-center p-6 text-center" style="background: linear-gradient(180deg, #b4c7d9 0%, #b5ba8b 100%); overflow-y-auto;">
+                <div style="padding-top: max(env(safe-area-inset-top), 2rem);"></div>
+                <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-6 tracking-widest leading-tight">A Note from<br>the Creator</h2>
+                
+                <div class="card-glass p-6 mb-8 text-left space-y-4 w-full max-w-sm">
+                    <p class="text-sm text-slate-800 font-medium leading-relaxed">
+                        This application is my gift to you. This is in hopes that you'll find what you need to in order to get better. It won't always be easy, but in truth, it will always be worth it.
+                    </p>
+                    <p class="text-sm text-slate-800 font-medium leading-relaxed">
+                        This app is here for you for any struggle you may have or habit you need to stay away from. Use it as often as you need to and try to enjoy each moment in what will be the rest of your sober life.
+                    </p>
+                    <p class="text-sm text-slate-800 font-medium leading-relaxed">
+                        Much love to all of you and thank you to God for bringing you here to this application, and thanks to you for keeping an open mind. I hope this helps you sincerely.
+                    </p>
+                    <p class="text-sm text-slate-800 font-bold text-right italic mt-4">
+                        - Brady Yaddof
+                    </p>
+                </div>
+
+                <button onclick="showScreen('explanation')" class="w-full max-w-sm bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg hover:bg-white transition-colors mt-auto mb-8">Continue</button>
             </div>
 
             <div id="screen-explanation" class="hidden fixed inset-0 z-[95] flex flex-col items-center justify-center p-6 text-center" style="background: linear-gradient(180deg, #b4c7d9 0%, #b5ba8b 100%);">
