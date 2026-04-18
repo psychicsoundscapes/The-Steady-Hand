@@ -45,7 +45,7 @@ function init() {
         else showScreen('welcome');
     } else {
         showScreen('welcome');
-        addHabitField(); // Prep the setup screen in the background
+        addHabitField(); 
     }
     updateDate();
     renderDashboard();
@@ -56,8 +56,8 @@ function showScreen(screen) {
     document.getElementById(`screen-${screen}`).classList.remove('hidden');
     
     const nav = document.getElementById('app-nav');
-    // Hide nav on all onboarding/setup screens
-    if (screen === 'welcome' || screen === 'explanation' || screen === 'setup' || screen === 'gateway') {
+    // Hide nav on all onboarding/setup screens, including the new creator note
+    if (screen === 'welcome' || screen === 'creator-note' || screen === 'explanation' || screen === 'setup' || screen === 'gateway') {
         nav.classList.add('hidden');
     } else {
         nav.classList.remove('hidden');
