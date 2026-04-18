@@ -131,6 +131,20 @@ document.getElementById('btn-amen').addEventListener('click', () => {
     showScreen('main');
 });
 
+// --- DEV TESTING TOOL ---
+// Physically shifts the internal clock of all habits and slips back 24 hours to simulate a day passing.
+function devPassDay() {
+    const ONE_DAY = 86400000;
+    state.habits.forEach(h => {
+        h.startDate = new Date(new Date(h.startDate).getTime() - ONE_DAY).toISOString();
+        h.slips = h.slips.map(s => new Date(new Date(s).getTime() - ONE_DAY).toISOString());
+    });
+    localStorage.setItem('steady_hand_state', JSON.stringify(state));
+    renderDashboard();
+    toggleSettings();
+    alert("Time warped forward 1 day! Check your War Room stats.");
+}
+
 function renderDashboard() {
     const container = document.getElementById('dashboard-habits');
     if (!container) return; container.innerHTML = '';
@@ -157,6 +171,7 @@ function renderDashboard() {
     });
     
     document.getElementById('total-saved').innerText = `$${totalSavedValue.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
+    // Cap progress bar at $5000 visually so it doesn't break styling
     document.getElementById('financial-progress').style.width = `${Math.min(100, (totalSavedValue / 5000) * 100)}%`;
 }
 
@@ -229,7 +244,6 @@ function loadVault() {
 
 function deleteVideo(id) { if(confirm("Purge this voice recording permanently?")) db.transaction("videos", "readwrite").objectStore("videos").delete(id).onsuccess = loadVault; }
 
-
 // --- Smarter Urge Engine Algorithm ---
 let lastUrgeType = null;
 let lastVerseIndex = -1;
@@ -294,23 +308,40 @@ async function triggerUrgeEngine() {
     lucide.createIcons();
 }
 
-// --- Logic Utils ---
+// --- NEW STRICT CALENDAR DATE LOGIC ---
+// This ensures that "1 day" literally means crossing midnight, eliminating the fractional slip bug.
+
+function getStartOfDay(dateStr) {
+    const d = new Date(dateStr);
+    d.setHours(0, 0, 0, 0);
+    return d;
+}
+
 function calculateTotalSaved(habit) {
-    const msPerDay = 86400000;
-    const totalDaysElapsed = Math.floor(Math.max(0, new Date() - new Date(habit.startDate)) / msPerDay);
-    const totalCleanDays = Math.max(0, totalDaysElapsed - habit.slips.length);
+    const today = getStartOfDay(new Date());
+    const start = getStartOfDay(habit.startDate);
+    const totalDaysElapsed = Math.floor(Math.abs(today - start) / 86400000);
+
+    // Count unique slip days so slipping 3 times in one day doesn't steal 3 days of savings
+    const uniqueSlipDays = new Set(habit.slips.map(s => getStartOfDay(s).getTime())).size;
+    
+    const totalCleanDays = Math.max(0, totalDaysElapsed - uniqueSlipDays);
     return totalCleanDays * habit.costPerDay;
 }
 
 function calculateStreak(habit) { 
-    const msPerDay = 86400000;
-    const lastDate = habit.slips.length > 0 ? new Date(habit.slips[habit.slips.length-1]) : new Date(habit.startDate); 
-    return Math.floor(Math.max(0, new Date() - lastDate) / msPerDay);
+    const today = getStartOfDay(new Date());
+    const lastDate = habit.slips.length > 0 ? getStartOfDay(habit.slips[habit.slips.length-1]) : getStartOfDay(habit.startDate);
+    return Math.floor(Math.max(0, today - lastDate) / 86400000);
 }
 
 function calculateSuccessRate(h) { 
-    const t = Math.max(1, Math.floor((new Date() - new Date(h.startDate)) / 86400000)); 
-    return Math.min(100, ((t - h.slips.length)/t)*100); 
+    const today = getStartOfDay(new Date());
+    const start = getStartOfDay(h.startDate);
+    const t = Math.max(1, Math.floor(Math.abs(today - start) / 86400000)); 
+    
+    const uniqueSlipDays = new Set(h.slips.map(s => getStartOfDay(s).getTime())).size;
+    return Math.min(100, ((t - uniqueSlipDays) / t) * 100); 
 }
 
 function logSlip(id) { 
