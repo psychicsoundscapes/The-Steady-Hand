@@ -178,7 +178,6 @@ document.getElementById('btn-amen').addEventListener('click', () => {
     showScreen('main');
 });
 
-// Updates the time jump to 2000 Days
 function devPassDay() {
     const TIME_JUMP = 86400000 * 2000;
     state.habits.forEach(h => {
@@ -259,37 +258,8 @@ function renderDashboard() {
     document.getElementById('rank-progress').style.width = `${progressPct}%`;
     document.getElementById('total-saved').innerText = `$${totalSavedValue.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
 
-    const trophies = [
-        { title: 'First Step', desc: '1 Day Clean', icon: 'footprints', earned: currentMainStreak >= 1 },
-        { title: 'Iron Will', desc: '7 Days Clean', icon: 'shield', earned: currentMainStreak >= 7 },
-        { title: 'The Forge', desc: '30 Days Clean', icon: 'swords', earned: currentMainStreak >= 30 },
-        { title: 'Unbroken', desc: '90 Days Clean', icon: 'flame', earned: currentMainStreak >= 90 },
-        { title: 'The Crucible', desc: '180 Days Clean', icon: 'anvil', earned: currentMainStreak >= 180 },
-        { title: 'One Year', desc: '365 Days Clean', icon: 'sun', earned: currentMainStreak >= 365 },
-        { title: 'The Marathon', desc: '2 Years Clean', icon: 'mountain-snow', earned: currentMainStreak >= 730 },
-        { title: 'Deep Roots', desc: '3 Years Clean', icon: 'tree-pine', earned: currentMainStreak >= 1095 },
-        { title: 'Living Legend', desc: '5 Years Clean', icon: 'crown', earned: currentMainStreak >= 1825 },
-        { title: 'Piggy Bank', desc: '$100 Saved', icon: 'coins', earned: totalSavedValue >= 100 },
-        { title: 'Heavy Purse', desc: '$500 Saved', icon: 'banknote', earned: totalSavedValue >= 500 },
-        { title: 'Treasure', desc: '$1k Saved', icon: 'gem', earned: totalSavedValue >= 1000 },
-        { title: 'Dragon Hoard', desc: '$5k Saved', icon: 'castle', earned: totalSavedValue >= 5000 },
-        { title: 'King\'s Ransom', desc: '$10k Saved', icon: 'landmark', earned: totalSavedValue >= 10000 },
-        { title: 'Seeking Light', desc: 'Urge Button 5x', icon: 'bell-ring', earned: state.urgeClicks >= 5 },
-        { title: 'Shield Wall', desc: 'Urge Button 25x', icon: 'bell-electric', earned: state.urgeClicks >= 25 },
-        { title: 'The Watchman', desc: 'Urge Button 100x', icon: 'eye', earned: state.urgeClicks >= 100 },
-        { title: 'Storm Breaker', desc: 'Urge Button 500x', icon: 'zap', earned: state.urgeClicks >= 500 },
-        { title: 'Inner Voice', desc: '1 Voice Memo', icon: 'mic', earned: state.voiceMemos >= 1 },
-        { title: 'War Cry', desc: '5 Voice Memos', icon: 'mic-vocal', earned: state.voiceMemos >= 5 },
-        { title: 'Choir of One', desc: '25 Voice Memos', icon: 'library', earned: state.voiceMemos >= 25 },
-        { title: 'The Archivist', desc: '100 Voice Memos', icon: 'archive', earned: state.voiceMemos >= 100 },
-        { title: 'The Phoenix', desc: '30 Days after a Slip', icon: 'bird', earned: state.habits.some(h => h.slips.length > 0 && calculateStreak(h) >= 30) },
-        { title: 'Diamond Hands', desc: '1 Year, Zero Slips', icon: 'diamond', earned: state.habits.some(h => h.slips.length === 0 && calculateStreak(h) >= 365) },
-        { title: 'Vow of Silence', desc: '1 Yr on $0 Struggle', icon: 'wind', earned: state.habits.some(h => h.costPerDay === 0 && calculateStreak(h) >= 365) },
-        { title: 'Midnight Guard', desc: '10 Late Night Urges', icon: 'moon', earned: state.midnightUrges >= 10 },
-        { title: 'Ritual Master', desc: 'Serenity Prayer 100x', icon: 'book-open', earned: state.amenClicks >= 100 },
-        { title: 'Echo of Iron', desc: 'Memo after 1 Yr Clean', icon: 'speaker', earned: state.veteranMemos >= 1 },
-        { title: 'The Monolith', desc: '1000 Days, Zero Slips', icon: 'landmark', earned: state.habits.some(h => h.slips.length === 0 && calculateStreak(h) >= 1000) }
-    ];
+    // Get massive trophy list from the trophies.js file
+    const trophies = generateAllTrophies(state, currentMainStreak, totalSavedValue, activeStrugglesCount, calculateStreak);
 
     const trophyContainer = document.getElementById('trophy-case');
     trophyContainer.innerHTML = trophies.map(t => `
@@ -473,7 +443,6 @@ async function loadWallMessages() {
             return;
         }
 
-        // We assign data-id here so our script knows which message you long-pressed
         feed.innerHTML = messages.map(m => `
             <div class="card-glass p-4 border-white/30 wall-message select-none" data-id="${m.id}">
                 <p class="text-sm text-slate-800 font-medium leading-relaxed pointer-events-none">"${m.text}"</p>
@@ -481,7 +450,6 @@ async function loadWallMessages() {
             </div>
         `).join('');
 
-        // Attach Long Press Listeners to every message
         document.querySelectorAll('.wall-message').forEach(el => {
             let pressTimer;
             const startPress = () => {
