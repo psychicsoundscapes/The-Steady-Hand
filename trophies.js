@@ -151,6 +151,12 @@ function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeSt
     // 6. CREATIVE & OUT-OF-THE-BOX CHALLENGES
     // ==========================================
     
+    // Wall of Wisdom Trophies (Permanent)
+    addTrophy("First Echo", "1 Message on the Wall", "message-square", state.wallPosts >= 1);
+    addTrophy("The Encourager", "10 Messages on the Wall", "heart", state.wallPosts >= 10);
+    addTrophy("Sanctuary Pillar", "50 Messages on the Wall", "users", state.wallPosts >= 50);
+    addTrophy("Beacon of Light", "100 Messages on the Wall", "sun", state.wallPosts >= 100);
+
     // Multi-Struggle Combinations (Dynamic based on current streak)
     addTrophy("Dual Wielder", "2 Active Streaks", "layers", activeStrugglesCount >= 2);
     const hasTrinity = state.habits.filter(h => calculateStreak(h) >= 30).length >= 3;
