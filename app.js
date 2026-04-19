@@ -12,7 +12,16 @@ dbRequest.onsuccess = (e) => {
     }
 };
 
-let state = { setupComplete: false, tutorialStep: 0, habits: [], urgeClicks: 0, voiceMemos: 0 };
+let state = { 
+    setupComplete: false, 
+    tutorialStep: 0, 
+    habits: [], 
+    urgeClicks: 0, 
+    voiceMemos: 0,
+    amenClicks: 0,
+    midnightUrges: 0,
+    veteranMemos: 0
+};
 
 const tutorialSteps = [
     { title: "The War Room", desc: "This is TSH Command. Level up through ranks and earn trophies as you rebuild your life.", icon: "layout-dashboard" },
@@ -23,11 +32,14 @@ const tutorialSteps = [
 
 const rankTiers = [
     { name: "Initiate", daysReq: 0 },
+    { name: "Novice", daysReq: 7 },
     { name: "Fighter", daysReq: 30 },
     { name: "Warrior", daysReq: 90 },
+    { name: "Sentinel", daysReq: 180 },
     { name: "Vanguard", daysReq: 365 },
     { name: "Champion", daysReq: 730 },
     { name: "Titan", daysReq: 1095 },
+    { name: "Paragon", daysReq: 1460 },
     { name: "Legend", daysReq: 1825 }
 ];
 
@@ -39,6 +51,9 @@ function init() {
         state = JSON.parse(savedState);
         state.urgeClicks = state.urgeClicks || 0;
         state.voiceMemos = state.voiceMemos || 0;
+        state.amenClicks = state.amenClicks || 0;
+        state.midnightUrges = state.midnightUrges || 0;
+        state.veteranMemos = state.veteranMemos || 0;
         state.habits.forEach(h => { if(h.isMain === undefined) h.isMain = true; });
         
         if (state.setupComplete) showScreen('gateway');
@@ -56,7 +71,6 @@ function showScreen(screen) {
     document.getElementById(`screen-${screen}`).classList.remove('hidden');
     
     const nav = document.getElementById('app-nav');
-    // Hide nav on all onboarding/setup screens, including the new creator note
     if (screen === 'welcome' || screen === 'creator-note' || screen === 'explanation' || screen === 'setup' || screen === 'gateway') {
         nav.classList.add('hidden');
     } else {
@@ -152,11 +166,13 @@ async function saveInitialSetup() {
 
 document.getElementById('btn-amen').addEventListener('click', () => {
     if (navigator.vibrate) navigator.vibrate([40, 60, 40]);
+    state.amenClicks = (state.amenClicks || 0) + 1;
+    localStorage.setItem('steady_hand_state', JSON.stringify(state));
+    
     document.getElementById('screen-gateway').classList.add('hidden');
     showScreen('main');
 });
 
-// --- DEV TESTING TOOL ---
 function devPassDay() {
     const ONE_DAY = 86400000;
     state.habits.forEach(h => {
@@ -237,20 +253,46 @@ function renderDashboard() {
     document.getElementById('rank-progress').style.width = `${progressPct}%`;
     document.getElementById('total-saved').innerText = `$${totalSavedValue.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
 
-    // --- TIMELINE & ACTION TROPHY SYSTEM ---
+    // --- MASSIVE TROPHY ARMORY SYSTEM ---
     const trophies = [
+        // Timeline Milestones
         { title: 'First Step', desc: '1 Day Clean', icon: 'footprints', earned: currentMainStreak >= 1 },
         { title: 'Iron Will', desc: '7 Days Clean', icon: 'shield', earned: currentMainStreak >= 7 },
         { title: 'The Forge', desc: '30 Days Clean', icon: 'swords', earned: currentMainStreak >= 30 },
         { title: 'Unbroken', desc: '90 Days Clean', icon: 'flame', earned: currentMainStreak >= 90 },
+        { title: 'The Crucible', desc: '180 Days Clean', icon: 'anvil', earned: currentMainStreak >= 180 },
         { title: 'One Year', desc: '365 Days Clean', icon: 'sun', earned: currentMainStreak >= 365 },
-        { title: 'Living Legend', desc: '1825 Days Clean', icon: 'crown', earned: currentMainStreak >= 1825 },
+        { title: 'The Marathon', desc: '2 Years Clean', icon: 'mountain-snow', earned: currentMainStreak >= 730 },
+        { title: 'Deep Roots', desc: '3 Years Clean', icon: 'tree-pine', earned: currentMainStreak >= 1095 },
+        { title: 'Living Legend', desc: '5 Years Clean', icon: 'crown', earned: currentMainStreak >= 1825 },
+
+        // Financial Milestones
         { title: 'Piggy Bank', desc: '$100 Saved', icon: 'coins', earned: totalSavedValue >= 100 },
-        { title: 'Dual Wielder', desc: '2+ Struggles', icon: 'layers', earned: activeStrugglesCount >= 2 },
+        { title: 'Heavy Purse', desc: '$500 Saved', icon: 'banknote', earned: totalSavedValue >= 500 },
+        { title: 'Treasure', desc: '$1k Saved', icon: 'gem', earned: totalSavedValue >= 1000 },
+        { title: 'Dragon Hoard', desc: '$5k Saved', icon: 'castle', earned: totalSavedValue >= 5000 },
+        { title: 'King\'s Ransom', desc: '$10k Saved', icon: 'landmark', earned: totalSavedValue >= 10000 },
+
+        // Urge Engine Mastery
         { title: 'Seeking Light', desc: 'Urge Button 5x', icon: 'bell-ring', earned: state.urgeClicks >= 5 },
         { title: 'Shield Wall', desc: 'Urge Button 25x', icon: 'bell-electric', earned: state.urgeClicks >= 25 },
+        { title: 'The Watchman', desc: 'Urge Button 100x', icon: 'eye', earned: state.urgeClicks >= 100 },
+        { title: 'Storm Breaker', desc: 'Urge Button 500x', icon: 'zap', earned: state.urgeClicks >= 500 },
+
+        // Vault & Memo Creation
         { title: 'Inner Voice', desc: '1 Voice Memo', icon: 'mic', earned: state.voiceMemos >= 1 },
-        { title: 'War Cry', desc: '5 Voice Memos', icon: 'mic-vocal', earned: state.voiceMemos >= 5 }
+        { title: 'War Cry', desc: '5 Voice Memos', icon: 'mic-vocal', earned: state.voiceMemos >= 5 },
+        { title: 'Choir of One', desc: '25 Voice Memos', icon: 'library', earned: state.voiceMemos >= 25 },
+        { title: 'The Archivist', desc: '100 Voice Memos', icon: 'archive', earned: state.voiceMemos >= 100 },
+
+        // Creative Challenges (Single-Struggle Analytics)
+        { title: 'The Phoenix', desc: '30 Days after a Slip', icon: 'bird', earned: state.habits.some(h => h.slips.length > 0 && calculateStreak(h) >= 30) },
+        { title: 'Diamond Hands', desc: '1 Year, Zero Slips', icon: 'diamond', earned: state.habits.some(h => h.slips.length === 0 && calculateStreak(h) >= 365) },
+        { title: 'Vow of Silence', desc: '1 Yr on $0 Struggle', icon: 'wind', earned: state.habits.some(h => h.costPerDay === 0 && calculateStreak(h) >= 365) },
+        { title: 'Midnight Guard', desc: '10 Late Night Urges', icon: 'moon', earned: state.midnightUrges >= 10 },
+        { title: 'Ritual Master', desc: 'Serenity Prayer 100x', icon: 'book-open', earned: state.amenClicks >= 100 },
+        { title: 'Echo of Iron', desc: 'Memo after 1 Yr Clean', icon: 'speaker', earned: state.veteranMemos >= 1 },
+        { title: 'The Monolith', desc: '1000 Days, Zero Slips', icon: 'landmark', earned: state.habits.some(h => h.slips.length === 0 && calculateStreak(h) >= 1000) }
     ];
 
     const trophyContainer = document.getElementById('trophy-case');
@@ -288,6 +330,13 @@ async function startRecording() {
             const t = db.transaction(["videos"], "readwrite");
             t.objectStore("videos").add({ blob: b, date: new Date().toISOString() });
             
+            // Check for "Echo of Iron" trophy (Recording a memo while holding a 1+ year streak)
+            const mainHabits = state.habits.filter(h => h.isMain);
+            const currentMainStreak = mainHabits.length > 0 ? Math.min(...mainHabits.map(h => calculateStreak(h))) : 0;
+            if (currentMainStreak >= 365) {
+                state.veteranMemos = (state.veteranMemos || 0) + 1;
+            }
+
             state.voiceMemos = (state.voiceMemos || 0) + 1;
             localStorage.setItem('steady_hand_state', JSON.stringify(state));
             
@@ -347,6 +396,12 @@ let lastVerseIndex = -1;
 let lastAudioId = -1;
 
 async function triggerUrgeEngine() {
+    // Check for "Midnight Guard" trophy (Urges between 12 AM and 4 AM)
+    const currentHour = new Date().getHours();
+    if (currentHour >= 0 && currentHour < 4) {
+        state.midnightUrges = (state.midnightUrges || 0) + 1;
+    }
+
     state.urgeClicks = (state.urgeClicks || 0) + 1;
     localStorage.setItem('steady_hand_state', JSON.stringify(state));
     renderDashboard();
