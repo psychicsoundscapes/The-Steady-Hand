@@ -180,6 +180,19 @@ document.getElementById('btn-amen').addEventListener('click', () => {
     showScreen('main');
 });
 
+// DEV JUMP TOOL RESTORED
+function devPassDay() {
+    const TIME_JUMP = 86400000 * 2000; // 2000 Days
+    state.habits.forEach(h => {
+        h.startDate = new Date(new Date(h.startDate).getTime() - TIME_JUMP).toISOString();
+        h.slips = h.slips.map(s => new Date(new Date(s).getTime() - TIME_JUMP).toISOString());
+    });
+    localStorage.setItem('steady_hand_state', JSON.stringify(state));
+    renderDashboard();
+    toggleSettings();
+    alert("Time warped forward 2000 days! Check your War Room stats.");
+}
+
 function renderDashboard() {
     const container = document.getElementById('dashboard-habits');
     if (!container) return; container.innerHTML = '';
@@ -248,7 +261,7 @@ function renderDashboard() {
     document.getElementById('rank-progress').style.width = `${progressPct}%`;
     document.getElementById('total-saved').innerText = `$${totalSavedValue.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
 
-    // Get massive trophy list from the trophies.js file
+    // Generate massive trophy list from trophies.js
     const trophies = generateAllTrophies(state, currentMainStreak, totalSavedValue, activeStrugglesCount, calculateStreak);
 
     const trophyContainer = document.getElementById('trophy-case');
