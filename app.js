@@ -593,7 +593,6 @@ function logSlip(id) {
         h.slips.push(new Date().toISOString()); 
         localStorage.setItem('steady_hand_state', JSON.stringify(state)); 
         renderDashboard(); 
-        document.getElementById('screen-gateway').classList.remove('hidden'); 
     } 
 }
 
