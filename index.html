@@ -45,26 +45,33 @@
     <div id="app-scroller">
         <div id="app" class="max-w-md mx-auto min-h-[100dvh] relative flex flex-col pb-32">
             
-            <div id="screen-gateway" class="hidden fixed inset-0 h-[100dvh] w-full z-[100] flex flex-col items-center justify-center p-8 text-center bg-[#b4c7d9]">
-                <div class="mb-6">
+            <!-- FIXED GATEWAY SCREEN -->
+            <div id="screen-gateway" class="hidden fixed inset-0 h-[100dvh] w-full z-[100] flex flex-col items-center justify-center p-6 text-center bg-[#b4c7d9] overflow-y-auto">
+                
+                <!-- Top Section (Text & Images - Click Events Disabled) -->
+                <div class="flex-1 w-full flex flex-col items-center justify-center pointer-events-none mt-8">
                     <img src="picture/tsh.PNG" alt="TSH Logo" class="w-32 h-32 mx-auto mb-6 logo-glow rounded-full shadow-2xl" onerror="this.onerror=null; this.src='https://via.placeholder.com/150/ffffff/334155?text=TSH'">
-                    <h1 class="font-cinzel text-3xl dark-gradient mb-6 tracking-widest uppercase font-bold">The Steady Hand</h1>
+                    <h1 class="font-cinzel text-3xl dark-gradient mb-4 tracking-widest uppercase font-bold">The Steady Hand</h1>
                     
-                    <div class="p-6 card-glass mb-8 border-white/60">
+                    <div class="p-6 card-glass mb-6 border-white/60 w-full max-w-sm">
                         <p class="text-[10px] text-slate-600 font-bold uppercase tracking-[0.2em] mb-4">Serenity Ritual</p>
                         <p id="prayer-text" class="text-lg italic text-slate-800 leading-relaxed font-semibold">
                             "God, grant me the serenity to accept the things I cannot change, courage to change the things I can, and wisdom to know the difference."
                         </p>
                     </div>
                     
-                    <p class="text-xs text-slate-800 font-bold animate-pulse mb-8 uppercase tracking-widest bg-white/30 py-2 px-4 rounded-full">
+                    <p class="text-xs text-slate-800 font-bold animate-pulse uppercase tracking-widest bg-white/30 py-2 px-4 rounded-full">
                         Speak the prayer aloud
                     </p>
                 </div>
                 
-                <button id="btn-amen" onclick="clickAmen()" class="amen-pulse group relative flex items-center justify-center w-32 h-32 rounded-full border-2 border-white bg-white/40 shadow-xl">
-                    <span class="font-cinzel text-2xl text-slate-800 font-bold group-active:scale-90 transition-transform">Amen</span>
-                </button>
+                <!-- Bottom Section (Amen Button - Click Events Forced On) -->
+                <div class="shrink-0 mt-8 mb-12 pb-4 pointer-events-auto z-[110]">
+                    <button type="button" id="btn-amen" onclick="clickAmen()" class="amen-pulse group relative flex items-center justify-center w-32 h-32 rounded-full border-2 border-white bg-white/40 shadow-xl cursor-pointer touch-manipulation hover:bg-white/60 active:scale-95 transition-all">
+                        <span class="font-cinzel text-2xl text-slate-800 font-bold pointer-events-none">Amen</span>
+                    </button>
+                </div>
+
             </div>
 
             <div id="screen-welcome" class="hidden fixed inset-0 h-[100dvh] w-full z-[95] flex flex-col items-center justify-center p-8 pb-16 text-center bg-[#b4c7d9] overflow-y-auto">
@@ -88,14 +95,14 @@
                             Tap Share <i data-lucide="share" class="w-3 h-3 inline mx-1"></i><br>then "Add to Home Screen"
                         </div>
 
-                        <button id="btn-install-app" class="hidden w-full bg-slate-800 py-3 rounded-lg font-bold uppercase tracking-widest text-[10px] text-white shadow-md hover:bg-slate-700 transition-colors flex items-center justify-center gap-2">
+                        <button type="button" id="btn-install-app" class="hidden w-full bg-slate-800 py-3 rounded-lg font-bold uppercase tracking-widest text-[10px] text-white shadow-md hover:bg-slate-700 transition-colors flex items-center justify-center gap-2">
                             <i data-lucide="download" class="w-4 h-4"></i> Install App Automatically
                         </button>
                     </div>
                 </div>
 
                 <div class="w-full max-w-xs space-y-3 mb-8 shrink-0">
-                    <button onclick="showScreen('creator-note')" class="w-full bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg hover:bg-white transition-colors flex items-center justify-center">
+                    <button type="button" onclick="showScreen('creator-note')" class="w-full bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg hover:bg-white transition-colors flex items-center justify-center">
                         <span class="hide-in-pwa">Continue in Browser</span>
                         <span class="hidden" id="pwa-continue-text">Continue</span>
                     </button>
@@ -120,7 +127,7 @@
                     </p>
                 </div>
 
-                <button onclick="showScreen('explanation')" class="w-full max-w-sm bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg hover:bg-white transition-colors mb-8 shrink-0">Continue</button>
+                <button type="button" onclick="showScreen('explanation')" class="w-full max-w-sm bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg hover:bg-white transition-colors mb-8 shrink-0">Continue</button>
             </div>
 
             <div id="screen-explanation" class="hidden fixed inset-0 h-[100dvh] w-full z-[95] flex flex-col items-center justify-center p-6 pb-16 text-center bg-[#b4c7d9] overflow-y-auto">
@@ -141,7 +148,7 @@
                     </div>
                 </div>
 
-                <button onclick="showScreen('setup')" class="w-full max-w-sm bg-slate-800 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-slate-700 text-white shadow-lg hover:bg-slate-700 transition-colors mb-8 shrink-0">Enter Sanctuary</button>
+                <button type="button" onclick="showScreen('setup')" class="w-full max-w-sm bg-slate-800 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-slate-700 text-white shadow-lg hover:bg-slate-700 transition-colors mb-8 shrink-0">Enter Sanctuary</button>
             </div>
 
             <div id="screen-setup" class="hidden fixed inset-0 h-[100dvh] w-full z-[90] overflow-y-auto p-6 pb-16 flex flex-col bg-[#b4c7d9]">
@@ -159,11 +166,11 @@
 
                 <div id="habit-inputs" class="space-y-4 mb-8"></div>
 
-                <button onclick="addHabitField()" class="flex items-center gap-2 text-slate-800 mb-8 text-xs font-bold uppercase tracking-widest bg-white/40 px-5 py-3 rounded-full w-max border border-white/60 shadow-sm hover:bg-white/60 mx-auto">
+                <button type="button" onclick="addHabitField()" class="flex items-center gap-2 text-slate-800 mb-8 text-xs font-bold uppercase tracking-widest bg-white/40 px-5 py-3 rounded-full w-max border border-white/60 shadow-sm hover:bg-white/60 mx-auto">
                     <i data-lucide="plus-circle" class="w-4 h-4"></i> Add Struggle
                 </button>
 
-                <button onclick="saveInitialSetup()" class="w-full bg-white/60 hover:bg-white/80 text-slate-800 font-bold py-4 rounded-xl shadow-md transition-all mt-4 mb-12 uppercase tracking-widest text-sm border border-white">
+                <button type="button" onclick="saveInitialSetup()" class="w-full bg-white/60 hover:bg-white/80 text-slate-800 font-bold py-4 rounded-xl shadow-md transition-all mt-4 mb-12 uppercase tracking-widest text-sm border border-white">
                     Confirm Commitment
                 </button>
             </div>
@@ -177,7 +184,7 @@
                             <p id="date-display" class="text-[8px] uppercase tracking-widest text-slate-600 font-bold"></p>
                         </div>
                     </div>
-                    <button onclick="toggleSettings()" class="p-1.5 text-slate-700 hover:text-slate-900 bg-white/30 rounded-full shadow-sm">
+                    <button type="button" onclick="toggleSettings()" class="p-1.5 text-slate-700 hover:text-slate-900 bg-white/30 rounded-full shadow-sm">
                         <i data-lucide="settings" class="w-4 h-4"></i>
                     </button>
                 </header>
@@ -215,19 +222,19 @@
 
                 <div id="dashboard-habits" class="space-y-3"></div>
 
-                <button onclick="triggerUrgeEngine()" class="w-full py-6 rounded-2xl bg-white/40 border border-white/70 flex flex-col items-center justify-center gap-1.5 active:scale-95 transition-transform shadow-lg backdrop-blur-md mt-5">
+                <button type="button" onclick="triggerUrgeEngine()" class="w-full py-6 rounded-2xl bg-white/40 border border-white/70 flex flex-col items-center justify-center gap-1.5 active:scale-95 transition-transform shadow-lg backdrop-blur-md mt-5">
                     <i data-lucide="shield-alert" class="w-8 h-8 text-red-600 animate-pulse"></i>
                     <span class="font-bold text-slate-800 uppercase tracking-[0.2em] text-[11px] drop-shadow-sm">I Have an Urge</span>
                 </button>
 
-                <button onclick="showScreen('support')" class="w-full py-3 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center gap-2 active:scale-95 transition-transform shadow-lg mt-3">
+                <button type="button" onclick="showScreen('support')" class="w-full py-3 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center gap-2 active:scale-95 transition-transform shadow-lg mt-3">
                     <i data-lucide="life-buoy" class="w-4 h-4 text-white"></i>
                     <span class="font-bold text-white uppercase tracking-widest text-[9px]">Support & Lifelines</span>
                 </button>
             </main>
 
             <div id="screen-support" class="hidden flex-1 p-6 overflow-y-auto pt-10 pb-32 relative">
-                <button onclick="showScreen('main')" class="absolute top-6 left-6 text-slate-700 bg-white/40 p-2 rounded-full z-[160] hover:bg-white/60 transition-colors shadow-sm"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
+                <button type="button" onclick="showScreen('main')" class="absolute top-6 left-6 text-slate-700 bg-white/40 p-2 rounded-full z-[160] hover:bg-white/60 transition-colors shadow-sm"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
                 <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-2 mt-8 text-center">Lifelines</h2>
                 <p class="text-slate-700 text-xs mb-8 italic font-medium text-center">You are never fighting alone.</p>
 
@@ -239,7 +246,7 @@
                     <div class="space-y-3 mb-4">
                         <input type="text" id="safety-name" placeholder="Name (e.g. Sponsor John)" class="w-full rounded-lg p-3 text-xs shadow-inner">
                         <input type="tel" id="safety-phone" placeholder="Phone Number" class="w-full rounded-lg p-3 text-xs shadow-inner">
-                        <button onclick="saveSafetyContact()" class="w-full bg-white/60 hover:bg-white/80 text-slate-800 font-bold py-2 rounded-lg shadow-sm transition-all text-[10px] uppercase tracking-widest border border-white">Save Contact</button>
+                        <button type="button" onclick="saveSafetyContact()" class="w-full bg-white/60 hover:bg-white/80 text-slate-800 font-bold py-2 rounded-lg shadow-sm transition-all text-[10px] uppercase tracking-widest border border-white">Save Contact</button>
                     </div>
                     <div class="flex gap-2">
                         <a href="#" id="safety-call-btn" class="flex-1 bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md opacity-50 pointer-events-none">
@@ -354,11 +361,11 @@
                     </div>
                     
                     <div class="flex justify-center gap-3 max-w-[280px] mx-auto">
-                        <button id="btn-start-record" onclick="startRecording()" class="flex-1 bg-white/60 py-4 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest text-slate-800 border border-white shadow-sm hover:bg-white/80 transition-colors">
+                        <button type="button" id="btn-start-record" onclick="startRecording()" class="flex-1 bg-white/60 py-4 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest text-slate-800 border border-white shadow-sm hover:bg-white/80 transition-colors">
                             <i data-lucide="circle" class="w-3 h-3 text-red-600 fill-red-600"></i> Record Voice
                         </button>
                         
-                        <button id="btn-stop-record" onclick="stopRecording()" class="hidden flex-1 bg-white/80 py-4 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest text-red-700 border border-white shadow-sm">
+                        <button type="button" id="btn-stop-record" onclick="stopRecording()" class="hidden flex-1 bg-white/80 py-4 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest text-red-700 border border-white shadow-sm">
                             <i data-lucide="square" class="w-3 h-3 fill-red-700"></i> Stop
                         </button>
                     </div>
@@ -380,7 +387,7 @@
 
                 <div class="card-glass p-4 mb-8">
                     <textarea id="wall-input" placeholder="Share your truth, offer hope, or leave a prayer..." class="w-full rounded-xl p-3 text-sm shadow-inner bg-white/70 border border-white/80 focus:bg-white focus:border-slate-400 resize-none h-24 mb-3 outline-none text-slate-800 placeholder-slate-500"></textarea>
-                    <button onclick="postToWall()" class="w-full bg-slate-800 text-white font-bold py-3 rounded-xl shadow-lg uppercase tracking-widest text-[10px] flex items-center justify-center gap-2 hover:bg-slate-700 transition-colors">
+                    <button type="button" onclick="postToWall()" class="w-full bg-slate-800 text-white font-bold py-3 rounded-xl shadow-lg uppercase tracking-widest text-[10px] flex items-center justify-center gap-2 hover:bg-slate-700 transition-colors">
                         <i data-lucide="send" class="w-4 h-4"></i> Leave your mark
                     </button>
                 </div>
@@ -396,15 +403,15 @@
     
     <nav id="app-nav" class="hidden fixed bottom-0 left-0 right-0 w-full bg-white/60 backdrop-blur-2xl border-t border-white/60 z-[90] shadow-[0_-10px_30px_rgba(0,0,0,0.05)] pb-5 pt-3">
         <div class="max-w-md mx-auto w-full flex items-center justify-around px-2">
-            <button onclick="showScreen('main')" class="nav-link flex flex-col items-center gap-1 text-slate-500 w-20" data-nav="main">
+            <button type="button" onclick="showScreen('main')" class="nav-link flex flex-col items-center gap-1 text-slate-500 w-20" data-nav="main">
                 <i data-lucide="layout-dashboard" class="w-6 h-6"></i>
                 <span class="text-[10px] uppercase font-bold tracking-tighter">War Room</span>
             </button>
-            <button onclick="showScreen('vault')" class="nav-link flex flex-col items-center gap-1 text-slate-500 w-20" data-nav="vault">
+            <button type="button" onclick="showScreen('vault')" class="nav-link flex flex-col items-center gap-1 text-slate-500 w-20" data-nav="vault">
                 <i data-lucide="lock" class="w-6 h-6"></i>
                 <span class="text-[10px] uppercase font-bold tracking-tighter">Vault</span>
             </button>
-            <button onclick="showScreen('wall')" class="nav-link flex flex-col items-center gap-1 text-slate-500 w-20" data-nav="wall">
+            <button type="button" onclick="showScreen('wall')" class="nav-link flex flex-col items-center gap-1 text-slate-500 w-20" data-nav="wall">
                 <i data-lucide="globe" class="w-6 h-6"></i>
                 <span class="text-[10px] uppercase font-bold tracking-tighter">The Wall</span>
             </button>
@@ -415,11 +422,11 @@
         <img src="picture/tsh.PNG" class="w-24 h-24 rounded-full border-4 border-white mb-6 shadow-2xl" onerror="this.onerror=null; this.src='https://via.placeholder.com/150/ffffff/334155?text=TSH'">
         <h2 id="tut-title" class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-4">Welcome</h2>
         <p id="tut-desc" class="text-slate-800 leading-relaxed mb-10 text-sm font-semibold"></p>
-        <button onclick="nextTutorialStep()" class="w-full bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg hover:bg-white transition-colors">Continue</button>
+        <button type="button" onclick="nextTutorialStep()" class="w-full bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg hover:bg-white transition-colors">Continue</button>
     </div>
 
     <div id="urge-overlay" class="hidden fixed inset-0 h-[100dvh] w-full z-[150] flex flex-col p-8 overflow-y-auto bg-[#b4c7d9]">
-        <button onclick="closeUrgeEngine()" class="absolute top-10 right-6 text-slate-700 bg-white/40 p-2 rounded-full z-[160] hover:bg-white/60 transition-colors shadow-sm"><i data-lucide="x" class="w-6 h-6"></i></button>
+        <button type="button" onclick="closeUrgeEngine()" class="absolute top-10 right-6 text-slate-700 bg-white/40 p-2 rounded-full z-[160] hover:bg-white/60 transition-colors shadow-sm"><i data-lucide="x" class="w-6 h-6"></i></button>
         <div id="urge-content" class="flex-1 flex flex-col items-center justify-center text-center space-y-8 mt-12"></div>
     </div>
 
@@ -430,15 +437,15 @@
                 <h3 class="font-cinzel text-lg dark-gradient font-bold uppercase tracking-widest">TSH Sanctum</h3>
             </div>
             <div class="space-y-4">
-                <button onclick="resetTutorial()" class="w-full text-left p-4 bg-white/40 border border-white/60 rounded-xl text-slate-800 flex items-center justify-between font-bold hover:bg-white/60 transition-colors shadow-sm">
+                <button type="button" onclick="resetTutorial()" class="w-full text-left p-4 bg-white/40 border border-white/60 rounded-xl text-slate-800 flex items-center justify-between font-bold hover:bg-white/60 transition-colors shadow-sm">
                     <span>Watch Tutorial Again</span>
                     <i data-lucide="help-circle" class="w-5 h-5"></i>
                 </button>
-                <button onclick="resetApp()" class="w-full text-left p-4 bg-red-100/80 border border-red-300 rounded-xl text-red-800 flex items-center justify-between font-bold hover:bg-red-200 transition-colors shadow-sm">
+                <button type="button" onclick="resetApp()" class="w-full text-left p-4 bg-red-100/80 border border-red-300 rounded-xl text-red-800 flex items-center justify-between font-bold hover:bg-red-200 transition-colors shadow-sm">
                     <span>Reset Sanctuary</span>
                     <i data-lucide="trash-2" class="w-5 h-5"></i>
                 </button>
-                <button onclick="toggleSettings()" class="w-full py-4 bg-slate-800 hover:bg-slate-700 rounded-xl text-white font-bold uppercase tracking-widest text-xs shadow-lg transition-colors">Return</button>
+                <button type="button" onclick="toggleSettings()" class="w-full py-4 bg-slate-800 hover:bg-slate-700 rounded-xl text-white font-bold uppercase tracking-widest text-xs shadow-lg transition-colors">Return</button>
             </div>
         </div>
     </div>
@@ -450,15 +457,12 @@
         const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
         
         if (isStandalone) {
-            // CSS handles hiding the extra stuff, but we explicitly un-hide the simple "Continue" text
             document.getElementById('pwa-continue-text').classList.remove('hidden');
         } else {
-            // We are in the browser. Check if iOS Safari.
             const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
             const isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
             
             if (isIOS && isSafari) {
-                // Show manual instructions for iOS
                 document.getElementById('ios-install-hint').classList.remove('hidden');
             }
         }
@@ -477,16 +481,16 @@
         // PWA Install Prompt Handling (Android/Chrome)
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault(); // Prevent automatic prompt
-            deferredPrompt = e; // Stash event
+            e.preventDefault(); 
+            deferredPrompt = e; 
             
             const installBtn = document.getElementById('btn-install-app');
             if (installBtn && !isStandalone) {
-                installBtn.classList.remove('hidden'); // Show button if event fired
+                installBtn.classList.remove('hidden');
                 
                 installBtn.addEventListener('click', async () => {
-                    installBtn.classList.add('hidden'); // Hide button
-                    deferredPrompt.prompt(); // Show native prompt
+                    installBtn.classList.add('hidden');
+                    deferredPrompt.prompt();
                     
                     const { outcome } = await deferredPrompt.userChoice;
                     console.log(`User response to the install prompt: ${outcome}`);
