@@ -24,7 +24,9 @@ let state = {
     amenClicks: 0,
     midnightUrges: 0,
     middayUrges: 0,
-    veteranMemos: 0
+    veteranMemos: 0,
+    wallPosts: 0,
+    safetyContact: { name: "", phone: "" }
 };
 
 const tutorialSteps = [
@@ -60,6 +62,8 @@ function init() {
         state.midnightUrges = state.midnightUrges || 0;
         state.middayUrges = state.middayUrges || 0;
         state.veteranMemos = state.veteranMemos || 0;
+        state.wallPosts = state.wallPosts || 0;
+        state.safetyContact = state.safetyContact || { name: "", phone: "" };
         state.habits.forEach(h => { if(h.isMain === undefined) h.isMain = true; });
         
         if (state.setupComplete) showScreen('gateway');
@@ -70,6 +74,7 @@ function init() {
     }
     updateDate();
     renderDashboard();
+    renderSafetyContact();
 }
 
 function showScreen(screen) {
@@ -77,7 +82,7 @@ function showScreen(screen) {
     document.getElementById(`screen-${screen}`).classList.remove('hidden');
     
     const nav = document.getElementById('app-nav');
-    if (screen === 'welcome' || screen === 'creator-note' || screen === 'explanation' || screen === 'setup' || screen === 'gateway') {
+    if (screen === 'welcome' || screen === 'creator-note' || screen === 'explanation' || screen === 'setup' || screen === 'gateway' || screen === 'support') {
         nav.classList.add('hidden');
     } else {
         nav.classList.remove('hidden');
@@ -94,6 +99,7 @@ function showScreen(screen) {
     
     if (screen === 'vault') loadVault();
     if (screen === 'wall') loadWallMessages();
+    if (screen === 'support') renderSafetyContact();
     if (screen === 'main' && (state.tutorialStep === 0 || state.tutorialStep === undefined)) {
         startTutorial();
     }
@@ -180,17 +186,39 @@ document.getElementById('btn-amen').addEventListener('click', () => {
     showScreen('main');
 });
 
-// DEV JUMP TOOL RESTORED
-function devPassDay() {
-    const TIME_JUMP = 86400000 * 2000; // 2000 Days
-    state.habits.forEach(h => {
-        h.startDate = new Date(new Date(h.startDate).getTime() - TIME_JUMP).toISOString();
-        h.slips = h.slips.map(s => new Date(new Date(s).getTime() - TIME_JUMP).toISOString());
-    });
+// --- Personal Safety Contact Logic ---
+function saveSafetyContact() {
+    const name = document.getElementById('safety-name').value;
+    const phone = document.getElementById('safety-phone').value;
+    state.safetyContact = { name, phone };
     localStorage.setItem('steady_hand_state', JSON.stringify(state));
-    renderDashboard();
-    toggleSettings();
-    alert("Time warped forward 2000 days! Check your War Room stats.");
+    renderSafetyContact();
+    alert("Safety dial locked in.");
+}
+
+function renderSafetyContact() {
+    const nameEl = document.getElementById('safety-display-name');
+    const callBtn = document.getElementById('safety-call-btn');
+    const textBtn = document.getElementById('safety-text-btn');
+    
+    if(document.getElementById('safety-name')) {
+        document.getElementById('safety-name').value = state.safetyContact.name || "";
+        document.getElementById('safety-phone').value = state.safetyContact.phone || "";
+    }
+    
+    if(state.safetyContact && state.safetyContact.phone) {
+        nameEl.innerText = state.safetyContact.name || "Contact";
+        callBtn.href = `tel:${state.safetyContact.phone}`;
+        textBtn.href = `sms:${state.safetyContact.phone}`;
+        callBtn.classList.remove('opacity-50', 'pointer-events-none');
+        textBtn.classList.remove('opacity-50', 'pointer-events-none');
+    } else {
+        nameEl.innerText = "";
+        callBtn.href = "#";
+        textBtn.href = "#";
+        callBtn.classList.add('opacity-50', 'pointer-events-none');
+        textBtn.classList.add('opacity-50', 'pointer-events-none');
+    }
 }
 
 function renderDashboard() {
@@ -452,7 +480,6 @@ async function loadWallMessages() {
             return;
         }
 
-        // We assign data-id here so our script knows which message you long-pressed
         feed.innerHTML = messages.map(m => `
             <div class="card-glass p-4 border-white/30 wall-message select-none" data-id="${m.id}">
                 <p class="text-sm text-slate-800 font-medium leading-relaxed pointer-events-none">"${m.text}"</p>
@@ -465,7 +492,7 @@ async function loadWallMessages() {
             const startPress = () => {
                 pressTimer = setTimeout(() => {
                     adminDeleteMessage(el.dataset.id);
-                }, 10000); // 10,000 ms = 10 Seconds
+                }, 10000); 
             };
             const cancelPress = () => {
                 clearTimeout(pressTimer);
@@ -499,7 +526,7 @@ async function adminDeleteMessage(messageId) {
         
         if (res.ok) {
             alert("Target vaporized.");
-            loadWallMessages(); // Refresh the wall
+            loadWallMessages(); 
         } else {
             alert("Unauthorized. Incorrect DELETE_CODE.");
         }
@@ -527,6 +554,9 @@ async function postToWall() {
         feed.innerHTML = '';
     }
     feed.insertAdjacentHTML('afterbegin', newMsgHTML);
+
+    state.wallPosts = (state.wallPosts || 0) + 1;
+    localStorage.setItem('steady_hand_state', JSON.stringify(state));
 
     try {
         await fetch(WORKER_API_URL, {
