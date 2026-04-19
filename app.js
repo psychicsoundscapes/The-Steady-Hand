@@ -23,6 +23,7 @@ let state = {
     voiceMemos: 0,
     amenClicks: 0,
     midnightUrges: 0,
+    middayUrges: 0,
     veteranMemos: 0
 };
 
@@ -57,6 +58,7 @@ function init() {
         state.voiceMemos = state.voiceMemos || 0;
         state.amenClicks = state.amenClicks || 0;
         state.midnightUrges = state.midnightUrges || 0;
+        state.middayUrges = state.middayUrges || 0;
         state.veteranMemos = state.veteranMemos || 0;
         state.habits.forEach(h => { if(h.isMain === undefined) h.isMain = true; });
         
@@ -177,18 +179,6 @@ document.getElementById('btn-amen').addEventListener('click', () => {
     document.getElementById('screen-gateway').classList.add('hidden');
     showScreen('main');
 });
-
-function devPassDay() {
-    const TIME_JUMP = 86400000 * 2000;
-    state.habits.forEach(h => {
-        h.startDate = new Date(new Date(h.startDate).getTime() - TIME_JUMP).toISOString();
-        h.slips = h.slips.map(s => new Date(new Date(s).getTime() - TIME_JUMP).toISOString());
-    });
-    localStorage.setItem('steady_hand_state', JSON.stringify(state));
-    renderDashboard();
-    toggleSettings();
-    alert("Time warped forward 2000 days! Check your War Room stats.");
-}
 
 function renderDashboard() {
     const container = document.getElementById('dashboard-habits');
@@ -362,8 +352,14 @@ let lastAudioId = -1;
 
 async function triggerUrgeEngine() {
     const currentHour = new Date().getHours();
+    
+    // Track Late-Night Urges (Midnight to 4 AM)
     if (currentHour >= 0 && currentHour < 4) {
         state.midnightUrges = (state.midnightUrges || 0) + 1;
+    } 
+    // Track Midday Urges (11 AM to 2 PM)
+    else if (currentHour >= 11 && currentHour <= 14) {
+        state.middayUrges = (state.middayUrges || 0) + 1;
     }
 
     state.urgeClicks = (state.urgeClicks || 0) + 1;
@@ -443,6 +439,7 @@ async function loadWallMessages() {
             return;
         }
 
+        // We assign data-id here so our script knows which message you long-pressed
         feed.innerHTML = messages.map(m => `
             <div class="card-glass p-4 border-white/30 wall-message select-none" data-id="${m.id}">
                 <p class="text-sm text-slate-800 font-medium leading-relaxed pointer-events-none">"${m.text}"</p>
