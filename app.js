@@ -106,11 +106,13 @@ function showScreen(screen) {
     lucide.createIcons();
 
     // Reset scroll position to top
-    window.scrollTo({ top: 0, behavior: 'instant' }); 
-    const targetScreen = document.getElementById('screen-' + screen);
-    if (targetScreen) {
-        targetScreen.scrollTop = 0; 
-    }
+    setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' }); 
+        const targetScreen = document.getElementById('screen-' + screen);
+        if (targetScreen) {
+            targetScreen.scrollTop = 0; 
+        }
+    }, 10);
 }
 
 function startTutorial() {
@@ -472,7 +474,7 @@ async function triggerUrgeEngine() {
     lucide.createIcons();
 }
 
-// --- WALL OF WISDOM LOGIC (With Secret Admin Delete) ---
+// --- WALL OF WISDOM LOGIC ---
 async function loadWallMessages() {
     const feed = document.getElementById('wall-feed');
     feed.innerHTML = '<div class="text-center text-slate-600 font-bold uppercase tracking-widest text-[10px] animate-pulse py-8">Loading global sanctuary...</div>';
@@ -498,51 +500,8 @@ async function loadWallMessages() {
             `;
         }).join('');
 
-        document.querySelectorAll('.wall-message').forEach(el => {
-            let pressTimer;
-            const startPress = () => {
-                pressTimer = setTimeout(() => {
-                    adminDeleteMessage(el.dataset.id);
-                }, 10000); 
-            };
-            const cancelPress = () => {
-                clearTimeout(pressTimer);
-            };
-            
-            el.addEventListener('touchstart', startPress, {passive: true});
-            el.addEventListener('touchend', cancelPress);
-            el.addEventListener('touchmove', cancelPress);
-            el.addEventListener('mousedown', startPress);
-            el.addEventListener('mouseup', cancelPress);
-            el.addEventListener('mouseleave', cancelPress);
-        });
-
     } catch(e) {
         feed.innerHTML = '<div class="text-center text-slate-500 text-xs italic">The connection to the global sanctuary is temporarily lost.</div>';
-    }
-}
-
-async function adminDeleteMessage(messageId) {
-    if (navigator.vibrate) navigator.vibrate([100, 50, 100]); 
-    
-    const code = prompt("GHOST MODE: Enter DELETE_CODE to purge this message from the server.");
-    if (!code) return; 
-    
-    try {
-        const res = await fetch(WORKER_API_URL, {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id: parseInt(messageId), code: code })
-        });
-        
-        if (res.ok) {
-            alert("Target vaporized.");
-            loadWallMessages(); 
-        } else {
-            alert("Unauthorized. Incorrect DELETE_CODE.");
-        }
-    } catch(e) {
-        alert("Failed to communicate with the server.");
     }
 }
 
