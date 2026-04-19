@@ -227,11 +227,17 @@ function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeSt
     addTrophy("The Juggler", "4 Active Streaks", "layout", activeStrugglesCount >= 4);
     addTrophy("Zen Master", "5+ Active Streaks", "cpu", activeStrugglesCount >= 5);
 
-    // Midnight Urges (Between Midnight and 4AM)
-    addTrophy("Night Watch", "1 Late Urge", "moon", state.midnightUrges >= 1);
-    addTrophy("Midnight Guard", "10 Late Urges", "moon", state.midnightUrges >= 10);
-    addTrophy("Darkest Hour", "25 Late Urges", "moon", state.midnightUrges >= 25);
-    addTrophy("Lunar Knight", "50 Late Urges", "moon", state.midnightUrges >= 50);
+    // Late-Night Urges (Between Midnight and 4AM)
+    addTrophy("Night Watch", "1 Late-Night Urge", "moon", state.midnightUrges >= 1);
+    addTrophy("Midnight Guard", "10 Late-Night Urges", "moon", state.midnightUrges >= 10);
+    addTrophy("Darkest Hour", "25 Late-Night Urges", "moon", state.midnightUrges >= 25);
+    addTrophy("Lunar Knight", "50 Late-Night Urges", "moon", state.midnightUrges >= 50);
+
+    // Midday Urges (Between 11AM and 2PM)
+    addTrophy("Daylight Defense", "1 Midday Urge", "sun", state.middayUrges >= 1);
+    addTrophy("Noon Guardian", "10 Midday Urges", "sun", state.middayUrges >= 10);
+    addTrophy("Sun Shield", "25 Midday Urges", "sun", state.middayUrges >= 25);
+    addTrophy("Solar Knight", "50 Midday Urges", "sun", state.middayUrges >= 50);
 
     // Veteran Memos (Memos made while holding a 1+ Year streak)
     addTrophy("Echo of Iron", "Memo @ 1 Yr Clean", "speaker", state.veteranMemos >= 1);
