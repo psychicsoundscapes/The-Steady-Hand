@@ -41,7 +41,7 @@ function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeSt
         [60, "Two Months", "navigation"],
         [90, "The Crucible", "anvil"],
         [180, "Half Year", "star"],
-        [250, "Spartan", "spear"],
+        [250, "Spartan", "crosshair"],
         [365, "One Year", "sun"],
         [500, "The Vanguard", "flag"],
         [730, "Two Years Unbroken", "shield-check"],
@@ -80,7 +80,7 @@ function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeSt
     const urgeData = [
         [1, "First Defense", "shield-alert"],
         [10, "Tenth Victory", "swords"],
-        [25, "Shield Wall", "bell-electric"],
+        [25, "Shield Wall", "bell-ring"],
         [50, "Defender", "shield-check"],
         [100, "The Watchman", "eye"],
         [250, "Quarter Thousand", "target"],
@@ -112,7 +112,7 @@ function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeSt
     // 5. SERENITY RITUAL
     // ==========================================
     const ritualData = [
-        [1, "First Prayer", "hands"],
+        [1, "First Prayer", "hand-heart"],
         [10, "Ritual Novice", "book-open"],
         [50, "Faithful", "heart"],
         [100, "Ritual Master", "church"],
