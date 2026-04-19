@@ -2,13 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TSH - The Steady Hand</title>
     
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="TSH">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#b4c7d9">
     
     <link rel="icon" type="image/png" href="picture/tsh.PNG">
@@ -27,9 +26,9 @@
 <body>
 
     <div id="app-scroller">
-        <div id="app" class="max-w-md mx-auto min-h-[100dvh] relative flex flex-col pb-32">
+        <div id="app" class="max-w-md mx-auto min-h-[100vh] relative flex flex-col pb-32">
             
-            <div id="screen-gateway" class="hidden fixed inset-0 h-[100dvh] w-full z-[100] flex flex-col items-center justify-center p-8 text-center bg-[#b4c7d9]" style="padding-top: calc(env(safe-area-inset-top) + 2rem); padding-bottom: calc(env(safe-area-inset-bottom) + 2rem);">
+            <div id="screen-gateway" class="hidden fixed inset-0 h-[100vh] w-full z-[100] flex flex-col items-center justify-center p-8 text-center bg-[#b4c7d9]">
                 <div class="mb-6">
                     <img src="picture/tsh.PNG" alt="TSH Logo" class="w-32 h-32 mx-auto mb-6 logo-glow rounded-full shadow-2xl" onerror="this.src='https://via.placeholder.com/150/ffffff/334155?text=TSH'">
                     <h1 class="font-cinzel text-3xl dark-gradient mb-6 tracking-widest uppercase font-bold">The Steady Hand</h1>
@@ -57,7 +56,7 @@
                 </div>
             </div>
 
-            <div id="screen-welcome" class="hidden fixed inset-0 h-[100dvh] w-full z-[95] flex flex-col items-center justify-center p-8 text-center bg-[#b4c7d9]" style="padding-top: calc(env(safe-area-inset-top) + 2rem); padding-bottom: calc(env(safe-area-inset-bottom) + 2rem);">
+            <div id="screen-welcome" class="hidden fixed inset-0 h-[100vh] w-full z-[95] flex flex-col items-center justify-center p-8 text-center bg-[#b4c7d9]">
                 <img src="picture/tsh.PNG" class="w-28 h-28 mx-auto mb-8 logo-glow rounded-full shadow-2xl" onerror="this.src='https://via.placeholder.com/150/ffffff/334155?text=TSH'">
                 <h1 class="font-cinzel text-3xl dark-gradient mb-6 tracking-widest uppercase font-bold">Welcome</h1>
                 <p class="text-slate-800 font-semibold mb-12 leading-relaxed text-sm">
@@ -66,7 +65,7 @@
                 <button onclick="showScreen('creator-note')" class="w-full max-w-xs bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg hover:bg-white transition-colors">Continue</button>
             </div>
 
-            <div id="screen-creator-note" class="hidden fixed inset-0 h-[100dvh] w-full z-[95] flex flex-col items-center justify-center p-6 text-center bg-[#b4c7d9] overflow-y-auto" style="padding-top: calc(env(safe-area-inset-top) + 2rem); padding-bottom: calc(env(safe-area-inset-bottom) + 2rem);">
+            <div id="screen-creator-note" class="hidden fixed inset-0 h-[100vh] w-full z-[95] flex flex-col items-center justify-center p-6 text-center bg-[#b4c7d9] overflow-y-auto">
                 <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-6 tracking-widest leading-tight mt-auto">A Note from<br>the Creator</h2>
                 
                 <div class="card-glass p-6 mb-8 text-left space-y-4 w-full max-w-sm">
@@ -87,7 +86,7 @@
                 <button onclick="showScreen('explanation')" class="w-full max-w-sm bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg hover:bg-white transition-colors mt-auto mb-8">Continue</button>
             </div>
 
-            <div id="screen-explanation" class="hidden fixed inset-0 h-[100dvh] w-full z-[95] flex flex-col items-center justify-center p-6 text-center bg-[#b4c7d9]" style="padding-top: calc(env(safe-area-inset-top) + 2rem); padding-bottom: calc(env(safe-area-inset-bottom) + 2rem);">
+            <div id="screen-explanation" class="hidden fixed inset-0 h-[100vh] w-full z-[95] flex flex-col items-center justify-center p-6 text-center bg-[#b4c7d9]">
                 <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-6 tracking-widest mt-auto">Your Struggles</h2>
                 
                 <div class="card-glass p-6 mb-10 text-left space-y-6 w-full max-w-sm">
@@ -108,8 +107,8 @@
                 <button onclick="showScreen('setup')" class="w-full max-w-sm bg-slate-800 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-slate-700 text-white shadow-lg hover:bg-slate-700 transition-colors mt-auto mb-8">Enter Sanctuary</button>
             </div>
 
-            <div id="screen-setup" class="hidden fixed inset-0 h-[100dvh] w-full z-[90] overflow-y-auto p-6 flex flex-col bg-[#b4c7d9]" style="padding-top: calc(env(safe-area-inset-top) + 1rem); padding-bottom: calc(env(safe-area-inset-bottom) + 1rem);">
-                <div class="flex items-center gap-4 mb-6 mt-4">
+            <div id="screen-setup" class="hidden fixed inset-0 h-[100vh] w-full z-[90] overflow-y-auto p-6 flex flex-col bg-[#b4c7d9]">
+                <div class="flex items-center gap-4 mb-6 mt-8">
                     <img src="picture/tsh.PNG" class="w-12 h-12 rounded-full border border-white/50" onerror="this.src='https://via.placeholder.com/50/ffffff/334155?text=TSH'">
                     <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase">Sanctuary Setup</h2>
                 </div>
@@ -132,7 +131,7 @@
                 </button>
             </div>
 
-            <main id="screen-main" class="hidden flex-1 p-6 space-y-6" style="padding-top: calc(env(safe-area-inset-top) + 2rem);">
+            <main id="screen-main" class="hidden flex-1 p-6 space-y-6 pt-10">
                 <header class="flex justify-between items-center mt-2 mb-6">
                     <div class="flex items-center gap-3">
                         <img src="picture/tsh.PNG" class="w-10 h-10 rounded-full border border-white/50 shadow-sm" onerror="this.src='https://via.placeholder.com/40/ffffff/334155?text=TSH'">
@@ -185,7 +184,7 @@
                 </button>
             </main>
 
-            <div id="screen-vault" class="hidden flex-1 p-6 overflow-y-auto" style="padding-top: calc(env(safe-area-inset-top) + 2rem);">
+            <div id="screen-vault" class="hidden flex-1 p-6 overflow-y-auto pt-10">
                 <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-2 mt-2">The Vault</h2>
                 <p class="text-slate-700 text-xs mb-8 italic font-medium">Record your strength when your light is brightest.</p>
                 
@@ -217,7 +216,7 @@
                 <div id="vault-list" class="space-y-6 pb-12 max-w-[280px] mx-auto"></div>
             </div>
 
-            <div id="screen-wall" class="hidden flex-1 p-6 overflow-y-auto" style="padding-top: calc(env(safe-area-inset-top) + 2rem);">
+            <div id="screen-wall" class="hidden flex-1 p-6 overflow-y-auto pt-10">
                 <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-2 mt-2">Wall of Wisdom</h2>
                 <p class="text-slate-700 text-xs mb-6 italic font-medium">Anonymous words of strength and love from the global sanctuary.</p>
 
@@ -237,8 +236,8 @@
         </div>
     </div> 
     
-    <nav id="app-nav" class="hidden fixed bottom-0 left-0 right-0 w-full bg-white/60 backdrop-blur-2xl border-t border-white/60 z-[90] shadow-[0_-10px_30px_rgba(0,0,0,0.05)]" style="padding-bottom: env(safe-area-inset-bottom);">
-        <div class="max-w-md mx-auto w-full flex items-center justify-around px-2 pt-3 pb-2">
+    <nav id="app-nav" class="hidden fixed bottom-0 left-0 right-0 w-full bg-white/60 backdrop-blur-2xl border-t border-white/60 z-[90] shadow-[0_-10px_30px_rgba(0,0,0,0.05)] pb-6 pt-4">
+        <div class="max-w-md mx-auto w-full flex items-center justify-around px-2">
             <button onclick="showScreen('main')" class="nav-link flex flex-col items-center gap-1.5 text-slate-500 w-24" data-nav="main">
                 <i data-lucide="layout-dashboard" class="w-7 h-7"></i>
                 <span class="text-[11px] uppercase font-bold tracking-tighter">War Room</span>
@@ -254,16 +253,15 @@
         </div>
     </nav>
 
-    <div id="tutorial-step" class="hidden fixed inset-0 h-[100dvh] w-full z-[200] flex flex-col items-center justify-center p-8 text-center bg-[#b4c7d9]" style="padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom);">
+    <div id="tutorial-step" class="hidden fixed inset-0 h-[100vh] w-full z-[200] flex flex-col items-center justify-center p-8 text-center bg-[#b4c7d9]">
         <img src="picture/tsh.PNG" class="w-24 h-24 rounded-full border-4 border-white mb-6 shadow-2xl" onerror="this.src='https://via.placeholder.com/150/ffffff/334155?text=TSH'">
         <h2 id="tut-title" class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-4">Welcome</h2>
         <p id="tut-desc" class="text-slate-800 leading-relaxed mb-10 text-sm font-semibold"></p>
         <button onclick="nextTutorialStep()" class="w-full bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg hover:bg-white transition-colors">Continue</button>
     </div>
 
-    <div id="urge-overlay" class="hidden fixed inset-0 h-[100dvh] w-full z-[150] flex flex-col p-8 overflow-y-auto bg-[#b4c7d9]" style="padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom);">
-        <div style="padding-top: calc(env(safe-area-inset-top) + 2rem);"></div>
-        <button onclick="closeUrgeEngine()" class="absolute top-6 right-6 text-slate-700 bg-white/40 p-2 rounded-full z-[160] hover:bg-white/60 transition-colors shadow-sm" style="margin-top: env(safe-area-inset-top);"><i data-lucide="x" class="w-6 h-6"></i></button>
+    <div id="urge-overlay" class="hidden fixed inset-0 h-[100vh] w-full z-[150] flex flex-col p-8 overflow-y-auto bg-[#b4c7d9]">
+        <button onclick="closeUrgeEngine()" class="absolute top-10 right-6 text-slate-700 bg-white/40 p-2 rounded-full z-[160] hover:bg-white/60 transition-colors shadow-sm"><i data-lucide="x" class="w-6 h-6"></i></button>
         <div id="urge-content" class="flex-1 flex flex-col items-center justify-center text-center space-y-8 mt-12"></div>
     </div>
 
