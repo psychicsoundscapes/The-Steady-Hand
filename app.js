@@ -104,6 +104,13 @@ function showScreen(screen) {
         startTutorial();
     }
     lucide.createIcons();
+
+    // Reset scroll position to top
+    window.scrollTo({ top: 0, behavior: 'instant' }); 
+    const targetScreen = document.getElementById('screen-' + screen);
+    if (targetScreen) {
+        targetScreen.scrollTop = 0; 
+    }
 }
 
 function startTutorial() {
