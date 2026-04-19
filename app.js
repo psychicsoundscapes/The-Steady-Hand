@@ -39,8 +39,7 @@ const tutorialSteps =[
     { title: "The War Room", desc: "This is TSH Command. Level up through ranks and earn trophies as you rebuild your life.", icon: "layout-dashboard" },
     { title: "The Urge Engine", desc: "In moments of crisis, trigger the Engine to draw upon the Word or your personal vault recordings.", icon: "shield-alert" },
     { title: "The Vault", desc: "Record your own voice when you are strong. These notes become your shield during future urges.", icon: "lock" },
-    { title: "The Wall", desc: "Share anonymous wisdom or read words of encouragement left by others on the same journey.", icon: "globe" },
-    { title: "Ritual Entry", desc: "Vocalizing the Serenity Prayer is the first step to reclaiming your space. Speak it every time.", icon: "volume-2" }
+    { title: "The Wall", desc: "Share anonymous wisdom or read words of encouragement left by others on the same journey.", icon: "globe" }
 ];
 
 const rankTiers =[
