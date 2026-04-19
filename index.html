@@ -2,13 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TSH - The Steady Hand</title>
     
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="TSH">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#b4c7d9">
     
     <link rel="icon" type="image/png" href="picture/tsh.PNG">
@@ -27,9 +26,9 @@
 <body>
 
     <div id="app-scroller">
-        <div id="app" class="max-w-md mx-auto min-h-screen relative flex flex-col pb-48">
+        <div id="app" class="max-w-md mx-auto min-h-[100vh] relative flex flex-col pb-32">
             
-            <div id="screen-gateway" class="hidden fixed inset-0 z-[100] flex flex-col items-center justify-center p-8 text-center bg-[#b4c7d9]">
+            <div id="screen-gateway" class="hidden fixed inset-0 h-[100vh] w-full z-[100] flex flex-col items-center justify-center p-8 text-center bg-[#b4c7d9]">
                 <div class="mb-6">
                     <img src="picture/tsh.PNG" alt="TSH Logo" class="w-32 h-32 mx-auto mb-6 logo-glow rounded-full shadow-2xl" onerror="this.src='https://via.placeholder.com/150/ffffff/334155?text=TSH'">
                     <h1 class="font-cinzel text-3xl dark-gradient mb-6 tracking-widest uppercase font-bold">The Steady Hand</h1>
@@ -49,15 +48,9 @@
                 <button id="btn-amen" class="amen-pulse group relative flex items-center justify-center w-32 h-32 rounded-full border-2 border-white bg-white/40 shadow-xl backdrop-blur-md">
                     <span class="font-cinzel text-2xl text-slate-800 font-bold group-active:scale-90 transition-transform">Amen</span>
                 </button>
-
-                <div class="mt-12 w-full">
-                    <a href="tel:988" class="text-[10px] uppercase tracking-widest text-slate-600 font-bold border-b border-slate-400 pb-1 inline-flex items-center gap-2">
-                        <i data-lucide="phone" class="w-3 h-3"></i> Emergency Support
-                    </a>
-                </div>
             </div>
 
-            <div id="screen-welcome" class="hidden fixed inset-0 z-[95] flex flex-col items-center justify-center p-8 text-center bg-[#b4c7d9]">
+            <div id="screen-welcome" class="hidden fixed inset-0 h-[100vh] w-full z-[95] flex flex-col items-center justify-center p-8 text-center bg-[#b4c7d9]">
                 <img src="picture/tsh.PNG" class="w-28 h-28 mx-auto mb-8 logo-glow rounded-full shadow-2xl" onerror="this.src='https://via.placeholder.com/150/ffffff/334155?text=TSH'">
                 <h1 class="font-cinzel text-3xl dark-gradient mb-6 tracking-widest uppercase font-bold">Welcome</h1>
                 <p class="text-slate-800 font-semibold mb-12 leading-relaxed text-sm">
@@ -66,9 +59,8 @@
                 <button onclick="showScreen('creator-note')" class="w-full max-w-xs bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg hover:bg-white transition-colors">Continue</button>
             </div>
 
-            <div id="screen-creator-note" class="hidden fixed inset-0 z-[95] flex flex-col items-center justify-center p-6 text-center bg-[#b4c7d9] overflow-y-auto">
-                <div style="padding-top: calc(env(safe-area-inset-top) + 2rem);"></div>
-                <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-6 tracking-widest leading-tight">A Note from<br>the Creator</h2>
+            <div id="screen-creator-note" class="hidden fixed inset-0 h-[100vh] w-full z-[95] flex flex-col items-center justify-center p-6 text-center bg-[#b4c7d9] overflow-y-auto">
+                <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-6 tracking-widest leading-tight mt-auto">A Note from<br>the Creator</h2>
                 
                 <div class="card-glass p-6 mb-8 text-left space-y-4 w-full max-w-sm">
                     <p class="text-sm text-slate-800 font-medium leading-relaxed">
@@ -88,8 +80,8 @@
                 <button onclick="showScreen('explanation')" class="w-full max-w-sm bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg hover:bg-white transition-colors mt-auto mb-8">Continue</button>
             </div>
 
-            <div id="screen-explanation" class="hidden fixed inset-0 z-[95] flex flex-col items-center justify-center p-6 text-center bg-[#b4c7d9]">
-                <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-6 tracking-widest">Your Struggles</h2>
+            <div id="screen-explanation" class="hidden fixed inset-0 h-[100vh] w-full z-[95] flex flex-col items-center justify-center p-6 text-center bg-[#b4c7d9]">
+                <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-6 tracking-widest mt-auto">Your Struggles</h2>
                 
                 <div class="card-glass p-6 mb-10 text-left space-y-6 w-full max-w-sm">
                     <div>
@@ -106,12 +98,11 @@
                     </div>
                 </div>
 
-                <button onclick="showScreen('setup')" class="w-full max-w-sm bg-slate-800 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-slate-700 text-white shadow-lg hover:bg-slate-700 transition-colors">Enter Sanctuary</button>
+                <button onclick="showScreen('setup')" class="w-full max-w-sm bg-slate-800 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-slate-700 text-white shadow-lg hover:bg-slate-700 transition-colors mt-auto mb-8">Enter Sanctuary</button>
             </div>
 
-            <div id="screen-setup" class="hidden fixed inset-0 z-[90] overflow-y-auto p-6 flex flex-col bg-[#b4c7d9]">
-                <div style="padding-top: calc(env(safe-area-inset-top) + 2rem);"></div>
-                <div class="flex items-center gap-4 mb-6 mt-4">
+            <div id="screen-setup" class="hidden fixed inset-0 h-[100vh] w-full z-[90] overflow-y-auto p-6 flex flex-col bg-[#b4c7d9]">
+                <div class="flex items-center gap-4 mb-6 mt-8">
                     <img src="picture/tsh.PNG" class="w-12 h-12 rounded-full border border-white/50" onerror="this.src='https://via.placeholder.com/50/ffffff/334155?text=TSH'">
                     <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase">Sanctuary Setup</h2>
                 </div>
@@ -170,11 +161,6 @@
                     </div>
                 </div>
 
-                <button onclick="showScreen('support')" class="w-full py-4 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center gap-3 active:scale-95 transition-transform shadow-lg">
-                    <i data-lucide="life-buoy" class="w-5 h-5 text-white"></i>
-                    <span class="font-bold text-white uppercase tracking-widest text-[10px]">Support & Lifelines</span>
-                </button>
-
                 <div>
                     <h3 class="text-[10px] uppercase tracking-widest text-slate-700 font-bold mb-3 px-2 flex justify-between">
                         <span>Trophy Room</span>
@@ -189,6 +175,11 @@
                 <button onclick="triggerUrgeEngine()" class="w-full py-8 rounded-3xl bg-white/40 border border-white/70 flex flex-col items-center justify-center gap-2 active:scale-95 transition-transform shadow-lg backdrop-blur-md mt-6">
                     <i data-lucide="shield-alert" class="w-10 h-10 text-red-600 animate-pulse"></i>
                     <span class="font-bold text-slate-800 uppercase tracking-[0.2em] text-xs drop-shadow-sm">I Have an Urge</span>
+                </button>
+
+                <button onclick="showScreen('support')" class="w-full py-4 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center gap-3 active:scale-95 transition-transform shadow-lg mt-4">
+                    <i data-lucide="life-buoy" class="w-5 h-5 text-white"></i>
+                    <span class="font-bold text-white uppercase tracking-widest text-[10px]">Support & Lifelines</span>
                 </button>
             </main>
 
@@ -391,16 +382,15 @@
         </div>
     </nav>
 
-    <div id="tutorial-step" class="hidden fixed inset-0 z-[200] flex flex-col items-center justify-center p-8 text-center bg-[#b4c7d9]">
+    <div id="tutorial-step" class="hidden fixed inset-0 h-[100vh] w-full z-[200] flex flex-col items-center justify-center p-8 text-center bg-[#b4c7d9]">
         <img src="picture/tsh.PNG" class="w-24 h-24 rounded-full border-4 border-white mb-6 shadow-2xl" onerror="this.src='https://via.placeholder.com/150/ffffff/334155?text=TSH'">
         <h2 id="tut-title" class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-4">Welcome</h2>
         <p id="tut-desc" class="text-slate-800 leading-relaxed mb-10 text-sm font-semibold"></p>
         <button onclick="nextTutorialStep()" class="w-full bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg hover:bg-white transition-colors">Continue</button>
     </div>
 
-    <div id="urge-overlay" class="hidden fixed inset-0 z-[150] flex flex-col p-8 overflow-y-auto bg-[#b4c7d9]">
-        <div style="padding-top: calc(env(safe-area-inset-top) + 2rem);"></div>
-        <button onclick="closeUrgeEngine()" class="absolute top-6 right-6 text-slate-700 bg-white/40 p-2 rounded-full z-[160] hover:bg-white/60 transition-colors shadow-sm" style="margin-top: env(safe-area-inset-top);"><i data-lucide="x" class="w-6 h-6"></i></button>
+    <div id="urge-overlay" class="hidden fixed inset-0 h-[100vh] w-full z-[150] flex flex-col p-8 overflow-y-auto bg-[#b4c7d9]">
+        <button onclick="closeUrgeEngine()" class="absolute top-10 right-6 text-slate-700 bg-white/40 p-2 rounded-full z-[160] hover:bg-white/60 transition-colors shadow-sm"><i data-lucide="x" class="w-6 h-6"></i></button>
         <div id="urge-content" class="flex-1 flex flex-col items-center justify-center text-center space-y-8 mt-12"></div>
     </div>
 
