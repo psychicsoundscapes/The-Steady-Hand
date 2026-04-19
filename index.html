@@ -33,7 +33,6 @@
     
     <script src="translations.js?v=4" defer></script>
     <script src="translations2.js?v=4" defer></script>
-    
     <script src="verses.js?v=4" defer></script>
     <script src="trophies.js?v=4" defer></script>
     <script src="app.js?v=4" defer></script>
@@ -45,7 +44,7 @@
             
             <div id="screen-gateway" class="hidden fixed inset-0 h-[100dvh] w-full z-[100] bg-[#b4c7d9] overflow-y-auto">
                 <div class="min-h-full w-full flex flex-col items-center justify-center py-6 px-6 text-center">
-                    <img src="picture/tsh.PNG" alt="TSH Logo" class="w-20 h-20 mx-auto mb-4 logo-glow rounded-full shadow-2xl" onerror="this.onerror=null; this.src='https://via.placeholder.com/150/ffffff/334155?text=TSH'">
+                    <img src="picture/tsh.PNG" alt="TSH Logo" class="w-20 h-20 mx-auto mb-4 logo-glow rounded-full shadow-2xl">
                     <h1 data-i18n="app_title" class="font-cinzel text-2xl dark-gradient mb-4 tracking-widest uppercase font-bold">The Steady Hand</h1>
                     
                     <div class="p-5 card-glass mb-6 border-white/60 w-full max-w-sm">
@@ -55,21 +54,21 @@
                         </p>
                     </div>
                     
-                    <button type="button" id="btn-amen" onclick="clickAmen()" class="amen-pulse z-[200] relative flex items-center justify-center shrink-0 w-28 h-28 rounded-full border-2 border-white bg-white/40 shadow-xl cursor-pointer hover:bg-white/60 active:scale-95 transition-all mb-6">
+                    <button type="button" id="btn-amen" onclick="clickAmen()" class="amen-pulse z-[200] relative flex items-center justify-center shrink-0 w-28 h-28 rounded-full border-2 border-white bg-white/40 shadow-xl cursor-pointer active:scale-95 transition-all mb-6">
                         <span data-i18n="gateway_amen" class="font-cinzel text-xl text-slate-800 font-bold pointer-events-none">Amen</span>
                     </button>
                     
-                    <p data-i18n="gateway_speak_aloud" class="text-[10px] text-slate-800 font-bold animate-pulse uppercase tracking-widest bg-white/30 py-2 px-4 rounded-full mt-0">
+                    <p data-i18n="gateway_speak_aloud" class="text-[10px] text-slate-800 font-bold animate-pulse uppercase tracking-widest bg-white/30 py-2 px-4 rounded-full">
                         Speak the prayer aloud
                     </p>
                 </div>
             </div>
 
             <div id="screen-welcome" class="hidden fixed inset-0 h-[100dvh] w-full z-[95] flex flex-col items-center justify-center p-8 pb-16 text-center bg-[#b4c7d9] overflow-y-auto">
-                <img src="picture/tsh.PNG" class="w-28 h-28 mx-auto mb-6 mt-4 logo-glow rounded-full shadow-2xl shrink-0" onerror="this.onerror=null; this.src='https://via.placeholder.com/150/ffffff/334155?text=TSH'">
+                <img src="picture/tsh.PNG" class="w-28 h-28 mx-auto mb-6 mt-4 logo-glow rounded-full shadow-2xl shrink-0">
                 
                 <div class="w-full max-w-xs mb-6 shrink-0">
-                    <select onchange="changeLanguage(this.value)" class="lang-selector w-full bg-white/60 border border-white/80 rounded-xl p-3 text-sm font-bold text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-400 appearance-none text-center">
+                    <select onchange="changeLanguage(this.value)" class="lang-selector w-full bg-white/60 border border-white/80 rounded-xl p-3 text-sm font-bold text-slate-800 shadow-sm focus:outline-none appearance-none text-center">
                         <option value="en">English</option>
                         <option value="es">Español (Spanish)</option>
                         <option value="fr">Français (French)</option>
@@ -108,14 +107,14 @@
                             <span data-i18n="welcome_ios_hint">Tap Share then "Add to Home Screen"</span>
                         </div>
 
-                        <button type="button" id="btn-install-app" class="hidden w-full bg-slate-800 py-3 rounded-lg font-bold uppercase tracking-widest text-[10px] text-white shadow-md hover:bg-slate-700 transition-colors flex items-center justify-center gap-2">
+                        <button type="button" id="btn-install-app" class="hidden w-full bg-slate-800 py-3 rounded-lg font-bold uppercase tracking-widest text-[10px] text-white shadow-md flex items-center justify-center gap-2">
                             <i data-lucide="download" class="w-4 h-4"></i> <span data-i18n="welcome_install_btn">Install App Automatically</span>
                         </button>
                     </div>
                 </div>
 
                 <div class="w-full max-w-xs space-y-3 mb-8 shrink-0">
-                    <button type="button" onclick="showScreen('creator-note')" class="w-full bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg hover:bg-white transition-colors flex items-center justify-center">
+                    <button type="button" onclick="showScreen('creator-note')" class="w-full bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg flex items-center justify-center">
                         <span class="hide-in-pwa" data-i18n="welcome_continue_browser">Continue in Browser</span>
                         <span class="hidden" id="pwa-continue-text" data-i18n="welcome_continue">Continue</span>
                     </button>
@@ -124,25 +123,25 @@
 
             <div id="screen-creator-note" class="hidden fixed inset-0 h-[100dvh] w-full z-[95] flex flex-col items-center justify-center p-6 pb-16 text-center bg-[#b4c7d9] overflow-y-auto">
                 <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-6 tracking-widest leading-tight mt-8 shrink-0">
-                    <span data-i18n="creator_title_1">A Note from</span><br><span data-i18n="creator_title_2">the Creator</span>
+                    <span data-i18n="creator_title_1">A Note from</span><br><span data-i18n="creator_title_2">the TSH Creator</span>
                 </h2>
                 
                 <div class="card-glass p-6 mb-6 text-left space-y-4 w-full max-w-sm shrink-0">
-                    <p data-i18n="creator_p1" class="text-sm text-slate-800 font-medium leading-relaxed">
+                    <p data-i18n="creator_p1" class="text-xs text-slate-800 font-medium leading-relaxed">
                         This application is my gift to you. This is in hopes that you'll find what you need to in order to get better. It won't always be easy, but in truth, it will always be worth it.
                     </p>
-                    <p data-i18n="creator_p2" class="text-sm text-slate-800 font-medium leading-relaxed">
-                        This app is here for you for any struggle you may have or habit you need to stay away from. Use it as often as you need to and try to enjoy each moment in what will be the rest of your sober life.
+                    <p data-i18n="creator_p2" class="text-xs text-slate-800 font-medium leading-relaxed">
+                        This app is here for you for any struggle you may have or habit you need to stay away from. Use it as often as you need to and try to enjoy each moment in what will hopefully be the rest of your happier, more mindful life without the chains of habit or addiction. At least, thats what I hope to help bring to you in this journey of yours.
                     </p>
-                    <p data-i18n="creator_p3" class="text-sm text-slate-800 font-medium leading-relaxed">
+                    <p data-i18n="creator_p3" class="text-xs text-slate-800 font-medium leading-relaxed">
                         Much love to all of you and thank you to God for bringing you here to this application, and thanks to you for keeping an open mind. I hope this helps you sincerely.
                     </p>
-                    <p class="text-sm text-slate-800 font-bold text-right italic mt-4">
-                        - Brady Yaddof
+                    <p class="text-xs text-slate-800 font-bold text-right italic mt-4">
+                        - Brady
                     </p>
                 </div>
 
-                <button type="button" onclick="showScreen('explanation')" data-i18n="welcome_continue" class="w-full max-w-sm bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg hover:bg-white transition-colors mb-8 shrink-0">Continue</button>
+                <button type="button" onclick="showScreen('explanation')" data-i18n="welcome_continue" class="w-full max-w-sm bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg mb-8 shrink-0">Continue</button>
             </div>
 
             <div id="screen-explanation" class="hidden fixed inset-0 h-[100dvh] w-full z-[95] flex flex-col items-center justify-center p-6 pb-16 text-center bg-[#b4c7d9] overflow-y-auto">
@@ -163,12 +162,12 @@
                     </div>
                 </div>
 
-                <button type="button" onclick="showScreen('setup')" data-i18n="explanation_enter_btn" class="w-full max-w-sm bg-slate-800 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-slate-700 text-white shadow-lg hover:bg-slate-700 transition-colors mb-8 shrink-0">Enter Sanctuary</button>
+                <button type="button" onclick="showScreen('setup')" data-i18n="explanation_enter_btn" class="w-full max-w-sm bg-slate-800 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-slate-700 text-white shadow-lg mb-8 shrink-0">Enter Sanctuary</button>
             </div>
 
             <div id="screen-setup" class="hidden fixed inset-0 h-[100dvh] w-full z-[90] overflow-y-auto p-6 pb-16 flex flex-col bg-[#b4c7d9]">
                 <div class="flex items-center gap-4 mb-6 mt-8">
-                    <img src="picture/tsh.PNG" class="w-12 h-12 rounded-full border border-white/50" onerror="this.onerror=null; this.src='https://via.placeholder.com/50/ffffff/334155?text=TSH'">
+                    <img src="picture/tsh.PNG" class="w-12 h-12 rounded-full border border-white/50">
                     <h2 data-i18n="setup_title" class="font-cinzel text-2xl dark-gradient font-bold uppercase">Sanctuary Setup</h2>
                 </div>
                 
@@ -181,11 +180,11 @@
 
                 <div id="habit-inputs" class="space-y-4 mb-8"></div>
 
-                <button type="button" onclick="addHabitField()" class="flex items-center gap-2 text-slate-800 mb-8 text-xs font-bold uppercase tracking-widest bg-white/40 px-5 py-3 rounded-full w-max border border-white/60 shadow-sm hover:bg-white/60 mx-auto">
+                <button type="button" onclick="addHabitField()" class="flex items-center gap-2 text-slate-800 mb-8 text-xs font-bold uppercase tracking-widest bg-white/40 px-5 py-3 rounded-full w-max border border-white/60 mx-auto">
                     <i data-lucide="plus-circle" class="w-4 h-4"></i> <span data-i18n="setup_add_struggle">Add Struggle</span>
                 </button>
 
-                <button type="button" onclick="saveInitialSetup()" data-i18n="setup_confirm" class="w-full bg-white/60 hover:bg-white/80 text-slate-800 font-bold py-4 rounded-xl shadow-md transition-all mt-4 mb-12 uppercase tracking-widest text-sm border border-white">
+                <button type="button" onclick="saveInitialSetup()" data-i18n="setup_confirm" class="w-full bg-white/60 text-slate-800 font-bold py-4 rounded-xl shadow-md mt-4 mb-12 uppercase tracking-widest text-sm border border-white">
                     Confirm Commitment
                 </button>
             </div>
@@ -193,13 +192,13 @@
             <main id="screen-main" class="hidden flex-1 px-6 pt-8 max-w-[360px] mx-auto w-full space-y-5">
                 <header class="flex justify-between items-center mt-2 mb-5">
                     <div class="flex items-center gap-3">
-                        <img src="picture/tsh.PNG" class="w-8 h-8 rounded-full border border-white/50 shadow-sm" onerror="this.onerror=null; this.src='https://via.placeholder.com/40/ffffff/334155?text=TSH'">
+                        <img src="picture/tsh.PNG" class="w-8 h-8 rounded-full border border-white/50 shadow-sm">
                         <div>
                             <h1 data-i18n="main_war_room" class="font-cinzel text-base dark-gradient font-bold uppercase">War Room</h1>
                             <p id="date-display" class="text-[8px] uppercase tracking-widest text-slate-600 font-bold"></p>
                         </div>
                     </div>
-                    <button type="button" onclick="toggleSettings()" class="p-1.5 text-slate-700 hover:text-slate-900 bg-white/30 rounded-full shadow-sm">
+                    <button type="button" onclick="toggleSettings()" class="p-1.5 text-slate-700 bg-white/30 rounded-full shadow-sm">
                         <i data-lucide="settings" class="w-4 h-4"></i>
                     </button>
                 </header>
@@ -248,7 +247,7 @@
             </main>
 
             <div id="screen-support" class="hidden flex-1 p-6 overflow-y-auto pt-10 pb-32 relative">
-                <button type="button" onclick="showScreen('main')" class="absolute top-6 left-6 text-slate-700 bg-white/40 p-2 rounded-full z-[160] hover:bg-white/60 transition-colors shadow-sm"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
+                <button type="button" onclick="showScreen('main')" class="absolute top-6 left-6 text-slate-700 bg-white/40 p-2 rounded-full z-[160] shadow-sm"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
                 <h2 data-i18n="support_title" class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-2 mt-8 text-center">Lifelines</h2>
                 <p data-i18n="support_subtitle" class="text-slate-700 text-xs mb-8 italic font-medium text-center">You are never fighting alone.</p>
 
@@ -275,85 +274,13 @@
                 <div class="space-y-4">
                     <div class="card-glass p-5">
                         <h3 data-i18n="support_988_title" class="text-sm font-bold text-slate-800 mb-1">988 Suicide & Crisis Lifeline</h3>
-                        <p data-i18n="support_988_desc" class="text-[10px] text-slate-600 mb-4 leading-relaxed font-medium">A free, 24/7, confidential crisis line for suicidal thoughts, emotional distress, panic, or addiction crises.</p>
+                        <p data-i18n="support_988_desc" class="text-[10px] text-slate-600 mb-4 leading-relaxed font-medium">A free, 24/7, confidential crisis line...</p>
                         <div class="flex gap-2">
                             <a href="tel:988" class="flex-1 bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md"><i data-lucide="phone" class="w-3 h-3"></i> <span data-i18n="support_call">Call</span></a>
                             <a href="sms:988" class="flex-1 bg-white/80 text-slate-800 py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest border border-white shadow-md"><i data-lucide="message-circle" class="w-3 h-3"></i> <span data-i18n="support_text">Text</span></a>
                         </div>
                     </div>
-
-                    <div class="card-glass p-5">
-                        <h3 data-i18n="support_samhsa_title" class="text-sm font-bold text-slate-800 mb-1">SAMHSA National Helpline</h3>
-                        <p data-i18n="support_samhsa_desc" class="text-[10px] text-slate-600 mb-4 leading-relaxed font-medium">A free, 24/7, confidential hotline for those facing drug or alcohol addiction and mental health challenges.</p>
-                        <div class="flex gap-2">
-                            <a href="tel:8006624357" class="flex-1 bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md"><i data-lucide="phone" class="w-3 h-3"></i> <span data-i18n="support_call">Call</span></a>
-                            <a href="sms:8006624357" class="flex-1 bg-white/80 text-slate-800 py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest border border-white shadow-md"><i data-lucide="message-circle" class="w-3 h-3"></i> <span data-i18n="support_text">Text</span></a>
-                        </div>
                     </div>
-
-                    <div class="card-glass p-5">
-                        <h3 data-i18n="support_ndh_title" class="text-sm font-bold text-slate-800 mb-1">National Drug Helpline</h3>
-                        <p data-i18n="support_ndh_desc" class="text-[10px] text-slate-600 mb-4 leading-relaxed font-medium">A free, 24/7 hotline offering guidance for individuals struggling with drug or alcohol addiction.</p>
-                        <div class="flex gap-2">
-                            <a href="tel:8442890879" class="flex-1 bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md"><i data-lucide="phone" class="w-3 h-3"></i> <span data-i18n="support_call">Call</span></a>
-                            <a href="sms:8442890879" class="flex-1 bg-white/80 text-slate-800 py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest border border-white shadow-md"><i data-lucide="message-circle" class="w-3 h-3"></i> <span data-i18n="support_text">Text</span></a>
-                        </div>
-                    </div>
-
-                    <div class="card-glass p-5">
-                        <h3 data-i18n="support_na_title" class="text-sm font-bold text-slate-800 mb-1">Narcotics Anonymous</h3>
-                        <p data-i18n="support_na_desc" class="text-[10px] text-slate-600 mb-4 leading-relaxed font-medium">A support line to help find NA meetings and provide encouragement. Available via phone call only.</p>
-                        <a href="tel:8187739999" class="w-full bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md"><i data-lucide="phone" class="w-3 h-3"></i> <span data-i18n="support_call_helpline">Call Helpline</span></a>
-                    </div>
-
-                    <div class="card-glass p-5">
-                        <h3 data-i18n="support_aa_title" class="text-sm font-bold text-slate-800 mb-1">Alcoholics Anonymous</h3>
-                        <p data-i18n="support_aa_desc" class="text-[10px] text-slate-600 mb-4 leading-relaxed font-medium">A support line to help find AA meetings and regional information. Available via phone call only.</p>
-                        <a href="tel:2128703400" class="w-full bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md"><i data-lucide="phone" class="w-3 h-3"></i> <span data-i18n="support_call_aa">Call AA Office</span></a>
-                    </div>
-
-                    <div class="card-glass p-5">
-                        <h3 data-i18n="support_nua_title" class="text-sm font-bold text-slate-800 mb-1">Never Use Alone</h3>
-                        <p data-i18n="support_nua_desc" class="text-[10px] text-slate-600 mb-4 leading-relaxed font-medium">A free, 24/7 hotline for individuals using drugs alone to ensure they remain safe. Available via phone call only.</p>
-                        <a href="tel:8004843731" class="w-full bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md"><i data-lucide="phone" class="w-3 h-3"></i> <span data-i18n="support_call_support">Call Support</span></a>
-                    </div>
-
-                    <div class="card-glass p-5">
-                        <h3 data-i18n="support_bg_title" class="text-sm font-bold text-slate-800 mb-1">Billy Graham Prayer Line</h3>
-                        <p data-i18n="support_bg_desc" class="text-[10px] text-slate-600 mb-4 leading-relaxed font-medium">A free, 24/7 Christian prayer and spiritual support hotline. Available via phone call only.</p>
-                        <a href="tel:8883882683" class="w-full bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md"><i data-lucide="phone" class="w-3 h-3"></i> <span data-i18n="support_call_prayer">Call for Prayer</span></a>
-                    </div>
-
-                    <div class="card-glass p-5">
-                        <h3 data-i18n="support_jo_title" class="text-sm font-bold text-slate-800 mb-1">Joel Osteen Ministries</h3>
-                        <p data-i18n="support_jo_desc" class="text-[10px] text-slate-600 mb-4 leading-relaxed font-medium">A free, 24/7 Christian prayer hotline providing spiritual guidance. Available via phone call only.</p>
-                        <a href="tel:8885675635" class="w-full bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md"><i data-lucide="phone" class="w-3 h-3"></i> <span data-i18n="support_call_prayer">Call for Prayer</span></a>
-                    </div>
-
-                    <div class="card-glass p-5">
-                        <h3 data-i18n="support_ccm_title" class="text-sm font-bold text-slate-800 mb-1">Christian Care Ministry</h3>
-                        <p data-i18n="support_ccm_desc" class="text-[10px] text-slate-600 mb-4 leading-relaxed font-medium">A free Christian support line for prayer and encouragement. Available via phone call only.</p>
-                        <a href="tel:8005255683" class="w-full bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md"><i data-lucide="phone" class="w-3 h-3"></i> <span data-i18n="support_call_support">Call for Support</span></a>
-                    </div>
-
-                    <div class="card-glass p-5">
-                        <h3 data-i18n="support_su_title" class="text-sm font-bold text-slate-800 mb-1">Silent Unity Prayer Line</h3>
-                        <p data-i18n="support_su_desc" class="text-[10px] text-slate-600 mb-4 leading-relaxed font-medium">A free, 24/7 prayer hotline offering emotional and spiritual support. Available via phone call only.</p>
-                        <a href="tel:8169692000" class="w-full bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md"><i data-lucide="phone" class="w-3 h-3"></i> <span data-i18n="support_call_prayer">Call for Prayer</span></a>
-                    </div>
-
-                    <div class="card-glass p-5">
-                        <h3 data-i18n="support_ctl_title" class="text-sm font-bold text-slate-800 mb-1">Crisis Text Line</h3>
-                        <p data-i18n="support_ctl_desc" class="text-[10px] text-slate-600 mb-4 leading-relaxed font-medium">A free, 24/7 text-based crisis support service for emotional distress. Available via text only.</p>
-                        <a href="sms:741741?body=HOME" class="w-full bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md"><i data-lucide="message-circle" class="w-3 h-3"></i> <span data-i18n="support_text_home">Text HOME to 741741</span></a>
-                    </div>
-
-                    <div class="card-glass p-5">
-                        <h3 data-i18n="support_samhsa_text_title" class="text-sm font-bold text-slate-800 mb-1">SAMHSA Text Support</h3>
-                        <p data-i18n="support_samhsa_text_desc" class="text-[10px] text-slate-600 mb-4 leading-relaxed font-medium">A free text-based service for automated treatment resources. Available via text only.</p>
-                        <a href="sms:435748?body=HELP" class="w-full bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md"><i data-lucide="message-circle" class="w-3 h-3"></i> <span data-i18n="support_text_help">Text HELP to 435748</span></a>
-                    </div>
-                </div>
             </div>
 
             <div id="screen-vault" class="hidden flex-1 p-6 overflow-y-auto pt-10">
@@ -375,7 +302,7 @@
                     </div>
                     
                     <div class="flex justify-center gap-3 max-w-[280px] mx-auto">
-                        <button type="button" id="btn-start-record" onclick="startRecording()" class="flex-1 bg-white/60 py-4 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest text-slate-800 border border-white shadow-sm hover:bg-white/80 transition-colors">
+                        <button type="button" id="btn-start-record" onclick="startRecording()" class="flex-1 bg-white/60 py-4 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest text-slate-800 border border-white shadow-sm transition-colors">
                             <i data-lucide="circle" class="w-3 h-3 text-red-600 fill-red-600"></i> <span data-i18n="vault_record_btn">Record Voice</span>
                         </button>
                         
@@ -390,7 +317,7 @@
 
             <div id="screen-wall" class="hidden flex-1 p-6 overflow-y-auto pt-10">
                 <h2 data-i18n="wall_title" class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-2 mt-2">Wall of Wisdom</h2>
-                <p data-i18n="wall_subtitle" class="text-slate-700 text-xs mb-6 italic font-medium">Anonymous words of strength and love from the global sanctuary.</p>
+                <p data-i18n="wall_subtitle" class="text-slate-700 text-xs mb-6 italic font-medium">Anonymous footprints of strength and love from real people within this global sanctuary.</p>
 
                 <div class="bg-slate-800/10 border border-slate-800/20 p-3 rounded-xl mb-4 text-center">
                     <p data-i18n="wall_tap_instruction" class="text-[10px] text-slate-800 uppercase font-bold tracking-widest">
@@ -401,27 +328,27 @@
                 <div class="bg-white/40 border border-white/60 p-3 rounded-xl mb-4 flex gap-3 items-start shadow-sm">
                     <i data-lucide="info" class="w-4 h-4 text-slate-800 mt-0.5 shrink-0"></i>
                     <p class="text-[10px] text-slate-800 leading-relaxed font-medium">
-                        <strong data-i18n="wall_notice_prefix">Kindly note:</strong> <span data-i18n="wall_notice_text">Statements cannot be edited once posted. If you need a message removed, please email support@yaddof.dev with the exact text you'd like deleted, and I will happily assist you.</span>
+                        <strong data-i18n="wall_notice_prefix">Kindly note:</strong> <span data-i18n="wall_notice_text">Statements cannot be edited once posted. If you need a message removed, please email <a href="mailto:support@yaddof.dev" class="font-bold underline">support@yaddof.dev</a> with the exact text you'd like deleted.</span>
                     </p>
                 </div>
 
                 <div class="card-glass p-4 mb-8">
-                    <textarea id="wall-input" data-i18n-placeholder="wall_ph_input" placeholder="Share your truth, offer hope, or leave a prayer..." class="w-full rounded-xl p-3 text-sm shadow-inner bg-white/70 border border-white/80 focus:bg-white focus:border-slate-400 resize-none h-24 mb-3 outline-none text-slate-800 placeholder-slate-500"></textarea>
-                    <button type="button" onclick="postToWall()" class="w-full bg-slate-800 text-white font-bold py-3 rounded-xl shadow-lg uppercase tracking-widest text-[10px] flex items-center justify-center gap-2 hover:bg-slate-700 transition-colors">
-                        <i data-lucide="send" class="w-4 h-4"></i> <span data-i18n="wall_leave_mark">Leave your mark</span>
+                    <textarea id="wall-input" data-i18n-placeholder="wall_ph_input" placeholder="Share your truth..." class="w-full rounded-xl p-3 text-sm bg-white/70 h-24 mb-3 outline-none"></textarea>
+                    <button type="button" onclick="postToWall()" class="w-full bg-slate-800 text-white font-bold py-3 rounded-xl uppercase tracking-widest text-[10px] flex items-center justify-center gap-2">
+                        <i data-lucide="send" class="w-4 h-4"></i> <span data-i18n="wall_leave_mark">Leave your mark for others in need</span>
                     </button>
                 </div>
 
                 <div id="wall-feed" class="space-y-4 pb-16">
                     <div id="wall-placeholder" data-i18n="wall_loading" class="text-center text-slate-600 font-bold uppercase tracking-widest text-[10px] animate-pulse py-8">
-                        Loading global sanctuary...
+                        Loading sanctuary...
                     </div>
                 </div>
             </div>
         </div>
     </div> 
     
-    <nav id="app-nav" class="hidden fixed bottom-0 left-0 right-0 w-full bg-white/60 backdrop-blur-2xl border-t border-white/60 z-[90] shadow-[0_-10px_30px_rgba(0,0,0,0.05)] pb-5 pt-3">
+    <nav id="app-nav" class="hidden fixed bottom-0 left-0 right-0 w-full bg-white/60 backdrop-blur-2xl border-t border-white/60 z-[90] pb-5 pt-3">
         <div class="max-w-md mx-auto w-full flex items-center justify-around px-2">
             <button type="button" onclick="showScreen('main')" class="nav-link flex flex-col items-center gap-1 text-slate-500 w-20" data-nav="main">
                 <i data-lucide="layout-dashboard" class="w-6 h-6"></i>
@@ -438,28 +365,16 @@
         </div>
     </nav>
 
-    <div id="tutorial-step" class="hidden fixed inset-0 h-[100dvh] w-full z-[200] flex flex-col items-center justify-center p-8 text-center bg-[#b4c7d9]">
-        <img src="picture/tsh.PNG" class="w-24 h-24 rounded-full border-4 border-white mb-6 shadow-2xl" onerror="this.onerror=null; this.src='https://via.placeholder.com/150/ffffff/334155?text=TSH'">
-        <h2 id="tut-title" class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-4">Welcome</h2>
-        <p id="tut-desc" class="text-slate-800 leading-relaxed mb-10 text-sm font-semibold"></p>
-        <button type="button" onclick="nextTutorialStep()" data-i18n="welcome_continue" class="w-full bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg hover:bg-white transition-colors">Continue</button>
-    </div>
-
-    <div id="urge-overlay" class="hidden fixed inset-0 h-[100dvh] w-full z-[150] flex flex-col p-8 overflow-y-auto bg-[#b4c7d9]">
-        <button type="button" onclick="closeUrgeEngine()" class="absolute top-10 right-6 text-slate-700 bg-white/40 p-2 rounded-full z-[160] hover:bg-white/60 transition-colors shadow-sm"><i data-lucide="x" class="w-6 h-6"></i></button>
-        <div id="urge-content" class="flex-1 flex flex-col items-center justify-center text-center space-y-8 mt-12"></div>
-    </div>
-
     <div id="modal-settings" class="hidden fixed inset-0 z-[300] bg-slate-800/80 backdrop-blur-md flex items-center justify-center p-6">
         <div class="card-glass w-full p-8 space-y-6 max-h-[80vh] overflow-y-auto">
             <div class="flex items-center gap-3 border-b border-slate-400 pb-4">
-                <img src="picture/tsh.PNG" class="w-8 h-8 rounded-full border border-white shadow-sm" onerror="this.onerror=null; this.src='https://via.placeholder.com/32/ffffff/334155?text=T'">
+                <img src="picture/tsh.PNG" class="w-8 h-8 rounded-full border border-white shadow-sm">
                 <h3 data-i18n="settings_title" class="font-cinzel text-lg dark-gradient font-bold uppercase tracking-widest">TSH Sanctum</h3>
             </div>
             
             <div class="space-y-4 mb-4">
                 <label class="text-[10px] uppercase tracking-widest font-bold text-slate-600 block">Language / Idioma</label>
-                <select onchange="changeLanguage(this.value)" class="lang-selector w-full bg-white/60 border border-white/80 rounded-xl p-3 text-sm font-bold text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-400 appearance-none text-center">
+                <select onchange="changeLanguage(this.value)" class="lang-selector w-full bg-white/60 border border-white/80 rounded-xl p-3 text-sm font-bold text-slate-800 shadow-sm focus:outline-none appearance-none text-center">
                     <option value="en">English</option>
                     <option value="es">Español (Spanish)</option>
                     <option value="fr">Français (French)</option>
@@ -480,69 +395,33 @@
             </div>
 
             <div class="space-y-4">
-                <button type="button" onclick="resetTutorial()" class="w-full text-left p-4 bg-white/40 border border-white/60 rounded-xl text-slate-800 flex items-center justify-between font-bold hover:bg-white/60 transition-colors shadow-sm">
+                <button type="button" onclick="resetTutorial()" class="w-full text-left p-4 bg-white/40 border border-white/60 rounded-xl text-slate-800 flex items-center justify-between font-bold shadow-sm">
                     <span data-i18n="settings_watch_tut">Watch Tutorial Again</span>
                     <i data-lucide="help-circle" class="w-5 h-5"></i>
                 </button>
-                <button type="button" onclick="resetApp()" class="w-full text-left p-4 bg-red-100/80 border border-red-300 rounded-xl text-red-800 flex items-center justify-between font-bold hover:bg-red-200 transition-colors shadow-sm">
+                <a href="privacy.html" target="_blank" class="w-full text-left p-4 bg-white/40 border border-white/60 rounded-xl text-slate-800 flex items-center justify-between font-bold text-xs uppercase tracking-widest shadow-sm">
+                    <span>Privacy Policy</span>
+                    <i data-lucide="external-link" class="w-4 h-4"></i>
+                </a>
+                <a href="tos.html" target="_blank" class="w-full text-left p-4 bg-white/40 border border-white/60 rounded-xl text-slate-800 flex items-center justify-between font-bold text-xs uppercase tracking-widest shadow-sm">
+                    <span>Terms of Service</span>
+                    <i data-lucide="external-link" class="w-4 h-4"></i>
+                </a>
+                <button type="button" onclick="resetApp()" class="w-full text-left p-4 bg-red-100/80 border border-red-300 rounded-xl text-red-800 flex items-center justify-between font-bold shadow-sm">
                     <span data-i18n="settings_reset">Reset Sanctuary</span>
                     <i data-lucide="trash-2" class="w-5 h-5"></i>
                 </button>
-                <button type="button" onclick="toggleSettings()" data-i18n="settings_return" class="w-full py-4 bg-slate-800 hover:bg-slate-700 rounded-xl text-white font-bold uppercase tracking-widest text-xs shadow-lg transition-colors">Return</button>
+                <button type="button" onclick="toggleSettings()" data-i18n="settings_return" class="w-full py-4 bg-slate-800 rounded-xl text-white font-bold uppercase tracking-widest text-xs shadow-lg transition-colors">Return</button>
             </div>
         </div>
     </div>
 
     <script>
         const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-        
-        if (isStandalone) {
-            document.getElementById('pwa-continue-text').classList.remove('hidden');
-        } else {
-            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-            const isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
-            
-            if (isIOS && isSafari) {
-                document.getElementById('ios-install-hint').classList.remove('hidden');
-            }
-        }
-
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js').then((registration) => {
-                    console.log('ServiceWorker registration successful');
-                }).catch((error) => {
-                    console.log('ServiceWorker registration failed: ', error);
-                });
-            });
-        }
-
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault(); 
-            deferredPrompt = e; 
-            
-            const installBtn = document.getElementById('btn-install-app');
-            if (installBtn && !isStandalone) {
-                installBtn.classList.remove('hidden');
-                
-                installBtn.addEventListener('click', async () => {
-                    installBtn.classList.add('hidden');
-                    deferredPrompt.prompt();
-                    
-                    const { outcome } = await deferredPrompt.userChoice;
-                    console.log(`User response to the install prompt: ${outcome}`);
-                    deferredPrompt = null;
-                });
-            }
-        });
-
-        window.addEventListener('appinstalled', () => {
-            const installBtn = document.getElementById('btn-install-app');
-            if (installBtn) installBtn.classList.add('hidden');
-            deferredPrompt = null;
-            console.log('PWA was installed');
-        });
+        if (isStandalone) { document.getElementById('pwa-continue-text').classList.remove('hidden'); } else { const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream; const isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent); if (isIOS && isSafari) { document.getElementById('ios-install-hint').classList.remove('hidden'); } }
+        if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').then((registration) => { console.log('ServiceWorker registration successful'); }).catch((error) => { console.log('ServiceWorker registration failed: ', error); }); }); }
+        let deferredPrompt; window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; const installBtn = document.getElementById('btn-install-app'); if (installBtn && !isStandalone) { installBtn.classList.remove('hidden'); installBtn.addEventListener('click', async () => { installBtn.classList.add('hidden'); deferredPrompt.prompt(); const { outcome } = await deferredPrompt.userChoice; deferredPrompt = null; }); } });
+        window.addEventListener('appinstalled', () => { const installBtn = document.getElementById('btn-install-app'); if (installBtn) installBtn.classList.add('hidden'); deferredPrompt = null; });
     </script>
 </body>
 </html>
