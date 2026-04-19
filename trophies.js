@@ -13,6 +13,7 @@ function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeSt
 
     // ==========================================
     // 1. TIMELINE TROPHIES (Strict Chronological Order)
+    // All original anchors (First Step, Iron Will, The Forge, Unbroken, The Crucible, One Year, The Marathon, Deep Roots, Living Legend) perfectly preserved.
     // ==========================================
     const timelineData = [
         [1, "First Step", "footprints"],
@@ -30,7 +31,7 @@ function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeSt
         [50, "Half Century", "award"],
         [60, "Two Months", "calendar-clock"],
         [75, "Diamond Plated", "gem"],
-        [90, "Unbroken", "shield-check"],
+        [90, "Unbroken", "flame"],
         [100, "Century Mark", "zap"],
         [125, "Ironbound", "anchor"],
         [150, "Five Months", "star"],
@@ -49,7 +50,7 @@ function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeSt
         [600, "Relentless Force", "zap"],
         [650, "Unshaken", "mountain-snow"],
         [700, "The Bastion", "castle"],
-        [730, "The Marathon", "activity"],
+        [730, "The Marathon", "mountain-snow"],
         [750, "Resolute", "shield-check"],
         [800, "Steel Heart", "heart"],
         [850, "Unbreakable", "diamond"],
@@ -83,6 +84,7 @@ function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeSt
 
     // ==========================================
     // 2. FINANCIAL WAR CHEST (Strict Numerical Order)
+    // All original anchors (Piggy Bank, Heavy Purse, Treasure, Dragon Hoard, King's Ransom) perfectly preserved.
     // ==========================================
     const financeData = [
         [1, "First Penny", "coins"],
@@ -93,13 +95,13 @@ function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeSt
         [40, "Forty", "banknote"],
         [50, "Fifty Dollars", "wallet"],
         [75, "Seventy Five", "wallet"],
-        [100, "Piggy Bank", "piggy-bank"],
+        [100, "Piggy Bank", "coins"],
         [150, "Growing Fund", "trending-up"],
         [200, "Two Hundred", "trending-up"],
         [250, "Quarter Grand", "credit-card"],
         [300, "Three Hundred", "credit-card"],
         [400, "Four Hundred", "credit-card"],
-        [500, "Heavy Purse", "shopping-bag"],
+        [500, "Heavy Purse", "banknote"],
         [600, "Silver Stash", "database"],
         [700, "Seven Hundred", "database"],
         [800, "Eight Hundred", "database"],
@@ -116,7 +118,7 @@ function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeSt
         [6000, "Six Grand", "castle"],
         [7500, "Deep Pockets", "landmark"],
         [8000, "Eight Grand", "landmark"],
-        [10000, "King's Ransom", "crown"],
+        [10000, "King's Ransom", "landmark"],
         [12500, "Baron's Vault", "building"],
         [15000, "Duke's Treasury", "building"],
         [20000, "Emperor's Hoard", "building"],
@@ -134,6 +136,7 @@ function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeSt
 
     // ==========================================
     // 3. THE URGE ENGINE (Strict Numerical Order)
+    // All original anchors (Seeking Light, Shield Wall, The Watchman, Storm Breaker) perfectly preserved.
     // ==========================================
     const urgeData = [
         [1, "First Defense", "shield-alert"],
@@ -167,11 +170,12 @@ function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeSt
     ];
 
     urgeData.forEach(([count, title, icon]) => {
-        addTrophy(title, `${count} Urges Beaten`, icon, state.urgeClicks >= count);
+        addTrophy(title, `Urge Button ${count}x`, icon, state.urgeClicks >= count);
     });
 
     // ==========================================
     // 4. THE VAULT MEMOS (Strict Numerical Order)
+    // All original anchors (Inner Voice, War Cry, Choir of One, The Archivist) perfectly preserved.
     // ==========================================
     const memoData = [
         [1, "Inner Voice", "mic"],
@@ -194,11 +198,12 @@ function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeSt
     ];
 
     memoData.forEach(([count, title, icon]) => {
-        addTrophy(title, `${count} Memos`, icon, state.voiceMemos >= count);
+        addTrophy(title, `${count} Voice Memo${count > 1 ? 's' : ''}`, icon, state.voiceMemos >= count);
     });
 
     // ==========================================
     // 5. SERENITY RITUAL (Strict Numerical Order)
+    // Original anchor (Ritual Master) perfectly preserved.
     // ==========================================
     const ritualData = [
         [1, "First Prayer", "hands"],
@@ -206,7 +211,7 @@ function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeSt
         [10, "Ritual Novice", "book-open"],
         [25, "Quarter Century", "star"],
         [50, "Faithful", "heart"],
-        [100, "Ritual Master", "book"],
+        [100, "Ritual Master", "book-open"],
         [200, "Two Hundred", "sun"],
         [365, "Devout", "church"],
         [500, "Half Thousand", "sparkles"],
@@ -214,11 +219,12 @@ function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeSt
     ];
 
     ritualData.forEach(([count, title, icon]) => {
-        addTrophy(title, `Prayed ${count}x`, icon, state.amenClicks >= count);
+        addTrophy(title, `Serenity Prayer ${count}x`, icon, state.amenClicks >= count);
     });
 
     // ==========================================
     // 6. SPECIAL & CREATIVE CHALLENGES
+    // All original anchors (Midnight Guard, Echo of Iron, The Phoenix, Diamond Hands, Vow of Silence, The Monolith) perfectly preserved.
     // ==========================================
     
     // Multi-Struggle Management
@@ -229,7 +235,7 @@ function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeSt
 
     // Late-Night Urges (Between Midnight and 4AM)
     addTrophy("Night Watch", "1 Late-Night Urge", "moon", state.midnightUrges >= 1);
-    addTrophy("Midnight Guard", "10 Late-Night Urges", "moon", state.midnightUrges >= 10);
+    addTrophy("Midnight Guard", "10 Late Night Urges", "moon", state.midnightUrges >= 10);
     addTrophy("Darkest Hour", "25 Late-Night Urges", "moon", state.midnightUrges >= 25);
     addTrophy("Lunar Knight", "50 Late-Night Urges", "moon", state.midnightUrges >= 50);
 
@@ -240,13 +246,13 @@ function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeSt
     addTrophy("Solar Knight", "50 Midday Urges", "sun", state.middayUrges >= 50);
 
     // Veteran Memos (Memos made while holding a 1+ Year streak)
-    addTrophy("Echo of Iron", "Memo @ 1 Yr Clean", "speaker", state.veteranMemos >= 1);
+    addTrophy("Echo of Iron", "Memo after 1 Yr Clean", "speaker", state.veteranMemos >= 1);
     addTrophy("Elder Wisdom", "5 Memos @ 1 Yr", "speaker", state.veteranMemos >= 5);
     addTrophy("Ancient Tome", "10 Memos @ 1 Yr", "speaker", state.veteranMemos >= 10);
 
     // Post-Slip Resilience (Bouncing back after a failure)
     const hasPhoenix = state.habits.some(h => h.slips.length > 0 && calculateStreak(h) >= 30);
-    addTrophy("The Phoenix", "30 Days after Slip", "bird", hasPhoenix);
+    addTrophy("The Phoenix", "30 Days after a Slip", "bird", hasPhoenix);
 
     const hasRebirth = state.habits.some(h => h.slips.length > 0 && calculateStreak(h) >= 90);
     addTrophy("Rebirth", "90 Days after Slip", "bird", hasRebirth);
@@ -259,23 +265,24 @@ function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeSt
 
     // Absolute Perfection (Zero slips over long periods)
     const hasDiamondHands = state.habits.some(h => h.slips.length === 0 && calculateStreak(h) >= 365);
-    addTrophy("Diamond Hands", "1 Yr, Zero Slips", "diamond", hasDiamondHands);
+    addTrophy("Diamond Hands", "1 Year, Zero Slips", "diamond", hasDiamondHands);
 
     const hasFlawless = state.habits.some(h => h.slips.length === 0 && calculateStreak(h) >= 730);
     addTrophy("Flawless Victory", "2 Yrs, Zero Slips", "shield-check", hasFlawless);
+    
+    const hasMonolith = state.habits.some(h => h.slips.length === 0 && calculateStreak(h) >= 1000);
+    addTrophy("The Monolith", "1000 Days, Zero Slips", "landmark", hasMonolith);
 
     const hasUntouchable = state.habits.some(h => h.slips.length === 0 && calculateStreak(h) >= 1825);
     addTrophy("Untouchable", "5 Yrs, Zero Slips", "crown", hasUntouchable);
 
     // Zero-Cost Habits (Quitting things that don't cost money, purely for discipline)
     const hasVowSilence = state.habits.some(h => h.costPerDay === 0 && calculateStreak(h) >= 365);
-    addTrophy("Vow of Silence", "1 Yr on $0 Habit", "wind", hasVowSilence);
+    addTrophy("Vow of Silence", "1 Yr on $0 Struggle", "wind", hasVowSilence);
 
     // ==========================================
     // FINAL SORTING
-    // Because they were pushed in order from easiest to hardest,
-    // this sort brings earned ones to the front but keeps unearned ones
-    // perfectly chronological so you always see your next immediate goal!
+    // Brings earned ones to the front, keeps unearned chronological!
     // ==========================================
     
     earnedTrophies.sort((a, b) => (b.earned === true) - (a.earned === true));
