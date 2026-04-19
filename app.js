@@ -1,6 +1,55 @@
 // --- CLOUDFLARE PAGES FUNCTION API URL ---
 const WORKER_API_URL = "/api/messages";
 
+// --- i18n Merge & Translation Engine ---
+if (typeof translations !== 'undefined' && typeof translations2 !== 'undefined') {
+    for (const lang in translations2) {
+        translations[lang] = translations2[lang];
+    }
+}
+
+function changeLanguage(langCode) {
+    localStorage.setItem('tsh_language', langCode);
+    window.location.reload();
+}
+
+function applyTranslations() {
+    if (typeof translations === 'undefined') return;
+    
+    // Ensure currentLang is set (falls back to English if something goes wrong)
+    const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
+    const langData = translations[activeLang] || translations['en'];
+    const fallbackData = translations['en'];
+
+    // Translate standard text elements
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        const translatedText = langData[key] || fallbackData[key];
+        if (translatedText) {
+            el.innerText = translatedText;
+        }
+    });
+
+    // Translate input placeholders
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        const translatedText = langData[key] || fallbackData[key];
+        if (translatedText) {
+            el.placeholder = translatedText;
+        }
+    });
+
+    // --- NEW LOGIC: Sync ALL language dropdown UIs across the app ---
+    document.querySelectorAll('.lang-selector').forEach(select => {
+        select.value = activeLang;
+    });
+
+    // Refresh icons so they aren't destroyed by text replacement
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+}
+
 // --- Core State & DB ---
 let db;
 const dbRequest = indexedDB.open("TSH_Database", 4);
@@ -35,11 +84,12 @@ let state = {
     safetyContact: { name: "", phone: "" }
 };
 
+// Refactored Tutorial Array with Dictionary Keys
 const tutorialSteps =[
-    { title: "The War Room", desc: "This is TSH Command. Level up through ranks and earn trophies as you rebuild your life.", icon: "layout-dashboard" },
-    { title: "The Urge Engine", desc: "In moments of crisis, trigger the Engine to draw upon the Word or your personal vault recordings.", icon: "shield-alert" },
-    { title: "The Vault", desc: "Record your own voice when you are strong. These notes become your shield during future urges.", icon: "lock" },
-    { title: "The Wall", desc: "Share anonymous wisdom or read words of encouragement left by others on the same journey.", icon: "globe" }
+    { titleKey: "tut_1_title", descKey: "tut_1_desc", defaultTitle: "The War Room", defaultDesc: "This is TSH Command. Level up through ranks and earn trophies as you rebuild your life.", icon: "layout-dashboard" },
+    { titleKey: "tut_2_title", descKey: "tut_2_desc", defaultTitle: "The Urge Engine", defaultDesc: "In moments of crisis, trigger the Engine to draw upon the Word or your personal vault recordings.", icon: "shield-alert" },
+    { titleKey: "tut_3_title", descKey: "tut_3_desc", defaultTitle: "The Vault", defaultDesc: "Record your own voice when you are strong. These notes become your shield during future urges.", icon: "lock" },
+    { titleKey: "tut_4_title", descKey: "tut_4_desc", defaultTitle: "The Wall", defaultDesc: "Share anonymous wisdom or read words of encouragement left by others on the same journey.", icon: "globe" }
 ];
 
 const rankTiers =[
@@ -96,11 +146,11 @@ function init() {
         else showScreen('welcome');
     }
 
+    applyTranslations();
     updateDate();
     renderDashboard();
     renderSafetyContact();
 
-    // Dynamically refresh the dashboard so Trophies pop instantly at midnight or when switching apps
     const refreshDashboardIfVisible = () => {
         if (!document.getElementById('screen-main').classList.contains('hidden')) {
             updateDate();
@@ -109,7 +159,7 @@ function init() {
     };
     
     window.addEventListener('focus', refreshDashboardIfVisible);
-    setInterval(refreshDashboardIfVisible, 60000); // Check automatically every 60 seconds
+    setInterval(refreshDashboardIfVisible, 60000); 
 }
 
 function showScreen(screen) {
@@ -138,7 +188,6 @@ function showScreen(screen) {
     if (screen === 'support') renderSafetyContact();
     
     if (screen === 'main') {
-        // Ensures Trophies and Ranks update the second you navigate to the War Room
         updateDate();
         renderDashboard();
         if (state.tutorialStep === 0 || state.tutorialStep === undefined) {
@@ -148,7 +197,6 @@ function showScreen(screen) {
     
     lucide.createIcons();
 
-    // Reset scroll position to top gracefully
     setTimeout(() => {
         window.scrollTo({ top: 0, behavior: 'instant' }); 
         if (targetEl) targetEl.scrollTop = 0; 
@@ -169,8 +217,14 @@ function nextTutorialStep() {
         return;
     }
     const step = tutorialSteps[state.tutorialStep];
-    document.getElementById('tut-title').innerText = step.title;
-    document.getElementById('tut-desc').innerText = step.desc;
+    
+    const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
+    const langData = typeof translations !== 'undefined' ? (translations[activeLang] || translations['en']) : {};
+    const fallbackData = typeof translations !== 'undefined' ? translations['en'] : {};
+
+    document.getElementById('tut-title').innerText = langData[step.titleKey] || fallbackData[step.titleKey] || step.defaultTitle;
+    document.getElementById('tut-desc').innerText = langData[step.descKey] || fallbackData[step.descKey] || step.defaultDesc;
+    
     state.tutorialStep++;
     lucide.createIcons();
 }
@@ -186,14 +240,22 @@ function addHabitField() {
     const div = document.createElement('div');
     div.className = 'card-glass p-4 space-y-3 relative';
     
+    const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
+    const langData = typeof translations !== 'undefined' ? (translations[activeLang] || translations['en']) : {};
+    const fallbackData = typeof translations !== 'undefined' ? translations['en'] : {};
+    
+    const phStruggle = langData['setup_ph_struggle'] || fallbackData['setup_ph_struggle'] || "Struggle (e.g. Nicotine)";
+    const phCost = langData['setup_ph_cost'] || fallbackData['setup_ph_cost'] || "Daily Financial Cost ($)";
+    const lblMain = langData['setup_main_label'] || fallbackData['setup_main_label'] || "Main Struggle (Affects Rank)";
+
     div.innerHTML = `
         <button onclick="this.parentElement.remove()" class="absolute -top-2 -right-2 bg-slate-700 text-white rounded-full p-1.5 shadow-md hover:bg-red-600 transition-colors"><i data-lucide="x" class="w-3 h-3"></i></button>
-        <input type="text" placeholder="Struggle (e.g. Nicotine)" class="habit-name w-full rounded-lg p-3 text-sm uppercase font-bold tracking-wider shadow-inner">
-        <input type="number" placeholder="Daily Financial Cost ($)" class="habit-cost w-full rounded-lg p-3 text-sm shadow-inner" min="0">
+        <input type="text" placeholder="${escapeHTML(phStruggle)}" class="habit-name w-full rounded-lg p-3 text-sm uppercase font-bold tracking-wider shadow-inner">
+        <input type="number" placeholder="${escapeHTML(phCost)}" class="habit-cost w-full rounded-lg p-3 text-sm shadow-inner" min="0">
         <div class="flex items-center justify-between mt-2 px-1">
             <label class="text-[10px] uppercase font-bold text-slate-700 flex items-center gap-2 cursor-pointer">
                 <input type="checkbox" class="habit-main w-4 h-4 rounded border-slate-400 text-slate-800 focus:ring-slate-800" checked>
-                Main Struggle (Affects Rank)
+                ${escapeHTML(lblMain)}
             </label>
         </div>
     `;
@@ -232,7 +294,6 @@ async function saveInitialSetup() {
     renderDashboard();
 }
 
-// Fixed Amen Click Function
 function clickAmen() {
     if (navigator.vibrate) navigator.vibrate([40, 60, 40]);
     state.amenClicks = (state.amenClicks || 0) + 1;
@@ -242,7 +303,6 @@ function clickAmen() {
     showScreen('main');
 }
 
-// --- Personal Safety Contact Logic ---
 function saveSafetyContact() {
     const name = document.getElementById('safety-name').value;
     const phone = document.getElementById('safety-phone').value;
@@ -287,6 +347,11 @@ function renderDashboard() {
     let totalSavedValue = 0;
     let activeStrugglesCount = 0;
     
+    const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
+    const langData = typeof translations !== 'undefined' ? (translations[activeLang] || translations['en']) : {};
+    const fallbackData = typeof translations !== 'undefined' ? translations['en'] : {};
+    const getI18n = (key) => langData[key] || fallbackData[key] || key;
+    
     state.habits.forEach(habit => {
         const streakDays = calculateStreak(habit);
         const cleanDays = calculateTotalCleanDays(habit);
@@ -296,8 +361,8 @@ function renderDashboard() {
         if (streakDays > 0) activeStrugglesCount++;
         
         const tagHTML = habit.isMain 
-            ? `<span class="text-[8px] bg-slate-800 text-white px-2 py-0.5 rounded-full tracking-widest ml-2 align-middle">MAIN</span>`
-            : `<span class="text-[8px] bg-slate-400 text-white px-2 py-0.5 rounded-full tracking-widest ml-2 align-middle">SECONDARY</span>`;
+            ? `<span class="text-[8px] bg-slate-800 text-white px-2 py-0.5 rounded-full tracking-widest ml-2 align-middle">${escapeHTML(getI18n('explanation_main_badge'))}</span>`
+            : `<span class="text-[8px] bg-slate-400 text-white px-2 py-0.5 rounded-full tracking-widest ml-2 align-middle">${escapeHTML(getI18n('explanation_sec_badge'))}</span>`;
 
         const div = document.createElement('div');
         div.className = 'card-glass p-5';
@@ -305,16 +370,15 @@ function renderDashboard() {
             <div class="flex justify-between items-start mb-4">
                 <div>
                     <h3 class="text-slate-800 font-cinzel text-sm uppercase tracking-widest font-bold mb-1 flex items-center">${escapeHTML(habit.name)} ${tagHTML}</h3>
-                    <p class="text-3xl font-bold text-slate-800">${streakDays} <span class="text-[10px] text-slate-600 uppercase tracking-tighter ml-1 font-semibold">Days Won</span></p>
+                    <p class="text-3xl font-bold text-slate-800">${streakDays} <span class="text-[10px] text-slate-600 uppercase tracking-tighter ml-1 font-semibold">${escapeHTML(getI18n('dash_days_won'))}</span></p>
                 </div>
-                <button onclick="logSlip('${habit.id}')" class="text-[10px] uppercase font-bold text-slate-700 border border-slate-400 bg-white/50 px-3 py-2 rounded-full active:bg-slate-200 transition-colors shadow-sm">Log Slip</button>
+                <button onclick="logSlip('${habit.id}')" class="text-[10px] uppercase font-bold text-slate-700 border border-slate-400 bg-white/50 px-3 py-2 rounded-full active:bg-slate-200 transition-colors shadow-sm">${escapeHTML(getI18n('dash_log_slip'))}</button>
             </div>
             <div class="bg-white/60 h-2 rounded-full overflow-hidden shadow-inner"><div class="bg-slate-700 h-full" style="width: ${calculateSuccessRate(habit)}%"></div></div>
         `;
         container.appendChild(div);
     });
     
-    // --- TIMELINE MATH ---
     const mainHabits = state.habits.filter(h => h.isMain);
     let currentMainStreak = 0;
     
@@ -343,7 +407,6 @@ function renderDashboard() {
         daysText = `${currentMainStreak} / ${nextRank.daysReq} Days`;
     }
 
-    // Clamp progress to logical limits (0 - 100)
     progressPct = Math.max(0, Math.min(100, progressPct));
 
     document.getElementById('rank-name').innerText = currentRank.name;
@@ -351,7 +414,6 @@ function renderDashboard() {
     document.getElementById('rank-progress').style.width = `${progressPct}%`;
     document.getElementById('total-saved').innerText = `$${totalSavedValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
-    // Safely attempt to generate trophies if external file is present
     const trophies = typeof generateAllTrophies === 'function' ? generateAllTrophies(state, currentMainStreak, totalSavedValue, activeStrugglesCount, calculateStreak) :[];
 
     const trophyContainer = document.getElementById('trophy-case');
@@ -365,7 +427,6 @@ function renderDashboard() {
     
     lucide.createIcons();
 
-    // --- FALLBACK FOR MISSING ICONS ---
     const missingIcons = document.querySelectorAll('#trophy-case i[data-lucide]');
     if (missingIcons.length > 0) {
         missingIcons.forEach(el => el.setAttribute('data-lucide', 'award'));
@@ -392,7 +453,7 @@ async function startRecording() {
         mediaRecorder.ondataavailable = e => { if(e.data.size > 0) chunks.push(e.data); };
         mediaRecorder.onstop = () => {
             if (chunks.length === 0) return;
-            const mimeType = mediaRecorder.mimeType || ''; // Let Blob infer if empty to avoid safari crash
+            const mimeType = mediaRecorder.mimeType || ''; 
             const b = new Blob(chunks, mimeType ? { type: mimeType } : undefined);
             const t = db.transaction(["videos"], "readwrite");
             t.objectStore("videos").add({ blob: b, date: new Date().toISOString() });
@@ -471,11 +532,9 @@ let lastAudioId = -1;
 async function triggerUrgeEngine() {
     const currentHour = new Date().getHours();
     
-    // Track Late-Night Urges (Midnight to 4 AM)
     if (currentHour >= 0 && currentHour < 4) {
         state.midnightUrges = (state.midnightUrges || 0) + 1;
     } 
-    // Track Midday Urges (11 AM to 2 PM)
     else if (currentHour >= 11 && currentHour <= 14) {
         state.middayUrges = (state.middayUrges || 0) + 1;
     }
@@ -488,7 +547,7 @@ async function triggerUrgeEngine() {
     const c = document.getElementById('urge-content');
     
     const vaultAudios = await new Promise(r => {
-        if (!db) return r([]); // Fast exit if DB failed to mount
+        if (!db) return r([]); 
         const res =[]; 
         db.transaction("videos").objectStore("videos").openCursor().onsuccess = e => {
             if(e.target.result) { res.push(e.target.result.value); e.target.result.continue(); } else r(res);
@@ -527,10 +586,9 @@ async function triggerUrgeEngine() {
             <p class="text-[10px] text-slate-600 uppercase font-bold tracking-widest mt-8">Breathe and Listen</p>
         `;
     } else {
-        // Fallback robust logic incase verses.js is somehow blocked
-        const safeScriptures = (typeof scriptures !== 'undefined' && scriptures.length > 0) 
-            ? scriptures 
-            :[{text: "Breathe. Focus on your strength. You can overcome this.", ref: "The Steady Hand"}];
+        const safeScriptures = (typeof scriptures !== 'undefined' && typeof currentLang !== 'undefined' && scriptures[currentLang] && scriptures[currentLang].length > 0) 
+            ? scriptures[currentLang] 
+            : (typeof scriptures !== 'undefined' && scriptures['en'] ? scriptures['en'] : [{text: "Breathe. Focus on your strength. You can overcome this.", ref: "The Steady Hand"}]);
 
         let nextIndex = Math.floor(Math.random() * safeScriptures.length);
         while (nextIndex === lastVerseIndex && safeScriptures.length > 1) {
@@ -552,11 +610,13 @@ async function triggerUrgeEngine() {
 // --- WALL OF WISDOM LOGIC ---
 async function loadWallMessages() {
     const feed = document.getElementById('wall-feed');
-    // Using an explicit ID so postToWall knows exactly what to safely remove
     feed.innerHTML = '<div id="wall-placeholder" class="text-center text-slate-600 font-bold uppercase tracking-widest text-[10px] animate-pulse py-8">Loading global sanctuary...</div>';
     
     try {
-        const res = await fetch(WORKER_API_URL);
+        // Appending the user's language preference dynamically to trigger Cloudflare AI
+        const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
+        const res = await fetch(`${WORKER_API_URL}?lang=${activeLang}`);
+        
         if (!res.ok) throw new Error("Network response was not ok");
         const messages = await res.json();
         
@@ -591,7 +651,6 @@ async function postToWall() {
     const feed = document.getElementById('wall-feed');
     const placeholder = document.getElementById('wall-placeholder');
     
-    // Safely remove only the placeholder message, completely ignoring other wall posts
     if (placeholder) {
         placeholder.remove();
     }
