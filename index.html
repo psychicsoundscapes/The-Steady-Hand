@@ -66,7 +66,29 @@
             </div>
 
             <div id="screen-welcome" class="hidden fixed inset-0 h-[100dvh] w-full z-[95] flex flex-col items-center justify-center p-8 pb-16 text-center bg-[#b4c7d9] overflow-y-auto">
-                <img src="picture/tsh.PNG" class="w-28 h-28 mx-auto mb-8 mt-4 logo-glow rounded-full shadow-2xl shrink-0" onerror="this.onerror=null; this.src='https://via.placeholder.com/150/ffffff/334155?text=TSH'">
+                <img src="picture/tsh.PNG" class="w-28 h-28 mx-auto mb-6 mt-4 logo-glow rounded-full shadow-2xl shrink-0" onerror="this.onerror=null; this.src='https://via.placeholder.com/150/ffffff/334155?text=TSH'">
+                
+                <div class="w-full max-w-xs mb-6 shrink-0">
+                    <select onchange="changeLanguage(this.value)" class="lang-selector w-full bg-white/60 border border-white/80 rounded-xl p-3 text-sm font-bold text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-400 appearance-none text-center">
+                        <option value="en">English</option>
+                        <option value="es">Español (Spanish)</option>
+                        <option value="fr">Français (French)</option>
+                        <option value="de">Deutsch (German)</option>
+                        <option value="zh">中文 (Mandarin)</option>
+                        <option value="hi">हिन्दी (Hindi)</option>
+                        <option value="ar">العربية (Arabic)</option>
+                        <option value="pt">Português (Portuguese)</option>
+                        <option value="ru">Русский (Russian)</option>
+                        <option value="ja">日本語 (Japanese)</option>
+                        <option value="he">עברית (Hebrew)</option>
+                        <option value="tl">Tagalog (Filipino)</option>
+                        <option value="it">Italiano (Italian)</option>
+                        <option value="ko">한국어 (Korean)</option>
+                        <option value="pl">Polski (Polish)</option>
+                        <option value="sw">Kiswahili (Swahili)</option>
+                    </select>
+                </div>
+
                 <h1 data-i18n="welcome_title" class="font-cinzel text-3xl dark-gradient mb-6 tracking-widest uppercase font-bold shrink-0">Welcome</h1>
                 
                 <div class="text-slate-800 font-semibold mb-8 leading-relaxed text-sm max-w-xs space-y-4 shrink-0">
@@ -431,7 +453,7 @@
             
             <div class="space-y-4 mb-4">
                 <label class="text-[10px] uppercase tracking-widest font-bold text-slate-600 block">Language / Idioma</label>
-                <select id="language-select" onchange="changeLanguage(this.value)" class="w-full bg-white/60 border border-white/80 rounded-xl p-3 text-sm font-bold text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-400 appearance-none text-center">
+                <select onchange="changeLanguage(this.value)" class="lang-selector w-full bg-white/60 border border-white/80 rounded-xl p-3 text-sm font-bold text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-400 appearance-none text-center">
                     <option value="en">English</option>
                     <option value="es">Español (Spanish)</option>
                     <option value="fr">Français (French)</option>
