@@ -1,40 +1,74 @@
 /**
  * TSH Trophy Generator Engine
- * Hand-crafted, properly paced milestones for The Steady Hand.
+ * Hand-crafted, properly paced milestones with permanent historical badges.
  */
 
 function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeStrugglesCount, calculateStreak) {
     const earnedTrophies = [];
 
-    // Helper function to easily push trophies to the array in exact order
+    // Helper function to easily push trophies to the array
     const addTrophy = (title, desc, icon, condition) => {
         earnedTrophies.push({ title, desc, icon, earned: condition });
     };
 
+    // Helper function to get an array of all historical streak lengths for a habit
+    const getHistoricalStreaks = (habit) => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const start = new Date(habit.startDate);
+        start.setHours(0, 0, 0, 0);
+
+        let streaks = [];
+        let currentStart = start;
+
+        // If no slips, the entire time is one streak
+        if (!habit.slips || habit.slips.length === 0) {
+            streaks.push(Math.max(0, Math.floor((today - start) / 86400000)));
+            return streaks;
+        }
+
+        // Calculate length of each historical streak between slips
+        habit.slips.forEach(slipStr => {
+            const slipDate = new Date(slipStr);
+            slipDate.setHours(0, 0, 0, 0);
+
+            const diff = Math.floor((slipDate - currentStart) / 86400000);
+            streaks.push(Math.max(0, diff));
+
+            // Next streak starts the day after the slip
+            currentStart = new Date(slipDate.getTime() + 86400000); 
+        });
+
+        // Add the final active streak from the last slip to today
+        const finalDiff = Math.floor((today - currentStart) / 86400000);
+        streaks.push(Math.max(0, finalDiff));
+
+        return streaks;
+    };
+
     // ==========================================
-    // 1. TIMELINE TROPHIES (Spaced for maximum dopamine impact)
-    // Matches modern recovery milestones (1d, 1w, 1m, 3m, 6m, 1y) 
-    // with carefully placed "bridge" trophies to prevent burn-out.
+    // 1. TIMELINE TROPHIES (Resets on slip)
     // ==========================================
     const timelineData = [
-        [1, "First Step", "footprints"],                 // 24 Hours
-        [3, "The Crucial 72", "wind"],                   // 72 Hours (Major physical detox hurdle)
-        [7, "One Week Free", "calendar-check"],          // 1 Week
-        [14, "The Fortnight", "layers"],                 // 2 Weeks
-        [21, "Habit Breaker", "brain"],                  // Science says 21 days breaks the loop
-        [30, "The Forge (1 Month)", "swords"],           // 1 Month
-        [45, "Momentum", "trending-up"],                 // Bridge
-        [60, "Two Months", "shield"],                    // 2 Months
-        [90, "The Crucible (3 Months)", "anvil"],        // 3 Months
-        [100, "Triple Digits", "zap"],                   // 100 Days (Massive psychological milestone)
-        [180, "Half Year", "star"],                      // 6 Months
-        [250, "The Spartan", "spear"],                   // Bridge
-        [365, "The Sun Returns", "sun"],                 // 1 Year
-        [500, "The Vanguard", "flag"],                   // Bridge
-        [730, "Two Years Unbroken", "shield-check"],     // 2 Years
-        [1000, "The Millennium", "crown"],               // 1000 Days
-        [1460, "Four Year Fortress", "castle"],          // 4 Years
-        [1825, "Living Legend", "sparkles"]              // 5 Years
+        [1, "First Step", "footprints"],                 
+        [3, "The Crucial 72", "wind"],                   
+        [7, "One Week Free", "calendar-check"],          
+        [14, "The Fortnight", "layers"],                 
+        [21, "Habit Breaker", "brain"],                  
+        [30, "The Forge (1 Month)", "swords"],           
+        [45, "Momentum", "trending-up"],                 
+        [60, "Two Months", "shield"],                    
+        [90, "The Crucible (3 Months)", "anvil"],        
+        [100, "Triple Digits", "zap"],                   
+        [180, "Half Year", "star"],                      
+        [250, "The Spartan", "sword"],                   
+        [365, "The Sun Returns", "sun"],                 
+        [500, "The Vanguard", "flag"],                   
+        [730, "Two Years Unbroken", "shield-check"],     
+        [1000, "The Millennium", "crown"],               
+        [1460, "Four Year Fortress", "castle"],          
+        [1825, "Living Legend", "sparkles"]              
     ];
 
     timelineData.forEach(([days, title, icon]) => {
@@ -42,7 +76,7 @@ function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeSt
     });
 
     // ==========================================
-    // 2. FINANCIAL WAR CHEST (Slightly spaced out)
+    // 2. FINANCIAL WAR CHEST (Permanent)
     // ==========================================
     const financeData = [
         [10, "First Dime", "coins"],
@@ -51,7 +85,7 @@ function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeSt
         [250, "Quarter Grand", "credit-card"],
         [500, "Heavy Purse", "banknote"],
         [1000, "Treasure", "gem"],
-        [2500, "Wealth Builder", "safe"],
+        [2500, "Wealth Builder", "lock"],
         [5000, "Dragon Hoard", "castle"],
         [10000, "King's Ransom", "landmark"],
         [25000, "Empire", "building"],
@@ -64,12 +98,12 @@ function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeSt
     });
 
     // ==========================================
-    // 3. THE URGE ENGINE
+    // 3. THE URGE ENGINE (Permanent)
     // ==========================================
     const urgeData = [
         [1, "First Defense", "shield-alert"],
         [10, "Pushing Back", "hand"],
-        [25, "Shield Wall", "bell-electric"],
+        [25, "Shield Wall", "bell-ring"],
         [50, "Defender", "shield-check"],
         [100, "The Watchman", "eye"],
         [250, "Storm Breaker", "zap"],
@@ -82,11 +116,11 @@ function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeSt
     });
 
     // ==========================================
-    // 4. THE VAULT MEMOS
+    // 4. THE VAULT MEMOS (Permanent)
     // ==========================================
     const memoData = [
         [1, "Inner Voice", "mic"],
-        [5, "War Cry", "mic-vocal"],
+        [5, "War Cry", "mic"],
         [15, "Testimony", "book"],
         [30, "Choir of One", "library"],
         [50, "The Chronicler", "book-open"],
@@ -98,13 +132,13 @@ function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeSt
     });
 
     // ==========================================
-    // 5. SERENITY RITUAL
+    // 5. SERENITY RITUAL (Permanent)
     // ==========================================
     const ritualData = [
-        [1, "First Prayer", "hands"],
+        [1, "First Prayer", "hand"],
         [10, "Ritual Novice", "book-open"],
         [50, "Faithful", "heart"],
-        [100, "Ritual Master", "church"],
+        [100, "Ritual Master", "landmark"],
         [365, "Devout", "sun"],
         [1000, "The Monk", "crown"]
     ];
@@ -115,54 +149,62 @@ function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeSt
 
     // ==========================================
     // 6. CREATIVE & OUT-OF-THE-BOX CHALLENGES
-    // Hyper-specific, hidden achievements for players who love weird stats.
     // ==========================================
     
-    // Multi-Struggle Combinations
+    // Multi-Struggle Combinations (Dynamic based on current streak)
     addTrophy("Dual Wielder", "2 Active Streaks", "layers", activeStrugglesCount >= 2);
     const hasTrinity = state.habits.filter(h => calculateStreak(h) >= 30).length >= 3;
     addTrophy("The Trinity", "3 Habits, 30+ Days Each", "boxes", hasTrinity);
 
-    // Contextual Urge Survival
+    // Contextual Urge Survival (Permanent)
     addTrophy("Night Watch", "1 Late-Night Urge", "moon", state.midnightUrges >= 1);
     addTrophy("Vampire Hunter", "50 Late-Night Urges", "moon", state.midnightUrges >= 50);
     
     addTrophy("Daylight Defense", "1 Midday Urge", "sun", state.middayUrges >= 1);
     addTrophy("Solar Knight", "50 Midday Urges", "sun", state.middayUrges >= 50);
 
-    // High-Stakes Financial Reversals
-    const hasAlchemist = state.habits.some(h => h.costPerDay >= 15 && calculateStreak(h) >= 365);
+    // High-Stakes Financial Reversals (Permanent - checked against historical streaks)
+    const hasAlchemist = state.habits.some(h => h.costPerDay >= 15 && getHistoricalStreaks(h).some(s => s >= 365));
     addTrophy("The Alchemist", "1 Yr Clean on a $15+/day Habit", "gem", hasAlchemist);
 
-    const hasVowSilence = state.habits.some(h => h.costPerDay === 0 && calculateStreak(h) >= 365);
+    const hasVowSilence = state.habits.some(h => h.costPerDay === 0 && getHistoricalStreaks(h).some(s => s >= 365));
     addTrophy("Vow of Silence", "1 Yr Clean on a $0 Habit", "wind", hasVowSilence);
 
-    // Cross-Discipline Trophies
-    const hasGraceUnderFire = state.urgeClicks >= 100 && state.habits.some(h => h.isMain && h.slips.length === 0 && calculateStreak(h) > 30);
-    addTrophy("Grace Under Fire", "100+ Urges clicked, 0 Main Slips", "shield-check", hasGraceUnderFire);
+    // Cross-Discipline Trophies (Permanent)
+    const hasGraceUnderFire = state.urgeClicks >= 100 && state.habits.some(h => h.isMain && getHistoricalStreaks(h).some(s => s >= 30));
+    addTrophy("Grace Under Fire", "100+ Urges clicked, 30+ Days Clean", "shield-check", hasGraceUnderFire);
 
     const hasChoirOfAngels = state.voiceMemos >= 20 && state.amenClicks >= 100;
     addTrophy("Choir of Angels", "20 Memos & 100 Prayers", "speaker", hasChoirOfAngels);
 
-    const hasArchivistSecret = state.voiceMemos >= 50 && currentMainStreak >= 500;
+    const hasArchivistSecret = state.voiceMemos >= 50 && getHistoricalStreaks(state.habits.find(h => h.isMain) || {}).some(s => s >= 500);
     addTrophy("Archivist's Secret", "50 Memos + 500 Days Clean", "archive", hasArchivistSecret);
 
-    // Veteran & Post-Slip Resilience 
+    // Veteran & Post-Slip Resilience (Permanent - checked against historical records)
     addTrophy("Echo of Iron", "Memo recorded after 1 Yr Clean", "speaker", state.veteranMemos >= 1);
 
-    const hasPhoenix = state.habits.some(h => h.slips.length > 0 && calculateStreak(h) >= 30);
+    // The Phoenix checks if any streak AFTER the first index (index 0 is pre-slip) is >= 30
+    const hasPhoenix = state.habits.some(h => {
+        const streaks = getHistoricalStreaks(h);
+        return streaks.length > 1 && streaks.slice(1).some(s => s >= 30);
+    });
     addTrophy("The Phoenix", "30 Days after a Slip", "bird", hasPhoenix);
 
-    const hasResurrection = state.habits.some(h => h.slips.length > 0 && calculateStreak(h) >= 365);
+    const hasResurrection = state.habits.some(h => {
+        const streaks = getHistoricalStreaks(h);
+        return streaks.length > 1 && streaks.slice(1).some(s => s >= 365);
+    });
     addTrophy("Resurrection", "1 Yr after a Slip", "bird", hasResurrection);
 
-    // Absolute Perfection
-    const hasFlawless = state.habits.some(h => h.slips.length === 0 && calculateStreak(h) >= 730);
+    // Absolute Perfection (Permanent - checks if the very first attempt reached 730 days)
+    const hasFlawless = state.habits.some(h => {
+        const streaks = getHistoricalStreaks(h);
+        return streaks.length > 0 && streaks[0] >= 730;
+    });
     addTrophy("Flawless Victory", "2 Yrs, Zero Slips", "shield-check", hasFlawless);
 
     // ==========================================
-    // FINAL SORTING: Modern Gaming Standard
-    // Earned -> Unearned, while strictly keeping chronological timeline inside each group
+    // FINAL SORTING
     // ==========================================
     
     // Assign original order index to guarantee stable sorting
