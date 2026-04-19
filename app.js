@@ -4,10 +4,12 @@ const WORKER_API_URL = "/api/messages";
 // --- Core State & DB ---
 let db;
 const dbRequest = indexedDB.open("TSH_Database", 4);
+
 dbRequest.onupgradeneeded = (e) => {
     db = e.target.result;
     if(!db.objectStoreNames.contains("videos")) db.createObjectStore("videos", { keyPath: "id", autoIncrement: true });
 };
+
 dbRequest.onsuccess = (e) => { 
     db = e.target.result; 
     if(document.getElementById('vault-list')) {
@@ -15,10 +17,14 @@ dbRequest.onsuccess = (e) => {
     }
 };
 
+dbRequest.onerror = (e) => {
+    console.error("IndexedDB error or blocked by browser:", e);
+};
+
 let state = { 
     setupComplete: false, 
     tutorialStep: 0, 
-    habits: [], 
+    habits:[], 
     urgeClicks: 0, 
     voiceMemos: 0,
     amenClicks: 0,
@@ -29,7 +35,7 @@ let state = {
     safetyContact: { name: "", phone: "" }
 };
 
-const tutorialSteps = [
+const tutorialSteps =[
     { title: "The War Room", desc: "This is TSH Command. Level up through ranks and earn trophies as you rebuild your life.", icon: "layout-dashboard" },
     { title: "The Urge Engine", desc: "In moments of crisis, trigger the Engine to draw upon the Word or your personal vault recordings.", icon: "shield-alert" },
     { title: "The Vault", desc: "Record your own voice when you are strong. These notes become your shield during future urges.", icon: "lock" },
@@ -37,7 +43,7 @@ const tutorialSteps = [
     { title: "Ritual Entry", desc: "Vocalizing the Serenity Prayer is the first step to reclaiming your space. Speak it every time.", icon: "volume-2" }
 ];
 
-const rankTiers = [
+const rankTiers =[
     { name: "Initiate", daysReq: 0 },
     { name: "Novice", daysReq: 7 },
     { name: "Fighter", daysReq: 30 },
@@ -50,28 +56,47 @@ const rankTiers = [
     { name: "Legend", daysReq: 1825 }
 ];
 
+// Security Function to prevent HTML/XSS Injection
+function escapeHTML(str) {
+    if (!str) return "";
+    return str.replace(/[&<>'"]/g, tag => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+    }[tag] || tag));
+}
+
 // --- Initialization ---
 function init() {
     lucide.createIcons();
-    const savedState = localStorage.getItem('steady_hand_state');
+    let savedState = localStorage.getItem('steady_hand_state');
+    
     if (savedState) {
-        state = JSON.parse(savedState);
-        state.urgeClicks = state.urgeClicks || 0;
-        state.voiceMemos = state.voiceMemos || 0;
-        state.amenClicks = state.amenClicks || 0;
-        state.midnightUrges = state.midnightUrges || 0;
-        state.middayUrges = state.middayUrges || 0;
-        state.veteranMemos = state.veteranMemos || 0;
-        state.wallPosts = state.wallPosts || 0;
-        state.safetyContact = state.safetyContact || { name: "", phone: "" };
-        state.habits.forEach(h => { if(h.isMain === undefined) h.isMain = true; });
-        
-        if (state.setupComplete) showScreen('gateway');
-        else showScreen('welcome');
-    } else {
+        try {
+            state = JSON.parse(savedState);
+            state.habits = state.habits ||[];
+            state.urgeClicks = state.urgeClicks || 0;
+            state.voiceMemos = state.voiceMemos || 0;
+            state.amenClicks = state.amenClicks || 0;
+            state.midnightUrges = state.midnightUrges || 0;
+            state.middayUrges = state.middayUrges || 0;
+            state.veteranMemos = state.veteranMemos || 0;
+            state.wallPosts = state.wallPosts || 0;
+            state.safetyContact = state.safetyContact || { name: "", phone: "" };
+            state.habits.forEach(h => { if(h.isMain === undefined) h.isMain = true; });
+        } catch(e) {
+            console.error("Corrupted state wiped for stability.", e);
+            localStorage.removeItem('steady_hand_state');
+            savedState = null;
+        }
+    } 
+    
+    if (!savedState) {
         showScreen('welcome');
         addHabitField(); 
+    } else {
+        if (state.setupComplete) showScreen('gateway');
+        else showScreen('welcome');
     }
+
     updateDate();
     renderDashboard();
     renderSafetyContact();
@@ -79,7 +104,8 @@ function init() {
 
 function showScreen(screen) {
     document.querySelectorAll('[id^="screen-"]').forEach(s => s.classList.add('hidden'));
-    document.getElementById(`screen-${screen}`).classList.remove('hidden');
+    const targetEl = document.getElementById(`screen-${screen}`);
+    if (targetEl) targetEl.classList.remove('hidden');
     
     const nav = document.getElementById('app-nav');
     if (screen === 'welcome' || screen === 'creator-note' || screen === 'explanation' || screen === 'setup' || screen === 'gateway' || screen === 'support') {
@@ -105,13 +131,10 @@ function showScreen(screen) {
     }
     lucide.createIcons();
 
-    // Reset scroll position to top
+    // Reset scroll position to top gracefully
     setTimeout(() => {
         window.scrollTo({ top: 0, behavior: 'instant' }); 
-        const targetScreen = document.getElementById('screen-' + screen);
-        if (targetScreen) {
-            targetScreen.scrollTop = 0; 
-        }
+        if (targetEl) targetEl.scrollTop = 0; 
     }, 10);
 }
 
@@ -149,7 +172,7 @@ function addHabitField() {
     div.innerHTML = `
         <button onclick="this.parentElement.remove()" class="absolute -top-2 -right-2 bg-slate-700 text-white rounded-full p-1.5 shadow-md hover:bg-red-600 transition-colors"><i data-lucide="x" class="w-3 h-3"></i></button>
         <input type="text" placeholder="Struggle (e.g. Nicotine)" class="habit-name w-full rounded-lg p-3 text-sm uppercase font-bold tracking-wider shadow-inner">
-        <input type="number" placeholder="Daily Financial Cost ($)" class="habit-cost w-full rounded-lg p-3 text-sm shadow-inner">
+        <input type="number" placeholder="Daily Financial Cost ($)" class="habit-cost w-full rounded-lg p-3 text-sm shadow-inner" min="0">
         <div class="flex items-center justify-between mt-2 px-1">
             <label class="text-[10px] uppercase font-bold text-slate-700 flex items-center gap-2 cursor-pointer">
                 <input type="checkbox" class="habit-main w-4 h-4 rounded border-slate-400 text-slate-800 focus:ring-slate-800" checked>
@@ -163,7 +186,13 @@ function addHabitField() {
 
 async function saveInitialSetup() {
     const habitEls = document.querySelectorAll('#habit-inputs > div');
-    state.habits = [];
+    
+    if (habitEls.length === 0) {
+        alert("Please add at least one struggle to forge your shield.");
+        return;
+    }
+
+    state.habits =[];
     habitEls.forEach(el => {
         const name = el.querySelector('.habit-name').value;
         const cost = el.querySelector('.habit-cost').value || 0;
@@ -172,9 +201,9 @@ async function saveInitialSetup() {
         if (name) state.habits.push({ 
             id: 'habit_' + Date.now() + '_' + Math.floor(Math.random() * 1000), 
             name, 
-            costPerDay: parseFloat(cost), 
+            costPerDay: Math.max(0, parseFloat(cost) || 0), 
             startDate: new Date().toISOString(), 
-            slips: [],
+            slips:[],
             isMain: isMain
         });
     });
@@ -211,18 +240,21 @@ function renderSafetyContact() {
     const callBtn = document.getElementById('safety-call-btn');
     const textBtn = document.getElementById('safety-text-btn');
     
-    if(document.getElementById('safety-name')) {
-        document.getElementById('safety-name').value = state.safetyContact.name || "";
-        document.getElementById('safety-phone').value = state.safetyContact.phone || "";
+    const safetyNameInput = document.getElementById('safety-name');
+    const safetyPhoneInput = document.getElementById('safety-phone');
+
+    if(safetyNameInput && safetyPhoneInput) {
+        safetyNameInput.value = state.safetyContact.name || "";
+        safetyPhoneInput.value = state.safetyContact.phone || "";
     }
     
-    if(state.safetyContact && state.safetyContact.phone) {
+    if(callBtn && textBtn && state.safetyContact && state.safetyContact.phone) {
         nameEl.innerText = state.safetyContact.name || "Contact";
         callBtn.href = `tel:${state.safetyContact.phone}`;
         textBtn.href = `sms:${state.safetyContact.phone}`;
         callBtn.classList.remove('opacity-50', 'pointer-events-none');
         textBtn.classList.remove('opacity-50', 'pointer-events-none');
-    } else {
+    } else if (callBtn && textBtn) {
         nameEl.innerText = "";
         callBtn.href = "#";
         textBtn.href = "#";
@@ -255,7 +287,7 @@ function renderDashboard() {
         div.innerHTML = `
             <div class="flex justify-between items-start mb-4">
                 <div>
-                    <h3 class="text-slate-800 font-cinzel text-sm uppercase tracking-widest font-bold mb-1 flex items-center">${habit.name} ${tagHTML}</h3>
+                    <h3 class="text-slate-800 font-cinzel text-sm uppercase tracking-widest font-bold mb-1 flex items-center">${escapeHTML(habit.name)} ${tagHTML}</h3>
                     <p class="text-3xl font-bold text-slate-800">${streakDays} <span class="text-[10px] text-slate-600 uppercase tracking-tighter ml-1 font-semibold">Days Won</span></p>
                 </div>
                 <button onclick="logSlip('${habit.id}')" class="text-[10px] uppercase font-bold text-slate-700 border border-slate-400 bg-white/50 px-3 py-2 rounded-full active:bg-slate-200 transition-colors shadow-sm">Log Slip</button>
@@ -294,28 +326,29 @@ function renderDashboard() {
         daysText = `${currentMainStreak} / ${nextRank.daysReq} Days`;
     }
 
+    // Clamp progress to logical limits (0 - 100)
+    progressPct = Math.max(0, Math.min(100, progressPct));
+
     document.getElementById('rank-name').innerText = currentRank.name;
     document.getElementById('xp-text').innerText = daysText;
     document.getElementById('rank-progress').style.width = `${progressPct}%`;
-    document.getElementById('total-saved').innerText = `$${totalSavedValue.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
+    document.getElementById('total-saved').innerText = `$${totalSavedValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
-    // Generate massive trophy list from trophies.js
-    const trophies = generateAllTrophies(state, currentMainStreak, totalSavedValue, activeStrugglesCount, calculateStreak);
+    // Safely attempt to generate trophies if external file is present
+    const trophies = typeof generateAllTrophies === 'function' ? generateAllTrophies(state, currentMainStreak, totalSavedValue, activeStrugglesCount, calculateStreak) :[];
 
     const trophyContainer = document.getElementById('trophy-case');
     trophyContainer.innerHTML = trophies.map(t => `
         <div class="flex-shrink-0 w-[84px] h-24 rounded-2xl bg-white/${t.earned ? '60' : '20'} border ${t.earned ? 'border-yellow-400/50 shadow-md' : 'border-white/30'} flex flex-col items-center justify-center p-2 text-center transition-all duration-500">
             <i data-lucide="${t.icon}" class="w-6 h-6 mb-2 ${t.earned ? 'text-yellow-600 drop-shadow-sm' : 'text-slate-400 opacity-50'}"></i>
-            <p class="text-[8px] font-bold uppercase tracking-tighter ${t.earned ? 'text-slate-800' : 'text-slate-500'} leading-tight mb-0.5">${t.title}</p>
-            <p class="text-[7px] text-slate-500 font-medium leading-tight">${t.desc}</p>
+            <p class="text-[8px] font-bold uppercase tracking-tighter ${t.earned ? 'text-slate-800' : 'text-slate-500'} leading-tight mb-0.5">${escapeHTML(t.title)}</p>
+            <p class="text-[7px] text-slate-500 font-medium leading-tight">${escapeHTML(t.desc)}</p>
         </div>
     `).join('');
     
     lucide.createIcons();
 
     // --- FALLBACK FOR MISSING ICONS ---
-    // If an icon name from trophies.js was invalid, Lucide will leave the <i> tag intact.
-    // This finds any un-converted <i> tags and forces them to use a default 'award' icon.
     const missingIcons = document.querySelectorAll('#trophy-case i[data-lucide]');
     if (missingIcons.length > 0) {
         missingIcons.forEach(el => el.setAttribute('data-lucide', 'award'));
@@ -324,7 +357,7 @@ function renderDashboard() {
 }
 
 // --- Audio Recording Logic ---
-let mediaRecorder; let chunks = [];
+let mediaRecorder; let chunks =[];
 let audioStream;
 
 async function startRecording() {
@@ -337,12 +370,13 @@ async function startRecording() {
         document.getElementById('recording-active').classList.add('flex');
         
         mediaRecorder = new MediaRecorder(s); 
-        chunks = [];
+        chunks =[];
         
         mediaRecorder.ondataavailable = e => { if(e.data.size > 0) chunks.push(e.data); };
         mediaRecorder.onstop = () => {
-            const mimeType = mediaRecorder.mimeType || 'audio/webm';
-            const b = new Blob(chunks, { type: mimeType });
+            if (chunks.length === 0) return;
+            const mimeType = mediaRecorder.mimeType || ''; // Let Blob infer if empty to avoid safari crash
+            const b = new Blob(chunks, mimeType ? { type: mimeType } : undefined);
             const t = db.transaction(["videos"], "readwrite");
             t.objectStore("videos").add({ blob: b, date: new Date().toISOString() });
             
@@ -382,12 +416,15 @@ function stopRecording() {
 
 function loadVault() {
     if(!db) return;
-    const c = document.getElementById('vault-list'); c.innerHTML = '';
+    const c = document.getElementById('vault-list'); 
+    c.innerHTML = '';
+    
     db.transaction("videos", "readonly").objectStore("videos").openCursor(null, 'prev').onsuccess = e => {
         const cur = e.target.result;
         if(cur) {
             const url = URL.createObjectURL(cur.value.blob);
-            const d = document.createElement('div'); d.className = 'card-glass p-4 relative';
+            const d = document.createElement('div'); 
+            d.className = 'card-glass p-4 relative';
             
             d.innerHTML = `
                 <div class="flex items-center gap-3 mb-4 bg-white/50 p-2 rounded-xl border border-white/60 shadow-inner">
@@ -403,7 +440,11 @@ function loadVault() {
     setTimeout(() => lucide.createIcons(), 50);
 }
 
-function deleteVideo(id) { if(confirm("Purge this voice recording permanently?")) db.transaction("videos", "readwrite").objectStore("videos").delete(id).onsuccess = loadVault; }
+function deleteVideo(id) { 
+    if(confirm("Purge this voice recording permanently?")) {
+        db.transaction("videos", "readwrite").objectStore("videos").delete(id).onsuccess = loadVault; 
+    }
+}
 
 // --- Smarter Urge Engine Algorithm ---
 let lastUrgeType = null;
@@ -430,7 +471,9 @@ async function triggerUrgeEngine() {
     const c = document.getElementById('urge-content');
     
     const vaultAudios = await new Promise(r => {
-        const res = []; db.transaction("videos").objectStore("videos").openCursor().onsuccess = e => {
+        if (!db) return r([]); // Fast exit if DB failed to mount
+        const res =[]; 
+        db.transaction("videos").objectStore("videos").openCursor().onsuccess = e => {
             if(e.target.result) { res.push(e.target.result.value); e.target.result.continue(); } else r(res);
         };
     });
@@ -467,21 +510,26 @@ async function triggerUrgeEngine() {
             <p class="text-[10px] text-slate-600 uppercase font-bold tracking-widest mt-8">Breathe and Listen</p>
         `;
     } else {
-        let nextIndex = Math.floor(Math.random() * scriptures.length);
-        while (nextIndex === lastVerseIndex && scriptures.length > 1) {
-            nextIndex = Math.floor(Math.random() * scriptures.length);
+        // Fallback robust logic incase verses.js is somehow blocked
+        const safeScriptures = (typeof scriptures !== 'undefined' && scriptures.length > 0) 
+            ? scriptures 
+            :[{text: "Breathe. Focus on your strength. You can overcome this.", ref: "The Steady Hand"}];
+
+        let nextIndex = Math.floor(Math.random() * safeScriptures.length);
+        while (nextIndex === lastVerseIndex && safeScriptures.length > 1) {
+            nextIndex = Math.floor(Math.random() * safeScriptures.length);
         }
         lastVerseIndex = nextIndex;
-        const randomScripture = scriptures[nextIndex];
+        const randomScripture = safeScriptures[nextIndex];
         
         c.innerHTML = `<i data-lucide="sun" class="w-16 h-16 text-slate-700 drop-shadow-sm mx-auto mb-8"></i>
-            <h2 class="text-2xl font-cinzel text-slate-800 drop-shadow-sm leading-relaxed px-4 italic font-bold">"${randomScripture.text}"</h2>
-            <p class="text-sm font-bold text-slate-600 mt-6">${randomScripture.ref}</p>
+            <h2 class="text-2xl font-cinzel text-slate-800 drop-shadow-sm leading-relaxed px-4 italic font-bold">"${escapeHTML(randomScripture.text)}"</h2>
+            <p class="text-sm font-bold text-slate-600 mt-6">${escapeHTML(randomScripture.ref)}</p>
             <div class="mt-12 bg-white/40 py-2 px-6 rounded-full inline-block shadow-sm border border-white/50">
                 <p class="text-[10px] text-slate-700 uppercase tracking-widest font-bold">Breathe for 60 seconds.</p>
             </div>`;
     }
-    lucide.createIcons();
+    setTimeout(() => lucide.createIcons(), 50);
 }
 
 // --- WALL OF WISDOM LOGIC ---
@@ -502,8 +550,8 @@ async function loadWallMessages() {
         feed.innerHTML = messages.map(m => {
             const isLong = m.text.length > 250;
             return `
-                <div class="card-glass p-4 border-white/30 wall-message select-none" data-id="${m.id}">
-                    <p class="text-sm text-slate-800 font-medium leading-relaxed ${isLong ? 'wall-text-collapsed' : ''}">"${m.text}"</p>
+                <div class="card-glass p-4 border-white/30 wall-message select-none" data-id="${escapeHTML(String(m.id))}">
+                    <p class="text-sm text-slate-800 font-medium leading-relaxed ${isLong ? 'wall-text-collapsed' : ''}">"${escapeHTML(m.text)}"</p>
                     ${isLong ? `<button onclick="this.previousElementSibling.classList.toggle('wall-text-collapsed'); this.innerText = this.innerText === '...Read More' ? 'Show Less' : '...Read More'" class="text-[10px] font-bold text-slate-600 mt-2 uppercase tracking-widest">...Read More</button>` : ''}
                     <p class="text-[8px] text-slate-500 uppercase tracking-widest font-bold mt-3 text-right pointer-events-none">- Anonymous</p>
                 </div>
@@ -525,7 +573,7 @@ async function postToWall() {
     const feed = document.getElementById('wall-feed');
     const newMsgHTML = `
         <div class="card-glass p-4 border-yellow-400/50 shadow-md">
-            <p class="text-sm text-slate-800 font-medium leading-relaxed">"${text}"</p>
+            <p class="text-sm text-slate-800 font-medium leading-relaxed">"${escapeHTML(text)}"</p>
             <p class="text-[8px] text-yellow-600 uppercase tracking-widest font-bold mt-3 text-right">- You</p>
         </div>
     `;
@@ -560,7 +608,7 @@ function calculateTotalCleanDays(habit) {
     const today = getStartOfDay(new Date());
     const start = getStartOfDay(habit.startDate);
     
-    const totalDaysElapsed = Math.floor(Math.max(0, today - start) / 86400000);
+    const totalDaysElapsed = Math.round(Math.max(0, today - start) / 86400000); // Fixed daylight saving bug
     const pastSlips = habit.slips.filter(s => getStartOfDay(s).getTime() < today.getTime());
     const uniquePastSlipDays = new Set(pastSlips.map(s => getStartOfDay(s).getTime())).size;
     
@@ -582,19 +630,19 @@ function calculateStreak(habit) {
         streakStart = getStartOfDay(habit.startDate);
     }
     
-    const streakDays = Math.floor((today - streakStart) / 86400000);
+    const streakDays = Math.round((today - streakStart) / 86400000); // Fixed daylight saving bug
     return Math.max(0, streakDays);
 }
 
 function calculateSuccessRate(h) { 
     const today = getStartOfDay(new Date());
     const start = getStartOfDay(h.startDate);
-    const t = Math.max(1, Math.floor(Math.abs(today - start) / 86400000)); 
+    const t = Math.max(1, Math.round(Math.abs(today - start) / 86400000)); // Fixed daylight saving bug
     
     const pastSlips = h.slips.filter(s => getStartOfDay(s).getTime() < today.getTime());
     const uniquePastSlipDays = new Set(pastSlips.map(s => getStartOfDay(s).getTime())).size;
     
-    return Math.min(100, ((t - uniquePastSlipDays) / t) * 100); 
+    return Math.max(0, Math.min(100, ((t - uniquePastSlipDays) / t) * 100)); 
 }
 
 function logSlip(id) { 
