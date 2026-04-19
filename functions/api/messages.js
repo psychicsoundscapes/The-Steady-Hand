@@ -1,39 +1,48 @@
-export async function onRequestGet({ request, env }) {
-    try {
-        // 1. Get the requested language from the URL (e.g., '?lang=es')
-        const url = new URL(request.url);
-        const targetLang = url.searchParams.get('lang') || 'en';
+/**
+ * TSH API - Wall of Wisdom Backend
+ * Handles message retrieval, individual translation, and posting.
+ */
 
-        // 2. Fetch the 50 most recent messages from the database
-        const { results } = await env.DB.prepare("SELECT id, text, created_at FROM messages ORDER BY created_at DESC LIMIT 50").all();
-        
-        // 3. If English, return immediately (fastest response)
-        if (targetLang === 'en') {
+export async function onRequestGet({ request, env }) {
+    const url = new URL(request.url);
+    const msgId = url.searchParams.get('id');
+    const targetLang = url.searchParams.get('lang') || 'en';
+
+    try {
+        // CASE A: User is loading the Wall (Initial Load)
+        // We return the raw messages from the database without AI processing.
+        if (!msgId) {
+            const { results } = await env.DB.prepare(
+                "SELECT id, text, created_at FROM messages ORDER BY created_at DESC LIMIT 50"
+            ).all();
             return Response.json(results);
         }
 
-        // 4. If another language, translate the wall dynamically
-        const translatedResults = await Promise.all(results.map(async (msg) => {
-            try {
-                // Call Cloudflare's built-in AI translation model
-                const response = await env.AI.run('@cf/meta/m2m100-1.2b', {
-                    text: msg.text,
-                    target_lang: targetLang
-                });
-                
-                // Return the message with the newly translated text
-                return { ...msg, text: response.translated_text || msg.text };
-            } catch (aiError) {
-                // 5. Failsafe: If translation fails for this specific message, return the original text
-                console.error(`Translation failed for message ${msg.id}:`, aiError);
-                return msg; 
-            }
-        }));
+        // CASE B: User tapped a specific message to translate it
+        // 1. Fetch that specific message text from the D1 database
+        const msg = await env.DB.prepare(
+            "SELECT text FROM messages WHERE id = ?"
+        ).bind(msgId).first();
+        
+        if (!msg) {
+            return new Response("Message not found", { status: 404 });
+        }
 
-        return Response.json(translatedResults);
+        // 2. Run the specific text through Cloudflare Workers AI
+        // This only consumes "Neurons" when a user specifically requests a translation.
+        const aiResponse = await env.AI.run('@cf/meta/m2m100-1.2b', {
+            text: msg.text,
+            target_lang: targetLang
+        });
+
+        // 3. Return the single translated string
+        return Response.json({
+            translatedText: aiResponse.translated_text || msg.text
+        });
 
     } catch (e) {
-        return new Response("Error loading messages", { status: 500 });
+        console.error("Worker Error:", e);
+        return new Response("Error processing request", { status: 500 });
     }
 }
 
@@ -41,12 +50,12 @@ export async function onRequestPost({ request, env }) {
     try {
         const { text } = await request.json();
         
-        // Validation: Ensure text exists and set a high limit for long-form stories
-        if (!text || text.length > 10000) {
+        // Validation: Limit length to keep database and AI translation efficient
+        if (!text || text.length > 5000) {
             return new Response("Invalid message length", { status: 400 });
         }
 
-        // Insert the message into the D1 Database
+        // Insert into D1 Database
         await env.DB.prepare("INSERT INTO messages (text) VALUES (?)").bind(text).run();
         
         return Response.json({ success: true });
@@ -59,12 +68,11 @@ export async function onRequestDelete({ request, env }) {
     try {
         const { id, code } = await request.json();
         
-        // Check the passcode entered in the app against your Cloudflare Environment Variable
+        // Security check against your environment variable
         if (code !== env.DELETE_CODE) {
             return new Response("Unauthorized", { status: 401 });
         }
 
-        // If the passcode is correct, vaporize the specific message
         await env.DB.prepare("DELETE FROM messages WHERE id = ?").bind(id).run();
         
         return Response.json({ success: true });
