@@ -26,6 +26,14 @@
                 display: none !important;
             }
         }
+        
+        /* Prevent images from being saved or interacted with */
+        img {
+            -webkit-touch-callout: none; /* Disables the long-press popup on iOS */
+            -webkit-user-select: none;   /* Disables highlighting/selecting */
+            user-select: none;
+            pointer-events: none;        /* Prevents all touch/click interactions */
+        }
     </style>
     
     <script src="verses.js" defer></script>
