@@ -186,14 +186,15 @@ async function saveInitialSetup() {
     renderDashboard();
 }
 
-document.getElementById('btn-amen').addEventListener('click', () => {
+// Fixed Amen Click Function
+function clickAmen() {
     if (navigator.vibrate) navigator.vibrate([40, 60, 40]);
     state.amenClicks = (state.amenClicks || 0) + 1;
     localStorage.setItem('steady_hand_state', JSON.stringify(state));
     
     document.getElementById('screen-gateway').classList.add('hidden');
     showScreen('main');
-});
+}
 
 // --- Personal Safety Contact Logic ---
 function saveSafetyContact() {
@@ -311,6 +312,15 @@ function renderDashboard() {
     `).join('');
     
     lucide.createIcons();
+
+    // --- FALLBACK FOR MISSING ICONS ---
+    // If an icon name from trophies.js was invalid, Lucide will leave the <i> tag intact.
+    // This finds any un-converted <i> tags and forces them to use a default 'award' icon.
+    const missingIcons = document.querySelectorAll('#trophy-case i[data-lucide]');
+    if (missingIcons.length > 0) {
+        missingIcons.forEach(el => el.setAttribute('data-lucide', 'award'));
+        lucide.createIcons(); 
+    }
 }
 
 // --- Audio Recording Logic ---
