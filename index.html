@@ -48,12 +48,6 @@
                 <button id="btn-amen" class="amen-pulse group relative flex items-center justify-center w-32 h-32 rounded-full border-2 border-white bg-white/40 shadow-xl backdrop-blur-md">
                     <span class="font-cinzel text-2xl text-slate-800 font-bold group-active:scale-90 transition-transform">Amen</span>
                 </button>
-
-                <div class="mt-12 w-full">
-                    <a href="tel:988" class="text-[10px] uppercase tracking-widest text-slate-600 font-bold border-b border-slate-400 pb-1 inline-flex items-center gap-2">
-                        <i data-lucide="phone" class="w-3 h-3"></i> Emergency Support
-                    </a>
-                </div>
             </div>
 
             <div id="screen-welcome" class="hidden fixed inset-0 h-[100vh] w-full z-[95] flex flex-col items-center justify-center p-8 text-center bg-[#b4c7d9]">
@@ -182,7 +176,142 @@
                     <i data-lucide="shield-alert" class="w-10 h-10 text-red-600 animate-pulse"></i>
                     <span class="font-bold text-slate-800 uppercase tracking-[0.2em] text-xs drop-shadow-sm">I Have an Urge</span>
                 </button>
+
+                <button onclick="showScreen('support')" class="w-full py-4 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center gap-3 active:scale-95 transition-transform shadow-lg mt-4">
+                    <i data-lucide="life-buoy" class="w-5 h-5 text-white"></i>
+                    <span class="font-bold text-white uppercase tracking-widest text-[10px]">Support & Lifelines</span>
+                </button>
             </main>
+
+            <div id="screen-support" class="hidden flex-1 p-6 overflow-y-auto pt-10 pb-32 relative">
+                <button onclick="showScreen('main')" class="absolute top-6 left-6 text-slate-700 bg-white/40 p-2 rounded-full z-[160] hover:bg-white/60 transition-colors shadow-sm"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
+                <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-2 mt-8 text-center">Lifelines</h2>
+                <p class="text-slate-700 text-xs mb-8 italic font-medium text-center">You are never fighting alone.</p>
+
+                <div class="card-glass p-5 mb-6 border-slate-400">
+                    <h3 class="text-[11px] font-bold uppercase tracking-widest text-slate-800 mb-3 flex items-center gap-2">
+                        <i data-lucide="shield-check" class="w-4 h-4 text-slate-700"></i> Personal Safety Dial
+                    </h3>
+                    <p class="text-[10px] text-slate-600 mb-4 leading-relaxed font-medium">Set a direct line to your sponsor, family member, or trusted friend.</p>
+                    <div class="space-y-3 mb-4">
+                        <input type="text" id="safety-name" placeholder="Name (e.g. Sponsor John)" class="w-full rounded-lg p-3 text-xs shadow-inner">
+                        <input type="tel" id="safety-phone" placeholder="Phone Number" class="w-full rounded-lg p-3 text-xs shadow-inner">
+                        <button onclick="saveSafetyContact()" class="w-full bg-white/60 hover:bg-white/80 text-slate-800 font-bold py-2 rounded-lg shadow-sm transition-all text-[10px] uppercase tracking-widest border border-white">Save Contact</button>
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="#" id="safety-call-btn" class="flex-1 bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md opacity-50 pointer-events-none">
+                            <i data-lucide="phone" class="w-3 h-3"></i> Call <span id="safety-display-name" class="truncate max-w-[60px] inline-block align-bottom"></span>
+                        </a>
+                        <a href="#" id="safety-text-btn" class="flex-1 bg-white/80 text-slate-800 py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest border border-white shadow-md opacity-50 pointer-events-none">
+                            <i data-lucide="message-circle" class="w-3 h-3"></i> Text
+                        </a>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="card-glass p-5">
+                        <h3 class="text-sm font-bold text-slate-800 mb-1">988 Suicide & Crisis Lifeline</h3>
+                        <p class="text-[10px] text-slate-600 mb-4 leading-relaxed font-medium">A free, 24/7, confidential crisis line for anyone experiencing suicidal thoughts, emotional distress, panic, addiction-related crises, or overwhelming mental strain.</p>
+                        <div class="flex gap-2">
+                            <a href="tel:988" class="flex-1 bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md"><i data-lucide="phone" class="w-3 h-3"></i> Call</a>
+                            <a href="sms:988" class="flex-1 bg-white/80 text-slate-800 py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest border border-white shadow-md"><i data-lucide="message-circle" class="w-3 h-3"></i> Text</a>
+                        </div>
+                    </div>
+
+                    <div class="card-glass p-5">
+                        <h3 class="text-sm font-bold text-slate-800 mb-1">SAMHSA National Helpline</h3>
+                        <p class="text-[10px] text-slate-600 mb-4 leading-relaxed font-medium">A free, 24/7, confidential hotline for people facing drug addiction, alcohol addiction, or mental health challenges.</p>
+                        <div class="flex gap-2">
+                            <a href="tel:8006624357" class="flex-1 bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md"><i data-lucide="phone" class="w-3 h-3"></i> Call</a>
+                            <a href="sms:8006624357" class="flex-1 bg-white/80 text-slate-800 py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest border border-white shadow-md"><i data-lucide="message-circle" class="w-3 h-3"></i> Text</a>
+                        </div>
+                    </div>
+
+                    <div class="card-glass p-5">
+                        <h3 class="text-sm font-bold text-slate-800 mb-1">National Drug Helpline</h3>
+                        <p class="text-[10px] text-slate-600 mb-4 leading-relaxed font-medium">A free, 24/7 hotline offering support, information, and guidance for individuals struggling with drug or alcohol addiction.</p>
+                        <div class="flex gap-2">
+                            <a href="tel:8442890879" class="flex-1 bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md"><i data-lucide="phone" class="w-3 h-3"></i> Call</a>
+                            <a href="sms:8442890879" class="flex-1 bg-white/80 text-slate-800 py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest border border-white shadow-md"><i data-lucide="message-circle" class="w-3 h-3"></i> Text</a>
+                        </div>
+                    </div>
+
+                    <div class="card-glass p-5">
+                        <h3 class="text-sm font-bold text-slate-800 mb-1">Narcotics Anonymous</h3>
+                        <p class="text-[10px] text-slate-600 mb-4 leading-relaxed font-medium">A free support line that helps callers find NA meetings and provides encouragement for people recovering from drug addiction.</p>
+                        <div class="flex gap-2">
+                            <a href="tel:8187739999" class="flex-1 bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md"><i data-lucide="phone" class="w-3 h-3"></i> Call</a>
+                            <a href="sms:8187739999" class="flex-1 bg-white/80 text-slate-800 py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest border border-white shadow-md"><i data-lucide="message-circle" class="w-3 h-3"></i> Text</a>
+                        </div>
+                    </div>
+
+                    <div class="card-glass p-5">
+                        <h3 class="text-sm font-bold text-slate-800 mb-1">Alcoholics Anonymous</h3>
+                        <p class="text-[10px] text-slate-600 mb-4 leading-relaxed font-medium">A support line that helps callers find AA meetings and provides general information about alcohol recovery.</p>
+                        <div class="flex gap-2">
+                            <a href="tel:2128703400" class="flex-1 bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md"><i data-lucide="phone" class="w-3 h-3"></i> Call</a>
+                            <a href="sms:2128703400" class="flex-1 bg-white/80 text-slate-800 py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest border border-white shadow-md"><i data-lucide="message-circle" class="w-3 h-3"></i> Text</a>
+                        </div>
+                    </div>
+
+                    <div class="card-glass p-5">
+                        <h3 class="text-sm font-bold text-slate-800 mb-1">Never Use Alone</h3>
+                        <p class="text-[10px] text-slate-600 mb-4 leading-relaxed font-medium">A free, 24/7 hotline for individuals using drugs alone who want someone to stay on the line to ensure they remain safe.</p>
+                        <div class="flex gap-2">
+                            <a href="tel:8004843731" class="flex-1 bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md"><i data-lucide="phone" class="w-3 h-3"></i> Call</a>
+                            <a href="sms:8004843731" class="flex-1 bg-white/80 text-slate-800 py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest border border-white shadow-md"><i data-lucide="message-circle" class="w-3 h-3"></i> Text</a>
+                        </div>
+                    </div>
+
+                    <div class="card-glass p-5">
+                        <h3 class="text-sm font-bold text-slate-800 mb-1">Billy Graham Prayer Line</h3>
+                        <p class="text-[10px] text-slate-600 mb-4 leading-relaxed font-medium">A free, 24/7 Christian prayer and support hotline offering spiritual encouragement, emotional support, and someone to talk to.</p>
+                        <div class="flex gap-2">
+                            <a href="tel:8883882683" class="flex-1 bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md"><i data-lucide="phone" class="w-3 h-3"></i> Call</a>
+                            <a href="sms:8883882683" class="flex-1 bg-white/80 text-slate-800 py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest border border-white shadow-md"><i data-lucide="message-circle" class="w-3 h-3"></i> Text</a>
+                        </div>
+                    </div>
+
+                    <div class="card-glass p-5">
+                        <h3 class="text-sm font-bold text-slate-800 mb-1">Joel Osteen Ministries</h3>
+                        <p class="text-[10px] text-slate-600 mb-4 leading-relaxed font-medium">A free, 24/7 Christian prayer hotline providing encouragement, prayer support, and spiritual guidance for people seeking comfort.</p>
+                        <div class="flex gap-2">
+                            <a href="tel:8885675635" class="flex-1 bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md"><i data-lucide="phone" class="w-3 h-3"></i> Call</a>
+                            <a href="sms:8885675635" class="flex-1 bg-white/80 text-slate-800 py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest border border-white shadow-md"><i data-lucide="message-circle" class="w-3 h-3"></i> Text</a>
+                        </div>
+                    </div>
+
+                    <div class="card-glass p-5">
+                        <h3 class="text-sm font-bold text-slate-800 mb-1">Christian Care Ministry</h3>
+                        <p class="text-[10px] text-slate-600 mb-4 leading-relaxed font-medium">A free Christian support line offering prayer, encouragement, and spiritual help for people dealing with stress or guilt.</p>
+                        <div class="flex gap-2">
+                            <a href="tel:8005255683" class="flex-1 bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md"><i data-lucide="phone" class="w-3 h-3"></i> Call</a>
+                            <a href="sms:8005255683" class="flex-1 bg-white/80 text-slate-800 py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest border border-white shadow-md"><i data-lucide="message-circle" class="w-3 h-3"></i> Text</a>
+                        </div>
+                    </div>
+
+                    <div class="card-glass p-5">
+                        <h3 class="text-sm font-bold text-slate-800 mb-1">Silent Unity Prayer Line</h3>
+                        <p class="text-[10px] text-slate-600 mb-4 leading-relaxed font-medium">A free, 24/7 non-denominational Christian prayer hotline offering emotional and spiritual support, prayer, and encouragement.</p>
+                        <div class="flex gap-2">
+                            <a href="tel:8169692000" class="flex-1 bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md"><i data-lucide="phone" class="w-3 h-3"></i> Call</a>
+                            <a href="sms:8169692000" class="flex-1 bg-white/80 text-slate-800 py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest border border-white shadow-md"><i data-lucide="message-circle" class="w-3 h-3"></i> Text</a>
+                        </div>
+                    </div>
+
+                    <div class="card-glass p-5">
+                        <h3 class="text-sm font-bold text-slate-800 mb-1">Crisis Text Line</h3>
+                        <p class="text-[10px] text-slate-600 mb-4 leading-relaxed font-medium">A free, 24/7 text-based crisis support service for people experiencing emotional distress, anxiety, addiction struggles, or overwhelming feelings.</p>
+                        <a href="sms:741741?body=HOME" class="w-full bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md"><i data-lucide="message-circle" class="w-3 h-3"></i> Text HOME to 741741</a>
+                    </div>
+
+                    <div class="card-glass p-5">
+                        <h3 class="text-sm font-bold text-slate-800 mb-1">SAMHSA Text Support</h3>
+                        <p class="text-[10px] text-slate-600 mb-4 leading-relaxed font-medium">A free text-based service that provides automated information, treatment resources, and guidance for individuals seeking help with addiction.</p>
+                        <a href="sms:435748?body=HELP" class="w-full bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md"><i data-lucide="message-circle" class="w-3 h-3"></i> Text HELP to 435748</a>
+                    </div>
+                </div>
+            </div>
 
             <div id="screen-vault" class="hidden flex-1 p-6 overflow-y-auto pt-10">
                 <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-2 mt-2">The Vault</h2>
@@ -272,10 +401,6 @@
                 <h3 class="font-cinzel text-lg dark-gradient font-bold uppercase tracking-widest">TSH Sanctum</h3>
             </div>
             <div class="space-y-4">
-                <button onclick="devPassDay()" class="w-full text-left p-4 bg-yellow-100/80 border border-yellow-300 rounded-xl text-yellow-800 flex items-center justify-between font-bold hover:bg-yellow-200 transition-colors shadow-sm">
-                    <span>[Dev Test] Pass 2000 Days</span>
-                    <i data-lucide="fast-forward" class="w-5 h-5"></i>
-                </button>
                 <button onclick="resetTutorial()" class="w-full text-left p-4 bg-white/40 border border-white/60 rounded-xl text-slate-800 flex items-center justify-between font-bold hover:bg-white/60 transition-colors shadow-sm">
                     <span>Watch Tutorial Again</span>
                     <i data-lucide="help-circle" class="w-5 h-5"></i>
