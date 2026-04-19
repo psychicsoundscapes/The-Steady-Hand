@@ -1,3 +1,6 @@
+// --- CLOUDFLARE PAGES FUNCTION API URL ---
+const WORKER_API_URL = "/api/messages";
+
 // --- Core State & DB ---
 let db;
 const dbRequest = indexedDB.open("TSH_Database", 4);
@@ -27,6 +30,7 @@ const tutorialSteps = [
     { title: "The War Room", desc: "This is TSH Command. Level up through ranks and earn trophies as you rebuild your life.", icon: "layout-dashboard" },
     { title: "The Urge Engine", desc: "In moments of crisis, trigger the Engine to draw upon the Word or your personal vault recordings.", icon: "shield-alert" },
     { title: "The Vault", desc: "Record your own voice when you are strong. These notes become your shield during future urges.", icon: "lock" },
+    { title: "The Wall", desc: "Share anonymous wisdom or read words of encouragement left by others on the same journey.", icon: "globe" },
     { title: "Ritual Entry", desc: "Vocalizing the Serenity Prayer is the first step to reclaiming your space. Speak it every time.", icon: "volume-2" }
 ];
 
@@ -87,6 +91,7 @@ function showScreen(screen) {
     });
     
     if (screen === 'vault') loadVault();
+    if (screen === 'wall') loadWallMessages();
     if (screen === 'main' && (state.tutorialStep === 0 || state.tutorialStep === undefined)) {
         startTutorial();
     }
@@ -253,9 +258,7 @@ function renderDashboard() {
     document.getElementById('rank-progress').style.width = `${progressPct}%`;
     document.getElementById('total-saved').innerText = `$${totalSavedValue.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
 
-    // --- MASSIVE TROPHY ARMORY SYSTEM ---
     const trophies = [
-        // Timeline Milestones
         { title: 'First Step', desc: '1 Day Clean', icon: 'footprints', earned: currentMainStreak >= 1 },
         { title: 'Iron Will', desc: '7 Days Clean', icon: 'shield', earned: currentMainStreak >= 7 },
         { title: 'The Forge', desc: '30 Days Clean', icon: 'swords', earned: currentMainStreak >= 30 },
@@ -265,27 +268,19 @@ function renderDashboard() {
         { title: 'The Marathon', desc: '2 Years Clean', icon: 'mountain-snow', earned: currentMainStreak >= 730 },
         { title: 'Deep Roots', desc: '3 Years Clean', icon: 'tree-pine', earned: currentMainStreak >= 1095 },
         { title: 'Living Legend', desc: '5 Years Clean', icon: 'crown', earned: currentMainStreak >= 1825 },
-
-        // Financial Milestones
         { title: 'Piggy Bank', desc: '$100 Saved', icon: 'coins', earned: totalSavedValue >= 100 },
         { title: 'Heavy Purse', desc: '$500 Saved', icon: 'banknote', earned: totalSavedValue >= 500 },
         { title: 'Treasure', desc: '$1k Saved', icon: 'gem', earned: totalSavedValue >= 1000 },
         { title: 'Dragon Hoard', desc: '$5k Saved', icon: 'castle', earned: totalSavedValue >= 5000 },
         { title: 'King\'s Ransom', desc: '$10k Saved', icon: 'landmark', earned: totalSavedValue >= 10000 },
-
-        // Urge Engine Mastery
         { title: 'Seeking Light', desc: 'Urge Button 5x', icon: 'bell-ring', earned: state.urgeClicks >= 5 },
         { title: 'Shield Wall', desc: 'Urge Button 25x', icon: 'bell-electric', earned: state.urgeClicks >= 25 },
         { title: 'The Watchman', desc: 'Urge Button 100x', icon: 'eye', earned: state.urgeClicks >= 100 },
         { title: 'Storm Breaker', desc: 'Urge Button 500x', icon: 'zap', earned: state.urgeClicks >= 500 },
-
-        // Vault & Memo Creation
         { title: 'Inner Voice', desc: '1 Voice Memo', icon: 'mic', earned: state.voiceMemos >= 1 },
         { title: 'War Cry', desc: '5 Voice Memos', icon: 'mic-vocal', earned: state.voiceMemos >= 5 },
         { title: 'Choir of One', desc: '25 Voice Memos', icon: 'library', earned: state.voiceMemos >= 25 },
         { title: 'The Archivist', desc: '100 Voice Memos', icon: 'archive', earned: state.voiceMemos >= 100 },
-
-        // Creative Challenges (Single-Struggle Analytics)
         { title: 'The Phoenix', desc: '30 Days after a Slip', icon: 'bird', earned: state.habits.some(h => h.slips.length > 0 && calculateStreak(h) >= 30) },
         { title: 'Diamond Hands', desc: '1 Year, Zero Slips', icon: 'diamond', earned: state.habits.some(h => h.slips.length === 0 && calculateStreak(h) >= 365) },
         { title: 'Vow of Silence', desc: '1 Yr on $0 Struggle', icon: 'wind', earned: state.habits.some(h => h.costPerDay === 0 && calculateStreak(h) >= 365) },
@@ -330,7 +325,6 @@ async function startRecording() {
             const t = db.transaction(["videos"], "readwrite");
             t.objectStore("videos").add({ blob: b, date: new Date().toISOString() });
             
-            // Check for "Echo of Iron" trophy (Recording a memo while holding a 1+ year streak)
             const mainHabits = state.habits.filter(h => h.isMain);
             const currentMainStreak = mainHabits.length > 0 ? Math.min(...mainHabits.map(h => calculateStreak(h))) : 0;
             if (currentMainStreak >= 365) {
@@ -396,7 +390,6 @@ let lastVerseIndex = -1;
 let lastAudioId = -1;
 
 async function triggerUrgeEngine() {
-    // Check for "Midnight Guard" trophy (Urges between 12 AM and 4 AM)
     const currentHour = new Date().getHours();
     if (currentHour >= 0 && currentHour < 4) {
         state.midnightUrges = (state.midnightUrges || 0) + 1;
@@ -462,6 +455,63 @@ async function triggerUrgeEngine() {
             </div>`;
     }
     lucide.createIcons();
+}
+
+// --- WALL OF WISDOM LOGIC ---
+async function loadWallMessages() {
+    const feed = document.getElementById('wall-feed');
+    feed.innerHTML = '<div class="text-center text-slate-600 font-bold uppercase tracking-widest text-[10px] animate-pulse py-8">Loading global sanctuary...</div>';
+    
+    try {
+        const res = await fetch(WORKER_API_URL);
+        if (!res.ok) throw new Error("Network response was not ok");
+        const messages = await res.json();
+        
+        if (messages.length === 0) {
+            feed.innerHTML = '<div class="text-center text-slate-500 text-xs italic">The wall is quiet. Be the first to leave a mark.</div>';
+            return;
+        }
+
+        feed.innerHTML = messages.map(m => `
+            <div class="card-glass p-4 border-white/30">
+                <p class="text-sm text-slate-800 font-medium leading-relaxed">"${m.text}"</p>
+                <p class="text-[8px] text-slate-500 uppercase tracking-widest font-bold mt-3 text-right">- Anonymous</p>
+            </div>
+        `).join('');
+    } catch(e) {
+        feed.innerHTML = '<div class="text-center text-slate-500 text-xs italic">The connection to the global sanctuary is temporarily lost. If you have not deployed your Cloudflare Pages Function yet, the wall cannot load.</div>';
+    }
+}
+
+async function postToWall() {
+    const input = document.getElementById('wall-input');
+    const text = input.value.trim();
+    if(!text) return;
+
+    input.value = '';
+    
+    const feed = document.getElementById('wall-feed');
+    const newMsgHTML = `
+        <div class="card-glass p-4 border-yellow-400/50 shadow-md">
+            <p class="text-sm text-slate-800 font-medium leading-relaxed">"${text}"</p>
+            <p class="text-[8px] text-yellow-600 uppercase tracking-widest font-bold mt-3 text-right">- You</p>
+        </div>
+    `;
+    
+    if(feed.innerHTML.includes('Loading') || feed.innerHTML.includes('quiet') || feed.innerHTML.includes('lost')) {
+        feed.innerHTML = '';
+    }
+    feed.insertAdjacentHTML('afterbegin', newMsgHTML);
+
+    try {
+        await fetch(WORKER_API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text })
+        });
+    } catch(e) {
+        alert("Failed to permanently save message to the global wall.");
+    }
 }
 
 // --- STRICT CALENDAR DATE LOGIC ---
