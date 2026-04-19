@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - TSH</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;600&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #b4c7d9; color: #1e293b; }
+        .font-cinzel { font-family: 'Cinzel', serif; }
+        .card-glass { background: rgba(255, 255, 255, 0.45); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 1.5rem; }
+    </style>
+</head>
+<body class="p-6 min-h-screen flex flex-col items-center">
+    <div class="max-w-md w-full space-y-6">
+        <h1 class="font-cinzel text-2xl text-center uppercase tracking-widest font-bold mt-8">Privacy Policy</h1>
+        
+        <div class="card-glass p-6 space-y-4 text-sm leading-relaxed">
+            <section>
+                <h2 class="font-bold uppercase text-[10px] tracking-widest mb-1 text-slate-700">My Philosophy</h2>
+                <p>I built The Steady Hand (TSH) as a private sanctuary for you. I don't track you, I don't use accounts, and I have no interest in your personal data. This app is a tool for your growth, not for my collection.</p>
+            </section>
+
+            <section>
+                <h2 class="font-bold uppercase text-[10px] tracking-widest mb-1 text-slate-700">How I Store Your Data</h2>
+                <p>Everything important—your habits, your streaks, and your voice recordings—stays <strong>only on your device</strong>. I use LocalStorage and IndexedDB to keep this data local to you. I have zero access to it.</p>
+            </section>
+
+            <section>
+                <h2 class="font-bold uppercase text-[10px] tracking-widest mb-1 text-slate-700">The Wall of Wisdom</h2>
+                <p>When you post a message to the Wall, it is sent to my server so others can read it. While these posts are anonymous, your IP address is processed during the transmission. I do not link this to your local data in any way.</p>
+            </section>
+
+            <section>
+                <h2 class="font-bold uppercase text-[10px] tracking-widest mb-1 text-slate-700">Third-Party Services</h2>
+                <p>I use a few standard services (Cloudflare, Google, Lucide) to make sure the app loads quickly and looks right. These providers may see your basic connection info when you open the app.</p>
+            </section>
+        </div>
+        
+        <button onclick="window.close();" class="w-full py-4 bg-slate-800 text-white rounded-xl font-bold uppercase tracking-widest text-[10px]">Return to Sanctuary</button>
+    </div>
+</body>
+</html>
