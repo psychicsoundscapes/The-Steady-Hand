@@ -8,6 +8,19 @@ if (typeof translations !== 'undefined' && typeof translations2 !== 'undefined')
     }
 }
 
+// Word-level fingerprints to distinguish Latin-based languages
+const languageFingerprints = {
+    "en": ["the", "and", "was", "for", "you", "with"],
+    "es": ["el", "la", "que", "los", "con", "para"],
+    "fr": ["le", "la", "des", "dans", "pour", "avec"],
+    "de": ["der", "die", "und", "ist", "mit", "fuer"],
+    "it": ["il", "che", "per", "con", "una", "del"],
+    "pt": ["com", "uma", "para", "dos", "pelo", "mais"],
+    "pl": ["jest", "bylo", "oraz", "dla", "przez", "przy"],
+    "sw": ["na", "wa", "kwa", "katika", "ni", "ya"],
+    "tl": ["ang", "mga", "ng", "sa", "ay", "na"]
+};
+
 function changeLanguage(langCode) {
     localStorage.setItem('tsh_language', langCode);
     window.location.reload();
@@ -16,38 +29,27 @@ function changeLanguage(langCode) {
 function applyTranslations() {
     if (typeof translations === 'undefined') return;
     
-    // Ensure currentLang is set (falls back to English if something goes wrong)
     const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
     const langData = translations[activeLang] || translations['en'];
     const fallbackData = translations['en'];
 
-    // Translate standard text elements
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         const translatedText = langData[key] || fallbackData[key];
-        if (translatedText) {
-            el.innerText = translatedText;
-        }
+        if (translatedText) el.innerText = translatedText;
     });
 
-    // Translate input placeholders
     document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
         const key = el.getAttribute('data-i18n-placeholder');
         const translatedText = langData[key] || fallbackData[key];
-        if (translatedText) {
-            el.placeholder = translatedText;
-        }
+        if (translatedText) el.placeholder = translatedText;
     });
 
-    // --- NEW LOGIC: Sync ALL language dropdown UIs across the app ---
     document.querySelectorAll('.lang-selector').forEach(select => {
         select.value = activeLang;
     });
 
-    // Refresh icons so they aren't destroyed by text replacement
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
+    if (typeof lucide !== 'undefined') lucide.createIcons();
 }
 
 // --- Core State & DB ---
@@ -61,13 +63,7 @@ dbRequest.onupgradeneeded = (e) => {
 
 dbRequest.onsuccess = (e) => { 
     db = e.target.result; 
-    if(document.getElementById('vault-list')) {
-        loadVault();
-    }
-};
-
-dbRequest.onerror = (e) => {
-    console.error("IndexedDB error or blocked by browser:", e);
+    if(document.getElementById('vault-list')) loadVault();
 };
 
 let state = { 
@@ -84,28 +80,20 @@ let state = {
     safetyContact: { name: "", phone: "" }
 };
 
-// Refactored Tutorial Array with Dictionary Keys
 const tutorialSteps =[
-    { titleKey: "tut_1_title", descKey: "tut_1_desc", defaultTitle: "The War Room", defaultDesc: "This is TSH Command. Level up through ranks and earn trophies as you rebuild your life.", icon: "layout-dashboard" },
-    { titleKey: "tut_2_title", descKey: "tut_2_desc", defaultTitle: "The Urge Engine", defaultDesc: "In moments of crisis, trigger the Engine to draw upon the Word or your personal vault recordings.", icon: "shield-alert" },
-    { titleKey: "tut_3_title", descKey: "tut_3_desc", defaultTitle: "The Vault", defaultDesc: "Record your own voice when you are strong. These notes become your shield during future urges.", icon: "lock" },
-    { titleKey: "tut_4_title", descKey: "tut_4_desc", defaultTitle: "The Wall", defaultDesc: "Share anonymous wisdom or read words of encouragement left by others on the same journey.", icon: "globe" }
+    { titleKey: "tut_1_title", descKey: "tut_1_desc", defaultTitle: "The War Room", defaultDesc: "This is TSH Command.", icon: "layout-dashboard" },
+    { titleKey: "tut_2_title", descKey: "tut_2_desc", defaultTitle: "The Urge Engine", defaultDesc: "Trigger the Engine in crisis.", icon: "shield-alert" },
+    { titleKey: "tut_3_title", descKey: "tut_3_desc", defaultTitle: "The Vault", defaultDesc: "Record your own voice.", icon: "lock" },
+    { titleKey: "tut_4_title", descKey: "tut_4_desc", defaultTitle: "The Wall", defaultDesc: "Share anonymous wisdom.", icon: "globe" }
 ];
 
 const rankTiers =[
-    { name: "Initiate", daysReq: 0 },
-    { name: "Novice", daysReq: 7 },
-    { name: "Fighter", daysReq: 30 },
-    { name: "Warrior", daysReq: 90 },
-    { name: "Sentinel", daysReq: 180 },
-    { name: "Vanguard", daysReq: 365 },
-    { name: "Champion", daysReq: 730 },
-    { name: "Titan", daysReq: 1095 },
-    { name: "Paragon", daysReq: 1460 },
+    { name: "Initiate", daysReq: 0 }, { name: "Novice", daysReq: 7 }, { name: "Fighter", daysReq: 30 },
+    { name: "Warrior", daysReq: 90 }, { name: "Sentinel", daysReq: 180 }, { name: "Vanguard", daysReq: 365 },
+    { name: "Champion", daysReq: 730 }, { name: "Titan", daysReq: 1095 }, { name: "Paragon", daysReq: 1460 },
     { name: "Legend", daysReq: 1825 }
 ];
 
-// Security Function to prevent HTML/XSS Injection
 function escapeHTML(str) {
     if (!str) return "";
     return str.replace(/[&<>'"]/g, tag => ({
@@ -113,31 +101,17 @@ function escapeHTML(str) {
     }[tag] || tag));
 }
 
-// --- Initialization ---
 function init() {
     lucide.createIcons();
     let savedState = localStorage.getItem('steady_hand_state');
-    
     if (savedState) {
         try {
             state = JSON.parse(savedState);
-            state.habits = state.habits ||[];
-            state.urgeClicks = state.urgeClicks || 0;
-            state.voiceMemos = state.voiceMemos || 0;
-            state.amenClicks = state.amenClicks || 0;
-            state.midnightUrges = state.midnightUrges || 0;
-            state.middayUrges = state.middayUrges || 0;
-            state.veteranMemos = state.veteranMemos || 0;
-            state.wallPosts = state.wallPosts || 0;
-            state.safetyContact = state.safetyContact || { name: "", phone: "" };
-            state.habits.forEach(h => { if(h.isMain === undefined) h.isMain = true; });
         } catch(e) {
-            console.error("Corrupted state wiped for stability.", e);
             localStorage.removeItem('steady_hand_state');
             savedState = null;
         }
     } 
-    
     if (!savedState) {
         showScreen('welcome');
         addHabitField(); 
@@ -145,62 +119,31 @@ function init() {
         if (state.setupComplete) showScreen('gateway');
         else showScreen('welcome');
     }
-
     applyTranslations();
     updateDate();
     renderDashboard();
     renderSafetyContact();
-
-    const refreshDashboardIfVisible = () => {
-        if (!document.getElementById('screen-main').classList.contains('hidden')) {
-            updateDate();
-            renderDashboard();
-        }
-    };
-    
-    window.addEventListener('focus', refreshDashboardIfVisible);
-    setInterval(refreshDashboardIfVisible, 60000); 
 }
 
 function showScreen(screen) {
     document.querySelectorAll('[id^="screen-"]').forEach(s => s.classList.add('hidden'));
     const targetEl = document.getElementById(`screen-${screen}`);
     if (targetEl) targetEl.classList.remove('hidden');
-    
     const nav = document.getElementById('app-nav');
-    if (screen === 'welcome' || screen === 'creator-note' || screen === 'explanation' || screen === 'setup' || screen === 'gateway' || screen === 'support') {
-        nav.classList.add('hidden');
-    } else {
-        nav.classList.remove('hidden');
-    }
-
+    if (['welcome', 'creator-note', 'explanation', 'setup', 'gateway', 'support'].includes(screen)) nav.classList.add('hidden');
+    else nav.classList.remove('hidden');
     document.querySelectorAll('.nav-link').forEach(l => {
-        l.classList.remove('nav-active');
-        l.classList.add('text-slate-500');
-        if(l.dataset.nav === screen) {
-            l.classList.add('nav-active');
-            l.classList.remove('text-slate-500');
-        }
+        l.classList.toggle('nav-active', l.dataset.nav === screen);
+        l.classList.toggle('text-slate-500', l.dataset.nav !== screen);
     });
-    
     if (screen === 'vault') loadVault();
     if (screen === 'wall') loadWallMessages();
-    if (screen === 'support') renderSafetyContact();
-    
     if (screen === 'main') {
-        updateDate();
-        renderDashboard();
-        if (state.tutorialStep === 0 || state.tutorialStep === undefined) {
-            startTutorial();
-        }
+        updateDate(); renderDashboard();
+        if (state.tutorialStep === 0 || state.tutorialStep === undefined) startTutorial();
     }
-    
     lucide.createIcons();
-
-    setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'instant' }); 
-        if (targetEl) targetEl.scrollTop = 0; 
-    }, 10);
+    setTimeout(() => { window.scrollTo({ top: 0, behavior: 'instant' }); if (targetEl) targetEl.scrollTop = 0; }, 10);
 }
 
 function startTutorial() {
@@ -217,45 +160,26 @@ function nextTutorialStep() {
         return;
     }
     const step = tutorialSteps[state.tutorialStep];
-    
     const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
-    const langData = typeof translations !== 'undefined' ? (translations[activeLang] || translations['en']) : {};
-    const fallbackData = typeof translations !== 'undefined' ? translations['en'] : {};
-
-    document.getElementById('tut-title').innerText = langData[step.titleKey] || fallbackData[step.titleKey] || step.defaultTitle;
-    document.getElementById('tut-desc').innerText = langData[step.descKey] || fallbackData[step.descKey] || step.defaultDesc;
-    
+    const langData = translations[activeLang] || translations['en'];
+    document.getElementById('tut-title').innerText = langData[step.titleKey] || step.defaultTitle;
+    document.getElementById('tut-desc').innerText = langData[step.descKey] || step.defaultDesc;
     state.tutorialStep++;
-    lucide.createIcons();
-}
-
-function resetTutorial() {
-    state.tutorialStep = 0;
-    toggleSettings();
-    showScreen('main');
 }
 
 function addHabitField() {
     const container = document.getElementById('habit-inputs');
     const div = document.createElement('div');
     div.className = 'card-glass p-4 space-y-3 relative';
-    
-    const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
-    const langData = typeof translations !== 'undefined' ? (translations[activeLang] || translations['en']) : {};
-    const fallbackData = typeof translations !== 'undefined' ? translations['en'] : {};
-    
-    const phStruggle = langData['setup_ph_struggle'] || fallbackData['setup_ph_struggle'] || "Struggle (e.g. Nicotine)";
-    const phCost = langData['setup_ph_cost'] || fallbackData['setup_ph_cost'] || "Daily Financial Cost ($)";
-    const lblMain = langData['setup_main_label'] || fallbackData['setup_main_label'] || "Main Struggle (Affects Rank)";
-
+    const langData = translations[typeof currentLang !== 'undefined' ? currentLang : 'en'] || translations['en'];
     div.innerHTML = `
-        <button onclick="this.parentElement.remove()" class="absolute -top-2 -right-2 bg-slate-700 text-white rounded-full p-1.5 shadow-md hover:bg-red-600 transition-colors"><i data-lucide="x" class="w-3 h-3"></i></button>
-        <input type="text" placeholder="${escapeHTML(phStruggle)}" class="habit-name w-full rounded-lg p-3 text-sm uppercase font-bold tracking-wider shadow-inner">
-        <input type="number" placeholder="${escapeHTML(phCost)}" class="habit-cost w-full rounded-lg p-3 text-sm shadow-inner" min="0">
+        <button onclick="this.parentElement.remove()" class="absolute -top-2 -right-2 bg-slate-700 text-white rounded-full p-1.5 shadow-md"><i data-lucide="x" class="w-3 h-3"></i></button>
+        <input type="text" placeholder="${escapeHTML(langData.setup_ph_struggle)}" class="habit-name w-full rounded-lg p-3 text-sm uppercase font-bold tracking-wider">
+        <input type="number" placeholder="${escapeHTML(langData.setup_ph_cost)}" class="habit-cost w-full rounded-lg p-3 text-sm" min="0">
         <div class="flex items-center justify-between mt-2 px-1">
-            <label class="text-[10px] uppercase font-bold text-slate-700 flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" class="habit-main w-4 h-4 rounded border-slate-400 text-slate-800 focus:ring-slate-800" checked>
-                ${escapeHTML(lblMain)}
+            <label class="text-[10px] uppercase font-bold text-slate-700 flex items-center gap-2">
+                <input type="checkbox" class="habit-main w-4 h-4 rounded border-slate-400" checked>
+                ${escapeHTML(langData.setup_main_label)}
             </label>
         </div>
     `;
@@ -265,487 +189,210 @@ function addHabitField() {
 
 async function saveInitialSetup() {
     const habitEls = document.querySelectorAll('#habit-inputs > div');
-    
-    if (habitEls.length === 0) {
-        alert("Please add at least one struggle to forge your shield.");
-        return;
-    }
-
+    if (habitEls.length === 0) return alert("Please add at least one struggle.");
     state.habits =[];
     habitEls.forEach(el => {
         const name = el.querySelector('.habit-name').value;
         const cost = el.querySelector('.habit-cost').value || 0;
         const isMain = el.querySelector('.habit-main').checked;
-        
-        if (name) state.habits.push({ 
-            id: 'habit_' + Date.now() + '_' + Math.floor(Math.random() * 1000), 
-            name, 
-            costPerDay: Math.max(0, parseFloat(cost) || 0), 
-            startDate: new Date().toISOString(), 
-            slips:[],
-            isMain: isMain
-        });
+        if (name) state.habits.push({ id: 'h_' + Date.now() + Math.random(), name, costPerDay: parseFloat(cost), startDate: new Date().toISOString(), slips:[], isMain });
     });
-
-    state.setupComplete = true;
-    state.tutorialStep = 0; 
+    state.setupComplete = true; state.tutorialStep = 0;
     localStorage.setItem('steady_hand_state', JSON.stringify(state));
-    showScreen('gateway');
-    renderDashboard();
+    showScreen('gateway'); renderDashboard();
 }
 
 function clickAmen() {
-    if (navigator.vibrate) navigator.vibrate([40, 60, 40]);
     state.amenClicks = (state.amenClicks || 0) + 1;
     localStorage.setItem('steady_hand_state', JSON.stringify(state));
-    
-    document.getElementById('screen-gateway').classList.add('hidden');
     showScreen('main');
 }
 
 function saveSafetyContact() {
-    const name = document.getElementById('safety-name').value;
-    const phone = document.getElementById('safety-phone').value;
-    state.safetyContact = { name, phone };
+    state.safetyContact = { name: document.getElementById('safety-name').value, phone: document.getElementById('safety-phone').value };
     localStorage.setItem('steady_hand_state', JSON.stringify(state));
     renderSafetyContact();
-    alert("Safety dial locked in.");
+    alert("Safety dial locked.");
 }
 
 function renderSafetyContact() {
-    const nameEl = document.getElementById('safety-display-name');
+    const { name, phone } = state.safetyContact;
     const callBtn = document.getElementById('safety-call-btn');
     const textBtn = document.getElementById('safety-text-btn');
-    
-    const safetyNameInput = document.getElementById('safety-name');
-    const safetyPhoneInput = document.getElementById('safety-phone');
-
-    if(safetyNameInput && safetyPhoneInput) {
-        safetyNameInput.value = state.safetyContact.name || "";
-        safetyPhoneInput.value = state.safetyContact.phone || "";
-    }
-    
-    if(callBtn && textBtn && state.safetyContact && state.safetyContact.phone) {
-        nameEl.innerText = state.safetyContact.name || "Contact";
-        callBtn.href = `tel:${state.safetyContact.phone}`;
-        textBtn.href = `sms:${state.safetyContact.phone}`;
+    if (callBtn && textBtn && phone) {
+        document.getElementById('safety-display-name').innerText = name || "Contact";
+        callBtn.href = `tel:${phone}`; textBtn.href = `sms:${phone}`;
         callBtn.classList.remove('opacity-50', 'pointer-events-none');
         textBtn.classList.remove('opacity-50', 'pointer-events-none');
-    } else if (callBtn && textBtn) {
-        nameEl.innerText = "";
-        callBtn.href = "#";
-        textBtn.href = "#";
-        callBtn.classList.add('opacity-50', 'pointer-events-none');
-        textBtn.classList.add('opacity-50', 'pointer-events-none');
     }
 }
 
 function renderDashboard() {
     const container = document.getElementById('dashboard-habits');
     if (!container) return; container.innerHTML = '';
-    
-    let totalSavedValue = 0;
-    let activeStrugglesCount = 0;
-    
+    let totalSavedValue = 0; let activeStrugglesCount = 0;
     const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
-    const langData = typeof translations !== 'undefined' ? (translations[activeLang] || translations['en']) : {};
-    const fallbackData = typeof translations !== 'undefined' ? translations['en'] : {};
-    const getI18n = (key) => langData[key] || fallbackData[key] || key;
+    const langData = translations[activeLang] || translations['en'];
     
     state.habits.forEach(habit => {
         const streakDays = calculateStreak(habit);
         const cleanDays = calculateTotalCleanDays(habit);
-        const saved = cleanDays * habit.costPerDay;
-        
-        totalSavedValue += saved;
+        totalSavedValue += cleanDays * habit.costPerDay;
         if (streakDays > 0) activeStrugglesCount++;
-        
-        const tagHTML = habit.isMain 
-            ? `<span class="text-[8px] bg-slate-800 text-white px-2 py-0.5 rounded-full tracking-widest ml-2 align-middle">${escapeHTML(getI18n('explanation_main_badge'))}</span>`
-            : `<span class="text-[8px] bg-slate-400 text-white px-2 py-0.5 rounded-full tracking-widest ml-2 align-middle">${escapeHTML(getI18n('explanation_sec_badge'))}</span>`;
-
+        const badge = habit.isMain ? langData.explanation_main_badge : langData.explanation_sec_badge;
         const div = document.createElement('div');
         div.className = 'card-glass p-5';
         div.innerHTML = `
             <div class="flex justify-between items-start mb-4">
                 <div>
-                    <h3 class="text-slate-800 font-cinzel text-sm uppercase tracking-widest font-bold mb-1 flex items-center">${escapeHTML(habit.name)} ${tagHTML}</h3>
-                    <p class="text-3xl font-bold text-slate-800">${streakDays} <span class="text-[10px] text-slate-600 uppercase tracking-tighter ml-1 font-semibold">${escapeHTML(getI18n('dash_days_won'))}</span></p>
+                    <h3 class="text-slate-800 font-cinzel text-sm uppercase font-bold mb-1">${escapeHTML(habit.name)} <span class="text-[8px] bg-slate-800 text-white px-2 py-0.5 rounded-full ml-2">${badge}</span></h3>
+                    <p class="text-3xl font-bold text-slate-800">${streakDays} <span class="text-[10px] text-slate-600 uppercase font-semibold">${langData.dash_days_won}</span></p>
                 </div>
-                <button onclick="logSlip('${habit.id}')" class="text-[10px] uppercase font-bold text-slate-700 border border-slate-400 bg-white/50 px-3 py-2 rounded-full active:bg-slate-200 transition-colors shadow-sm">${escapeHTML(getI18n('dash_log_slip'))}</button>
+                <button onclick="logSlip('${habit.id}')" class="text-[10px] uppercase font-bold text-slate-700 border border-slate-400 bg-white/50 px-3 py-2 rounded-full">${langData.dash_log_slip}</button>
             </div>
-            <div class="bg-white/60 h-2 rounded-full overflow-hidden shadow-inner"><div class="bg-slate-700 h-full" style="width: ${calculateSuccessRate(habit)}%"></div></div>
         `;
         container.appendChild(div);
     });
-    
-    const mainHabits = state.habits.filter(h => h.isMain);
-    let currentMainStreak = 0;
-    
-    if (mainHabits.length > 0) {
-        currentMainStreak = Math.min(...mainHabits.map(h => calculateStreak(h)));
-    } else if (state.habits.length > 0) {
-        currentMainStreak = Math.min(...state.habits.map(h => calculateStreak(h)));
-    }
-    
-    let currentRank = rankTiers[0];
-    let nextRank = rankTiers[1];
-    
-    for(let i=0; i<rankTiers.length; i++) {
-        if (currentMainStreak >= rankTiers[i].daysReq) {
-            currentRank = rankTiers[i];
-            nextRank = rankTiers[i+1] || rankTiers[i];
-        }
-    }
-    
-    let progressPct = 100;
-    let daysText = `${currentMainStreak} Days (MAX)`;
-    if (currentRank !== nextRank) {
-        const daysIntoLevel = currentMainStreak - currentRank.daysReq;
-        const daysNeededForNext = nextRank.daysReq - currentRank.daysReq;
-        progressPct = (daysIntoLevel / daysNeededForNext) * 100;
-        daysText = `${currentMainStreak} / ${nextRank.daysReq} Days`;
-    }
 
-    progressPct = Math.max(0, Math.min(100, progressPct));
-
+    const mainStreak = state.habits.length ? Math.min(...state.habits.filter(h => h.isMain).map(calculateStreak)) : 0;
+    let currentRank = rankTiers[0]; let nextRank = rankTiers[1];
+    for (let r of rankTiers) { if (mainStreak >= r.daysReq) { currentRank = r; nextRank = rankTiers[rankTiers.indexOf(r)+1] || r; } }
+    
     document.getElementById('rank-name').innerText = currentRank.name;
-    document.getElementById('xp-text').innerText = daysText;
-    document.getElementById('rank-progress').style.width = `${progressPct}%`;
-    document.getElementById('total-saved').innerText = `$${totalSavedValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    document.getElementById('xp-text').innerText = `${mainStreak} / ${nextRank.daysReq} Days`;
+    document.getElementById('rank-progress').style.width = `${(mainStreak / nextRank.daysReq) * 100}%`;
+    document.getElementById('total-saved').innerText = `$${totalSavedValue.toFixed(2)}`;
 
-    const trophies = typeof generateAllTrophies === 'function' ? generateAllTrophies(state, currentMainStreak, totalSavedValue, activeStrugglesCount, calculateStreak) :[];
-
-    const trophyContainer = document.getElementById('trophy-case');
-    trophyContainer.innerHTML = trophies.map(t => `
-        <div class="flex-shrink-0 w-[84px] h-24 rounded-2xl bg-white/${t.earned ? '60' : '20'} border ${t.earned ? 'border-yellow-400/50 shadow-md' : 'border-white/30'} flex flex-col items-center justify-center p-2 text-center transition-all duration-500">
-            <i data-lucide="${t.icon}" class="w-6 h-6 mb-2 ${t.earned ? 'text-yellow-600 drop-shadow-sm' : 'text-slate-400 opacity-50'}"></i>
-            <p class="text-[8px] font-bold uppercase tracking-tighter ${t.earned ? 'text-slate-800' : 'text-slate-500'} leading-tight mb-0.5">${escapeHTML(t.title)}</p>
-            <p class="text-[7px] text-slate-500 font-medium leading-tight">${escapeHTML(t.desc)}</p>
+    const trophies = generateAllTrophies(state, mainStreak, totalSavedValue, activeStrugglesCount, calculateStreak);
+    document.getElementById('trophy-case').innerHTML = trophies.map(t => `
+        <div class="flex-shrink-0 w-[84px] h-24 rounded-2xl bg-white/${t.earned ? '60' : '20'} border ${t.earned ? 'border-yellow-400/50' : 'border-white/30'} flex flex-col items-center justify-center p-2 text-center">
+            <i data-lucide="${t.icon}" class="w-6 h-6 mb-2 ${t.earned ? 'text-yellow-600' : 'text-slate-400 opacity-50'}"></i>
+            <p class="text-[8px] font-bold uppercase ${t.earned ? 'text-slate-800' : 'text-slate-500'} leading-tight">${escapeHTML(t.title)}</p>
         </div>
     `).join('');
-    
     lucide.createIcons();
-
-    const missingIcons = document.querySelectorAll('#trophy-case i[data-lucide]');
-    if (missingIcons.length > 0) {
-        missingIcons.forEach(el => el.setAttribute('data-lucide', 'award'));
-        lucide.createIcons(); 
-    }
 }
-
-// --- Audio Recording Logic ---
-let mediaRecorder; let chunks =[];
-let audioStream;
 
 async function startRecording() {
     try {
-        const s = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
-        audioStream = s;
-        
-        document.getElementById('record-placeholder').classList.add('hidden');
-        document.getElementById('recording-active').classList.remove('hidden');
-        document.getElementById('recording-active').classList.add('flex');
-        
-        mediaRecorder = new MediaRecorder(s); 
-        chunks =[];
-        
-        mediaRecorder.ondataavailable = e => { if(e.data.size > 0) chunks.push(e.data); };
+        const s = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(s); chunks =[];
+        mediaRecorder.ondataavailable = e => chunks.push(e.data);
         mediaRecorder.onstop = () => {
-            if (chunks.length === 0) return;
-            const mimeType = mediaRecorder.mimeType || ''; 
-            const b = new Blob(chunks, mimeType ? { type: mimeType } : undefined);
-            const t = db.transaction(["videos"], "readwrite");
-            t.objectStore("videos").add({ blob: b, date: new Date().toISOString() });
-            
-            const mainHabits = state.habits.filter(h => h.isMain);
-            const currentMainStreak = mainHabits.length > 0 ? Math.min(...mainHabits.map(h => calculateStreak(h))) : 0;
-            if (currentMainStreak >= 365) {
-                state.veteranMemos = (state.veteranMemos || 0) + 1;
-            }
-
-            state.voiceMemos = (state.voiceMemos || 0) + 1;
-            localStorage.setItem('steady_hand_state', JSON.stringify(state));
-            
-            t.oncomplete = () => {
-                loadVault();
-                renderDashboard();
-            };
+            const b = new Blob(chunks, { type: 'audio/ogg; codecs=opus' });
+            db.transaction(["videos"], "readwrite").objectStore("videos").add({ blob: b, date: new Date().toISOString() });
+            state.voiceMemos++; localStorage.setItem('steady_hand_state', JSON.stringify(state)); loadVault();
         };
-        
         mediaRecorder.start();
         document.getElementById('btn-start-record').classList.add('hidden');
         document.getElementById('btn-stop-record').classList.remove('hidden');
-    } catch (err) { alert("Microphone access required for the Vault."); }
+        document.getElementById('record-placeholder').classList.add('hidden');
+        document.getElementById('recording-active').classList.remove('hidden');
+    } catch (err) { alert("Mic access required."); }
 }
 
 function stopRecording() {
-    if(!mediaRecorder) return;
     mediaRecorder.stop();
-    if(audioStream) audioStream.getTracks().forEach(t => t.stop());
-    
-    document.getElementById('record-placeholder').classList.remove('hidden');
-    document.getElementById('recording-active').classList.add('hidden');
-    document.getElementById('recording-active').classList.remove('flex');
-    
     document.getElementById('btn-start-record').classList.remove('hidden');
     document.getElementById('btn-stop-record').classList.add('hidden');
+    document.getElementById('record-placeholder').classList.remove('hidden');
+    document.getElementById('recording-active').classList.add('hidden');
 }
 
 function loadVault() {
-    if(!db) return;
-    const c = document.getElementById('vault-list'); 
-    c.innerHTML = '';
-    
+    const c = document.getElementById('vault-list'); if (!c) return; c.innerHTML = '';
     db.transaction("videos", "readonly").objectStore("videos").openCursor(null, 'prev').onsuccess = e => {
         const cur = e.target.result;
         if(cur) {
             const url = URL.createObjectURL(cur.value.blob);
-            const d = document.createElement('div'); 
-            d.className = 'card-glass p-4 relative';
-            
-            d.innerHTML = `
-                <div class="flex items-center gap-3 mb-4 bg-white/50 p-2 rounded-xl border border-white/60 shadow-inner">
-                    <i data-lucide="mic" class="w-5 h-5 text-slate-700 shrink-0 ml-2"></i>
-                    <audio src="${url}" controls class="w-full h-8 outline-none bg-transparent"></audio>
-                </div>
-                <div class="flex justify-between items-center text-[10px] uppercase font-bold text-slate-700 px-2">
-                <span class="truncate max-w-[150px]">Captured ${new Date(cur.value.date).toLocaleDateString()}</span>
-                <button onclick="deleteVideo(${cur.value.id})" class="text-red-600 bg-white/50 px-3 py-1 rounded-full shadow-sm hover:bg-red-50 transition-colors">Purge</button></div>`;
+            const d = document.createElement('div'); d.className = 'card-glass p-4';
+            d.innerHTML = `<audio src="${url}" controls class="w-full h-8 mb-2"></audio>
+                <div class="flex justify-between text-[10px] uppercase font-bold">
+                <span>${new Date(cur.value.date).toLocaleDateString()}</span>
+                <button onclick="deleteVideo(${cur.value.id})" class="text-red-600">Purge</button></div>`;
             c.appendChild(d); cur.continue();
         }
     };
-    setTimeout(() => lucide.createIcons(), 50);
 }
 
-function deleteVideo(id) { 
-    if(confirm("Purge this voice recording permanently?")) {
-        db.transaction("videos", "readwrite").objectStore("videos").delete(id).onsuccess = loadVault; 
-    }
-}
-
-// --- Smarter Urge Engine Algorithm ---
-let lastUrgeType = null;
-let lastVerseIndex = -1;
-let lastAudioId = -1;
+function deleteVideo(id) { if(confirm("Purge recording?")) db.transaction("videos", "readwrite").objectStore("videos").delete(id).onsuccess = loadVault; }
 
 async function triggerUrgeEngine() {
-    const currentHour = new Date().getHours();
-    
-    if (currentHour >= 0 && currentHour < 4) {
-        state.midnightUrges = (state.midnightUrges || 0) + 1;
-    } 
-    else if (currentHour >= 11 && currentHour <= 14) {
-        state.middayUrges = (state.middayUrges || 0) + 1;
-    }
-
-    state.urgeClicks = (state.urgeClicks || 0) + 1;
-    localStorage.setItem('steady_hand_state', JSON.stringify(state));
-    renderDashboard();
-    
-    const o = document.getElementById('urge-overlay'); o.classList.remove('hidden');
+    state.urgeClicks++; localStorage.setItem('steady_hand_state', JSON.stringify(state));
+    document.getElementById('urge-overlay').classList.remove('hidden');
     const c = document.getElementById('urge-content');
-    
-    const vaultAudios = await new Promise(r => {
-        if (!db) return r([]); 
-        const res =[]; 
-        db.transaction("videos").objectStore("videos").openCursor().onsuccess = e => {
-            if(e.target.result) { res.push(e.target.result.value); e.target.result.continue(); } else r(res);
-        };
-    });
-    
-    let choice = 'scripture';
-    
-    if (vaultAudios.length > 0) {
-        if (lastUrgeType === 'audio') {
-            choice = Math.random() > 0.8 ? 'audio' : 'scripture';
-        } else {
-            choice = Math.random() > 0.5 ? 'audio' : 'scripture';
-        }
-    }
-
-    lastUrgeType = choice;
-
-    if (choice === 'audio') {
-        let audioMatch = vaultAudios[Math.floor(Math.random() * vaultAudios.length)];
-        let safetyCounter = 0;
-        while (audioMatch.id === lastAudioId && vaultAudios.length > 1 && safetyCounter < 10) {
-            audioMatch = vaultAudios[Math.floor(Math.random() * vaultAudios.length)];
-            safetyCounter++;
-        }
-        lastAudioId = audioMatch.id;
-
-        const url = URL.createObjectURL(audioMatch.blob);
-
-        c.innerHTML = `
-            <i data-lucide="mic" class="w-16 h-16 text-slate-700 drop-shadow-sm mx-auto mb-6"></i>
-            <h2 class="font-cinzel text-slate-800 mb-6 uppercase font-bold tracking-widest text-xl">Listen to Your Strength</h2>
-            <div class="bg-white/60 p-4 rounded-2xl w-full max-w-sm shadow-xl border-2 border-white">
-                <audio src="${url}" autoplay controls class="w-full outline-none"></audio>
-            </div>
-            <p class="text-[10px] text-slate-600 uppercase font-bold tracking-widest mt-8">Breathe and Listen</p>
-        `;
-    } else {
-        const safeScriptures = (typeof scriptures !== 'undefined' && typeof currentLang !== 'undefined' && scriptures[currentLang] && scriptures[currentLang].length > 0) 
-            ? scriptures[currentLang] 
-            : (typeof scriptures !== 'undefined' && scriptures['en'] ? scriptures['en'] : [{text: "Breathe. Focus on your strength. You can overcome this.", ref: "The Steady Hand"}]);
-
-        let nextIndex = Math.floor(Math.random() * safeScriptures.length);
-        while (nextIndex === lastVerseIndex && safeScriptures.length > 1) {
-            nextIndex = Math.floor(Math.random() * safeScriptures.length);
-        }
-        lastVerseIndex = nextIndex;
-        const randomScripture = safeScriptures[nextIndex];
-        
-        c.innerHTML = `<i data-lucide="sun" class="w-16 h-16 text-slate-700 drop-shadow-sm mx-auto mb-8"></i>
-            <h2 class="text-2xl font-cinzel text-slate-800 drop-shadow-sm leading-relaxed px-4 italic font-bold">"${escapeHTML(randomScripture.text)}"</h2>
-            <p class="text-sm font-bold text-slate-600 mt-6">${escapeHTML(randomScripture.ref)}</p>
-            <div class="mt-12 bg-white/40 py-2 px-6 rounded-full inline-block shadow-sm border border-white/50">
-                <p class="text-[10px] text-slate-700 uppercase tracking-widest font-bold">Breathe for 60 seconds.</p>
-            </div>`;
-    }
-    setTimeout(() => lucide.createIcons(), 50);
+    const safeScriptures = scriptures[typeof currentLang !== 'undefined' ? currentLang : 'en'] || scriptures['en'];
+    const randomScripture = safeScriptures[Math.floor(Math.random() * safeScriptures.length)];
+    c.innerHTML = `<h2 class="text-2xl font-cinzel italic font-bold">"${escapeHTML(randomScripture.text)}"</h2><p class="mt-6 font-bold text-slate-600">${escapeHTML(randomScripture.ref)}</p>`;
+    lucide.createIcons();
 }
 
-// --- WALL OF WISDOM LOGIC ---
 async function loadWallMessages() {
     const feed = document.getElementById('wall-feed');
-    feed.innerHTML = '<div id="wall-placeholder" class="text-center text-slate-600 font-bold uppercase tracking-widest text-[10px] animate-pulse py-8">Loading global sanctuary...</div>';
-    
+    feed.innerHTML = '<div class="text-center animate-pulse py-8 uppercase text-[10px] font-bold">Loading Sanctuary...</div>';
     try {
-        // Appending the user's language preference dynamically to trigger Cloudflare AI
-        const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
-        const res = await fetch(`${WORKER_API_URL}?lang=${activeLang}`);
-        
-        if (!res.ok) throw new Error("Network response was not ok");
+        const res = await fetch(WORKER_API_URL);
         const messages = await res.json();
-        
-        if (messages.length === 0) {
-            feed.innerHTML = '<div id="wall-placeholder" class="text-center text-slate-500 text-xs italic">The wall is quiet. Be the first to leave a mark.</div>';
-            return;
-        }
+        feed.innerHTML = messages.map(m => `
+            <div class="card-glass p-4 wall-message active:scale-[0.98] transition-transform cursor-pointer" onclick="handleMessageTap(this, ${m.id})">
+                <p class="text-sm font-medium msg-body">"${escapeHTML(m.text)}"</p>
+                <p class="text-[8px] uppercase font-bold mt-3 text-right">- Anonymous</p>
+            </div>
+        `).join('');
+    } catch(e) { feed.innerHTML = '<div class="text-center text-xs italic">Connection lost.</div>'; }
+}
 
-        feed.innerHTML = messages.map(m => {
-            const isLong = m.text.length > 250;
-            return `
-                <div class="card-glass p-4 border-white/30 wall-message select-none" data-id="${escapeHTML(String(m.id))}">
-                    <p class="text-sm text-slate-800 font-medium leading-relaxed ${isLong ? 'wall-text-collapsed' : ''}">"${escapeHTML(m.text)}"</p>
-                    ${isLong ? `<button onclick="this.previousElementSibling.classList.toggle('wall-text-collapsed'); this.innerText = this.innerText === '...Read More' ? 'Show Less' : '...Read More'" class="text-[10px] font-bold text-slate-600 mt-2 uppercase tracking-widest">...Read More</button>` : ''}
-                    <p class="text-[8px] text-slate-500 uppercase tracking-widest font-bold mt-3 text-right pointer-events-none">- Anonymous</p>
-                </div>
-            `;
-        }).join('');
-
-    } catch(e) {
-        feed.innerHTML = '<div id="wall-placeholder" class="text-center text-slate-500 text-xs italic">The connection to the global sanctuary is temporarily lost.</div>';
+function isAlreadyInLanguage(text, targetLang) {
+    const scripts = { "ar": /[\u0600-\u06FF]/, "he": /[\u0590-\u05FF]/, "zh": /[\u4e00-\u9fa5]/, "ja": /[\u3040-\u30ff]/, "ko": /[\uac00-\ud7af]/, "ru": /[\u0400-\u04FF]/, "hi": /[\u0900-\u097F]/ };
+    for (const [lang, regex] of Object.entries(scripts)) { if (regex.test(text)) return targetLang === lang; }
+    if (languageFingerprints[targetLang]) {
+        const words = text.toLowerCase().replace(/[.,/#!$%^&*;:{}=\-_`~()]/g,"").split(/\s+/);
+        return words.filter(word => languageFingerprints[targetLang].includes(word)).length > 0;
     }
+    return false;
+}
+
+async function handleMessageTap(element, msgId) {
+    const textEl = element.querySelector('.msg-body');
+    const originalText = textEl.innerText.replace(/"/g, '');
+    const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
+    if (isAlreadyInLanguage(originalText, activeLang)) {
+        if (element.getAttribute('data-attempted')) return;
+        element.setAttribute('data-attempted', 'true');
+    }
+    textEl.classList.add('animate-pulse'); textEl.innerText = "...";
+    try {
+        const res = await fetch(`${WORKER_API_URL}?id=${msgId}&lang=${activeLang}`);
+        const data = await res.json();
+        textEl.innerText = `"${data.translatedText}"`;
+        textEl.classList.remove('animate-pulse');
+        element.onclick = null; element.classList.remove('cursor-pointer');
+    } catch (e) { textEl.innerText = `"${originalText}"`; textEl.classList.remove('animate-pulse'); }
 }
 
 async function postToWall() {
-    const input = document.getElementById('wall-input');
-    const text = input.value.trim();
-    if(!text) return;
-
+    const input = document.getElementById('wall-input'); const text = input.value.trim(); if(!text) return;
     input.value = '';
-    
-    const feed = document.getElementById('wall-feed');
-    const placeholder = document.getElementById('wall-placeholder');
-    
-    if (placeholder) {
-        placeholder.remove();
-    }
-    
-    const newMsgHTML = `
-        <div class="card-glass p-4 border-yellow-400/50 shadow-md">
-            <p class="text-sm text-slate-800 font-medium leading-relaxed">"${escapeHTML(text)}"</p>
-            <p class="text-[8px] text-yellow-600 uppercase tracking-widest font-bold mt-3 text-right">- You</p>
-        </div>
-    `;
-    
-    feed.insertAdjacentHTML('afterbegin', newMsgHTML);
-
-    state.wallPosts = (state.wallPosts || 0) + 1;
-    localStorage.setItem('steady_hand_state', JSON.stringify(state));
-
-    try {
-        await fetch(WORKER_API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text })
-        });
-    } catch(e) {
-        alert("Failed to permanently save message to the global wall.");
-    }
+    const newMsgHTML = `<div class="card-glass p-4 border-yellow-400/50"><p class="text-sm font-medium">"${escapeHTML(text)}"</p><p class="text-[8px] uppercase font-bold mt-3 text-right">- You</p></div>`;
+    document.getElementById('wall-feed').insertAdjacentHTML('afterbegin', newMsgHTML);
+    state.wallPosts++; localStorage.setItem('steady_hand_state', JSON.stringify(state));
+    await fetch(WORKER_API_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text }) });
 }
 
-// --- STRICT CALENDAR DATE LOGIC ---
-function getStartOfDay(dateStr) {
-    const d = new Date(dateStr);
-    d.setHours(0, 0, 0, 0);
-    return d;
+function getStartOfDay(d) { const date = new Date(d); date.setHours(0,0,0,0); return date; }
+function calculateTotalCleanDays(h) {
+    const total = Math.round((getStartOfDay(new Date()) - getStartOfDay(h.startDate)) / 86400000);
+    return Math.max(0, total - new Set(h.slips.map(s => getStartOfDay(s).getTime())).size);
 }
-
-function calculateTotalCleanDays(habit) {
+function calculateStreak(h) {
     const today = getStartOfDay(new Date());
-    const start = getStartOfDay(habit.startDate);
-    
-    const totalDaysElapsed = Math.round(Math.max(0, today - start) / 86400000); 
-    const pastSlips = habit.slips.filter(s => getStartOfDay(s).getTime() < today.getTime());
-    const uniquePastSlipDays = new Set(pastSlips.map(s => getStartOfDay(s).getTime())).size;
-    
-    return Math.max(0, totalDaysElapsed - uniquePastSlipDays);
+    const last = h.slips.length ? getStartOfDay(h.slips[h.slips.length-1]) : null;
+    const start = last ? new Date(last.getTime() + 86400000) : getStartOfDay(h.startDate);
+    return Math.max(0, Math.round((today - start) / 86400000));
 }
-
-function calculateTotalSaved(habit) {
-    return calculateTotalCleanDays(habit) * habit.costPerDay;
-}
-
-function calculateStreak(habit) { 
-    const today = getStartOfDay(new Date());
-    let streakStart;
-    
-    if (habit.slips.length > 0) {
-        const lastSlipDate = getStartOfDay(habit.slips[habit.slips.length - 1]);
-        streakStart = new Date(lastSlipDate.getTime() + 86400000);
-    } else {
-        streakStart = getStartOfDay(habit.startDate);
-    }
-    
-    const streakDays = Math.round((today - streakStart) / 86400000); 
-    return Math.max(0, streakDays);
-}
-
-function calculateSuccessRate(h) { 
-    const today = getStartOfDay(new Date());
-    const start = getStartOfDay(h.startDate);
-    const t = Math.max(1, Math.round(Math.abs(today - start) / 86400000)); 
-    
-    const pastSlips = h.slips.filter(s => getStartOfDay(s).getTime() < today.getTime());
-    const uniquePastSlipDays = new Set(pastSlips.map(s => getStartOfDay(s).getTime())).size;
-    
-    return Math.max(0, Math.min(100, ((t - uniquePastSlipDays) / t) * 100)); 
-}
-
-function logSlip(id) { 
-    const h = state.habits.find(x=>x.id === id); 
-    if(h) { 
-        h.slips.push(new Date().toISOString()); 
-        localStorage.setItem('steady_hand_state', JSON.stringify(state)); 
-        renderDashboard(); 
-    } 
-}
-
+function logSlip(id) { const h = state.habits.find(x=>x.id === id); if(h) { h.slips.push(new Date().toISOString()); localStorage.setItem('steady_hand_state', JSON.stringify(state)); renderDashboard(); } }
 function closeUrgeEngine() { document.getElementById('urge-overlay').classList.add('hidden'); }
 function toggleSettings() { document.getElementById('modal-settings').classList.toggle('hidden'); lucide.createIcons(); }
-function updateDate() { 
-    document.getElementById('date-display').innerText = new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }); 
-}
-function resetApp() { 
-    if(confirm("DELETE ALL DATA? This erases all progress and voice notes permanently.")) { 
-        localStorage.clear(); 
-        indexedDB.deleteDatabase("TSH_Database"); 
-        window.location.reload(); 
-    } 
-}
-
+function updateDate() { document.getElementById('date-display').innerText = new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }); }
+function resetApp() { if(confirm("ERASE ALL DATA?")) { localStorage.clear(); indexedDB.deleteDatabase("TSH_Database"); window.location.reload(); } }
 window.onload = init;
