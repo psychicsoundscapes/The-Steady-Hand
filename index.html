@@ -256,14 +256,14 @@
         </div>
     </nav>
 
-    <div id="tutorial-step" class="hidden fixed inset-0 z-[200] flex flex-col items-center justify-center p-8 text-center" style="background: linear-gradient(180deg, #b4c7d9 0%, #b5ba8b 100%);">
+    <div id="tutorial-step" class="hidden fixed inset-0 z-[200] tutorial-overlay flex flex-col items-center justify-center p-8 text-center bg-transparent">
         <img src="picture/tsh.PNG" class="w-24 h-24 rounded-full border-4 border-white mb-6 shadow-2xl" onerror="this.src='https://via.placeholder.com/150/ffffff/334155?text=TSH'">
         <h2 id="tut-title" class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-4">Welcome</h2>
         <p id="tut-desc" class="text-slate-800 leading-relaxed mb-10 text-sm font-semibold"></p>
         <button onclick="nextTutorialStep()" class="w-full bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg hover:bg-white transition-colors">Continue</button>
     </div>
 
-    <div id="urge-overlay" class="hidden fixed inset-0 z-[150] flex flex-col p-8 overflow-y-auto" style="background: linear-gradient(180deg, #b4c7d9 0%, #b5ba8b 100%);">
+    <div id="urge-overlay" class="hidden fixed inset-0 z-[150] flex flex-col p-8 overflow-y-auto bg-transparent">
         <div style="padding-top: calc(env(safe-area-inset-top) + 2rem);"></div>
         <button onclick="closeUrgeEngine()" class="absolute top-6 right-6 text-slate-700 bg-white/40 p-2 rounded-full z-[160] hover:bg-white/60 transition-colors shadow-sm" style="margin-top: env(safe-area-inset-top);"><i data-lucide="x" class="w-6 h-6"></i></button>
         <div id="urge-content" class="flex-1 flex flex-col items-center justify-center text-center space-y-8 mt-12"></div>
@@ -276,6 +276,10 @@
                 <h3 class="font-cinzel text-lg dark-gradient font-bold uppercase tracking-widest">TSH Sanctum</h3>
             </div>
             <div class="space-y-4">
+                <button onclick="devPassDay()" class="w-full text-left p-4 bg-yellow-100/80 border border-yellow-300 rounded-xl text-yellow-800 flex items-center justify-between font-bold hover:bg-yellow-200 transition-colors shadow-sm">
+                    <span>[Dev Test] Pass 1 Day</span>
+                    <i data-lucide="fast-forward" class="w-5 h-5"></i>
+                </button>
                 <button onclick="resetTutorial()" class="w-full text-left p-4 bg-white/40 border border-white/60 rounded-xl text-slate-800 flex items-center justify-between font-bold hover:bg-white/60 transition-colors shadow-sm">
                     <span>Watch Tutorial Again</span>
                     <i data-lucide="help-circle" class="w-5 h-5"></i>
