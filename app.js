@@ -480,12 +480,16 @@ async function loadWallMessages() {
             return;
         }
 
-        feed.innerHTML = messages.map(m => `
-            <div class="card-glass p-4 border-white/30 wall-message select-none" data-id="${m.id}">
-                <p class="text-sm text-slate-800 font-medium leading-relaxed pointer-events-none">"${m.text}"</p>
-                <p class="text-[8px] text-slate-500 uppercase tracking-widest font-bold mt-3 text-right pointer-events-none">- Anonymous</p>
-            </div>
-        `).join('');
+        feed.innerHTML = messages.map(m => {
+            const isLong = m.text.length > 250;
+            return `
+                <div class="card-glass p-4 border-white/30 wall-message select-none" data-id="${m.id}">
+                    <p class="text-sm text-slate-800 font-medium leading-relaxed ${isLong ? 'wall-text-collapsed' : ''}">"${m.text}"</p>
+                    ${isLong ? `<button onclick="this.previousElementSibling.classList.toggle('wall-text-collapsed'); this.innerText = this.innerText === '...Read More' ? 'Show Less' : '...Read More'" class="text-[10px] font-bold text-slate-600 mt-2 uppercase tracking-widest">...Read More</button>` : ''}
+                    <p class="text-[8px] text-slate-500 uppercase tracking-widest font-bold mt-3 text-right pointer-events-none">- Anonymous</p>
+                </div>
+            `;
+        }).join('');
 
         document.querySelectorAll('.wall-message').forEach(el => {
             let pressTimer;
