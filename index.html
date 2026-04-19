@@ -50,17 +50,36 @@
                 </button>
             </div>
 
-            <div id="screen-welcome" class="hidden fixed inset-0 h-[100vh] w-full z-[95] flex flex-col items-center justify-center p-8 text-center bg-[#b4c7d9]">
-                <img src="picture/tsh.PNG" class="w-28 h-28 mx-auto mb-8 logo-glow rounded-full shadow-2xl" onerror="this.src='https://via.placeholder.com/150/ffffff/334155?text=TSH'">
+            <div id="screen-welcome" class="hidden fixed inset-0 h-[100vh] w-full z-[95] flex flex-col items-center justify-center p-8 text-center bg-[#b4c7d9] overflow-y-auto">
+                <img src="picture/tsh.PNG" class="w-28 h-28 mx-auto mb-8 mt-4 logo-glow rounded-full shadow-2xl" onerror="this.src='https://via.placeholder.com/150/ffffff/334155?text=TSH'">
                 <h1 class="font-cinzel text-3xl dark-gradient mb-6 tracking-widest uppercase font-bold">Welcome</h1>
-                <p class="text-slate-800 font-semibold mb-12 leading-relaxed text-sm">
-                    You have taken the first step. The Steady Hand is a private sanctuary designed to track your victories, build your financial war chest, and forge a shield against your darkest moments.
-                </p>
-                <button onclick="showScreen('creator-note')" class="w-full max-w-xs bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg hover:bg-white transition-colors">Continue</button>
+                
+                <div class="text-slate-800 font-semibold mb-8 leading-relaxed text-sm max-w-xs space-y-4">
+                    <p>
+                        You have taken the first step. The Steady Hand is a private sanctuary designed to track your victories, build your financial war chest, and forge a shield against your darkest moments.
+                    </p>
+                    <div class="bg-white/40 border border-white/60 p-4 rounded-xl shadow-sm text-left">
+                        <h3 class="text-[11px] font-bold uppercase tracking-widest text-slate-800 flex items-center gap-2 mb-2">
+                            <i data-lucide="smartphone" class="w-4 h-4"></i> Mobile Sanctuary
+                        </h3>
+                        <p class="text-[11px] text-slate-800 font-medium leading-relaxed">
+                            For the best and safest experience, TSH is designed to be saved to your phone and used just like a normal native application. Tap the button below to add it directly to your Home Screen.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="w-full max-w-xs space-y-3 mb-8">
+                    <button id="btn-install-app" class="hidden w-full bg-slate-800 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-slate-700 text-white shadow-lg hover:bg-slate-700 transition-colors flex items-center justify-center gap-2">
+                        <i data-lucide="download" class="w-4 h-4"></i> Install to Home Screen
+                    </button>
+                    <button onclick="showScreen('creator-note')" class="w-full bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg hover:bg-white transition-colors">
+                        Continue in Browser
+                    </button>
+                </div>
             </div>
 
             <div id="screen-creator-note" class="hidden fixed inset-0 h-[100vh] w-full z-[95] flex flex-col items-center justify-center p-6 text-center bg-[#b4c7d9] overflow-y-auto">
-                <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-6 tracking-widest leading-tight">A Note from<br>the Creator</h2>
+                <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-6 tracking-widest leading-tight mt-8">A Note from<br>the Creator</h2>
                 
                 <div class="card-glass p-6 mb-6 text-left space-y-4 w-full max-w-sm">
                     <p class="text-sm text-slate-800 font-medium leading-relaxed">
@@ -77,13 +96,13 @@
                     </p>
                 </div>
 
-                <button onclick="showScreen('explanation')" class="w-full max-w-sm bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg hover:bg-white transition-colors">Continue</button>
+                <button onclick="showScreen('explanation')" class="w-full max-w-sm bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg hover:bg-white transition-colors mb-8">Continue</button>
             </div>
 
-            <div id="screen-explanation" class="hidden fixed inset-0 h-[100vh] w-full z-[95] flex flex-col items-center justify-center p-6 text-center bg-[#b4c7d9]">
-                <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-6 tracking-widest mt-auto">Your Struggles</h2>
+            <div id="screen-explanation" class="hidden fixed inset-0 h-[100vh] w-full z-[95] flex flex-col items-center justify-center p-6 text-center bg-[#b4c7d9] overflow-y-auto">
+                <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-6 tracking-widest mt-8">Your Struggles</h2>
                 
-                <div class="card-glass p-6 mb-10 text-left space-y-6 w-full max-w-sm">
+                <div class="card-glass p-6 mb-6 text-left space-y-6 w-full max-w-sm">
                     <div>
                         <h3 class="text-[11px] font-bold uppercase tracking-widest text-slate-800 mb-2 flex items-center gap-2">
                             <span class="bg-slate-800 text-white px-2 py-0.5 rounded-full text-[8px]">MAIN</span> Main Struggles
@@ -98,7 +117,7 @@
                     </div>
                 </div>
 
-                <button onclick="showScreen('setup')" class="w-full max-w-sm bg-slate-800 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-slate-700 text-white shadow-lg hover:bg-slate-700 transition-colors mt-auto mb-8">Enter Sanctuary</button>
+                <button onclick="showScreen('setup')" class="w-full max-w-sm bg-slate-800 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-slate-700 text-white shadow-lg hover:bg-slate-700 transition-colors mb-8">Enter Sanctuary</button>
             </div>
 
             <div id="screen-setup" class="hidden fixed inset-0 h-[100vh] w-full z-[90] overflow-y-auto p-6 flex flex-col bg-[#b4c7d9]">
@@ -120,7 +139,7 @@
                     <i data-lucide="plus-circle" class="w-4 h-4"></i> Add Struggle
                 </button>
 
-                <button onclick="saveInitialSetup()" class="w-full bg-white/60 hover:bg-white/80 text-slate-800 font-bold py-4 rounded-xl shadow-md transition-all mt-auto mb-12 uppercase tracking-widest text-sm border border-white">
+                <button onclick="saveInitialSetup()" class="w-full bg-white/60 hover:bg-white/80 text-slate-800 font-bold py-4 rounded-xl shadow-md transition-all mt-4 mb-12 uppercase tracking-widest text-sm border border-white">
                     Confirm Commitment
                 </button>
             </div>
@@ -400,5 +419,54 @@
         </div>
     </div>
 
+    <script>
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').then((registration) => {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }).catch((error) => {
+                    console.log('ServiceWorker registration failed: ', error);
+                });
+            });
+        }
+
+        // PWA Install Prompt Handling
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent Chrome 67 and earlier from automatically showing the prompt
+            e.preventDefault();
+            // Stash the event so it can be triggered later.
+            deferredPrompt = e;
+            
+            // Update UI to notify the user they can add to home screen
+            const installBtn = document.getElementById('btn-install-app');
+            if (installBtn) {
+                installBtn.classList.remove('hidden');
+                
+                installBtn.addEventListener('click', async () => {
+                    // Hide the app provided install promotion
+                    installBtn.classList.add('hidden');
+                    // Show the install prompt
+                    deferredPrompt.prompt();
+                    // Wait for the user to respond to the prompt
+                    const { outcome } = await deferredPrompt.userChoice;
+                    console.log(`User response to the install prompt: ${outcome}`);
+                    // We've used the prompt, and can't use it again, throw it away
+                    deferredPrompt = null;
+                });
+            }
+        });
+
+        // Optional: Listen for successful installation to hide button just in case
+        window.addEventListener('appinstalled', () => {
+            const installBtn = document.getElementById('btn-install-app');
+            if (installBtn) {
+                installBtn.classList.add('hidden');
+            }
+            deferredPrompt = null;
+            console.log('PWA was installed');
+        });
+    </script>
 </body>
 </html>
