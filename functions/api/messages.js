@@ -12,8 +12,8 @@ export async function onRequestPost({ request, env }) {
     try {
         const { text } = await request.json();
         
-        // Basic validation: ensure text exists and isn't too long
-        if (!text || text.length > 250) {
+        // Validation: Ensure text exists and set a high limit for long-form stories
+        if (!text || text.length > 10000) {
             return new Response("Invalid message length", { status: 400 });
         }
 
