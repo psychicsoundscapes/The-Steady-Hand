@@ -21,14 +21,15 @@
     <link rel="stylesheet" href="styles.css">
     
     <script src="verses.js" defer></script>
+    <script src="trophies.js" defer></script>
     <script src="app.js" defer></script>
 </head>
 <body>
 
     <div id="app-scroller">
-        <div id="app" class="max-w-md mx-auto min-h-screen relative flex flex-col pb-36">
+        <div id="app" class="max-w-md mx-auto min-h-screen relative flex flex-col pb-48">
             
-            <div id="screen-gateway" class="fixed inset-0 z-[100] flex flex-col items-center justify-center p-8 text-center bg-transparent">
+            <div id="screen-gateway" class="fixed inset-0 z-[100] flex flex-col items-center justify-center p-8 text-center" style="background: linear-gradient(180deg, #b4c7d9 0%, #b5ba8b 100%);">
                 <div class="mb-6">
                     <img src="picture/tsh.PNG" alt="TSH Logo" class="w-32 h-32 mx-auto mb-6 logo-glow rounded-full shadow-2xl" onerror="this.src='https://via.placeholder.com/150/ffffff/334155?text=TSH'">
                     <h1 class="font-cinzel text-3xl dark-gradient mb-6 tracking-widest uppercase font-bold">The Steady Hand</h1>
@@ -56,7 +57,7 @@
                 </div>
             </div>
 
-            <div id="screen-welcome" class="hidden fixed inset-0 z-[95] flex flex-col items-center justify-center p-8 text-center bg-transparent">
+            <div id="screen-welcome" class="hidden fixed inset-0 z-[95] flex flex-col items-center justify-center p-8 text-center" style="background: linear-gradient(180deg, #b4c7d9 0%, #b5ba8b 100%);">
                 <img src="picture/tsh.PNG" class="w-28 h-28 mx-auto mb-8 logo-glow rounded-full shadow-2xl" onerror="this.src='https://via.placeholder.com/150/ffffff/334155?text=TSH'">
                 <h1 class="font-cinzel text-3xl dark-gradient mb-6 tracking-widest uppercase font-bold">Welcome</h1>
                 <p class="text-slate-800 font-semibold mb-12 leading-relaxed text-sm">
@@ -65,7 +66,7 @@
                 <button onclick="showScreen('creator-note')" class="w-full max-w-xs bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg hover:bg-white transition-colors">Continue</button>
             </div>
 
-            <div id="screen-creator-note" class="hidden fixed inset-0 z-[95] flex flex-col items-center justify-center p-6 text-center bg-transparent overflow-y-auto">
+            <div id="screen-creator-note" class="hidden fixed inset-0 z-[95] flex flex-col items-center justify-center p-6 text-center overflow-y-auto" style="background: linear-gradient(180deg, #b4c7d9 0%, #b5ba8b 100%);">
                 <div style="padding-top: calc(env(safe-area-inset-top) + 2rem);"></div>
                 <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-6 tracking-widest leading-tight">A Note from<br>the Creator</h2>
                 
@@ -87,7 +88,7 @@
                 <button onclick="showScreen('explanation')" class="w-full max-w-sm bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg hover:bg-white transition-colors mt-auto mb-8">Continue</button>
             </div>
 
-            <div id="screen-explanation" class="hidden fixed inset-0 z-[95] flex flex-col items-center justify-center p-6 text-center bg-transparent">
+            <div id="screen-explanation" class="hidden fixed inset-0 z-[95] flex flex-col items-center justify-center p-6 text-center" style="background: linear-gradient(180deg, #b4c7d9 0%, #b5ba8b 100%);">
                 <h2 class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-6 tracking-widest">Your Struggles</h2>
                 
                 <div class="card-glass p-6 mb-10 text-left space-y-6 w-full max-w-sm">
@@ -108,7 +109,7 @@
                 <button onclick="showScreen('setup')" class="w-full max-w-sm bg-slate-800 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-slate-700 text-white shadow-lg hover:bg-slate-700 transition-colors">Enter Sanctuary</button>
             </div>
 
-            <div id="screen-setup" class="hidden fixed inset-0 z-[90] overflow-y-auto p-6 flex flex-col bg-transparent">
+            <div id="screen-setup" class="hidden fixed inset-0 z-[90] overflow-y-auto p-6 flex flex-col" style="background: linear-gradient(180deg, #b4c7d9 0%, #b5ba8b 100%);">
                 <div style="padding-top: calc(env(safe-area-inset-top) + 2rem);"></div>
                 <div class="flex items-center gap-4 mb-6 mt-4">
                     <img src="picture/tsh.PNG" class="w-12 h-12 rounded-full border border-white/50" onerror="this.src='https://via.placeholder.com/50/ffffff/334155?text=TSH'">
@@ -236,7 +237,9 @@
                 </div>
             </div>
         </div>
-    </div> <nav id="app-nav" class="hidden fixed bottom-0 left-0 right-0 w-full bg-white/60 backdrop-blur-2xl border-t border-white/60 z-[90] shadow-[0_-10px_30px_rgba(0,0,0,0.05)]" style="padding-bottom: env(safe-area-inset-bottom);">
+    </div>
+
+    <nav id="app-nav" class="hidden fixed bottom-0 left-0 right-0 w-full bg-white/60 backdrop-blur-2xl border-t border-white/60 z-[90] shadow-[0_-10px_30px_rgba(0,0,0,0.05)]" style="padding-bottom: env(safe-area-inset-bottom);">
         <div class="max-w-md mx-auto w-full flex items-center justify-around px-2 pt-4 pb-4">
             <button onclick="showScreen('main')" class="nav-link flex flex-col items-center gap-1.5 text-slate-500 w-24" data-nav="main">
                 <i data-lucide="layout-dashboard" class="w-7 h-7"></i>
@@ -253,30 +256,26 @@
         </div>
     </nav>
 
-    <div id="tutorial-step" class="hidden fixed inset-0 z-[200] tutorial-overlay flex flex-col items-center justify-center p-8 text-center bg-transparent">
+    <div id="tutorial-step" class="hidden fixed inset-0 z-[200] flex flex-col items-center justify-center p-8 text-center" style="background: linear-gradient(180deg, #b4c7d9 0%, #b5ba8b 100%);">
         <img src="picture/tsh.PNG" class="w-24 h-24 rounded-full border-4 border-white mb-6 shadow-2xl" onerror="this.src='https://via.placeholder.com/150/ffffff/334155?text=TSH'">
         <h2 id="tut-title" class="font-cinzel text-2xl dark-gradient font-bold uppercase mb-4">Welcome</h2>
         <p id="tut-desc" class="text-slate-800 leading-relaxed mb-10 text-sm font-semibold"></p>
         <button onclick="nextTutorialStep()" class="w-full bg-white/80 py-4 rounded-xl font-bold uppercase tracking-widest text-xs border border-white text-slate-800 shadow-lg hover:bg-white transition-colors">Continue</button>
     </div>
 
-    <div id="urge-overlay" class="hidden fixed inset-0 z-[150] flex flex-col p-8 overflow-y-auto bg-transparent">
+    <div id="urge-overlay" class="hidden fixed inset-0 z-[150] flex flex-col p-8 overflow-y-auto" style="background: linear-gradient(180deg, #b4c7d9 0%, #b5ba8b 100%);">
         <div style="padding-top: calc(env(safe-area-inset-top) + 2rem);"></div>
         <button onclick="closeUrgeEngine()" class="absolute top-6 right-6 text-slate-700 bg-white/40 p-2 rounded-full z-[160] hover:bg-white/60 transition-colors shadow-sm" style="margin-top: env(safe-area-inset-top);"><i data-lucide="x" class="w-6 h-6"></i></button>
         <div id="urge-content" class="flex-1 flex flex-col items-center justify-center text-center space-y-8 mt-12"></div>
     </div>
 
-    <div id="modal-settings" class="hidden fixed inset-0 z-[300] bg-slate-800/60 backdrop-blur-md flex items-center justify-center p-6">
+    <div id="modal-settings" class="hidden fixed inset-0 z-[300] bg-slate-800/80 backdrop-blur-md flex items-center justify-center p-6">
         <div class="card-glass w-full p-8 space-y-6 max-h-[80vh] overflow-y-auto">
             <div class="flex items-center gap-3 border-b border-slate-400 pb-4">
                 <img src="picture/tsh.PNG" class="w-8 h-8 rounded-full border border-white shadow-sm" onerror="this.src='https://via.placeholder.com/32/ffffff/334155?text=T'">
                 <h3 class="font-cinzel text-lg dark-gradient font-bold uppercase tracking-widest">TSH Sanctum</h3>
             </div>
             <div class="space-y-4">
-                <button onclick="devPassDay()" class="w-full text-left p-4 bg-yellow-100/80 border border-yellow-300 rounded-xl text-yellow-800 flex items-center justify-between font-bold hover:bg-yellow-200 transition-colors shadow-sm">
-                    <span>[Dev Test] Pass 2000 Days</span>
-                    <i data-lucide="fast-forward" class="w-5 h-5"></i>
-                </button>
                 <button onclick="resetTutorial()" class="w-full text-left p-4 bg-white/40 border border-white/60 rounded-xl text-slate-800 flex items-center justify-between font-bold hover:bg-white/60 transition-colors shadow-sm">
                     <span>Watch Tutorial Again</span>
                     <i data-lucide="help-circle" class="w-5 h-5"></i>
