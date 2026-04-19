@@ -100,6 +100,17 @@ function init() {
     updateDate();
     renderDashboard();
     renderSafetyContact();
+
+    // Dynamically refresh the dashboard so Trophies pop instantly at midnight or when switching apps
+    const refreshDashboardIfVisible = () => {
+        if (!document.getElementById('screen-main').classList.contains('hidden')) {
+            updateDate();
+            renderDashboard();
+        }
+    };
+    
+    window.addEventListener('focus', refreshDashboardIfVisible);
+    setInterval(refreshDashboardIfVisible, 60000); // Check automatically every 60 seconds
 }
 
 function showScreen(screen) {
@@ -126,9 +137,16 @@ function showScreen(screen) {
     if (screen === 'vault') loadVault();
     if (screen === 'wall') loadWallMessages();
     if (screen === 'support') renderSafetyContact();
-    if (screen === 'main' && (state.tutorialStep === 0 || state.tutorialStep === undefined)) {
-        startTutorial();
+    
+    if (screen === 'main') {
+        // Ensures Trophies and Ranks update the second you navigate to the War Room
+        updateDate();
+        renderDashboard();
+        if (state.tutorialStep === 0 || state.tutorialStep === undefined) {
+            startTutorial();
+        }
     }
+    
     lucide.createIcons();
 
     // Reset scroll position to top gracefully
@@ -535,7 +553,8 @@ async function triggerUrgeEngine() {
 // --- WALL OF WISDOM LOGIC ---
 async function loadWallMessages() {
     const feed = document.getElementById('wall-feed');
-    feed.innerHTML = '<div class="text-center text-slate-600 font-bold uppercase tracking-widest text-[10px] animate-pulse py-8">Loading global sanctuary...</div>';
+    // Using an explicit ID so postToWall knows exactly what to safely remove
+    feed.innerHTML = '<div id="wall-placeholder" class="text-center text-slate-600 font-bold uppercase tracking-widest text-[10px] animate-pulse py-8">Loading global sanctuary...</div>';
     
     try {
         const res = await fetch(WORKER_API_URL);
@@ -543,7 +562,7 @@ async function loadWallMessages() {
         const messages = await res.json();
         
         if (messages.length === 0) {
-            feed.innerHTML = '<div class="text-center text-slate-500 text-xs italic">The wall is quiet. Be the first to leave a mark.</div>';
+            feed.innerHTML = '<div id="wall-placeholder" class="text-center text-slate-500 text-xs italic">The wall is quiet. Be the first to leave a mark.</div>';
             return;
         }
 
@@ -559,7 +578,7 @@ async function loadWallMessages() {
         }).join('');
 
     } catch(e) {
-        feed.innerHTML = '<div class="text-center text-slate-500 text-xs italic">The connection to the global sanctuary is temporarily lost.</div>';
+        feed.innerHTML = '<div id="wall-placeholder" class="text-center text-slate-500 text-xs italic">The connection to the global sanctuary is temporarily lost.</div>';
     }
 }
 
@@ -571,6 +590,13 @@ async function postToWall() {
     input.value = '';
     
     const feed = document.getElementById('wall-feed');
+    const placeholder = document.getElementById('wall-placeholder');
+    
+    // Safely remove only the placeholder message, completely ignoring other wall posts
+    if (placeholder) {
+        placeholder.remove();
+    }
+    
     const newMsgHTML = `
         <div class="card-glass p-4 border-yellow-400/50 shadow-md">
             <p class="text-sm text-slate-800 font-medium leading-relaxed">"${escapeHTML(text)}"</p>
@@ -578,9 +604,6 @@ async function postToWall() {
         </div>
     `;
     
-    if(feed.innerHTML.includes('Loading') || feed.innerHTML.includes('quiet') || feed.innerHTML.includes('lost')) {
-        feed.innerHTML = '';
-    }
     feed.insertAdjacentHTML('afterbegin', newMsgHTML);
 
     state.wallPosts = (state.wallPosts || 0) + 1;
@@ -608,7 +631,7 @@ function calculateTotalCleanDays(habit) {
     const today = getStartOfDay(new Date());
     const start = getStartOfDay(habit.startDate);
     
-    const totalDaysElapsed = Math.round(Math.max(0, today - start) / 86400000); // Fixed daylight saving bug
+    const totalDaysElapsed = Math.round(Math.max(0, today - start) / 86400000); 
     const pastSlips = habit.slips.filter(s => getStartOfDay(s).getTime() < today.getTime());
     const uniquePastSlipDays = new Set(pastSlips.map(s => getStartOfDay(s).getTime())).size;
     
@@ -630,14 +653,14 @@ function calculateStreak(habit) {
         streakStart = getStartOfDay(habit.startDate);
     }
     
-    const streakDays = Math.round((today - streakStart) / 86400000); // Fixed daylight saving bug
+    const streakDays = Math.round((today - streakStart) / 86400000); 
     return Math.max(0, streakDays);
 }
 
 function calculateSuccessRate(h) { 
     const today = getStartOfDay(new Date());
     const start = getStartOfDay(h.startDate);
-    const t = Math.max(1, Math.round(Math.abs(today - start) / 86400000)); // Fixed daylight saving bug
+    const t = Math.max(1, Math.round(Math.abs(today - start) / 86400000)); 
     
     const pastSlips = h.slips.filter(s => getStartOfDay(s).getTime() < today.getTime());
     const uniquePastSlipDays = new Set(pastSlips.map(s => getStartOfDay(s).getTime())).size;
