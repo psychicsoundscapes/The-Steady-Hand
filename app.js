@@ -33,18 +33,21 @@ function applyTranslations() {
     const langData = translations[activeLang] || translations['en'];
     const fallbackData = translations['en'];
 
+    // Update standard text
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         const translatedText = langData[key] || fallbackData[key];
         if (translatedText) el.innerText = translatedText;
     });
 
+    // Update placeholders
     document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
         const key = el.getAttribute('data-i18n-placeholder');
         const translatedText = langData[key] || fallbackData[key];
         if (translatedText) el.placeholder = translatedText;
     });
 
+    // Sync all dropdowns
     document.querySelectorAll('.lang-selector').forEach(select => {
         select.value = activeLang;
     });
@@ -104,14 +107,17 @@ function escapeHTML(str) {
 function init() {
     lucide.createIcons();
     let savedState = localStorage.getItem('steady_hand_state');
+    
     if (savedState) {
         try {
             state = JSON.parse(savedState);
+            state.habits.forEach(h => { if(h.isMain === undefined) h.isMain = true; });
         } catch(e) {
             localStorage.removeItem('steady_hand_state');
             savedState = null;
         }
     } 
+    
     if (!savedState) {
         showScreen('welcome');
         addHabitField(); 
@@ -119,29 +125,48 @@ function init() {
         if (state.setupComplete) showScreen('gateway');
         else showScreen('welcome');
     }
+
     applyTranslations();
     updateDate();
     renderDashboard();
     renderSafetyContact();
+
+    // Auto-refresh for trophies/streaks
+    const refreshDashboardIfVisible = () => {
+        if (!document.getElementById('screen-main').classList.contains('hidden')) {
+            updateDate();
+            renderDashboard();
+        }
+    };
+    window.addEventListener('focus', refreshDashboardIfVisible);
+    setInterval(refreshDashboardIfVisible, 60000); 
 }
 
 function showScreen(screen) {
     document.querySelectorAll('[id^="screen-"]').forEach(s => s.classList.add('hidden'));
     const targetEl = document.getElementById(`screen-${screen}`);
     if (targetEl) targetEl.classList.remove('hidden');
+    
     const nav = document.getElementById('app-nav');
-    if (['welcome', 'creator-note', 'explanation', 'setup', 'gateway', 'support'].includes(screen)) nav.classList.add('hidden');
-    else nav.classList.remove('hidden');
+    if (['welcome', 'creator-note', 'explanation', 'setup', 'gateway', 'support'].includes(screen)) {
+        nav.classList.add('hidden');
+    } else {
+        nav.classList.remove('hidden');
+    }
+
     document.querySelectorAll('.nav-link').forEach(l => {
         l.classList.toggle('nav-active', l.dataset.nav === screen);
         l.classList.toggle('text-slate-500', l.dataset.nav !== screen);
     });
+    
     if (screen === 'vault') loadVault();
     if (screen === 'wall') loadWallMessages();
     if (screen === 'main') {
-        updateDate(); renderDashboard();
+        updateDate();
+        renderDashboard();
         if (state.tutorialStep === 0 || state.tutorialStep === undefined) startTutorial();
     }
+    
     lucide.createIcons();
     setTimeout(() => { window.scrollTo({ top: 0, behavior: 'instant' }); if (targetEl) targetEl.scrollTop = 0; }, 10);
 }
@@ -172,12 +197,13 @@ function addHabitField() {
     const div = document.createElement('div');
     div.className = 'card-glass p-4 space-y-3 relative';
     const langData = translations[typeof currentLang !== 'undefined' ? currentLang : 'en'] || translations['en'];
+    
     div.innerHTML = `
         <button onclick="this.parentElement.remove()" class="absolute -top-2 -right-2 bg-slate-700 text-white rounded-full p-1.5 shadow-md"><i data-lucide="x" class="w-3 h-3"></i></button>
-        <input type="text" placeholder="${escapeHTML(langData.setup_ph_struggle)}" class="habit-name w-full rounded-lg p-3 text-sm uppercase font-bold tracking-wider">
-        <input type="number" placeholder="${escapeHTML(langData.setup_ph_cost)}" class="habit-cost w-full rounded-lg p-3 text-sm" min="0">
+        <input type="text" placeholder="${escapeHTML(langData.setup_ph_struggle)}" class="habit-name w-full rounded-lg p-3 text-sm uppercase font-bold shadow-inner">
+        <input type="number" placeholder="${escapeHTML(langData.setup_ph_cost)}" class="habit-cost w-full rounded-lg p-3 text-sm shadow-inner" min="0">
         <div class="flex items-center justify-between mt-2 px-1">
-            <label class="text-[10px] uppercase font-bold text-slate-700 flex items-center gap-2">
+            <label class="text-[10px] uppercase font-bold text-slate-700 flex items-center gap-2 cursor-pointer">
                 <input type="checkbox" class="habit-main w-4 h-4 rounded border-slate-400" checked>
                 ${escapeHTML(langData.setup_main_label)}
             </label>
@@ -203,6 +229,7 @@ async function saveInitialSetup() {
 }
 
 function clickAmen() {
+    if (navigator.vibrate) navigator.vibrate([40, 60, 40]);
     state.amenClicks = (state.amenClicks || 0) + 1;
     localStorage.setItem('steady_hand_state', JSON.stringify(state));
     showScreen('main');
@@ -250,6 +277,7 @@ function renderDashboard() {
                 </div>
                 <button onclick="logSlip('${habit.id}')" class="text-[10px] uppercase font-bold text-slate-700 border border-slate-400 bg-white/50 px-3 py-2 rounded-full">${langData.dash_log_slip}</button>
             </div>
+            <div class="bg-white/60 h-2 rounded-full overflow-hidden shadow-inner"><div class="bg-slate-700 h-full" style="width: ${calculateSuccessRate(habit)}%"></div></div>
         `;
         container.appendChild(div);
     });
@@ -261,18 +289,20 @@ function renderDashboard() {
     document.getElementById('rank-name').innerText = currentRank.name;
     document.getElementById('xp-text').innerText = `${mainStreak} / ${nextRank.daysReq} Days`;
     document.getElementById('rank-progress').style.width = `${(mainStreak / nextRank.daysReq) * 100}%`;
-    document.getElementById('total-saved').innerText = `$${totalSavedValue.toFixed(2)}`;
+    document.getElementById('total-saved').innerText = `$${totalSavedValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
     const trophies = generateAllTrophies(state, mainStreak, totalSavedValue, activeStrugglesCount, calculateStreak);
     document.getElementById('trophy-case').innerHTML = trophies.map(t => `
-        <div class="flex-shrink-0 w-[84px] h-24 rounded-2xl bg-white/${t.earned ? '60' : '20'} border ${t.earned ? 'border-yellow-400/50' : 'border-white/30'} flex flex-col items-center justify-center p-2 text-center">
+        <div class="flex-shrink-0 w-[84px] h-24 rounded-2xl bg-white/${t.earned ? '60' : '20'} border ${t.earned ? 'border-yellow-400/50 shadow-md' : 'border-white/30'} flex flex-col items-center justify-center p-2 text-center transition-all">
             <i data-lucide="${t.icon}" class="w-6 h-6 mb-2 ${t.earned ? 'text-yellow-600' : 'text-slate-400 opacity-50'}"></i>
-            <p class="text-[8px] font-bold uppercase ${t.earned ? 'text-slate-800' : 'text-slate-500'} leading-tight">${escapeHTML(t.title)}</p>
+            <p class="text-[8px] font-bold uppercase tracking-tighter ${t.earned ? 'text-slate-800' : 'text-slate-500'} leading-tight">${escapeHTML(t.title)}</p>
         </div>
     `).join('');
     lucide.createIcons();
 }
 
+// --- Audio Logic ---
+let mediaRecorder; let chunks =[];
 async function startRecording() {
     try {
         const s = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -308,16 +338,20 @@ function loadVault() {
             const d = document.createElement('div'); d.className = 'card-glass p-4';
             d.innerHTML = `<audio src="${url}" controls class="w-full h-8 mb-2"></audio>
                 <div class="flex justify-between text-[10px] uppercase font-bold">
-                <span>${new Date(cur.value.date).toLocaleDateString()}</span>
+                <span>Captured ${new Date(cur.value.date).toLocaleDateString()}</span>
                 <button onclick="deleteVideo(${cur.value.id})" class="text-red-600">Purge</button></div>`;
             c.appendChild(d); cur.continue();
         }
     };
+    setTimeout(() => lucide.createIcons(), 50);
 }
 
 function deleteVideo(id) { if(confirm("Purge recording?")) db.transaction("videos", "readwrite").objectStore("videos").delete(id).onsuccess = loadVault; }
 
 async function triggerUrgeEngine() {
+    const hr = new Date().getHours();
+    if (hr >= 0 && hr < 4) state.midnightUrges++;
+    else if (hr >= 11 && hr <= 14) state.middayUrges++;
     state.urgeClicks++; localStorage.setItem('steady_hand_state', JSON.stringify(state));
     document.getElementById('urge-overlay').classList.remove('hidden');
     const c = document.getElementById('urge-content');
@@ -327,9 +361,10 @@ async function triggerUrgeEngine() {
     lucide.createIcons();
 }
 
+// --- Wall Logic ---
 async function loadWallMessages() {
     const feed = document.getElementById('wall-feed');
-    feed.innerHTML = '<div class="text-center animate-pulse py-8 uppercase text-[10px] font-bold">Loading Sanctuary...</div>';
+    feed.innerHTML = '<div class="text-center animate-pulse py-8 uppercase text-[10px] font-bold">Loading sanctuary...</div>';
     try {
         const res = await fetch(WORKER_API_URL);
         const messages = await res.json();
@@ -373,12 +408,13 @@ async function handleMessageTap(element, msgId) {
 async function postToWall() {
     const input = document.getElementById('wall-input'); const text = input.value.trim(); if(!text) return;
     input.value = '';
-    const newMsgHTML = `<div class="card-glass p-4 border-yellow-400/50"><p class="text-sm font-medium">"${escapeHTML(text)}"</p><p class="text-[8px] uppercase font-bold mt-3 text-right">- You</p></div>`;
+    const newMsgHTML = `<div class="card-glass p-4 border-yellow-400/50 shadow-md"><p class="text-sm font-medium">"${escapeHTML(text)}"</p><p class="text-[8px] uppercase font-bold mt-3 text-right">- You</p></div>`;
     document.getElementById('wall-feed').insertAdjacentHTML('afterbegin', newMsgHTML);
     state.wallPosts++; localStorage.setItem('steady_hand_state', JSON.stringify(state));
     await fetch(WORKER_API_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text }) });
 }
 
+// --- Utility ---
 function getStartOfDay(d) { const date = new Date(d); date.setHours(0,0,0,0); return date; }
 function calculateTotalCleanDays(h) {
     const total = Math.round((getStartOfDay(new Date()) - getStartOfDay(h.startDate)) / 86400000);
@@ -390,9 +426,13 @@ function calculateStreak(h) {
     const start = last ? new Date(last.getTime() + 86400000) : getStartOfDay(h.startDate);
     return Math.max(0, Math.round((today - start) / 86400000));
 }
+function calculateSuccessRate(h) {
+    const t = Math.max(1, Math.round(Math.abs(getStartOfDay(new Date()) - getStartOfDay(h.startDate)) / 86400000));
+    return Math.max(0, Math.min(100, ((t - new Set(h.slips.map(s => getStartOfDay(s).getTime())).size) / t) * 100));
+}
 function logSlip(id) { const h = state.habits.find(x=>x.id === id); if(h) { h.slips.push(new Date().toISOString()); localStorage.setItem('steady_hand_state', JSON.stringify(state)); renderDashboard(); } }
 function closeUrgeEngine() { document.getElementById('urge-overlay').classList.add('hidden'); }
 function toggleSettings() { document.getElementById('modal-settings').classList.toggle('hidden'); lucide.createIcons(); }
 function updateDate() { document.getElementById('date-display').innerText = new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }); }
-function resetApp() { if(confirm("ERASE ALL DATA?")) { localStorage.clear(); indexedDB.deleteDatabase("TSH_Database"); window.location.reload(); } }
+function resetApp() { if(confirm("ERASE ALL DATA PERMANENTLY?")) { localStorage.clear(); indexedDB.deleteDatabase("TSH_Database"); window.location.reload(); } }
 window.onload = init;
