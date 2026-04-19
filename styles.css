@@ -34,6 +34,11 @@ body {
     -webkit-overflow-scrolling: touch;
 }
 
+/* Fixes iOS PWA scroll/tap locking on fixed screens */
+[id^="screen-"] {
+    -webkit-overflow-scrolling: touch;
+}
+
 .font-cinzel { font-family: 'Cinzel', serif; }
 
 .dark-gradient {
@@ -81,6 +86,17 @@ body {
     background: rgba(255,255,255,0.2);
 }
 
+/* =========================================================
+   APPLE iOS BUG FIX
+   Forces the keyboard to open on inputs inside a PWA
+========================================================= */
+input, textarea {
+    -webkit-user-select: text !important;
+    user-select: text !important;
+    -webkit-touch-callout: default !important;
+    touch-action: manipulation;
+}
+
 input:not([type="checkbox"]) {
     background: rgba(255, 255, 255, 0.65) !important;
     color: #0f172a !important;
@@ -88,11 +104,13 @@ input:not([type="checkbox"]) {
     font-weight: 600;
     transition: all 0.2s ease;
 }
+
 input:not([type="checkbox"]):focus {
     background: rgba(255, 255, 255, 0.9) !important;
     border-color: #64748b !important;
     outline: none;
 }
+
 input::placeholder { color: #64748b !important; font-weight: 400; }
 
 .nav-active {
