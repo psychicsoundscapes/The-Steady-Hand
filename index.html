@@ -17,8 +17,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     
-    <!-- Cache-busting ?v=2 added to force Cloudflare/browsers to load the new files -->
-    <link rel="stylesheet" href="styles.css?v=2">
+    <!-- Cache-busting ?v=3 to force Cloudflare/browsers to load the new layout -->
+    <link rel="stylesheet" href="styles.css?v=3">
     
     <style>
         /* Automatically hide these elements if the app is installed to the home screen */
@@ -37,38 +37,41 @@
         }
     </style>
     
-    <!-- Cache-busting ?v=2 added here as well -->
-    <script src="verses.js?v=2" defer></script>
-    <script src="trophies.js?v=2" defer></script>
-    <script src="app.js?v=2" defer></script>
+    <script src="verses.js?v=3" defer></script>
+    <script src="trophies.js?v=3" defer></script>
+    <script src="app.js?v=3" defer></script>
 </head>
 <body>
 
     <div id="app-scroller">
         <div id="app" class="max-w-md mx-auto min-h-[100dvh] relative flex flex-col pb-32">
             
-            <!-- FIXED GATEWAY SCREEN (Visually Swapped) -->
+            <!-- FIXED GATEWAY SCREEN (Shrunk & Centered) -->
             <div id="screen-gateway" class="hidden fixed inset-0 h-[100dvh] w-full z-[100] bg-[#b4c7d9] overflow-y-auto">
-                <div class="min-h-full w-full flex flex-col items-center justify-center py-12 px-6 text-center">
+                <div class="min-h-full w-full flex flex-col items-center justify-center py-6 px-6 text-center">
                     
-                    <img src="picture/tsh.PNG" alt="TSH Logo" class="w-24 h-24 mx-auto mb-6 logo-glow rounded-full shadow-2xl" onerror="this.onerror=null; this.src='https://via.placeholder.com/150/ffffff/334155?text=TSH'">
+                    <!-- Shrunk logo slightly and reduced bottom margin -->
+                    <img src="picture/tsh.PNG" alt="TSH Logo" class="w-20 h-20 mx-auto mb-4 logo-glow rounded-full shadow-2xl" onerror="this.onerror=null; this.src='https://via.placeholder.com/150/ffffff/334155?text=TSH'">
                     
-                    <h1 class="font-cinzel text-3xl dark-gradient mb-6 tracking-widest uppercase font-bold">The Steady Hand</h1>
+                    <!-- Shrunk title text slightly and reduced bottom margin -->
+                    <h1 class="font-cinzel text-2xl dark-gradient mb-4 tracking-widest uppercase font-bold">The Steady Hand</h1>
                     
-                    <div class="p-6 card-glass mb-10 border-white/60 w-full max-w-sm">
-                        <p class="text-[10px] text-slate-600 font-bold uppercase tracking-[0.2em] mb-4">Serenity Ritual</p>
-                        <p id="prayer-text" class="text-lg italic text-slate-800 leading-relaxed font-semibold">
+                    <!-- Tightened padding and reduced margin around the prayer card -->
+                    <div class="p-5 card-glass mb-6 border-white/60 w-full max-w-sm">
+                        <p class="text-[10px] text-slate-600 font-bold uppercase tracking-[0.2em] mb-2">Serenity Ritual</p>
+                        <!-- Shrunk text size slightly for a tighter fit -->
+                        <p id="prayer-text" class="text-base italic text-slate-800 leading-relaxed font-semibold">
                             "God, grant me the serenity to accept the things I cannot change, courage to change the things I can, and wisdom to know the difference."
                         </p>
                     </div>
                     
-                    <!-- AMEN BUTTON (Moved Up) -->
-                    <button type="button" id="btn-amen" onclick="clickAmen()" class="amen-pulse z-[200] relative flex items-center justify-center shrink-0 w-32 h-32 rounded-full border-2 border-white bg-white/40 shadow-xl cursor-pointer hover:bg-white/60 active:scale-95 transition-all mb-8">
-                        <span class="font-cinzel text-2xl text-slate-800 font-bold pointer-events-none">Amen</span>
+                    <!-- Shrunk Amen Button (from w-32/h-32 down to w-28/h-28) -->
+                    <button type="button" id="btn-amen" onclick="clickAmen()" class="amen-pulse z-[200] relative flex items-center justify-center shrink-0 w-28 h-28 rounded-full border-2 border-white bg-white/40 shadow-xl cursor-pointer hover:bg-white/60 active:scale-95 transition-all mb-6">
+                        <span class="font-cinzel text-xl text-slate-800 font-bold pointer-events-none">Amen</span>
                     </button>
                     
-                    <!-- SPEAK ALOUD BUBBLE (Moved Down) -->
-                    <p class="text-xs text-slate-800 font-bold animate-pulse uppercase tracking-widest bg-white/30 py-2 px-4 rounded-full mt-2">
+                    <!-- Speak Aloud Bubble (Font adjusted slightly) -->
+                    <p class="text-[10px] text-slate-800 font-bold animate-pulse uppercase tracking-widest bg-white/30 py-2 px-4 rounded-full mt-0">
                         Speak the prayer aloud
                     </p>
                     
