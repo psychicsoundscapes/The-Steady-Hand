@@ -1,109 +1,59 @@
-// --- WALL OF WISDOM LOGIC ---
-let currentWallOffset = 0;
-let isFetchingWall = false;
+export async function onRequestGet({ request, env }) {
+    const url = new URL(request.url);
+    const msgId = url.searchParams.get('id');
+    const targetLang = url.searchParams.get('lang') || 'en';
+    const offset = parseInt(url.searchParams.get('offset')) || 0;
 
-async function loadWallMessages(append = false) {
-    if (isFetchingWall) return;
-    isFetchingWall = true;
-
-    const feed = document.getElementById('wall-feed');
-    
-    // If not appending (initial load), reset offset and clear feed
-    if (!append) {
-        currentWallOffset = 0;
-        feed.innerHTML = '<div id="wall-placeholder" class="text-center text-slate-600 font-bold uppercase tracking-widest text-[10px] animate-pulse py-8">Loading global sanctuary...</div>';
-    } else {
-        // Remove the previous "Load More" button while loading
-        const loadMoreBtn = document.getElementById('load-more-btn');
-        if (loadMoreBtn) loadMoreBtn.remove();
-        feed.insertAdjacentHTML('beforeend', '<div id="wall-placeholder-more" class="text-center text-slate-600 font-bold uppercase tracking-widest text-[10px] animate-pulse py-4">Reaching deeper into the sanctuary...</div>');
-    }
-    
     try {
-        const res = await fetch(`${WORKER_API_URL}?offset=${currentWallOffset}`);
-        if (!res.ok) throw new Error("Network response was not ok");
-        const messages = await res.json();
+        // CASE A: User is loading the Wall (Staggered Load)
+        if (!msgId) {
+            // Fetch 50 messages at a time, starting from the current offset
+            const { results } = await env.DB.prepare(
+                "SELECT id, text, created_at FROM messages ORDER BY created_at DESC LIMIT 50 OFFSET ?"
+            ).bind(offset).all();
+            return Response.json(results);
+        }
+
+        // CASE B: User tapped a specific message to translate it
+        const msg = await env.DB.prepare(
+            "SELECT text FROM messages WHERE id = ?"
+        ).bind(msgId).first();
         
-        // Clean up loading placeholders
-        const placeholder1 = document.getElementById('wall-placeholder');
-        const placeholder2 = document.getElementById('wall-placeholder-more');
-        if (placeholder1) placeholder1.remove();
-        if (placeholder2) placeholder2.remove();
-
-        if (messages.length === 0 && !append) {
-            feed.innerHTML = '<div id="wall-placeholder" class="text-center text-slate-500 text-xs italic">The wall is quiet. Be the first to leave a mark.</div>';
-            isFetchingWall = false;
-            return;
+        if (!msg) {
+            return new Response("Message not found", { status: 404 });
         }
 
-        // Map the messages (Removed character limits and "Read More" button entirely)
-        const messagesHTML = messages.map(m => `
-            <div class="card-glass p-4 border-white/30 wall-message select-none transition-transform" data-id="${escapeHTML(String(m.id))}">
-                <div class="cursor-pointer active:scale-[0.98] transition-transform" onclick="handleMessageTap(this.parentElement, ${m.id})">
-                    <p class="text-sm text-slate-800 font-medium leading-relaxed msg-body whitespace-pre-wrap">"${escapeHTML(m.text)}"</p>
-                </div>
-                <p class="text-[8px] text-slate-500 uppercase tracking-widest font-bold mt-3 text-right pointer-events-none">- Anonymous</p>
-            </div>
-        `).join('');
+        // Run the specific text through Cloudflare Workers AI
+        const aiResponse = await env.AI.run('@cf/meta/m2m100-1.2b', {
+            text: msg.text,
+            target_lang: targetLang
+        });
 
-        if (append) {
-            feed.insertAdjacentHTML('beforeend', messagesHTML);
-        } else {
-            feed.innerHTML = messagesHTML;
-        }
+        return Response.json({
+            translatedText: aiResponse.translated_text || msg.text
+        });
 
-        // Staggered Load: If we received exactly 50 messages, there are likely more in the database
-        if (messages.length === 50) {
-            currentWallOffset += 50;
-            feed.insertAdjacentHTML('beforeend', `
-                <button id="load-more-btn" onclick="loadWallMessages(true)" class="w-full bg-white/60 py-4 rounded-xl font-bold uppercase tracking-widest text-[10px] text-slate-800 border border-white shadow-sm mt-2 active:scale-95 transition-transform">
-                    Load Older Messages
-                </button>
-            `);
-        }
-
-    } catch(e) {
-        const placeholder = document.getElementById('wall-placeholder') || document.getElementById('wall-placeholder-more');
-        if (placeholder) placeholder.innerHTML = 'The connection to the global sanctuary is temporarily lost.';
+    } catch (e) {
+        console.error("Worker Error:", e);
+        return new Response("Error processing request", { status: 500 });
     }
-    
-    isFetchingWall = false;
 }
 
-async function postToWall() {
-    const input = document.getElementById('wall-input');
-    const text = input.value.trim();
-    if(!text) return;
-
-    input.value = '';
-    
-    const feed = document.getElementById('wall-feed');
-    const placeholder = document.getElementById('wall-placeholder');
-    
-    if (placeholder) {
-        placeholder.remove();
-    }
-    
-    // Instantly show the user's uncapped message at the top
-    const newMsgHTML = `
-        <div class="card-glass p-4 border-yellow-400/50 shadow-md">
-            <p class="text-sm text-slate-800 font-medium leading-relaxed whitespace-pre-wrap">"${escapeHTML(text)}"</p>
-            <p class="text-[8px] text-yellow-600 uppercase tracking-widest font-bold mt-3 text-right">- You</p>
-        </div>
-    `;
-    
-    feed.insertAdjacentHTML('afterbegin', newMsgHTML);
-
-    state.wallPosts = (state.wallPosts || 0) + 1;
-    localStorage.setItem('steady_hand_state', JSON.stringify(state));
-
+export async function onRequestPost({ request, env }) {
     try {
-        await fetch(WORKER_API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text })
-        });
-    } catch(e) {
-        alert("Failed to permanently save message to the global wall.");
+        const { text } = await request.json();
+        
+        // Validation: Ensure text exists (Empty strings rejected), but UNCAPPED length
+        if (!text || text.trim() === '') {
+            return new Response("Invalid message", { status: 400 });
+        }
+
+        // Insert the message into the D1 Database
+        await env.DB.prepare("INSERT INTO messages (text) VALUES (?)").bind(text).run();
+        
+        return Response.json({ success: true });
+    } catch (e) {
+        console.error("Worker Error:", e);
+        return new Response("Error saving message", { status: 500 });
     }
 }
