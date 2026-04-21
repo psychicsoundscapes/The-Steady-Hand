@@ -9,8 +9,8 @@ export async function onRequestGet({ request, env }) {
         if (!msgId) {
             // Fetch 50 messages at a time, starting from the current offset
             const { results } = await env.DB.prepare(
-                "SELECT id, text, created_at FROM messages ORDER BY created_at DESC LIMIT 50 OFFSET ?"
-            ).bind(offset).all();
+                "SELECT id, text, created_at FROM messages ORDER BY CASE WHEN language = ? THEN 1 ELSE 0 END DESC, created_at DESC LIMIT 50 OFFSET ?"
+            ).bind(targetLang, offset).all();
             return Response.json(results);
         }
 
@@ -41,15 +41,17 @@ export async function onRequestGet({ request, env }) {
 
 export async function onRequestPost({ request, env }) {
     try {
-        const { text } = await request.json();
+        const { text, language } = await request.json();
         
         // Validation: Ensure text exists (Empty strings rejected), but UNCAPPED length
         if (!text || text.trim() === '') {
             return new Response("Invalid message", { status: 400 });
         }
 
+        const msgLang = language || 'en';
+
         // Insert the message into the D1 Database
-        await env.DB.prepare("INSERT INTO messages (text) VALUES (?)").bind(text).run();
+        await env.DB.prepare("INSERT INTO messages (text, language) VALUES (?, ?)").bind(text, msgLang).run();
         
         return Response.json({ success: true });
     } catch (e) {

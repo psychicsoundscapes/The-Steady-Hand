@@ -506,7 +506,8 @@ async function loadWallMessages(append = false) {
     }
     
     try {
-        const res = await fetch(`${WORKER_API_URL}?offset=${currentWallOffset}`);
+        const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
+        const res = await fetch(`${WORKER_API_URL}?offset=${currentWallOffset}&lang=${activeLang}`);
         if (!res.ok) throw new Error("Network response was not ok");
         const messages = await res.json();
         
@@ -611,11 +612,12 @@ async function postToWall() {
     state.wallPosts = (state.wallPosts || 0) + 1;
     localStorage.setItem('steady_hand_state', JSON.stringify(state));
 
+    const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
     try {
         await fetch(WORKER_API_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text })
+            body: JSON.stringify({ text, language: activeLang })
         });
     } catch(e) {
         alert("Failed to permanently save message to the global wall.");
