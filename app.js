@@ -64,7 +64,7 @@ function applyTranslations() {
 
 // --- Core State & DB ---
 let db;
-const dbRequest = indexedDB.open("TSH_Database", 4);
+const dbRequest = indexedDB.open("TSH_Database", 7);
 
 dbRequest.onupgradeneeded = (e) => {
     db = e.target.result;
@@ -98,10 +98,10 @@ const tutorialSteps =[
 ];
 
 const rankTiers =[
-    { name: "Initiate", daysReq: 0 }, { name: "Novice", daysReq: 7 }, { name: "Fighter", daysReq: 30 },
-    { name: "Warrior", daysReq: 90 }, { name: "Sentinel", daysReq: 180 }, { name: "Vanguard", daysReq: 365 },
-    { name: "Champion", daysReq: 730 }, { name: "Titan", daysReq: 1095 }, { name: "Paragon", daysReq: 1460 },
-    { name: "Legend", daysReq: 1825 }
+    { nameKey: "rank_0", defaultName: "Initiate", daysReq: 0 }, { nameKey: "rank_1", defaultName: "Novice", daysReq: 7 }, { nameKey: "rank_2", defaultName: "Fighter", daysReq: 30 },
+    { nameKey: "rank_3", defaultName: "Warrior", daysReq: 90 }, { nameKey: "rank_4", defaultName: "Sentinel", daysReq: 180 }, { nameKey: "rank_5", defaultName: "Vanguard", daysReq: 365 },
+    { nameKey: "rank_6", defaultName: "Champion", daysReq: 730 }, { nameKey: "rank_7", defaultName: "Titan", daysReq: 1095 }, { nameKey: "rank_8", defaultName: "Paragon", daysReq: 1460 },
+    { nameKey: "rank_9", defaultName: "Legend", daysReq: 1825 }
 ];
 
 function escapeHTML(str) {
@@ -326,14 +326,14 @@ function renderDashboard() {
     }
     
     let progressPct = 100;
-    let daysText = `${currentMainStreak} Days (MAX)`;
+    let daysText = `${currentMainStreak} ${langData.dash_days || 'Days'} (MAX)`;
     if (currentRank !== nextRank) {
         progressPct = ((currentMainStreak - currentRank.daysReq) / (nextRank.daysReq - currentRank.daysReq)) * 100;
-        daysText = `${currentMainStreak} / ${nextRank.daysReq} Days`;
+        daysText = `${currentMainStreak} / ${nextRank.daysReq} ${langData.dash_days || 'Days'}`;
     }
     progressPct = Math.max(0, Math.min(100, progressPct));
 
-    document.getElementById('rank-name').innerText = currentRank.name;
+    document.getElementById('rank-name').innerText = langData[currentRank.nameKey] || currentRank.defaultName;
     document.getElementById('xp-text').innerText = daysText;
     document.getElementById('rank-progress').style.width = `${progressPct}%`;
     document.getElementById('total-saved').innerText = `$${totalSavedValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
@@ -661,7 +661,10 @@ function logSlip(id) {
 }
 function closeUrgeEngine() { document.getElementById('urge-overlay').classList.add('hidden'); }
 function toggleSettings() { document.getElementById('modal-settings').classList.toggle('hidden'); lucide.createIcons(); }
-function updateDate() { document.getElementById('date-display').innerText = new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }); }
+function updateDate() { 
+    const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
+    document.getElementById('date-display').innerText = new Date().toLocaleDateString(activeLang, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }); 
+}
 function resetApp() { 
     if(confirm("DELETE ALL DATA? This erases all progress and voice notes permanently.")) { 
         localStorage.clear(); 

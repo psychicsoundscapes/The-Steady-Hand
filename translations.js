@@ -108,7 +108,18 @@ const translations = {
         "settings_reset": "Reset Sanctuary",
         "settings_return": "Return",
         "dash_days_won": "Days Won",
-        "dash_log_slip": "Log Slip"
+        "dash_log_slip": "Log Slip",
+        "dash_days": "Days",
+        "rank_0": "Initiate",
+        "rank_1": "Novice",
+        "rank_2": "Fighter",
+        "rank_3": "Warrior",
+        "rank_4": "Sentinel",
+        "rank_5": "Vanguard",
+        "rank_6": "Champion",
+        "rank_7": "Titan",
+        "rank_8": "Paragon",
+        "rank_9": "Legend"
     },
     "es": {
         "app_title": "La Mano Firme",
@@ -214,7 +225,18 @@ const translations = {
         "settings_reset": "Restablecer Santuario",
         "settings_return": "Volver",
         "dash_days_won": "Días Ganados",
-        "dash_log_slip": "Registrar Recaída"
+        "dash_log_slip": "Registrar Recaída",
+        "dash_days": "Días",
+        "rank_0": "Iniciado",
+        "rank_1": "Novato",
+        "rank_2": "Luchador",
+        "rank_3": "Guerrero",
+        "rank_4": "Centinela",
+        "rank_5": "Vanguardia",
+        "rank_6": "Campeón",
+        "rank_7": "Titán",
+        "rank_8": "Modelo",
+        "rank_9": "Leyenda"
     },
     "fr": {
         "app_title": "La Main Ferme",
@@ -320,7 +342,18 @@ const translations = {
         "settings_reset": "Réinitialiser le Sanctuaire",
         "settings_return": "Retour",
         "dash_days_won": "Jours Gagnés",
-        "dash_log_slip": "Enregistrer un Écart"
+        "dash_log_slip": "Enregistrer un Écart",
+        "dash_days": "Jours",
+        "rank_0": "Initié",
+        "rank_1": "Novice",
+        "rank_2": "Combattant",
+        "rank_3": "Guerrier",
+        "rank_4": "Sentinelle",
+        "rank_5": "Avant-garde",
+        "rank_6": "Champion",
+        "rank_7": "Titan",
+        "rank_8": "Parangon",
+        "rank_9": "Légende"
     },
     "de": {
         "app_title": "Die Ruhige Hand",
@@ -426,7 +459,18 @@ const translations = {
         "settings_reset": "Heiligtum Zurücksetzen",
         "settings_return": "Zurück",
         "dash_days_won": "Gewonnene Tage",
-        "dash_log_slip": "Ausrutscher Eintragen"
+        "dash_log_slip": "Ausrutscher Eintragen",
+        "dash_days": "Tage",
+        "rank_0": "Initiant",
+        "rank_1": "Novize",
+        "rank_2": "Kämpfer",
+        "rank_3": "Krieger",
+        "rank_4": "Wächter",
+        "rank_5": "Vorhut",
+        "rank_6": "Champion",
+        "rank_7": "Titan",
+        "rank_8": "Vorbild",
+        "rank_9": "Legende"
     },
     "zh": {
         "app_title": "稳固之手",
@@ -532,7 +576,18 @@ const translations = {
         "settings_reset": "重置避难所",
         "settings_return": "返回",
         "dash_days_won": "胜利天数",
-        "dash_log_slip": "记录失误"
+        "dash_log_slip": "记录失误",
+        "dash_days": "天",
+        "rank_0": "初学者",
+        "rank_1": "新手",
+        "rank_2": "战士",
+        "rank_3": "勇士",
+        "rank_4": "哨兵",
+        "rank_5": "先锋",
+        "rank_6": "冠军",
+        "rank_7": "泰坦",
+        "rank_8": "典范",
+        "rank_9": "传奇"
     },
     "hi": {
         "app_title": "द स्टेडी हैंड",
@@ -638,7 +693,18 @@ const translations = {
         "settings_reset": "आश्रय रीसेट करें",
         "settings_return": "वापस जाएं",
         "dash_days_won": "जीते गए दिन",
-        "dash_log_slip": "पर्ची लॉग करें"
+        "dash_log_slip": "पर्ची लॉग करें",
+        "dash_days": "दिन",
+        "rank_0": "आरंभिक",
+        "rank_1": "नौसिखिया",
+        "rank_2": "लड़ाकू",
+        "rank_3": "योद्धा",
+        "rank_4": "प्रहरी",
+        "rank_5": "मोहरा",
+        "rank_6": "चैंपियन",
+        "rank_7": "टाइटन",
+        "rank_8": "आदर्श",
+        "rank_9": "किंवदंती"
     },
     "ar": {
         "app_title": "اليد الثابتة",
@@ -744,7 +810,18 @@ const translations = {
         "settings_reset": "إعادة تعيين الملاذ",
         "settings_return": "عودة",
         "dash_days_won": "الأيام المكتسبة",
-        "dash_log_slip": "تسجيل انزلاق"
+        "dash_log_slip": "تسجيل انزلاق",
+        "dash_days": "أيام",
+        "rank_0": "مبتدئ",
+        "rank_1": "ناشئ",
+        "rank_2": "مقاتل",
+        "rank_3": "محارب",
+        "rank_4": "حارس",
+        "rank_5": "طليعة",
+        "rank_6": "بطل",
+        "rank_7": "عملاق",
+        "rank_8": "نموذج",
+        "rank_9": "أسطورة"
     },
     "pt": {
         "app_title": "A Mão Firme",
@@ -850,7 +927,18 @@ const translations = {
         "settings_reset": "Redefinir Santuário",
         "settings_return": "Retornar",
         "dash_days_won": "Dias Vencidos",
-        "dash_log_slip": "Registrar Recaída"
+        "dash_log_slip": "Registrar Recaída",
+        "dash_days": "Dias",
+        "rank_0": "Iniciado",
+        "rank_1": "Novato",
+        "rank_2": "Lutador",
+        "rank_3": "Guerreiro",
+        "rank_4": "Sentinela",
+        "rank_5": "Vanguarda",
+        "rank_6": "Campeão",
+        "rank_7": "Titã",
+        "rank_8": "Modelo",
+        "rank_9": "Lenda"
     },
     "ru": {
         "app_title": "Твердая Рука",
@@ -956,7 +1044,18 @@ const translations = {
         "settings_reset": "Сбросить Убежище",
         "settings_return": "Вернуться",
         "dash_days_won": "Выигранные Дни",
-        "dash_log_slip": "Записать Срыв"
+        "dash_log_slip": "Записать Срыв",
+        "dash_days": "Дни",
+        "rank_0": "Посвященный",
+        "rank_1": "Новичок",
+        "rank_2": "Боец",
+        "rank_3": "Воин",
+        "rank_4": "Страж",
+        "rank_5": "Авангард",
+        "rank_6": "Чемпион",
+        "rank_7": "Титан",
+        "rank_8": "Идеал",
+        "rank_9": "Легенда"
     },
     "ja": {
         "app_title": "The Steady Hand",
@@ -1062,7 +1161,18 @@ const translations = {
         "settings_reset": "聖域をリセット",
         "settings_return": "戻る",
         "dash_days_won": "勝利した日数",
-        "dash_log_slip": "スリップを記録"
+        "dash_log_slip": "スリップを記録",
+        "dash_days": "日",
+        "rank_0": "初心者",
+        "rank_1": "新人",
+        "rank_2": "ファイター",
+        "rank_3": "戦士",
+        "rank_4": "センチネル",
+        "rank_5": "ヴァンガード",
+        "rank_6": "チャンピオン",
+        "rank_7": "タイタン",
+        "rank_8": "パラゴン",
+        "rank_9": "レジェンド"
     }
 };
 

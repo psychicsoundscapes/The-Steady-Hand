@@ -109,7 +109,18 @@ const translations2 = {
         "settings_reset": "אפס מקלט",
         "settings_return": "חזור",
         "dash_days_won": "ימים שניצחת",
-        "dash_log_slip": "דווח על מעידה"
+        "dash_log_slip": "דווח על מעידה",
+        "dash_days": "ימים",
+        "rank_0": "מתחיל",
+        "rank_1": "טירון",
+        "rank_2": "לוחם",
+        "rank_3": "גיבור",
+        "rank_4": "זקיף",
+        "rank_5": "חלוץ",
+        "rank_6": "אלוף",
+        "rank_7": "טיטאן",
+        "rank_8": "מופת",
+        "rank_9": "אגדה"
     },
     "tl": {
         "app_title": "Ang Matatag na Kamay",
@@ -215,7 +226,18 @@ const translations2 = {
         "settings_reset": "I-reset ang Santuwaryo",
         "settings_return": "Bumalik",
         "dash_days_won": "Mga Araw na Nanalo",
-        "dash_log_slip": "I-log ang Pagkakamali"
+        "dash_log_slip": "I-log ang Pagkakamali",
+        "dash_days": "Mga Araw",
+        "rank_0": "Nagsisimula",
+        "rank_1": "Baguhan",
+        "rank_2": "Lalaban",
+        "rank_3": "Mandirigma",
+        "rank_4": "Sentinel",
+        "rank_5": "Vanguard",
+        "rank_6": "Kampeon",
+        "rank_7": "Titan",
+        "rank_8": "Paragon",
+        "rank_9": "Alamat"
     },
     "it": {
         "app_title": "La Mano Ferma",
@@ -321,7 +343,18 @@ const translations2 = {
         "settings_reset": "Ripristina Santuario",
         "settings_return": "Indietro",
         "dash_days_won": "Giorni Vinti",
-        "dash_log_slip": "Registra Ricaduta"
+        "dash_log_slip": "Registra Ricaduta",
+        "dash_days": "Giorni",
+        "rank_0": "Iniziato",
+        "rank_1": "Novizio",
+        "rank_2": "Combattente",
+        "rank_3": "Guerriero",
+        "rank_4": "Sentinella",
+        "rank_5": "Avanguardia",
+        "rank_6": "Campione",
+        "rank_7": "Titano",
+        "rank_8": "Modello",
+        "rank_9": "Leggenda"
     },
     "ko": {
         "app_title": "단호한 손",
@@ -427,7 +460,18 @@ const translations2 = {
         "settings_reset": "안식처 초기화",
         "settings_return": "돌아가기",
         "dash_days_won": "승리한 날들",
-        "dash_log_slip": "실수 기록"
+        "dash_log_slip": "실수 기록",
+        "dash_days": "일",
+        "rank_0": "초심자",
+        "rank_1": "풋내기",
+        "rank_2": "투사",
+        "rank_3": "전사",
+        "rank_4": "파수꾼",
+        "rank_5": "선봉대",
+        "rank_6": "챔피언",
+        "rank_7": "타이탄",
+        "rank_8": "모범",
+        "rank_9": "전설"
     },
     "pl": {
         "app_title": "Pewna Dłoń",
@@ -533,7 +577,18 @@ const translations2 = {
         "settings_reset": "Zresetuj Sanktuarium",
         "settings_return": "Wróć",
         "dash_days_won": "Wygrane Dni",
-        "dash_log_slip": "Zaloguj Potknięcie"
+        "dash_log_slip": "Zaloguj Potknięcie",
+        "dash_days": "Dni",
+        "rank_0": "Nowicjusz",
+        "rank_1": "Początkujący",
+        "rank_2": "Wojownik",
+        "rank_3": "Wojownik",
+        "rank_4": "Strażnik",
+        "rank_5": "Awangarda",
+        "rank_6": "Mistrz",
+        "rank_7": "Tytan",
+        "rank_8": "Wzór",
+        "rank_9": "Legenda"
     },
     "sw": {
         "app_title": "Mkono Imara",
@@ -639,6 +694,17 @@ const translations2 = {
         "settings_reset": "Rudisha Patakatifu",
         "settings_return": "Rudi",
         "dash_days_won": "Siku Ulizoshinda",
-        "dash_log_slip": "Ingiza Kuteleza"
+        "dash_log_slip": "Ingiza Kuteleza",
+        "dash_days": "Siku",
+        "rank_0": "Mwanzilishi",
+        "rank_1": "Mgeni",
+        "rank_2": "Mpiganaji",
+        "rank_3": "Shujaa",
+        "rank_4": "Mlinzi",
+        "rank_5": "Kiongozi",
+        "rank_6": "Bingwa",
+        "rank_7": "Titani",
+        "rank_8": "Kielelezo",
+        "rank_9": "Nguli"
     }
 };
