@@ -341,8 +341,9 @@ function renderDashboard() {
     const trophies = typeof generateAllTrophies === 'function' ? generateAllTrophies(state, currentMainStreak, totalSavedValue, activeStrugglesCount, calculateStreak) :[];
     document.getElementById('trophy-case').innerHTML = trophies.map(t => `
         <div class="flex-shrink-0 w-[84px] h-24 rounded-2xl bg-white/${t.earned ? '60' : '20'} border ${t.earned ? 'border-yellow-400/50 shadow-md' : 'border-white/30'} flex flex-col items-center justify-center p-2 text-center transition-all duration-500">
-            <i data-lucide="${t.icon}" class="w-6 h-6 mb-2 ${t.earned ? 'text-yellow-600' : 'text-slate-400 opacity-50'}"></i>
+            <i data-lucide="${t.icon}" class="w-6 h-6 mb-1 ${t.earned ? 'text-yellow-600' : 'text-slate-400 opacity-50'}"></i>
             <p class="text-[8px] font-bold uppercase tracking-tighter ${t.earned ? 'text-slate-800' : 'text-slate-500'} leading-tight">${escapeHTML(t.title)}</p>
+            <p class="text-[6px] uppercase tracking-widest ${t.earned ? 'text-slate-600' : 'text-slate-400'} mt-1">${escapeHTML(t.desc)}</p>
         </div>
     `).join('');
     lucide.createIcons();
@@ -483,29 +484,76 @@ async function triggerUrgeEngine() {
     setTimeout(() => lucide.createIcons(), 50);
 }
 
-// --- WALL OF WISDOM ---
-async function loadWallMessages() {
+// --- WALL OF WISDOM LOGIC ---
+let currentWallOffset = 0;
+let isFetchingWall = false;
+
+async function loadWallMessages(append = false) {
+    if (isFetchingWall) return;
+    isFetchingWall = true;
+
     const feed = document.getElementById('wall-feed');
-    feed.innerHTML = '<div id="wall-placeholder" class="text-center text-slate-600 font-bold uppercase tracking-widest text-[10px] animate-pulse py-8">Loading global sanctuary...</div>';
+    
+    // If not appending (initial load), reset offset and clear feed
+    if (!append) {
+        currentWallOffset = 0;
+        feed.innerHTML = '<div id="wall-placeholder" class="text-center text-slate-600 font-bold uppercase tracking-widest text-[10px] animate-pulse py-8">Loading global sanctuary...</div>';
+    } else {
+        // Remove the previous "Load More" button while loading
+        const loadMoreBtn = document.getElementById('load-more-btn');
+        if (loadMoreBtn) loadMoreBtn.remove();
+        feed.insertAdjacentHTML('beforeend', '<div id="wall-placeholder-more" class="text-center text-slate-600 font-bold uppercase tracking-widest text-[10px] animate-pulse py-4">Reaching deeper into the sanctuary...</div>');
+    }
     
     try {
-        const res = await fetch(WORKER_API_URL);
+        const res = await fetch(`${WORKER_API_URL}?offset=${currentWallOffset}`);
+        if (!res.ok) throw new Error("Network response was not ok");
         const messages = await res.json();
         
-        if (messages.length === 0) {
+        // Clean up loading placeholders
+        const placeholder1 = document.getElementById('wall-placeholder');
+        const placeholder2 = document.getElementById('wall-placeholder-more');
+        if (placeholder1) placeholder1.remove();
+        if (placeholder2) placeholder2.remove();
+
+        if (messages.length === 0 && !append) {
             feed.innerHTML = '<div id="wall-placeholder" class="text-center text-slate-500 text-xs italic">The wall is quiet. Be the first to leave a mark.</div>';
+            isFetchingWall = false;
             return;
         }
 
-        feed.innerHTML = messages.map(m => `
-            <div class="card-glass p-4 border-white/30 wall-message active:scale-[0.98] transition-transform cursor-pointer" onclick="handleMessageTap(this, ${m.id})">
-                <p class="text-sm text-slate-800 font-medium leading-relaxed msg-body">"${escapeHTML(m.text)}"</p>
+        // Map the messages (Removed character limits and "Read More" button entirely)
+        const messagesHTML = messages.map(m => `
+            <div class="card-glass p-4 border-white/30 wall-message select-none transition-transform" data-id="${escapeHTML(String(m.id))}">
+                <div class="cursor-pointer active:scale-[0.98] transition-transform" onclick="handleMessageTap(this.parentElement, ${m.id})">
+                    <p class="text-sm text-slate-800 font-medium leading-relaxed msg-body whitespace-pre-wrap">"${escapeHTML(m.text)}"</p>
+                </div>
                 <p class="text-[8px] text-slate-500 uppercase tracking-widest font-bold mt-3 text-right pointer-events-none">- Anonymous</p>
             </div>
         `).join('');
+
+        if (append) {
+            feed.insertAdjacentHTML('beforeend', messagesHTML);
+        } else {
+            feed.innerHTML = messagesHTML;
+        }
+
+        // Staggered Load: If we received exactly 50 messages, there are likely more in the database
+        if (messages.length === 50) {
+            currentWallOffset += 50;
+            feed.insertAdjacentHTML('beforeend', `
+                <button id="load-more-btn" onclick="loadWallMessages(true)" class="w-full bg-white/60 py-4 rounded-xl font-bold uppercase tracking-widest text-[10px] text-slate-800 border border-white shadow-sm mt-2 active:scale-95 transition-transform">
+                    Load Older Messages
+                </button>
+            `);
+        }
+
     } catch(e) {
-        feed.innerHTML = '<div id="wall-placeholder" class="text-center text-slate-500 text-xs italic">The connection to the global sanctuary is temporarily lost.</div>';
+        const placeholder = document.getElementById('wall-placeholder') || document.getElementById('wall-placeholder-more');
+        if (placeholder) placeholder.innerHTML = 'The connection to the global sanctuary is temporarily lost.';
     }
+    
+    isFetchingWall = false;
 }
 
 function isAlreadyInLanguage(text, targetLang) {
@@ -542,18 +590,24 @@ async function postToWall() {
     if(!text) return;
 
     input.value = '';
+    
     const feed = document.getElementById('wall-feed');
     const placeholder = document.getElementById('wall-placeholder');
-    if (placeholder) placeholder.remove();
     
+    if (placeholder) {
+        placeholder.remove();
+    }
+    
+    // Instantly show the user's uncapped message at the top
     const newMsgHTML = `
         <div class="card-glass p-4 border-yellow-400/50 shadow-md">
-            <p class="text-sm text-slate-800 font-medium leading-relaxed">"${escapeHTML(text)}"</p>
+            <p class="text-sm text-slate-800 font-medium leading-relaxed whitespace-pre-wrap">"${escapeHTML(text)}"</p>
             <p class="text-[8px] text-yellow-600 uppercase tracking-widest font-bold mt-3 text-right">- You</p>
         </div>
     `;
     
     feed.insertAdjacentHTML('afterbegin', newMsgHTML);
+
     state.wallPosts = (state.wallPosts || 0) + 1;
     localStorage.setItem('steady_hand_state', JSON.stringify(state));
 
