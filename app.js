@@ -21,6 +21,19 @@ const languageFingerprints = {
     "tl": ["ang", "mga", "ng", "sa", "ay", "na"]
 };
 
+// --- Currency Mappings ---
+const currencyCodes = {
+    "en": "USD", "es": "EUR", "fr": "EUR", "de": "EUR", "it": "EUR", 
+    "pt": "BRL", "pl": "PLN", "sw": "KES", "tl": "PHP", "ar": "AED", 
+    "he": "ILS", "zh": "CNY", "ja": "JPY", "ko": "KRW", "ru": "RUB", "hi": "INR"
+};
+
+const currencySymbols = {
+    "en": "$", "es": "€", "fr": "€", "de": "€", "it": "€", 
+    "pt": "R$", "pl": "zł", "sw": "KSh", "tl": "₱", "ar": "د.إ", 
+    "he": "₪", "zh": "¥", "ja": "¥", "ko": "₩", "ru": "₽", "hi": "₹"
+};
+
 function changeLanguage(langCode) {
     localStorage.setItem('tsh_language', langCode);
     window.location.reload();
@@ -214,12 +227,18 @@ function addHabitField() {
     const container = document.getElementById('habit-inputs');
     const div = document.createElement('div');
     div.className = 'card-glass p-4 space-y-3 relative';
-    const langData = translations[typeof currentLang !== 'undefined' ? currentLang : 'en'] || translations['en'];
+    
+    const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
+    const langData = translations[activeLang] || translations['en'];
+    const currencySym = currencySymbols[activeLang] || "$";
+    
+    let phCost = langData.setup_ph_cost || `Daily Financial Cost (${currencySym})`;
+    phCost = phCost.replace(/\(\$\)|\(€\/\$\)/g, `(${currencySym})`);
     
     div.innerHTML = `
         <button onclick="this.parentElement.remove()" class="absolute -top-2 -right-2 bg-slate-700 text-white rounded-full p-1.5 shadow-md"><i data-lucide="x" class="w-3 h-3"></i></button>
         <input type="text" placeholder="${escapeHTML(langData.setup_ph_struggle)}" class="habit-name w-full rounded-lg p-3 text-sm uppercase font-bold shadow-inner">
-        <input type="number" placeholder="${escapeHTML(langData.setup_ph_cost)}" class="habit-cost w-full rounded-lg p-3 text-sm shadow-inner" min="0">
+        <input type="number" placeholder="${escapeHTML(phCost)}" class="habit-cost w-full rounded-lg p-3 text-sm shadow-inner" min="0">
         <div class="flex items-center justify-between mt-2 px-1">
             <label class="text-[10px] uppercase font-bold text-slate-700 flex items-center gap-2 cursor-pointer">
                 <input type="checkbox" class="habit-main w-4 h-4 rounded border-slate-400 text-slate-800 focus:ring-slate-800" checked>
@@ -336,7 +355,9 @@ function renderDashboard() {
     document.getElementById('rank-name').innerText = langData[currentRank.nameKey] || currentRank.defaultName;
     document.getElementById('xp-text').innerText = daysText;
     document.getElementById('rank-progress').style.width = `${progressPct}%`;
-    document.getElementById('total-saved').innerText = `$${totalSavedValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    
+    const currencyCode = currencyCodes[activeLang] || 'USD';
+    document.getElementById('total-saved').innerText = totalSavedValue.toLocaleString(activeLang, { style: 'currency', currency: currencyCode });
 
     const trophies = typeof generateAllTrophies === 'function' ? generateAllTrophies(state, currentMainStreak, totalSavedValue, activeStrugglesCount, calculateStreak) :[];
     document.getElementById('trophy-case').innerHTML = trophies.map(t => `
