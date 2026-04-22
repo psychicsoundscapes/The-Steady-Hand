@@ -394,13 +394,21 @@
                         Loading sanctuary...
                     </div>
                 </div>
-            </div>
         </div>
     </div> 
-    
-    <nav id="app-nav" class="hidden fixed bottom-0 left-0 right-0 w-full bg-white/60 backdrop-blur-2xl border-t border-white/60 z-[90] shadow-[0_-10px_30px_rgba(0,0,0,0.05)] pb-5 pt-3">
-        <div class="max-w-md mx-auto w-full flex items-center justify-around px-2">
-            <button type="button" onclick="showScreen('main')" class="nav-link flex flex-col items-center gap-1 text-slate-500 w-20" data-nav="main">
+</div> 
+
+<div id="urge-overlay" class="hidden fixed inset-0 h-[100dvh] w-full z-[400] bg-[#b4c7d9]/95 backdrop-blur-xl flex flex-col items-center justify-center p-6">
+    <button type="button" onclick="closeUrgeEngine()" class="absolute top-8 right-6 text-slate-700 bg-white/40 p-2 rounded-full z-[410] shadow-sm active:scale-95 transition-transform">
+        <i data-lucide="x" class="w-6 h-6"></i>
+    </button>
+    <div id="urge-content" class="w-full max-w-sm flex flex-col items-center justify-center text-center">
+        </div>
+</div>
+
+<nav id="app-nav" class="hidden fixed bottom-0 left-0 right-0 w-full bg-white/60 backdrop-blur-2xl border-t border-white/60 z-[90] shadow-[0_-10px_30px_rgba(0,0,0,0.05)] pb-5 pt-3">
+    <div class="max-w-md mx-auto w-full flex items-center justify-around px-2">
+        <button type="button" onclick="showScreen('main')" class="nav-link flex flex-col items-center gap-1 text-slate-500 w-20" data-nav="main">
                 <i data-lucide="layout-dashboard" class="w-6 h-6"></i>
                 <span data-i18n="nav_war_room" class="text-[10px] uppercase font-bold tracking-tighter">War Room</span>
             </button>
