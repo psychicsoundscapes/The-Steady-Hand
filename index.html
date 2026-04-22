@@ -376,14 +376,17 @@
                     <i data-lucide="info" class="w-4 h-4 text-slate-800 mt-0.5 shrink-0"></i>
                     <p class="text-[10px] text-slate-800 leading-relaxed font-medium">
                         <strong data-i18n="wall_notice_prefix">Kindly note:</strong> <span data-i18n="wall_notice_text">Statements cannot be edited once posted. If you need a message removed, please email <a href="mailto:support@yaddof.dev" class="font-bold underline hover:text-slate-900">support@yaddof.dev</a> with the exact text you'd like deleted, and I will happily assist you.</span>
-                    </p>
-                </div>
+            </p>
+        </div>
 
-                <div class="card-glass p-4 mb-8">
-                    <textarea id="wall-input" data-i18n-placeholder="wall_ph_input" placeholder="Share your truth..." class="w-full rounded-xl p-3 text-sm bg-white/70 border border-white/80 focus:bg-white focus:border-slate-400 resize-none h-24 mb-3 outline-none text-slate-800 placeholder-slate-500"></textarea>
-                    <button type="button" onclick="postToWall()" class="w-full bg-slate-800 text-white font-bold py-3 rounded-xl shadow-lg uppercase tracking-widest text-[10px] flex items-center justify-center gap-2 hover:bg-slate-700 transition-colors">
-                        <i data-lucide="send" class="w-4 h-4"></i> <span data-i18n="wall_leave_mark">Leave your mark for others in need</span>
-                    </button>
+        <div class="card-glass p-4 mb-8">
+            <p data-i18n="wall_lang_notice" class="text-[9px] text-slate-600 font-bold uppercase tracking-widest mb-3 text-center bg-white/40 py-1.5 px-2 rounded-lg border border-white/60">
+                Please write in your selected language to help the sanctuary organize messages.
+            </p>
+            <textarea id="wall-input" data-i18n-placeholder="wall_ph_input" placeholder="Share your truth..." class="w-full rounded-xl p-3 text-sm bg-white/70 border border-white/80 focus:bg-white focus:border-slate-400 resize-none h-24 mb-3 outline-none text-slate-800 placeholder-slate-500"></textarea>
+            <button type="button" onclick="postToWall()" class="w-full bg-slate-800 text-white font-bold py-3 rounded-xl shadow-lg uppercase tracking-widest text-[10px] flex items-center justify-center gap-2 hover:bg-slate-700 transition-colors">
+                <i data-lucide="send" class="w-4 h-4"></i> <span data-i18n="wall_leave_mark">Leave your mark for others in need</span>
+            </button>
                 </div>
 
                 <div id="wall-feed" class="space-y-4 pb-16">
