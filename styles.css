@@ -91,12 +91,17 @@ body {
    Forces the keyboard to open on inputs inside a PWA
 ========================================================= */
 input, textarea, select {
-    -webkit-user-select: text !important;
-    user-select: text !important;
+    -webkit-user-select: auto !important;
+    user-select: auto !important;
     -webkit-touch-callout: default !important;
-    touch-action: auto !important;
-    transform: translateZ(0); /* iOS PWA focus issue fix */
-    pointer-events: auto;
+    touch-action: manipulation !important;
+    pointer-events: auto !important;
+}
+
+/* Ensure the wrapper doesn't block touch events */
+#app-scroller, [id^="screen-"] {
+    -webkit-user-select: auto;
+    user-select: auto;
 }
 
 input:not([type="checkbox"]) {
