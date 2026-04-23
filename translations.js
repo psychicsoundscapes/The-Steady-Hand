@@ -124,11 +124,11 @@ const translations = {
         "tut_1_title": "The War Room",
         "tut_1_desc": "This is TSH Command. Here you can track your ongoing streaks, monitor your financial savings, and view the trophies you've earned along your journey.",
         "tut_2_title": "The Urge Engine",
-        "tut_2_desc": "Trigger the Engine in times of crisis. It provides immediate grounding through audio messages from your past self or encouraging text to help you breathe and refocus.",
+        "tut_2_desc": "Trigger the Engine in times of crisis. It provides immediate grounding through audio messages from your past self or verses from scripture to help you breathe and refocus.",
         "tut_3_title": "The Vault",
         "tut_3_desc": "Record your own voice when you are feeling strong. These memos are saved locally and played back to you during an urge to remind you of your true goals.",
         "tut_4_title": "The Wall",
-        "tut_4_desc": "Leave anonymous footprints of strength for others, and read messages from people in this global sanctuary. Tap any message to translate it to your language."
+        "tut_4_desc": "Leave anonymous footprints of strength for others, and read messages from people in this global sanctuary. Tap any message to translate it to your language. This is the only data saved to the server, so everyone can see the wisdom or story you've left behind."
     },
 
     "es": {
@@ -251,11 +251,11 @@ const translations = {
         "tut_1_title": "La Sala de Guerra",
         "tut_1_desc": "Este es el Comando TSH. Aquí puedes rastrear tus rachas en curso, monitorear tus ahorros financieros y ver los trofeos que has ganado a lo largo de tu viaje.",
         "tut_2_title": "El Motor de Impulsos",
-        "tut_2_desc": "Activa el Motor en tiempos de crisis. Proporciona conexión a tierra inmediata a través de mensajes de audio de tu yo pasado o texto alentador para ayudarte a respirar y reenfocarte.",
+        "tut_2_desc": "Activa el Motor en tiempos de crisis. Proporciona conexión a tierra inmediata a través de mensajes de audio de tu yo pasado o versículos de las escrituras para ayudarte a respirar y reenfocarte.",
         "tut_3_title": "La Bóveda",
         "tut_3_desc": "Graba tu propia voz cuando te sientas fuerte. Estos memos se guardan localmente y se reproducen durante un impulso para recordarte tus verdaderas metas.",
         "tut_4_title": "El Muro",
-        "tut_4_desc": "Deja huellas anónimas de fuerza para otros, y lee mensajes de personas en este santuario global. Toca cualquier mensaje para traducirlo a tu idioma."
+        "tut_4_desc": "Deja huellas anónimas de fuerza para otros, y lee mensajes de personas en este santuario global. Toca cualquier mensaje para traducirlo a tu idioma. Estos son los únicos datos que se guardan en el servidor, para que todos puedan ver la sabiduría o historia que has dejado atrás."
     },
 
     "fr": {
@@ -378,11 +378,11 @@ const translations = {
         "tut_1_title": "La Salle de Guerre",
         "tut_1_desc": "C'est le commandement TSH. Ici, vous pouvez suivre vos séries en cours, surveiller vos économies et voir les trophées que vous avez gagnés tout au long de votre parcours.",
         "tut_2_title": "Le Moteur d'Envie",
-        "tut_2_desc": "Déclenchez le moteur en temps de crise. Il offre un ancrage immédiat grâce à des messages audio de votre passé ou des textes d'encouragement pour vous aider à respirer et à vous recentrer.",
+        "tut_2_desc": "Déclenchez le moteur en temps de crise. Il offre un ancrage immédiat grâce à des messages audio de votre passé ou des versets des Écritures pour vous aider à respirer et à vous recentrer.",
         "tut_3_title": "La Voûte",
         "tut_3_desc": "Enregistrez votre propre voix lorsque vous vous sentez fort. Ces mémos sont sauvegardés localement et vous sont rejoués lors d'une envie pour vous rappeler vos véritables objectifs.",
         "tut_4_title": "Le Mur",
-        "tut_4_desc": "Laissez des empreintes anonymes de force pour les autres, et lisez les messages des personnes dans ce sanctuaire mondial. Appuyez sur n'importe quel message pour le traduire dans votre langue."
+        "tut_4_desc": "Laissez des empreintes anonymes de force pour les autres, et lisez les messages des personnes dans ce sanctuaire mondial. Appuyez sur n'importe quel message pour le traduire dans votre langue. Ce sont les seules données enregistrées sur le serveur, afin que chacun puisse voir la sagesse ou l'histoire que vous avez laissée derrière vous."
     },
 
     "de": {
@@ -505,11 +505,11 @@ const translations = {
         "tut_1_title": "Der Kriegsraum",
         "tut_1_desc": "Dies ist das TSH-Kommando. Hier kannst du deine laufenden Serien verfolgen, deine finanziellen Einsparungen überwachen und die Trophäen ansehen, die du auf deiner Reise verdient hast.",
         "tut_2_title": "Die Drang-Maschine",
-        "tut_2_desc": "Löse die Maschine in Krisenzeiten aus. Sie bietet sofortige Erdung durch Audionachrichten von deinem vergangenen Selbst oder ermutigende Texte, die dir helfen zu atmen und dich neu zu fokussieren.",
+        "tut_2_desc": "Löse die Maschine in Krisenzeiten aus. Sie bietet sofortige Erdung durch Audionachrichten von deinem vergangenen Selbst oder Verse aus der Schrift, die dir helfen zu atmen und dich neu zu fokussieren.",
         "tut_3_title": "Der Tresor",
         "tut_3_desc": "Nimm deine eigene Stimme auf, wenn du dich stark fühlst. Diese Memos werden lokal gespeichert und dir während eines Drangs vorgespielt, um dich an deine wahren Ziele zu erinnern.",
         "tut_4_title": "Die Mauer",
-        "tut_4_desc": "Hinterlasse anonyme Spuren der Stärke für andere und lies Nachrichten von Menschen in diesem globalen Heiligtum. Tippe auf eine beliebige Nachricht, um sie in deine Sprache zu übersetzen."
+        "tut_4_desc": "Hinterlasse anonyme Spuren der Stärke für andere und lies Nachrichten von Menschen in diesem globalen Heiligtum. Tippe auf eine beliebige Nachricht, um sie in deine Sprache zu übersetzen. Dies sind die einzigen Daten, die auf dem Server gespeichert werden, damit jeder die Weisheit oder Geschichte sehen kann, die du hinterlassen hast."
     },
 
     "zh": {
@@ -632,11 +632,11 @@ const translations = {
         "tut_1_title": "作战室",
         "tut_1_desc": "这是 TSH 指挥部。在这里你可以追踪你正在进行的连续记录，监控你的财务节省，并查看你在旅途中获得的奖杯。",
         "tut_2_title": "冲动引擎",
-        "tut_2_desc": "在危机时刻触发引擎。它通过你过去的录音信息或鼓励的文本提供即时的稳定感，帮助你呼吸并重新集中注意力。",
+        "tut_2_desc": "在危机时刻触发引擎。它通过你过去的录音信息或经文段落提供即时的稳定感，帮助你呼吸并重新集中注意力。",
         "tut_3_title": "金库",
         "tut_3_desc": "当你感到坚强时录下自己的声音。这些备忘录保存在本地，并在你产生冲动时播放给你听，以提醒你的真正目标。",
         "tut_4_title": "智慧之墙",
-        "tut_4_desc": "为他人留下匿名的力量足迹，并阅读这个全球避难所中人们的信息。点击任何消息将其翻译成你的语言。"
+        "tut_4_desc": "为他人留下匿名的力量足迹，并阅读这个全球避难所中人们的信息。点击任何消息将其翻译成你的语言。这是唯一保存到服务器的数据，这样每个人都能看到你留下的智慧或故事。"
     },
 
     "hi": {
@@ -759,11 +759,11 @@ const translations = {
         "tut_1_title": "वॉर रूम",
         "tut_1_desc": "यह TSH कमांड है। यहां आप अपनी चल रही लकीरों को ट्रैक कर सकते हैं, अपनी वित्तीय बचत की निगरानी कर सकते हैं, और अपनी यात्रा के दौरान अर्जित ट्राफियां देख सकते हैं।",
         "tut_2_title": "अर्ज इंजन",
-        "tut_2_desc": "संकट के समय इंजन को ट्रिगर करें। यह आपके अतीत के ऑडियो संदेशों या उत्साहजनक पाठ के माध्यम से तत्काल ग्राउंडिंग प्रदान करता है ताकि आपको सांस लेने और ध्यान केंद्रित करने में मदद मिल सके।",
+        "tut_2_desc": "संकट के समय इंजन को ट्रिगर करें। यह आपके अतीत के ऑडियो संदेशों या धर्मग्रंथों के छंदों के माध्यम से तत्काल ग्राउंडिंग प्रदान करता है ताकि आपको सांस लेने और ध्यान केंद्रित करने में मदद मिल सके।",
         "tut_3_title": "द वॉल्ट",
         "tut_3_desc": "जब आप मजबूत महसूस कर रहे हों तो अपनी आवाज रिकॉर्ड करें। ये मेमो स्थानीय रूप से सहेजे जाते हैं और आपको अपने वास्तविक लक्ष्यों की याद दिलाने के लिए तलब के दौरान आपको वापस चलाए जाते हैं।",
         "tut_4_title": "दीवार",
-        "tut_4_desc": "दूसरों के लिए ताकत के अनाम पदचिह्न छोड़ें, और इस वैश्विक आश्रय में लोगों के संदेश पढ़ें। किसी भी संदेश को अपनी भाषा में अनुवाद करने के लिए उस पर टैप करें।"
+        "tut_4_desc": "दूसरों के लिए ताकत के अनाम पदचिह्न छोड़ें, और इस वैश्विक आश्रय में लोगों के संदेश पढ़ें। किसी भी संदेश को अपनी भाषा में अनुवाद करने के लिए उस पर टैप करें। यह सर्वर पर सहेजा गया एकमात्र डेटा है, ताकि हर कोई आपके द्वारा छोड़ी गई बुद्धिमत्ता या कहानी को देख सके।"
     },
 
     "ar": {
@@ -886,11 +886,11 @@ const translations = {
         "tut_1_title": "غرفة الحرب",
         "tut_1_desc": "هذه هي قيادة TSH. هنا يمكنك تتبع خطوطك المستمرة، ومراقبة مدخراتك المالية، وعرض الجوائز التي ربحتها خلال رحلتك.",
         "tut_2_title": "محرك الرغبة",
-        "tut_2_desc": "قم بتشغيل المحرك في أوقات الأزمات. إنه يوفر تأريضًا فوريًا من خلال رسائل صوتية من ماضيك أو نص مشجع لمساعدتك على التنفس وإعادة التركيز.",
+        "tut_2_desc": "قم بتشغيل المحرك في أوقات الأزمات. إنه يوفر تأريضًا فوريًا من خلال رسائل صوتية من ماضيك أو آيات من الكتاب المقدس لمساعدتك على التنفس وإعادة التركيز.",
         "tut_3_title": "القبو",
         "tut_3_desc": "سجل صوتك عندما تشعر بالقوة. يتم حفظ هذه المذكرات محليًا ويتم تشغيلها لك أثناء الرغبة الملحة لتذكيرك بأهدافك الحقيقية.",
         "tut_4_title": "الجدار",
-        "tut_4_desc": "اترك بصمات مجهولة من القوة للآخرين، واقرأ رسائل من أشخاص في هذا الملاذ العالمي. اضغط على أي رسالة لترجمتها إلى لغتك."
+        "tut_4_desc": "اترك بصمات مجهولة من القوة للآخرين، واقرأ رسائل من أشخاص في هذا الملاذ العالمي. اضغط على أي رسالة لترجمتها إلى لغتك. هذه هي البيانات الوحيدة التي يتم حفظها على الخادم، حتى يتمكن الجميع من رؤية الحكمة أو القصة التي تركتها وراءك."
     },
 
     "pt": {
@@ -1013,11 +1013,11 @@ const translations = {
         "tut_1_title": "A Sala de Guerra",
         "tut_1_desc": "Este é o Comando TSH. Aqui você pode acompanhar suas sequências contínuas, monitorar suas economias financeiras e ver os troféus que você ganhou ao longo de sua jornada.",
         "tut_2_title": "O Motor de Impulsos",
-        "tut_2_desc": "Acione o Motor em tempos de crise. Ele fornece aterramento imediato através de mensagens de áudio do seu eu passado ou texto encorajador para ajudá-lo a respirar e se reorientar.",
+        "tut_2_desc": "Acione o Motor em tempos de crise. Ele fornece aterramento imediato através de mensagens de áudio do seu eu passado ou versículos das escrituras para ajudá-lo a respirar e se reorientar.",
         "tut_3_title": "O Cofre",
         "tut_3_desc": "Grave sua própria voz quando estiver se sentindo forte. Esses memorandos são salvos localmente e reproduzidos para você durante um impulso para lembrá-lo de seus verdadeiros objetivos.",
         "tut_4_title": "O Muro",
-        "tut_4_desc": "Deixe pegadas anônimas de força para os outros, e leia mensagens de pessoas neste santuário global. Toque em qualquer mensagem para traduzi-la para o seu idioma."
+        "tut_4_desc": "Deixe pegadas anônimas de força para os outros, e leia mensagens de pessoas neste santuário global. Toque em qualquer mensagem para traduzi-la para o seu idioma. Estes são os únicos dados salvos no servidor, para que todos possam ver a sabedoria ou história que você deixou para trás."
     },
 
     "ru": {
@@ -1140,11 +1140,11 @@ const translations = {
         "tut_1_title": "Военная Комната",
         "tut_1_desc": "Это Командование TSH. Здесь вы можете отслеживать свои текущие серии, следить за своими финансовыми сбережениями и просматривать трофеи, которые вы заработали за время своего путешествия.",
         "tut_2_title": "Двигатель Тяги",
-        "tut_2_desc": "Запускайте Двигатель во времена кризиса. Он обеспечивает немедленное заземление с помощью аудиосообщений от вашего прошлого «я» или ободряющего текста, который поможет вам дышать и переориентироваться.",
+        "tut_2_desc": "Запускайте Двигатель во времена кризиса. Он обеспечивает немедленное заземление с помощью аудиосообщений от вашего прошлого «я» или стихов из Священного Писания, которые помогут вам дышать и переориентироваться.",
         "tut_3_title": "Хранилище",
         "tut_3_desc": "Запишите свой собственный голос, когда чувствуете себя сильным. Эти заметки сохраняются локально и воспроизводятся вам во время тяги, чтобы напомнить вам о ваших истинных целях.",
         "tut_4_title": "Стена",
-        "tut_4_desc": "Оставьте анонимные следы силы для других и читайте сообщения от людей в этом глобальном убежище. Нажмите на любое сообщение, чтобы перевести его на свой язык."
+        "tut_4_desc": "Оставьте анонимные следы силы для других и читайте сообщения от людей в этом глобальном убежище. Нажмите на любое сообщение, чтобы перевести его на свой язык. Это единственные данные, сохраняемые на сервере, поэтому каждый может увидеть мудрость или историю, которую вы оставили после себя."
     },
 
     "ja": {
@@ -1267,11 +1267,11 @@ const translations = {
         "tut_1_title": "作戦室",
         "tut_1_desc": "ここはTSHコマンドです。ここでは、継続中のストリークを追跡し、経済的な節約を監視し、旅の中で獲得したトロフィーを見ることができます。",
         "tut_2_title": "衝動エンジン",
-        "tut_2_desc": "危機の時にエンジンをトリガーします。過去の自分からの音声メッセージや励ましのテキストを通じて即座に落ち着きを取り戻し、呼吸して再び集中するのを助けます。",
+        "tut_2_desc": "危機の時にエンジンをトリガーします。過去の自分からの音声メッセージや聖書の言葉を通じて即座に落ち着きを取り戻し、呼吸して再び集中するのを助けます。",
         "tut_3_title": "保管庫",
         "tut_3_desc": "自分が強いと感じているときに自分の声を録音してください。これらのメモはローカルに保存され、衝動に駆られたときに再生されて、本当の目標を思い出させます。",
         "tut_4_title": "壁",
-        "tut_4_desc": "他の人のために匿名の強さの足跡を残し、このグローバルな聖域にいる人々からのメッセージを読んでください。メッセージをタップするとあなたの言語に翻訳されます。"
+        "tut_4_desc": "他の人のために匿名の強さの足跡を残し、このグローバルな聖域にいる人々からのメッセージを読んでください。メッセージをタップするとあなたの言語に翻訳されます。これはサーバーに保存される唯一のデータであり、誰もがあなたの残した知恵や物語を見ることができます。"
     }
 };
 
