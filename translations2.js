@@ -121,8 +121,17 @@ const translations2 = {
         "rank_6": "אלוף",
         "rank_7": "טיטאן",
         "rank_8": "מופת",
-        "rank_9": "אגדה"
+        "rank_9": "אגדה",
+        "tut_1_title": "חדר המלחמה",
+        "tut_1_desc": "זהו פיקוד TSH. כאן תוכל לעקוב אחר הרצפים שלך, לפקח על החסכונות הכספיים שלך ולצפות בגביעים שהרווחת במהלך המסע שלך.",
+        "tut_2_title": "מנוע הדחפים",
+        "tut_2_desc": "הפעל את המנוע בזמני משבר. הוא מספק קרקוע מיידי באמצעות הודעות שמע מהעבר שלך או טקסט מעודד שיעזור לך לנשום ולהתמקד מחדש.",
+        "tut_3_title": "הכספת",
+        "tut_3_desc": "הקלט את הקול שלך כשאתה מרגיש חזק. תזכירים אלה נשמרים באופן מקומי ומושמעים לך במהלך דחף כדי להזכיר לך את המטרות האמיתיות שלך.",
+        "tut_4_title": "הקיר",
+        "tut_4_desc": "השאר טביעות רגל אנונימיות של כוח למען אחרים, וקרא הודעות מאנשים במקלט העולמי הזה. הקש על כל הודעה כדי לתרגם אותה לשפה שלך."
     },
+
     "tl": {
         "app_title": "Ang Matatag na Kamay",
         "gateway_ritual_title": "Ritwal ng Kapayapaan",
@@ -239,8 +248,17 @@ const translations2 = {
         "rank_6": "Kampeon",
         "rank_7": "Titan",
         "rank_8": "Paragon",
-        "rank_9": "Alamat"
+        "rank_9": "Alamat",
+        "tut_1_title": "Ang Silid Digmaan",
+        "tut_1_desc": "Ito ang TSH Command. Dito mo masusubaybayan ang iyong mga tagumpay, makikita ang iyong naipon, at matitingnan ang mga tropeo na nakuha mo sa iyong paglalakbay.",
+        "tut_2_title": "Ang Urge Engine",
+        "tut_2_desc": "I-trigger ang Engine sa oras ng krisis. Nagbibigay ito ng agarang pagpapahinahon sa pamamagitan ng mga audio message mula sa iyong sarili o nakakagaan ng loob na text upang matulungan kang huminga at mag-focus muli.",
+        "tut_3_title": "Ang Vault",
+        "tut_3_desc": "I-record ang iyong sariling boses kapag pakiramdam mo ay malakas ka. Ang mga memo na ito ay naka-save nang lokal at ipe-play sa iyo sa panahon ng matinding pagnanasa upang ipaalala sa iyo ang iyong mga tunay na layunin.",
+        "tut_4_title": "Ang Pader",
+        "tut_4_desc": "Mag-iwan ng hindi nagpapakilalang mga bakas ng lakas para sa iba, at magbasa ng mga mensahe mula sa mga tao sa pandaigdigang santuwaryong ito. I-tap ang anumang mensahe upang isalin ito sa iyong wika."
     },
+
     "it": {
         "app_title": "La Mano Ferma",
         "gateway_ritual_title": "Rituale di Serenità",
@@ -357,8 +375,17 @@ const translations2 = {
         "rank_6": "Campione",
         "rank_7": "Titano",
         "rank_8": "Modello",
-        "rank_9": "Leggenda"
+        "rank_9": "Leggenda",
+        "tut_1_title": "La Stanza della Guerra",
+        "tut_1_desc": "Questo è il Comando TSH. Qui puoi tenere traccia delle tue serie in corso, monitorare i tuoi risparmi finanziari e visualizzare i trofei che hai guadagnato lungo il tuo viaggio.",
+        "tut_2_title": "Il Motore degli Impulsi",
+        "tut_2_desc": "Innesca il Motore in tempi di crisi. Fornisce un radicamento immediato attraverso messaggi audio dal tuo io passato o testi incoraggianti per aiutarti a respirar e ritrovare la concentrazione.",
+        "tut_3_title": "Il Caveau",
+        "tut_3_desc": "Registra la tua voce quando ti senti forte. Questi memo vengono salvati localmente e riprodotti durante un impulso per ricordarti i tuoi veri obiettivi.",
+        "tut_4_title": "Il Muro",
+        "tut_4_desc": "Lascia impronte anonime di forza per gli altri e leggi i messaggi delle persone in questo santuario globale. Tocca qualsiasi messaggio per tradurlo nella tua lingua."
     },
+
     "ko": {
         "app_title": "단호한 손",
         "gateway_ritual_title": "평온의 의식",
@@ -475,8 +502,17 @@ const translations2 = {
         "rank_6": "챔피언",
         "rank_7": "타이탄",
         "rank_8": "모범",
-        "rank_9": "전설"
+        "rank_9": "전설",
+        "tut_1_title": "작전실",
+        "tut_1_desc": "이곳은 TSH 지휘소입니다. 여기에서 진행 중인 연속 기록을 추적하고, 재정적 절약 금액을 모니터링하며, 여정에서 얻은 트로피를 볼 수 있습니다.",
+        "tut_2_title": "충동 엔진",
+        "tut_2_desc": "위기의 순간에 엔진을 작동시키세요. 과거의 자신이 남긴 오디오 메시지나 격려의 글을 통해 즉각적인 안정을 제공하여 호흡을 가다듬고 다시 집중할 수 있도록 돕습니다.",
+        "tut_3_title": "금고",
+        "tut_3_desc": "자신이 강하다고 느낄 때 자신의 목소리를 녹음하세요. 이 메모들은 기기에 로컬로 저장되며, 충동이 일어날 때 재생되어 당신의 진정한 목표를 상기시켜 줍니다.",
+        "tut_4_title": "벽",
+        "tut_4_desc": "다른 사람들을 위해 익명의 힘의 발자취를 남기고, 이 글로벌 안식처에 있는 사람들의 메시지를 읽어보세요. 메시지를 탭하면 당신의 언어로 번역됩니다."
     },
+
     "pl": {
         "app_title": "Pewna Dłoń",
         "gateway_ritual_title": "Rytuał Spokoju",
@@ -593,8 +629,17 @@ const translations2 = {
         "rank_6": "Mistrz",
         "rank_7": "Tytan",
         "rank_8": "Wzór",
-        "rank_9": "Legenda"
+        "rank_9": "Legenda",
+        "tut_1_title": "Pokój Narad",
+        "tut_1_desc": "To jest Dowództwo TSH. Tutaj możesz śledzić swoje bieżące serie, monitorować oszczędności finansowe i przeglądać trofea zdobyte podczas swojej podróży.",
+        "tut_2_title": "Silnik Pokus",
+        "tut_2_desc": "Uruchom Silnik w czasach kryzysu. Zapewnia natychmiastowe uziemienie poprzez wiadomości audio od twojego dawnego ja lub zachęcający tekst, który pomoże ci oddychać i odzyskać skupienie.",
+        "tut_3_title": "Skarbiec",
+        "tut_3_desc": "Nagraj własny głos, gdy czujesz się silny. Te notatki są zapisywane lokalnie i odtwarzane w chwilach pokusy, aby przypomnieć ci o twoich prawdziwych celach.",
+        "tut_4_title": "Ściana",
+        "tut_4_desc": "Zostaw anonimowe ślady siły dla innych i czytaj wiadomości od ludzi w tym globalnym sanktuarium. Dotknij dowolnej wiadomości, aby przetłumaczyć ją na swój język."
     },
+
     "sw": {
         "app_title": "Mkono Imara",
         "gateway_ritual_title": "Ibada ya Utulivu",
@@ -711,6 +756,14 @@ const translations2 = {
         "rank_6": "Bingwa",
         "rank_7": "Titani",
         "rank_8": "Kielelezo",
-        "rank_9": "Nguli"
+        "rank_9": "Nguli",
+        "tut_1_title": "Chumba cha Vita",
+        "tut_1_desc": "Hii ni Kamandi ya TSH. Hapa unaweza kufuatilia mfululizo wako wa ushindi, kufuatilia akiba yako ya kifedha, na kutazama nyara ulizopata kwenye safari yako.",
+        "tut_2_title": "Injini ya Tamaa",
+        "tut_2_desc": "Washa Injini wakati wa mgogoro. Inatoa utulivu wa haraka kupitia ujumbe wa sauti kutoka kwako wa zamani au maandishi ya kutia moyo kukusaidia kupumua na kuelekeza umakini wako upya.",
+        "tut_3_title": "Handaki",
+        "tut_3_desc": "Rekodi sauti yako mwenyewe unapohisi una nguvu. Rekodi hizi zinahifadhiwa kwenye simu yako na kuchezwa kwako wakati wa tamaa ili kukukumbusha malengo yako ya kweli.",
+        "tut_4_title": "Ukuta",
+        "tut_4_desc": "Acha nyayo zisizojulikana za nguvu kwa wengine, na usome ujumbe kutoka kwa watu katika patakatifu hapa duniani. Gonga ujumbe wowote ili kuutafsiri katika lugha yako."
     }
 };
