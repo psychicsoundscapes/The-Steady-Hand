@@ -212,8 +212,18 @@ function nextTutorialStep() {
     const step = tutorialSteps[state.tutorialStep];
     const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
     const langData = translations[activeLang] || translations['en'];
+    
+    // Update text
     document.getElementById('tut-title').innerText = langData[step.titleKey] || step.defaultTitle;
     document.getElementById('tut-desc').innerText = langData[step.descKey] || step.defaultDesc;
+    
+    // Update the icon
+    const iconEl = document.getElementById('tut-icon');
+    if (iconEl) {
+        iconEl.setAttribute('data-lucide', step.icon);
+        lucide.createIcons(); // Re-render the new icon
+    }
+    
     state.tutorialStep++;
 }
 
