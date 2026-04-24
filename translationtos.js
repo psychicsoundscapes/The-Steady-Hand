@@ -192,8 +192,57 @@ const tosTranslations = {
         "tos_h2": "Data Yako",
         "tos_p2": "Kwa sababu sihifadhi data yako kwenye seva zangu mwenyewe, siwezi kuirejesha kwako ikiwa utafuta akiba ya kivinjari chako au kupoteza simu yako. Tafadhali kuwa mwangalifu na hili.",
         "tos_h3": "Ukuta",
-        "tos_p3": "Nataka Ukuta wa Hekima ubaki kuwa mahali pa matumaini. Ninahifadhi haki ya kuondoa chapisho lolote ambalo ni hatari, haramu, au linaenda kinyume na roho ya patakatifu hapa.",
+        "tos_p3": "Nataka Ukuta wa Hekima ubaki kuwa mahali pa matumaini. Nina haki ya kuondoa chapisho lolote ambalo ni la kudhuru, kinyume cha sheria, au linaloenda kinyume na roho ya patakatifu hapa.",
         "tos_date": "Ilisasishwa Mwisho: Aprili 2026",
         "tos_btn": "Ninaelewa"
+    },
+    "fa": {
+        "tos_title": "شرایط خدمات - TSH",
+        "tos_disclaimer": "سلب مسئولیت پزشکی: من یک توسعه‌دهنده هستم، نه یک پزشک. TSH یک ابزار انگیزشی است. اگر در بحران هستید، لطفا با خطوط نجات حرفه‌ای لیست شده در برنامه تماس بگیرید.",
+        "tos_h1": "توافقنامه ما",
+        "tos_p1": "با استفاده از TSH، درک می‌کنید که من این ابزار را \"همانطور که هست\" ارائه می‌دهم. من تمام تلاش خود را کرده‌ام تا آن را پایدار و مفید کنم، اما شما مسئول سفر خود و نحوه استفاده از برنامه هستید.",
+        "tos_h2": "اطلاعات شما",
+        "tos_p2": "از آنجا که من داده‌های شما را در سرورهای خودم ذخیره نمی‌کنم، در صورتی که حافظه پنهان مرورگر خود را پاک کنید یا گوشی خود را گم کنید، نمی‌توانم آن‌ها را برای شما بازیابی کنم. لطفا این موضوع را در نظر داشته باشید.",
+        "tos_h3": "دیوار",
+        "tos_p3": "من می‌خواهم دیوار خرد محلی برای امید باقی بماند. من حق حذف هر پستی که مضر، غیرقانونی یا برخلاف روح این پناهگاه باشد را برای خود محفوظ می‌دارم.",
+        "tos_date": "آخرین به‌روزرسانی: آوریل ۲۰۲۶",
+        "tos_btn": "متوجه شدم"
+    },
+    "ms": {
+        "tos_title": "Terma Perkhidmatan - TSH",
+        "tos_disclaimer": "Penafian Perubatan: Saya seorang pembangun, bukan doktor. TSH ialah alat motivasi. Jika anda berada dalam krisis, sila hubungi talian hayat profesional yang disenaraikan dalam aplikasi.",
+        "tos_h1": "Perjanjian Kita",
+        "tos_p1": "Dengan menggunakan TSH, anda memahami bahawa saya menyediakan alat ini \"seadanya.\" Saya telah berusaha sebaik mungkin untuk menjadikannya stabil dan membantu, tetapi anda bertanggungjawab atas perjalanan anda sendiri dan cara anda menggunakan aplikasi ini.",
+        "tos_h2": "Data Anda",
+        "tos_p2": "Oleh kerana saya tidak menyimpan data anda pada pelayan saya sendiri, saya tidak dapat memulihkannya untuk anda jika anda mengosongkan cache pelayar anda atau kehilangan telefon anda. Sila ambil perhatian tentang perkara ini.",
+        "tos_h3": "Dinding",
+        "tos_p3": "Saya mahu Dinding Kebijaksanaan kekal sebagai tempat harapan. Saya berhak untuk mengalih keluar sebarang siaran yang berbahaya, menyalahi undang-undang, atau bertentangan dengan semangat tempat perlindungan ini.",
+        "tos_date": "Kemas Kini Terakhir: April 2026",
+        "tos_btn": "Saya Faham"
+    },
+    "ur": {
+        "tos_title": "شرائطِ خدمت - TSH",
+        "tos_disclaimer": "طبی تردید (میڈیکل ڈس کلیمر): میں ایک ڈویلپر ہوں، کوئی ڈاکٹر نہیں۔ TSH ایک ترغیبی ٹول ہے۔ اگر آپ بحران میں ہیں، تو براہ کرم ایپ میں درج پیشہ ورانہ لائف لائنز سے رابطہ کریں۔",
+        "tos_h1": "ہمارا معاہدہ",
+        "tos_p1": "TSH استعمال کر کے، آپ سمجھتے ہیں کہ میں یہ ٹول \"جیسا ہے\" کی بنیاد پر فراہم کر رہا ہوں۔ میں نے اسے مستحکم اور مددگار بنانے کی پوری کوشش کی ہے، لیکن آپ اپنے سفر اور ایپ کے استعمال کے خود ذمہ دار ہیں۔",
+        "tos_h2": "آپ کا ڈیٹا",
+        "tos_p2": "چونکہ میں آپ کا ڈیٹا اپنے سرورز پر محفوظ نہیں کرتا، اس لیے اگر آپ اپنے براؤزر کا کیش (cache) صاف کر دیتے ہیں یا اپنا فون کھو دیتے ہیں تو میں اسے آپ کے لیے بازیافت نہیں کر سکتا۔ براہ کرم اس بات کا خیال رکھیں۔",
+        "tos_h3": "دیوار",
+        "tos_p3": "میں چاہتا ہوں کہ دانشمندی کی دیوار امید کی جگہ بنی رہے۔ میں کسی بھی ایسی پوسٹ کو ہٹانے کا حق محفوظ رکھتا ہوں جو نقصان دہ ہو، غیر قانونی ہو، یا اس پناہ گاہ کی روح کے خلاف ہو۔",
+        "tos_date": "آخری اپ ڈیٹ: اپریل 2026",
+        "tos_btn": "میں سمجھ گیا"
+    },
+    "uk": {
+        "tos_title": "Умови надання послуг - TSH",
+        "tos_disclaimer": "Медичне застереження: Я розробник, а не лікар. TSH — це мотиваційний інструмент. Якщо ви перебуваєте в кризовій ситуації, будь ласка, зверніться до професійних ліній допомоги, вказаних у додатку.",
+        "tos_h1": "Наша угода",
+        "tos_p1": "Використовуючи TSH, ви розумієте, що я надаю цей інструмент «як є». Я зробив усе можливе, щоб він був стабільним і корисним, але ви несете відповідальність за свій власний шлях і за те, як ви використовуєте додаток.",
+        "tos_h2": "Ваші дані",
+        "tos_p2": "Оскільки я не зберігаю ваші дані на власних серверах, я не зможу відновити їх для вас, якщо ви очистите кеш браузера або загубите телефон. Будь ласка, майте це на увазі.",
+        "tos_h3": "Стіна",
+        "tos_p3": "Я хочу, щоб Стіна Мудрості залишалася місцем надії. Я залишаю за собою право видаляти будь-які публікації, які є шкідливими, незаконними або суперечать духу цього сховку.",
+        "tos_date": "Останнє оновлення: квітень 2026 року",
+        "tos_btn": "Я розумію"
     }
 };
+

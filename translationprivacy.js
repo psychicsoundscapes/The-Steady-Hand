@@ -195,5 +195,57 @@ const privacyTranslations = {
         "privacy_h4": "Huduma za Wengine",
         "privacy_p4": "Natumia huduma chache za kawaida (Cloudflare, Google, Lucide) kuhakikisha programu inapakia haraka na inaonekana sawa. Watoa huduma hawa wanaweza kuona maelezo yako ya msingi ya muunganisho unapofungua programu.",
         "privacy_btn": "Rudi Patakatifu"
+    },
+        "privacy_h4": "Huduma za Wengine",
+        "privacy_p4": "Natumia huduma chache za kawaida (Cloudflare, Google, Lucide) kuhakikisha programu inapakia haraka na inaonekana sawa. Watoa huduma hawa wanaweza kuona maelezo yako ya msingi ya muunganisho unapofungua programu.",
+        "privacy_btn": "Rudi Patakatifu"
+    },
+    "fa": {
+        "privacy_title": "سیاست حریم خصوصی - TSH",
+        "privacy_h1": "فلسفه من",
+        "privacy_p1": "من دست استوار (TSH) را به عنوان یک پناهگاه خصوصی برای شما ساختم. من شما را ردیابی نمی‌کنم، از حساب کاربری استفاده نمی‌کنم و هیچ علاقه‌ای به اطلاعات شخصی شما ندارم. این برنامه ابزاری برای رشد شماست، نه برای جمع‌آوری داده‌های من.",
+        "privacy_h2": "نحوه ذخیره اطلاعات شما",
+        "privacy_p2": "هر چیز مهمی — عادات شما، رکوردهای شما و پیام‌های صوتی شما — <strong>فقط در دستگاه خودتان</strong> باقی می‌ماند. من از LocalStorage و IndexedDB برای حفظ این اطلاعات به صورت محلی استفاده می‌کنم و هیچ‌گونه دسترسی به آن‌ها ندارم.",
+        "privacy_h3": "دیوار خرد",
+        "privacy_p3": "هنگامی که پیامی را در دیوار پست می‌کنید، آن پیام به سرور من ارسال می‌شود تا دیگران بتوانند آن را بخوانند. اگرچه این پست‌ها ناشناس هستند، اما آدرس IP شما در حین انتقال پردازش می‌شود. من این موضوع را به هیچ وجه به داده‌های محلی شما پیوند نمی‌دهم.",
+        "privacy_h4": "خدمات شخص ثالث",
+        "privacy_p4": "من از چند سرویس استاندارد (مثل Cloudflare، Google، Lucide) استفاده می‌کنم تا مطمئن شوم برنامه سریع بارگیری می‌شود و ظاهر درستی دارد. این ارائه‌دهندگان ممکن است اطلاعات پایه اتصال شما را هنگام باز کردن برنامه ببینند.",
+        "privacy_btn": "بازگشت به پناهگاه"
+    },
+    "ms": {
+        "privacy_title": "Dasar Privasi - TSH",
+        "privacy_h1": "Falsafah Saya",
+        "privacy_p1": "Saya membina Tangan Yang Teguh (TSH) sebagai tempat perlindungan peribadi untuk anda. Saya tidak menjejaki anda, saya tidak menggunakan log masuk, dan saya tidak berminat dengan data peribadi anda. Aplikasi ini adalah alat untuk pertumbuhan anda, bukan untuk koleksi saya.",
+        "privacy_h2": "Bagaimana Saya Menyimpan Data Anda",
+        "privacy_p2": "Setiap perkara yang penting—tabiat anda, rekod berterusan anda, dan rakaman suara anda—kekal <strong>hanya pada peranti anda</strong>. Saya menggunakan LocalStorage dan IndexedDB untuk memastikan data ini kekal tempatan. Saya tidak mempunyai akses kepadanya sama sekali.",
+        "privacy_h3": "Dinding Kebijaksanaan",
+        "privacy_p3": "Apabila anda menyiarkan mesej ke Dinding, ia dihantar ke pelayan saya supaya orang lain boleh membacanya. Walaupun siaran ini adalah tanpa nama, alamat IP anda diproses semasa penghantaran. Saya tidak mengaitkan ini dengan data tempatan anda dalam apa jua cara.",
+        "privacy_h4": "Perkhidmatan Pihak Ketiga",
+        "privacy_p4": "Saya menggunakan beberapa perkhidmatan standard (Cloudflare, Google, Lucide) untuk memastikan aplikasi dimuatkan dengan pantas dan kelihatan baik. Penyedia ini mungkin melihat maklumat sambungan asas anda apabila anda membuka aplikasi.",
+        "privacy_btn": "Kembali ke Tempat Perlindungan"
+    },
+    "ur": {
+        "privacy_title": "پرائیویسی پالیسی - TSH",
+        "privacy_h1": "میرا فلسفہ",
+        "privacy_p1": "میں نے دی سٹیڈی ہینڈ (TSH) کو آپ کے لیے ایک نجی پناہ گاہ کے طور پر بنایا ہے۔ میں آپ کو ٹریک نہیں کرتا، میں اکاؤنٹس کا استعمال نہیں کرتا، اور مجھے آپ کے ذاتی ڈیٹا میں کوئی دلچسپی نہیں ہے۔ یہ ایپ آپ کی ترقی کے لیے ایک ٹول ہے، میرے ڈیٹا اکٹھا کرنے کے لیے نہیں۔",
+        "privacy_h2": "میں آپ کا ڈیٹا کیسے محفوظ کرتا ہوں",
+        "privacy_p2": "ہر اہم چیز—آپ کی عادات، آپ کی کامیابیاں، اور آپ کی وائس ریکارڈنگز—<strong>صرف آپ کے آلے پر</strong> رہتی ہیں۔ میں اس ڈیٹا کو آپ تک محدود رکھنے کے لیے LocalStorage اور IndexedDB کا استعمال کرتا ہوں۔ مجھے اس تک بالکل رسائی نہیں ہے۔",
+        "privacy_h3": "دانشمندی کی دیوار",
+        "privacy_p3": "جب آپ دیوار پر کوئی پیغام پوسٹ کرتے ہیں، تو یہ میرے سرور پر بھیجا جاتا ہے تاکہ دوسرے اسے پڑھ سکیں۔ اگرچہ یہ پوسٹس گمنام ہوتی ہیں، لیکن ترسیل کے دوران آپ کا IP ایڈریس پروسیس ہوتا ہے۔ میں اسے کسی بھی طرح آپ کے مقامی ڈیٹا سے نہیں جوڑتا۔",
+        "privacy_h4": "تھرڈ پارٹی سروسز",
+        "privacy_p4": "میں چند معیاری سروسز (Cloudflare، Google، Lucide) کا استعمال کرتا ہوں تاکہ یہ یقینی بنایا جا سکے کہ ایپ تیزی سے لوڈ ہو اور صحیح نظر آئے۔ جب آپ ایپ کھولتے ہیں تو یہ فراہم کنندگان آپ کی بنیادی کنکشن کی معلومات دیکھ سکتے ہیں۔",
+        "privacy_btn": "پناہ گاہ میں واپس جائیں"
+    },
+    "uk": {
+        "privacy_title": "Політика конфіденційності - TSH",
+        "privacy_h1": "Моя філософія",
+        "privacy_p1": "Я створив «Тверду Руку» (TSH) як приватний сховок для вас. Я не відстежую вас, не використовую облікові записи, і мене не цікавлять ваші особисті дані. Цей додаток є інструментом для вашого зростання, а не для моєї бази даних.",
+        "privacy_h2": "Як я зберігаю ваші дані",
+        "privacy_p2": "Все найважливіше — ваші звички, ваші серії перемог та ваші голосові записи — залишається <strong>лише на вашому пристрої</strong>. Я використовую LocalStorage та IndexedDB, щоб ці дані залишалися локальними для вас. Я не маю до них жодного доступу.",
+        "privacy_h3": "Стіна Мудрості",
+        "privacy_p3": "Коли ви публікуєте повідомлення на Стіні, воно надсилається на мій сервер, щоб інші могли його прочитати. Хоча ці повідомлення є анонімними, ваша IP-адреса обробляється під час передачі. Я жодним чином не пов'язую її з вашими локальними даними.",
+        "privacy_h4": "Сторонні сервіси",
+        "privacy_p4": "Я використовую кілька стандартних сервісів (Cloudflare, Google, Lucide), щоб додаток завантажувався швидко і виглядав правильно. Ці провайдери можуть бачити вашу базову інформацію про з'єднання, коли ви відкриваєте додаток.",
+        "privacy_btn": "Повернутися до сховку"
     }
 };

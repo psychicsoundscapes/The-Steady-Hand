@@ -18,20 +18,23 @@ const languageFingerprints = {
     "pt": ["com", "uma", "para", "dos", "pelo", "mais"],
     "pl": ["jest", "bylo", "oraz", "dla", "przez", "przy"],
     "sw": ["na", "wa", "kwa", "katika", "ni", "ya"],
-    "tl": ["ang", "mga", "ng", "sa", "ay", "na"]
+    "tl": ["ang", "mga", "ng", "sa", "ay", "na"],
+    "ms": ["yang", "dan", "di", "untuk", "dengan", "itu"]
 };
 
 // --- Currency Mappings ---
 const currencyCodes = {
     "en": "USD", "es": "EUR", "fr": "EUR", "de": "EUR", "it": "EUR", 
     "pt": "BRL", "pl": "PLN", "sw": "KES", "tl": "PHP", "ar": "AED", 
-    "he": "ILS", "zh": "CNY", "ja": "JPY", "ko": "KRW", "ru": "RUB", "hi": "INR"
+    "he": "ILS", "zh": "CNY", "ja": "JPY", "ko": "KRW", "ru": "RUB", "hi": "INR",
+    "ms": "MYR", "fa": "IRR", "ur": "PKR", "uk": "UAH"
 };
 
 const currencySymbols = {
     "en": "$", "es": "€", "fr": "€", "de": "€", "it": "€", 
     "pt": "R$", "pl": "zł", "sw": "KSh", "tl": "₱", "ar": "د.إ", 
-    "he": "₪", "zh": "¥", "ja": "¥", "ko": "₩", "ru": "₽", "hi": "₹"
+    "he": "₪", "zh": "¥", "ja": "¥", "ko": "₩", "ru": "₽", "hi": "₹",
+    "ms": "RM", "fa": "﷼", "ur": "₨", "uk": "₴"
 };
 
 function changeLanguage(langCode) {
@@ -262,7 +265,9 @@ function addHabitField() {
 
 async function saveInitialSetup() {
     const habitEls = document.querySelectorAll('#habit-inputs > div');
-    if (habitEls.length === 0) return alert("Please add at least one struggle to forge your shield.");
+    const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
+    const langData = translations[activeLang] || translations['en'];
+    if (habitEls.length === 0) return alert(langData.alert_setup_empty || "Please add at least one struggle to forge your shield.");
     state.habits =[];
     habitEls.forEach(el => {
         const name = el.querySelector('.habit-name').value;
@@ -286,7 +291,9 @@ function saveSafetyContact() {
     state.safetyContact = { name: document.getElementById('safety-name').value, phone: document.getElementById('safety-phone').value };
     localStorage.setItem('steady_hand_state', JSON.stringify(state));
     renderSafetyContact();
-    alert("Safety dial locked in.");
+    const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
+    const langData = translations[activeLang] || translations['en'];
+    alert(langData.alert_safety_saved || "Safety dial locked in.");
 }
 
 function renderSafetyContact() {
@@ -410,7 +417,11 @@ async function startRecording() {
         mediaRecorder.start();
         document.getElementById('btn-start-record').classList.add('hidden');
         document.getElementById('btn-stop-record').classList.remove('hidden');
-    } catch (err) { alert("Microphone access required for the Vault."); }
+    } catch (err) { 
+        const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
+        const langData = translations[activeLang] || translations['en'];
+        alert(langData.alert_mic_error || "Microphone access required for the Vault."); 
+    }
 }
 
 function stopRecording() {
@@ -446,7 +457,11 @@ function loadVault() {
     setTimeout(() => lucide.createIcons(), 50);
 }
 
-function deleteVideo(id) { if(confirm("Purge this voice recording permanently?")) db.transaction("videos", "readwrite").objectStore("videos").delete(id).onsuccess = loadVault; }
+function deleteVideo(id) { 
+    const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
+    const langData = translations[activeLang] || translations['en'];
+    if(confirm(langData.confirm_purge_record || "Purge this voice recording permanently?")) db.transaction("videos", "readwrite").objectStore("videos").delete(id).onsuccess = loadVault; 
+}
 
 let lastUrgeType = null; let lastVerseIndex = -1; let lastAudioId = -1;
 async function triggerUrgeEngine() {
@@ -476,6 +491,9 @@ async function triggerUrgeEngine() {
     }
     lastUrgeType = choice;
 
+    const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
+    const langData = translations[activeLang] || translations['en'];
+
     if (choice === 'audio') {
         let audioMatch = vaultAudios[Math.floor(Math.random() * vaultAudios.length)];
         let safetyCounter = 0;
@@ -487,11 +505,11 @@ async function triggerUrgeEngine() {
         const url = URL.createObjectURL(audioMatch.blob);
         c.innerHTML = `
             <i data-lucide="mic" class="w-16 h-16 text-slate-700 drop-shadow-sm mx-auto mb-6"></i>
-            <h2 class="font-cinzel text-slate-800 mb-6 uppercase font-bold tracking-widest text-xl">Listen to Your Strength</h2>
+            <h2 class="font-cinzel text-slate-800 mb-6 uppercase font-bold tracking-widest text-xl">${langData.urge_listen_strength || "Listen to Your Strength"}</h2>
             <div class="bg-white/60 p-4 rounded-2xl w-full max-w-sm shadow-xl border-2 border-white">
                 <audio src="${url}" autoplay controls class="w-full outline-none"></audio>
             </div>
-            <p class="text-[10px] text-slate-600 uppercase font-bold tracking-widest mt-8">Breathe and Listen</p>
+            <p class="text-[10px] text-slate-600 uppercase font-bold tracking-widest mt-8">${langData.urge_breathe_listen || "Breathe and Listen"}</p>
         `;
     } else {
         const safeScriptures = (typeof scriptures !== 'undefined' && scriptures[typeof currentLang !== 'undefined' ? currentLang : 'en']) 
@@ -509,7 +527,7 @@ async function triggerUrgeEngine() {
             <h2 class="text-2xl font-cinzel text-slate-800 drop-shadow-sm leading-relaxed px-4 italic font-bold">"${escapeHTML(randomScripture.text)}"</h2>
             <p class="text-sm font-bold text-slate-600 mt-6">${escapeHTML(randomScripture.ref)}</p>
             <div class="mt-12 bg-white/40 py-2 px-6 rounded-full inline-block shadow-sm border border-white/50">
-                <p class="text-[10px] text-slate-700 uppercase tracking-widest font-bold">Breathe for 60 seconds.</p>
+                <p class="text-[10px] text-slate-700 uppercase tracking-widest font-bold">${langData.urge_breathe_60 || "Breathe for 60 seconds."}</p>
             </div>`;
     }
     setTimeout(() => lucide.createIcons(), 50);
@@ -588,8 +606,7 @@ async function loadWallMessages(append = false) {
     isFetchingWall = false;
 }
 
-function isAlreadyInLanguage(text, targetLang) {
-    const scripts = { "ar": /[\u0600-\u06FF]/, "he": /[\u0590-\u05FF]/, "zh": /[\u4e00-\u9fa5]/, "ja": /[\u3040-\u30ff]/, "ko": /[\uac00-\ud7af]/, "ru": /[\u0400-\u04FF]/, "hi": /[\u0900-\u097F]/ };
+    const scripts = { "ar": /[\u0600-\u06FF]/, "he": /[\u0590-\u05FF]/, "zh": /[\u4e00-\u9fa5]/, "ja": /[\u3040-\u30ff]/, "ko": /[\uac00-\ud7af]/, "ru": /[\u0400-\u04FF]/, "hi": /[\u0900-\u097F]/, "fa": /[\u0600-\u06FF]/, "ur": /[\u0600-\u06FF]/, "uk": /[\u0400-\u04FF]/ };
     for (const [lang, regex] of Object.entries(scripts)) { if (regex.test(text)) return targetLang === lang; }
     if (languageFingerprints[targetLang]) {
         const words = text.toLowerCase().replace(/[.,/#!$%^&*;:{}=\-_`~()]/g,"").split(/\s+/);
@@ -651,7 +668,9 @@ async function postToWall() {
             body: JSON.stringify({ text, language: activeLang })
         });
     } catch(e) {
-        alert("Failed to permanently save message to the global wall.");
+        const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
+        const langData = translations[activeLang] || translations['en'];
+        alert(langData.alert_wall_fail || "Failed to permanently save message to the global wall.");
     }
 }
 
@@ -699,7 +718,9 @@ function updateDate() {
     document.getElementById('date-display').innerText = new Date().toLocaleDateString(activeLang, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }); 
 }
 function resetApp() { 
-    if(confirm("DELETE ALL DATA? This erases all progress and voice notes permanently.")) { 
+    const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
+    const langData = translations[activeLang] || translations['en'];
+    if(confirm(langData.confirm_reset || "DELETE ALL DATA? This erases all progress and voice notes permanently.")) { 
         localStorage.clear(); 
         indexedDB.deleteDatabase("TSH_Database"); 
         window.location.reload(); 
