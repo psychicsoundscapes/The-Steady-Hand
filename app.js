@@ -606,6 +606,7 @@ async function loadWallMessages(append = false) {
     isFetchingWall = false;
 }
 
+function isAlreadyInLanguage(text, targetLang) {
     const scripts = { "ar": /[\u0600-\u06FF]/, "he": /[\u0590-\u05FF]/, "zh": /[\u4e00-\u9fa5]/, "ja": /[\u3040-\u30ff]/, "ko": /[\uac00-\ud7af]/, "ru": /[\u0400-\u04FF]/, "hi": /[\u0900-\u097F]/, "fa": /[\u0600-\u06FF]/, "ur": /[\u0600-\u06FF]/, "uk": /[\u0400-\u04FF]/ };
     for (const [lang, regex] of Object.entries(scripts)) { if (regex.test(text)) return targetLang === lang; }
     if (languageFingerprints[targetLang]) {
