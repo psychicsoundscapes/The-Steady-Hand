@@ -441,6 +441,10 @@ function loadVault() {
     db.transaction("videos", "readonly").objectStore("videos").openCursor(null, 'prev').onsuccess = e => {
         const cur = e.target.result;
         if(cur) {
+            // Force direct read from local storage to prevent scope loss
+            const activeLang = localStorage.getItem('tsh_language') || 'en';
+            const langData = translations[activeLang] || translations['en'];
+
             const url = URL.createObjectURL(cur.value.blob);
             const d = document.createElement('div'); d.className = 'card-glass p-4 relative';
             d.innerHTML = `
@@ -449,8 +453,8 @@ function loadVault() {
                     <audio src="${url}" controls class="w-full h-8 outline-none bg-transparent"></audio>
                 </div>
                 <div class="flex justify-between items-center text-[10px] uppercase font-bold text-slate-700 px-2">
-                <span class="truncate max-w-[150px]">Captured ${new Date(cur.value.date).toLocaleDateString()}</span>
-                <button onclick="deleteVideo(${cur.value.id})" class="text-red-600 bg-white/50 px-3 py-1 rounded-full shadow-sm hover:bg-red-50 transition-colors">Purge</button></div>`;
+                <span class="truncate max-w-[150px]">${langData.vault_captured || "Captured "}${new Date(cur.value.date).toLocaleDateString(activeLang)}</span>
+                <button onclick="deleteVideo(${cur.value.id})" class="text-red-600 bg-white/50 px-3 py-1 rounded-full shadow-sm hover:bg-red-50 transition-colors">${langData.vault_purge || "Purge"}</button></div>`;
             c.appendChild(d); cur.continue();
         }
     };
