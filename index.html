@@ -217,24 +217,6 @@
 
                 <div id="dashboard-habits" class="space-y-3"></div>
 
-                <button type="button" onclick="toggleAddStruggleForm()" class="flex items-center gap-2 text-slate-800 text-xs font-bold uppercase tracking-widest bg-white/40 px-5 py-3 rounded-full w-max border border-white/60 mx-auto mt-4">
-                    <i data-lucide="plus-circle" class="w-4 h-4"></i> <span data-i18n="settings_add_struggle">Add New Struggle</span>
-                </button>
-
-                <div id="add-struggle-form" class="hidden card-glass p-5 space-y-3 mt-3">
-                    <input type="text" id="new-struggle-name" data-i18n-placeholder="setup_ph_struggle" placeholder="Struggle (e.g. Nicotine)" class="w-full rounded-lg p-3 text-sm uppercase font-bold shadow-inner">
-                    <input type="number" id="new-struggle-cost" data-i18n-placeholder="setup_ph_cost" placeholder="Daily Financial Cost ($)" class="w-full rounded-lg p-3 text-sm shadow-inner" min="0">
-                    <div class="flex items-center justify-between px-1">
-                        <label class="text-[10px] uppercase font-bold text-slate-700 flex items-center gap-2 cursor-pointer">
-                            <input type="checkbox" id="new-struggle-main" class="w-4 h-4 rounded border-slate-400 text-slate-800 focus:ring-slate-800" checked>
-                            <span data-i18n="setup_main_label">Main Struggle (Affects Rank)</span>
-                        </label>
-                    </div>
-                    <button type="button" onclick="addNewStruggleFromDashboard()" data-i18n="settings_add_struggle_confirm" class="w-full bg-white/60 text-slate-800 font-bold py-3 rounded-xl shadow-md uppercase tracking-widest text-[10px] border border-white">
-                        Add Struggle
-                    </button>
-                </div>
-
                 <button type="button" onclick="triggerUrgeEngine()" class="w-full py-6 rounded-2xl bg-white/40 border border-white/70 flex flex-col items-center justify-center gap-1.5 active:scale-95 transition-transform shadow-lg backdrop-blur-md mt-5">
                     <i data-lucide="shield-alert" class="w-8 h-8 text-red-600 animate-pulse"></i>
                     <span data-i18n="main_urge_btn" class="font-bold text-slate-800 uppercase tracking-[0.2em] text-[11px] drop-shadow-sm">I Have an Urge</span>
@@ -485,10 +467,6 @@
                     <option value="ko">한국어 (Korean)</option>
                     <option value="pl">Polski (Polish)</option>
                     <option value="sw">Kiswahili (Swahili)</option>
-                    <option value="ms">Bahasa Melayu (Malay)</option>
-                    <option value="fa">فارسی (Persian)</option>
-                    <option value="ur">اردو (Urdu)</option>
-                    <option value="uk">Українська (Ukrainian)</option>
                 </select>
             </div>
 
