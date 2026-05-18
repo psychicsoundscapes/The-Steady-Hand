@@ -90,7 +90,7 @@ const translations = {
         "vault_recording": "Recording...",
         "vault_record_btn": "Record Voice",
         "vault_stop_btn": "Stop",
-        "_title": "Wall of Wisdom",
+        "wall_title": "Wall of Wisdom",
         "wall_subtitle": "Anonymous footprints of strength and love from real people within this global sanctuary.",
         "wall_notice_prefix": "Kindly note:",
         "wall_notice_text": "Statements cannot be edited once posted. If you need a message removed, please email <a href='mailto:support@yaddof.dev' class='font-bold underline hover:text-slate-900'>support@yaddof.dev</a> with the exact text you'd like deleted, and I will happily assist you.",
