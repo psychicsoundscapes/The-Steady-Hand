@@ -1,4 +1,4 @@
-﻿/**
+/**
  * TSH Expansion Translation Dictionary
  * Contains Hebrew and major languages of heavily Christian populations: 
  * Tagalog (Philippines), Italian (Italy), Korean (South Korea), Polish (Poland), and Swahili (East Africa).
@@ -153,7 +153,7 @@ const translations2 = {
         "retire_confirm_msg": "פעולה זו היא קבועה ולא ניתנת לביטול. האם אתה בטוח לחלוטין שאתה רוצה להסיר מאבק זה?",
         "settings_add_struggle": "הוסף מאבק חדש",
         "settings_add_struggle_confirm": "הוסף מאבק",
-        "retire_last_main_warn": "זה המאבק הראשי היחיד שלך. הסרתו תאפס את הדירוג שלך ואת גביעי ציר הזמן של המאבק הראשי למצב ההתחלתי. האם אתה בטוח שברצונך לעשות זאת?"
+        "retire_last_main_warn": "זהו המאבק הראשי היחיד שלך. פרישה ממנו תאפס את הדרגה שלך ואת גביעי ציר הזמן של המאבק הראשי למצב הראשוני. האם אתה בטוח שברצונך לעשות זאת?"
     },
 
     "tl": {
