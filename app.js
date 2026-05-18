@@ -341,7 +341,10 @@ function renderDashboard() {
                     <h3 class="text-slate-800 font-cinzel text-sm uppercase font-bold mb-1">${escapeHTML(habit.name)} <span class="text-[8px] bg-slate-800 text-white px-2 py-0.5 rounded-full ml-2 align-middle">${badge}</span></h3>
                     <p class="text-3xl font-bold text-slate-800">${streakDays} <span class="text-[10px] text-slate-600 uppercase font-semibold">${langData.dash_days_won}</span></p>
                 </div>
-                <button onclick="logSlip('${habit.id}')" class="text-[10px] uppercase font-bold text-slate-700 border border-slate-400 bg-white/50 px-3 py-2 rounded-full shadow-sm">${langData.dash_log_slip}</button>
+                <div class="flex flex-col gap-1.5">
+                    <button onclick="logSlip('${habit.id}')" class="text-[10px] uppercase font-bold text-slate-700 border border-slate-400 bg-white/50 px-3 py-2 rounded-full shadow-sm">${langData.dash_log_slip}</button>
+                    <button onclick="retireStruggle('${habit.id}')" class="text-[10px] uppercase font-bold text-slate-700 border border-slate-400 bg-white/50 px-3 py-2 rounded-full shadow-sm">${langData.dash_retire || 'Retire'}</button>
+                </div>
             </div>
             <div class="bg-white/60 h-2 rounded-full overflow-hidden shadow-inner"><div class="bg-slate-700 h-full" style="width: ${calculateSuccessRate(habit)}%"></div></div>
         `;
@@ -715,6 +718,73 @@ function logSlip(id) {
         localStorage.setItem('steady_hand_state', JSON.stringify(state)); 
         renderDashboard(); 
     } 
+}
+
+function retireStruggle(id) {
+    const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
+    const langData = translations[activeLang] || translations['en'];
+    const habit = state.habits.find(x => x.id === id);
+    if (!habit) return;
+
+    // First confirmation: warn about rank/trophy impact
+    const warnMsg = langData.retire_warn_msg || "Removing this struggle may affect your profile. If this is your main struggle, your rank will be recalculated. If you have trophies earned from multiple active struggles, some may be lost. Are you sure you want to continue?";
+    if (!confirm(warnMsg)) return;
+
+    // Second confirmation: permanent action
+    const confirmMsg = langData.retire_confirm_msg || "This action is permanent and cannot be undone. Are you absolutely sure you want to retire this struggle?";
+    if (!confirm(confirmMsg)) return;
+
+    // Remove the struggle
+    state.habits = state.habits.filter(x => x.id !== id);
+    localStorage.setItem('steady_hand_state', JSON.stringify(state));
+    renderDashboard();
+}
+
+function addNewStruggleFromDashboard() {
+    const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
+    const langData = translations[activeLang] || translations['en'];
+    const currencySym = currencySymbols[activeLang] || "$";
+
+    const nameInput = document.getElementById('new-struggle-name');
+    const costInput = document.getElementById('new-struggle-cost');
+    const mainInput = document.getElementById('new-struggle-main');
+    const formEl = document.getElementById('add-struggle-form');
+
+    const name = nameInput.value.trim();
+    if (!name) {
+        alert(langData.alert_setup_empty || "Please add at least one struggle to forge your shield.");
+        return;
+    }
+
+    const cost = parseFloat(costInput.value) || 0;
+    const isMain = mainInput.checked;
+
+    state.habits.push({
+        id: 'h_' + Date.now() + Math.random(),
+        name: name,
+        costPerDay: cost,
+        startDate: new Date().toISOString(),
+        slips: [],
+        isMain: isMain
+    });
+
+    localStorage.setItem('steady_hand_state', JSON.stringify(state));
+
+    // Clear inputs and collapse form
+    nameInput.value = '';
+    costInput.value = '';
+    mainInput.checked = true;
+    formEl.classList.add('hidden');
+
+    renderDashboard();
+}
+
+function toggleAddStruggleForm() {
+    const formEl = document.getElementById('add-struggle-form');
+    formEl.classList.toggle('hidden');
+    if (!formEl.classList.contains('hidden')) {
+        document.getElementById('new-struggle-name').focus();
+    }
 }
 function closeUrgeEngine() { document.getElementById('urge-overlay').classList.add('hidden'); }
 function toggleSettings() { document.getElementById('modal-settings').classList.toggle('hidden'); lucide.createIcons(); }
