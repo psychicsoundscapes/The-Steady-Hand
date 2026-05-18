@@ -123,7 +123,7 @@ const translations2 = {
         "rank_8": "מופת",
         "rank_9": "אגדה",
         "tut_1_title": "חדר המלחמה",
-        "tut_1_desc": "זהו פיקוד TSH. כאן תוכל לעקוב אחר הרצפים שלך, לפקח על החסכונות הכספיים שלך ולצפות בגביעים שהרווחת במהלך המסע שלך.",
+        "tut_1_desc": "זהו פיקוד TSH. כאן תוכל לעקוב אחר הרצפים שלך, לפקח על החסכונות הכספיים שלך ולצפות בגביעים שהרווחת במהלך המסע שלך. תוכל גם להוסיף מאבקים חדשים בכל עת או להסיר מאבקים שאינך צריך עוד.",
         "tut_2_title": "מנוע הדחפים",
         "tut_2_desc": "הפעל את המנוע בזמני משבר. הוא מספק קרקוע מיידי באמצעות הודעות שמע מהעבר שלך או פסוקים מכתבי הקודש שיעזרו לך לנשום ולהתמקד מחדש.",
         "tut_3_title": "הכספת",
@@ -147,7 +147,13 @@ const translations2 = {
         "vault_purge": "מחק",
         "urge_listen_strength": "הקשב לכוח שלך",
         "urge_breathe_listen": "נשום והקשב",
-        "urge_breathe_60": "נשום במשך 60 שניות."
+        "urge_breathe_60": "נשום במשך 60 שניות.",
+        "dash_retire": "הסר",
+        "retire_warn_msg": "הסרת מאבק זה עלולה להשפיע על הפרופיל שלך. אם זה המאבק העיקרי שלך, הדירוג שלך יחושב מחדש. אם יש לך גביעים ממאבקים פעילים מרובים, חלקם עלולים לאבוד. האם אתה בטוח שברצונך להמשיך?",
+        "retire_confirm_msg": "פעולה זו היא קבועה ולא ניתנת לביטול. האם אתה בטוח לחלוטין שאתה רוצה להסיר מאבק זה?",
+        "settings_add_struggle": "הוסף מאבק חדש",
+        "settings_add_struggle_confirm": "הוסף מאבק",
+        "retire_last_main_warn": "זהו המאבק הראשי היחיד שלך. פרישה ממנו תאפס את הדרגה שלך ואת גביעי ציר הזמן של המאבק הראשי למצב הראשוני. האם אתה בטוח שברצונך לעשות זאת?"
     },
 
     "tl": {
@@ -268,7 +274,7 @@ const translations2 = {
         "rank_8": "Paragon",
         "rank_9": "Alamat",
         "tut_1_title": "Ang Silid Digmaan",
-        "tut_1_desc": "Ito ang TSH Command. Dito mo masusubaybayan ang iyong mga tagumpay, makikita ang iyong naipon, at matitingnan ang mga tropeo na nakuha mo sa iyong paglalakbay.",
+        "tut_1_desc": "Ito ang TSH Command. Dito mo masusubaybayan ang iyong mga tagumpay, makikita ang iyong naipon, at matitingnan ang mga tropeo na nakuha mo sa iyong paglalakbay. Maaari ka ring magdagdag ng bagong laban anumang oras o mag-retire ng mga hindi mo na kailangan.",
         "tut_2_title": "Ang Urge Engine",
         "tut_2_desc": "I-trigger ang Engine sa oras ng krisis. Nagbibigay ito ng agarang pagpapahinahon sa pamamagitan ng mga audio message mula sa iyong sarili o mga talata mula sa banal na kasulatan upang matulungan kang huminga at mag-focus muli.",
         "tut_3_title": "Ang Vault",
@@ -292,7 +298,13 @@ const translations2 = {
         "vault_purge": "Burahin",
         "urge_listen_strength": "Makinig sa Iyong Lakas",
         "urge_breathe_listen": "Huminga at Makinig",
-        "urge_breathe_60": "Huminga nang 60 segundo."
+        "urge_breathe_60": "Huminga nang 60 segundo.",
+        "dash_retire": "I-retire",
+        "retire_warn_msg": "Ang pag-alis ng labanang ito ay maaaring makaapekto sa iyong profile. Kung ito ang iyong pangunahing laban, ang iyong ranggo ay muling kakalkulahin. Kung mayroon kang mga tropeo mula sa maraming aktibong laban, ang ilan ay maaaring mawala. Sigurado ka bang gusto mong magpatuloy?",
+        "retire_confirm_msg": "Ang aksiyong ito ay permanente at hindi na mababawi. Talagang sigurado ka bang gusto mong i-retire ang labanang ito?",
+        "settings_add_struggle": "Magdagdag ng Bagong Laban",
+        "settings_add_struggle_confirm": "Idagdag ang Laban",
+        "retire_last_main_warn": "Ito ang iyong kaisa-isang pangunahing laban. Ang pag-retire nito ay magre-reset sa iyong ranggo at mga tropeo ng timeline ng pangunahing laban sa paunang estado. Sigurado ka bang gusto mong gawin ito?"
     },
 
     "it": {
@@ -413,7 +425,7 @@ const translations2 = {
         "rank_8": "Modello",
         "rank_9": "Leggenda",
         "tut_1_title": "La Stanza della Guerra",
-        "tut_1_desc": "Questo è il Comando TSH. Qui puoi tenere traccia delle tue serie in corso, monitorare i tuoi risparmi finanziari e visualizzare i trofei che hai guadagnato lungo il tuo viaggio.",
+        "tut_1_desc": "Questo è il Comando TSH. Qui puoi tenere traccia delle tue serie in corso, monitorare i tuoi risparmi finanziari e visualizzare i trofei che hai guadagnato lungo il tuo viaggio. Puoi anche aggiungere nuove lotte in qualsiasi momento o ritirare quelle di cui non hai più bisogno.",
         "tut_2_title": "Il Motore degli Impulsi",
         "tut_2_desc": "Innesca il Motore in tempi di crisi. Fornisce un radicamento immediato attraverso messaggi audio dal tuo io passato o versetti delle scritture per aiutarti a respirare e ritrovare la concentrazione.",
         "tut_3_title": "Il Caveau",
@@ -437,7 +449,13 @@ const translations2 = {
         "vault_purge": "Elimina",
         "urge_listen_strength": "Ascolta la tua forza",
         "urge_breathe_listen": "Respira e ascolta",
-        "urge_breathe_60": "Respira per 60 secondi."
+        "urge_breathe_60": "Respira per 60 secondi.",
+        "dash_retire": "Ritira",
+        "retire_warn_msg": "La rimozione di questa lotta potrebbe influire sul tuo profilo. Se questa è la tua lotta principale, il tuo grado verrà ricalcolato. Se hai trofei guadagnati da più lotte attive, alcuni potrebbero andare persi. Sei sicuro di voler continuare?",
+        "retire_confirm_msg": "Questa azione è permanente e non può essere annullata. Sei assolutamente sicuro di voler ritirare questa lotta?",
+        "settings_add_struggle": "Aggiungi Nuova Lotta",
+        "settings_add_struggle_confirm": "Aggiungi Lotta",
+        "retire_last_main_warn": "Questa è la tua unica lotta principale. Ritirarla ripristinerà il tuo grado e i trofei della linea temporale della lotta principale allo stato iniziale. Sei sicuro di volerlo fare?"
     },
 
     "ko": {
@@ -558,7 +576,7 @@ const translations2 = {
         "rank_8": "모범",
         "rank_9": "전설",
         "tut_1_title": "작전실",
-        "tut_1_desc": "이곳은 TSH 지휘소입니다. 여기에서 진행 중인 연속 기록을 추적하고, 재정적 절약 금액을 모니터링하며, 여정에서 얻은 트로피를 볼 수 있습니다.",
+        "tut_1_desc": "이곳은 TSH 지휘소입니다. 여기에서 진행 중인 연속 기록을 추적하고, 재정적 절약 금액을 모니터링하며, 여정에서 얻은 트로피를 볼 수 있습니다. 언제든지 새로운 투쟁을 추가하거나 필요 없는 투쟁을 은퇴시킬 수 있습니다.",
         "tut_2_title": "충동 엔진",
         "tut_2_desc": "위기의 순간에 엔진을 작동시키세요. 과거의 자신이 남긴 오디오 메시지나 성경 구절을 통해 즉각적인 안정을 제공하여 호흡을 가다듬고 다시 집중할 수 있도록 돕습니다.",
         "tut_3_title": "금고",
@@ -582,7 +600,13 @@ const translations2 = {
         "vault_purge": "삭제",
         "urge_listen_strength": "당신의 힘에 귀 기울이세요",
         "urge_breathe_listen": "호흡하고 귀 기울이세요",
-        "urge_breathe_60": "60초 동안 호흡하세요."
+        "urge_breathe_60": "60초 동안 호흡하세요.",
+        "dash_retire": "은퇴",
+        "retire_warn_msg": "이 투쟁을 제거하면 프로필에 영향을 미칠 수 있습니다. 이것이 주요 투쟁인 경우 등급이 재계산됩니다. 여러 활성 투쟁에서 획득한 트로피가 있는 경우 일부가 손실될 수 있습니다. 계속하시겠습니까?",
+        "retire_confirm_msg": "이 작업은 영구적이며 취소할 수 없습니다. 이 투쟁을 은퇴시키는 것이 확실합니까?",
+        "settings_add_struggle": "새 투쟁 추가",
+        "settings_add_struggle_confirm": "투쟁 추가",
+        "retire_last_main_warn": "이것은 귀하의 유일한 주요 투쟁입니다. 이것을 은퇴시키면 등급과 주요 투쟁 타임라인 트로피가 초기 상태로 재설정됩니다. 정말로 이 작업을 수행하시겠습니까?"
     },
 
     "pl": {
@@ -703,7 +727,7 @@ const translations2 = {
         "rank_8": "Wzór",
         "rank_9": "Legenda",
         "tut_1_title": "Pokój Narad",
-        "tut_1_desc": "To jest Dowództwo TSH. Tutaj możesz śledzić swoje bieżące serie, monitorować oszczędności finansowe i przeglądać trofea zdobyte podczas swojej podróży.",
+        "tut_1_desc": "To jest Dowództwo TSH. Tutaj możesz śledzić swoje bieżące serie, monitorować oszczędności finansowe i przeglądać trofea zdobyte podczas swojej podróży. Możesz też w każdej chwili dodać nowe walki lub wycofać te, których już nie potrzebujesz.",
         "tut_2_title": "Silnik Pokus",
         "tut_2_desc": "Uruchom Silnik w czasach kryzysu. Zapewnia natychmiastowe uziemienie poprzez wiadomości audio od twojego dawnego ja lub wersety z Pisma Świętego, które pomogą ci oddychać i odzyskać skupienie.",
         "tut_3_title": "Skarbiec",
@@ -727,7 +751,13 @@ const translations2 = {
         "vault_purge": "Usuń",
         "urge_listen_strength": "Wsłuchaj się w swoją siłę",
         "urge_breathe_listen": "Oddychaj i słuchaj",
-        "urge_breathe_60": "Oddychaj przez 60 sekund."
+        "urge_breathe_60": "Oddychaj przez 60 sekund.",
+        "dash_retire": "Wycofaj",
+        "retire_warn_msg": "Usunięcie tej walki może wpłynąć na twój profil. Jeśli to twoja główna walka, twój ranking zostanie przeliczony. Jeśli masz trofea zdobyte z wielu aktywnych walk, niektóre mogą zostać utracone. Czy na pewno chcesz kontynuować?",
+        "retire_confirm_msg": "Ta akcja jest trwała i nie może być cofnięta. Czy jesteś absolutnie pewien, że chcesz wycofać tę walkę?",
+        "settings_add_struggle": "Dodaj Nową Walkę",
+        "settings_add_struggle_confirm": "Dodaj Walkę",
+        "retire_last_main_warn": "To jest twoja jedyna główna walka. Wycofanie jej zresetuje twoją rangę i trofea osi czasu głównej walki do stanu początkowego. Czy na pewno chcesz to zrobić?"
     },
 
     "sw": {
@@ -848,7 +878,7 @@ const translations2 = {
         "rank_8": "Kielelezo",
         "rank_9": "Nguli",
         "tut_1_title": "Chumba cha Vita",
-        "tut_1_desc": "Hii ni Kamandi ya TSH. Hapa unaweza kufuatilia mfululizo wako wa ushindi, kufuatilia akiba yako ya kifedha, na kutazama nyara ulizopata kwenye safari yako.",
+        "tut_1_desc": "Hii ni Kamandi ya TSH. Hapa unaweza kufuatilia mfululizo wako wa ushindi, kufuatilia akiba yako ya kifedha, na kutazama nyara ulizopata kwenye safari yako. Pia unaweza kuongeza mapambano mapya wakati wowote au kuondoa yale usiyohitaji tena.",
         "tut_2_title": "Injini ya Tamaa",
         "tut_2_desc": "Washa Injini wakati wa mgogoro. Inatoa utulivu wa haraka kupitia ujumbe wa sauti kutoka kwako wa zamani au mistari kutoka kwenye maandiko kukusaidia kupumua na kuelekeza umakini wako upya.",
         "tut_3_title": "Handaki",
@@ -872,7 +902,13 @@ const translations2 = {
         "vault_purge": "Futa",
         "urge_listen_strength": "Sikiliza Nguvu Zako",
         "urge_breathe_listen": "Pumua na Usikilize",
-        "urge_breathe_60": "Pumua kwa sekunde 60."
+        "urge_breathe_60": "Pumua kwa sekunde 60.",
+        "dash_retire": "Ondoa",
+        "retire_warn_msg": "Kuondoa pambano hili kunaweza kuathiri wasifu wako. Ikiwa hili ni pambano lako kuu, cheo chako kitahesabiwa upya. Ikiwa una nyara kutoka mapambano mengi hai, baadhi zinaweza kupotea. Je, una uhakika unataka kuendelea?",
+        "retire_confirm_msg": "Hatua hii ni ya kudumu na haiwezi kutenduliwa. Je, una uhakika kabisa unataka kuondoa pambano hili?",
+        "settings_add_struggle": "Ongeza Pambano Jipya",
+        "settings_add_struggle_confirm": "Ongeza Pambano",
+        "retire_last_main_warn": "Hili ndilo pambano lako kuu pekee. Kuliondoa kutaweka upya cheo chako na nyara za kalenda ya matukio ya pambano kuu kwenye hali ya awali. Je, una uhakika unataka kufanya hivi?"
     },
 
     "fa": {
@@ -993,7 +1029,7 @@ const translations2 = {
         "rank_8": "الگو",
         "rank_9": "افسانه",
         "tut_1_title": "اتاق جنگ",
-        "tut_1_desc": "این فرماندهی TSH است. در اینجا می‌توانید رکوردهای مداوم خود را پیگیری کنید، پس‌انداز مالی خود را زیر نظر بگیرید و افتخاراتی را که در طول مسیر کسب کرده‌اید مشاهده کنید.",
+        "tut_1_desc": "این فرماندهی TSH است. در اینجا می‌توانید رکوردهای مداوم خود را پیگیری کنید، پس‌انداز مالی خود را زیر نظر بگیرید و افتخاراتی را که در طول مسیر کسب کرده‌اید مشاهده کنید. همچنین می‌توانید در هر زمان مبارزات جدید اضافه کنید یا مبارزاتی را که دیگر نیاز ندارید حذف کنید.",
         "tut_2_title": "موتور وسوسه",
         "tut_2_desc": "در زمان بحران موتور را فعال کنید. این موتور با پخش پیام‌های صوتی از گذشته خودتان یا آیات الهی، شما را فورا به آرامش می‌رساند تا بتوانید نفس بکشید و تمرکز خود را بازیابید.",
         "tut_3_title": "گاوصندوق",
@@ -1017,7 +1053,13 @@ const translations2 = {
         "vault_purge": "حذف",
         "urge_listen_strength": "به قدرت خود گوش فرا دهید",
         "urge_breathe_listen": "نفس بکشید و گوش دهید",
-        "urge_breathe_60": "به مدت 60 ثانیه نفس بکشید."
+        "urge_breathe_60": "به مدت 60 ثانیه نفس بکشید.",
+        "dash_retire": "حذف",
+        "retire_warn_msg": "حذف این مبارزه ممکن است بر پروفایل شما تأثیر بگذارد. اگر این مبارزه اصلی شماست، رتبه شما دوباره محاسبه می‌شود. اگر جوایزی از چند مبارزه فعال دارید، برخی ممکن است از دست بروند. آیا مطمئن هستید که می‌خواهید ادامه دهید?",
+        "retire_confirm_msg": "این عمل دائمی است و قابل بازگشت نیست. آیا کاملاً مطمئن هستید که می‌خواهید این مبارزه را حذف کنید?",
+        "settings_add_struggle": "افزودن مبارزه جدید",
+        "settings_add_struggle_confirm": "افزودن مبارزه",
+        "retire_last_main_warn": "این تنها مبارزه اصلی شماست. کنار گذاشتن آن، رتبه و جوایز جدول زمانی مبارزه اصلی شما را به حالت اولیه بازنشانی می‌کند. آیا مطمئن هستید که می‌خواهید این کار را انجام دهید؟"
     },
 
     "ms": {
@@ -1138,7 +1180,7 @@ const translations2 = {
         "rank_8": "Teladan",
         "rank_9": "Legenda",
         "tut_1_title": "Bilik Perang",
-        "tut_1_desc": "Ini adalah Pusat Arahan TSH. Di sini anda boleh menjejaki kemenangan berterusan anda, memantau simpanan kewangan, dan melihat trofi yang anda peroleh sepanjang perjalanan anda.",
+        "tut_1_desc": "Ini adalah Pusat Arahan TSH. Di sini anda boleh menjejaki kemenangan berterusan anda, memantau simpanan kewangan, dan melihat trofi yang anda peroleh sepanjang perjalanan anda. Anda juga boleh menambah perjuangan baharu pada bila-bila masa atau mengeluarkan yang tidak diperlukan lagi.",
         "tut_2_title": "Enjin Keinginan",
         "tut_2_desc": "Cetuskan Enjin semasa waktu krisis. Ia memberikan ketenangan serta-merta melalui mesej audio daripada diri anda pada masa lalu atau ayat-ayat kitab suci untuk membantu anda bernafas dan fokus semula.",
         "tut_3_title": "Peti Besi",
@@ -1162,7 +1204,13 @@ const translations2 = {
         "vault_purge": "Padam",
         "urge_listen_strength": "Dengarkan Kekuatan Anda",
         "urge_breathe_listen": "Tarik Nafas dan Dengar",
-        "urge_breathe_60": "Tarik nafas selama 60 saat."
+        "urge_breathe_60": "Tarik nafas selama 60 saat.",
+        "dash_retire": "Keluarkan",
+        "retire_warn_msg": "Mengeluarkan perjuangan ini mungkin menjejaskan profil anda. Jika ini adalah perjuangan utama anda, pangkat anda akan dikira semula. Jika anda mempunyai trofi dari pelbagai perjuangan aktif, sesetengahnya mungkin hilang. Adakah anda pasti mahu meneruskan?",
+        "retire_confirm_msg": "Tindakan ini kekal dan tidak boleh dibatalkan. Adakah anda benar-benar pasti mahu mengeluarkan perjuangan ini?",
+        "settings_add_struggle": "Tambah Perjuangan Baharu",
+        "settings_add_struggle_confirm": "Tambah Perjuangan",
+        "retire_last_main_warn": "Ini adalah satu-satunya perjuangan utama anda. Mengeluarkannya akan menetapkan semula pangkat anda dan trofi garis masa perjuangan utama ke keadaan awal. Adakah anda pasti mahu melakukan ini?"
     },
 
     "ur": {
@@ -1283,7 +1331,7 @@ const translations2 = {
         "rank_8": "مثالی شخصیت",
         "rank_9": "لیجنڈ",
         "tut_1_title": "وار روم",
-        "tut_1_desc": "یہ TSH کی کمانڈ ہے۔ یہاں آپ اپنی لگاتار کامیابیوں کو ٹریک کر سکتے ہیں، اپنی مالی بچتوں کی نگرانی کر سکتے ہیں، اور اپنے سفر میں حاصل کی گئی ٹرافیاں دیکھ سکتے ہیں۔",
+        "tut_1_desc": "یہ TSH کی کمانڈ ہے۔ یہاں آپ اپنی لگاتار کامیابیوں کو ٹریک کر سکتے ہیں، اپنی مالی بچتوں کی نگرانی کر سکتے ہیں، اور اپنے سفر میں حاصل کی گئی ٹرافیاں دیکھ سکتے ہیں۔ آپ کسی بھی وقت نئی جدوجہد بھی شامل کر سکتے ہیں یا غیر ضروری جدوجہد کو ریٹائر کر سکتے ہیں۔",
         "tut_2_title": "ارج انجن (طلب کا انجن)",
         "tut_2_desc": "بحران کے وقت انجن کو متحرک کریں۔ یہ آپ کے ماضی کے آڈیو پیغامات یا الہامی آیات کے ذریعے آپ کو فوری سکون فراہم کرتا ہے تاکہ آپ سانس لے سکیں اور دوبارہ توجہ مرکوز کر سکیں۔",
         "tut_3_title": "والٹ",
@@ -1307,7 +1355,13 @@ const translations2 = {
         "vault_purge": "ڈیلیٹ کریں",
         "urge_listen_strength": "اپنی طاقت کو سنیں",
         "urge_breathe_listen": "سانس لیں اور سنیں",
-        "urge_breathe_60": "60 سیکنڈ کے لیے سانس لیں۔"
+        "urge_breathe_60": "60 سیکنڈ کے لیے سانس لیں۔",
+        "dash_retire": "ریٹائر",
+        "retire_warn_msg": "اس جدوجہد کو ہٹانے سے آپ کی پروفائل متاثر ہو سکتی ہے۔ اگر یہ آپ کی بنیادی جدوجہد ہے تو آپ کا رینک دوبارہ شمار ہوگا۔ اگر آپ کے پاس متعدد فعال جدوجہد سے حاصل کردہ ٹرافیاں ہیں تو کچھ ضائع ہو سکتی ہیں۔ کیا آپ واقعی جاری رکھنا چاہتے ہیں؟",
+        "retire_confirm_msg": "یہ عمل مستقل ہے اور واپس نہیں ہو سکتا۔ کیا آپ بالکل یقین سے اس جدوجہد کو ریٹائر کرنا چاہتے ہیں؟",
+        "settings_add_struggle": "نئی جدوجہد شامل کریں",
+        "settings_add_struggle_confirm": "جدوجہد شامل کریں",
+        "retire_last_main_warn": "یہ آپ کی واحد اہم جدوجہد ہے۔ اسے ختم کرنے سے آپ کا رینک اور اہم جدوجہد کی ٹائم لائن ٹرافیاں ابتدائی حالت میں ری سیٹ ہو جائیں گی۔ کیا آپ واقعی ایسا کرنا چاہتے ہیں؟"
     },
 
     "uk": {
@@ -1428,7 +1482,7 @@ const translations2 = {
         "rank_8": "Еталон",
         "rank_9": "Легенда",
         "tut_1_title": "Штаб",
-        "tut_1_desc": "Це командний центр TSH. Тут ви можете відстежувати свої поточні серії, контролювати фінансові заощадження та переглядати трофеї, здобуті на вашому шляху.",
+        "tut_1_desc": "Це командний центр TSH. Тут ви можете відстежувати свої поточні серії, контролювати фінансові заощадження та переглядати трофеї, здобуті на вашому шляху. Ви також можете додавати нові боротьби в будь-який час або видаляти ті, які вам більше не потрібні.",
         "tut_2_title": "Двигун Потягу",
         "tut_2_desc": "Запускайте двигун під час кризи. Він забезпечує миттєве заземлення за допомогою аудіоповідомлень від вас з минулого або віршів зі Святого Письма, щоб допомогти вам дихати та відновити концентрацію.",
         "tut_3_title": "Сховище",
@@ -1452,7 +1506,13 @@ const translations2 = {
         "vault_purge": "Видалити",
         "urge_listen_strength": "Прислухайся до своєї сили",
         "urge_breathe_listen": "Дихай і слухай",
-        "urge_breathe_60": "Дихай протягом 60 секунд."
+        "urge_breathe_60": "Дихай протягом 60 секунд.",
+        "dash_retire": "Видалити",
+        "retire_warn_msg": "Видалення цієї боротьби може вплинути на ваш профіль. Якщо це ваша основна боротьба, ваш ранг буде перераховано. Якщо у вас є трофеї від кількох активних боротьб, деякі можуть бути втрачені. Ви впевнені, що хочете продовжити?",
+        "retire_confirm_msg": "Ця дія є постійною і не може бути скасована. Ви абсолютно впевнені, що хочете видалити цю боротьбу?",
+        "settings_add_struggle": "Додати Нову Боротьбу",
+        "settings_add_struggle_confirm": "Додати Боротьбу",
+        "retire_last_main_warn": "Це ваша єдина головна боротьба. Її видалення скине ваш ранг і трофеї часової шкали головної боротьби до початкового стану. Ви впевнені, що хочете це зробити?"
     }
 };
 

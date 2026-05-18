@@ -155,7 +155,7 @@ const trophyDict = {
         u_1: "最初の防衛", u_10: "十回目の勝利", u_25: "盾の壁", u_50: "防衛者", u_100: "見張り", u_250: "四分の一千", u_500: "嵐を砕く者", u_1000: "壁",
         m_1: "内なる声", m_5: "雄叫び", m_15: "理性の声", m_30: "三十の記録", m_50: "年代記編者", m_100: "アーキビスト",
         r_1: "最初の祈り", r_10: "儀式の初心者", r_50: "忠実", r_100: "儀式の達人", r_365: "敬虔",
-        w_1: "最初の反響", w_10: "聖域のガイド", w_25: "聖域の柱", w_100: "グローバルな声",
+        w_1: "最初の反響", w_10: "聖域 of 柱", w_25: "聖域の柱", w_100: "グローバルな声",
         s_du_t: "二刀流", s_du_d: "2つのアクティブな連続記録", s_ze_t: "禅マスター", s_ze_d: "5つ以上の記録", s_ju_t: "マスタージャグラー", s_ju_d: "3つ以上の習慣を2週間クリーン",
         s_nw_t: "夜警", s_nw_d: "1回の深夜の衝動", s_nwm_t: "夜警隊員", s_nwm_d: "10回以上の深夜の衝動を乗り切る", s_dd_t: "昼光防衛", s_dd_d: "1回の真昼の衝動",
         s_qc_t: "静かなる征服者", s_qc_d: "衝動ボタンなしで30日クリーン", s_ev_t: "伝道師", s_ev_d: "クリック数より多い投稿",
@@ -166,15 +166,15 @@ const trophyDict = {
     },
     "he": {
         days_c: "ימים נקיים", saved: "נחסך", urg_b: "כפתור דחף", v_m: "הקלטה קולית", v_ms: "הקלטות קוליות", s_p: "תפילה", w_p: "פוסט", w_ps: "פוסטים",
-        t_1: "צעד ראשון", t_7: "שבוע חופשי", t_14: "שבועיים", t_30: "הכבשן", t_60: "חודשיים", t_90: "המצרף", t_180: "חצי שנה", t_250: "ספרטני", t_365: "שנה אחת", t_500: "החלוץ", t_730: "שנתיים רצופות", t_1000: "המילניום", t_1825: "אגדה חיה",
+        t_1: "צעд ראשון", t_7: "שבוע חופשי", t_14: "שבועיים", t_30: "הכבשן", t_60: "חודשיים", t_90: "המצרף", t_180: "חצי שנה", t_250: "ספרטני", t_365: "שנה אחת", t_500: "החלוץ", t_730: "שנתיים רצופות", t_1000: "המילניウム", t_1825: "אגדה חיה",
         f_10: "חיסכון ראשון", f_50: "חמישים דולר", f_100: "קופת חיסכון", f_500: "ארנק כבד", f_1000: "אוצר", f_5000: "אוצר דרקון", f_10000: "כופר מלך", f_25000: "אימפריה", f_50000: "עושר דורי", f_100000: "בלתי ניתן לעצירה",
-        u_1: "הגנה ראשונה", u_10: "ניצחון עשירי", u_25: "חומת מגן", u_50: "מגן", u_100: "השומר", u_250: "רבע אלף", u_500: "שובר סערות", u_1000: "החומה",
-        m_1: "קול פנימי", m_5: "זעקת קרב", m_15: "קול ההיגיון", m_30: "שלושים רשומות", m_50: "המתעד", m_100: "הארכיונאי",
+        u_1: "הגנה ראשונה", u_10: "ניצחون עשירי", u_25: "חומת מגן", u_50: "מגן", u_100: "השומר", u_250: "רבע אלף", u_500: "שובר סערות", u_1000: "החומה",
+        m_1: "קול פנימי", m_5: "זעקת קרบ", m_15: "קול ההיגיון", m_30: "שלושים רשומות", m_50: "המתעד", m_100: "הארכיונאי",
         r_1: "תפילה ראשונה", r_10: "טירון טקסים", r_50: "נאמן", r_100: "מאסטר טקסים", r_365: "אדוק",
         w_1: "הד ראשון", w_10: "מדריך המקלט", w_25: "עמוד תווך", w_100: "קול עולמי",
         s_du_t: "אוחז כפול", s_du_d: "2 רצפים פעילים", s_ze_t: "מאסטר זן", s_ze_d: "5+ רצפים פעילים", s_ju_t: "להטוטן מאסטר", s_ju_d: "3+ הרגלים נקיים לשבועיים",
         s_nw_t: "משמר הלילה", s_nw_d: "דחף לילי אחד", s_nwm_t: "שומר הלילה", s_nwm_d: "הישרדות של 10+ דחפים ליליים", s_dd_t: "הגנת יום", s_dd_d: "דחף צהריים 1",
-        s_qc_t: "כובש שקט", s_qc_d: "30 ימים נקיים ללא כפתור דחף", s_ev_t: "האוונגליסט", s_ev_d: "יותר פוסטים מקליקים",
+        s_qc_t: "כובש שקט", s_qc_d: "30 ימים נקיים ללא כפתור דחף", s_ev_t: "האוונגلیסט", s_ev_d: "יותר פוסטים מקליקים",
         s_hs_t: "הימורים גבוהים", s_hs_d: "30 ימים ($20+/יום)", s_pp_t: "חסכן", s_pp_d: "100 ימים (<$2/יום)",
         s_ei_t: "הד של ברזל", s_ei_d: "הקלטה לאחר שנה נקייה", s_px_t: "הפניקס", s_px_d: "30 ימים אחרי מעידה",
         s_rb_t: "לידה מחדש", s_rb_d: "90 ימים אחרי מעידה", s_rs_t: "תחייה", s_rs_d: "שנה 1 אחרי מעידה",
@@ -206,7 +206,7 @@ const trophyDict = {
         w_1: "Primo Eco", w_10: "Guida del Santuario", w_25: "Pilastro del Santuario", w_100: "Voce Globale",
         s_du_t: "Doppia Lama", s_du_d: "2 Serie Attive", s_ze_t: "Maestro Zen", s_ze_d: "5+ Serie Attive", s_ju_t: "Giocoliere", s_ju_d: "3+ abitudini pulite per 2 sett.",
         s_nw_t: "Guardia Notturna", s_nw_d: "1 Impulso Notturno", s_nwm_t: "Vigile Notturno", s_nwm_d: "10+ Impulsi Notturni superati", s_dd_t: "Difesa Diurna", s_dd_d: "1 Impulso di Mezzogiorno",
-        s_qc_t: "Conquistatore Silenzioso", s_qc_d: "30 Giorni senza pulsante", s_ev_t: "L'Evangelista", s_ev_d: "Più post che impulsi",
+        s_qc_t: "Conquistatore Silenzioso", s_qc_d: "30 Giorni senza pulsante", s_ev_t: "L'Evangelista", s_ev_d: "Più post que impulsi",
         s_hs_t: "Poste Alte", s_hs_d: "30 Giorni ($20+/giorno)", s_pp_t: "Tirchio", s_pp_d: "100 Giorni (<$2/giorno)",
         s_ei_t: "Eco di Ferro", s_ei_d: "Memo dopo 1 Anno pulito", s_px_t: "La Fenice", s_px_d: "30 Giorni dopo una ricaduta",
         s_rb_t: "Rinascita", s_rb_d: "90 Giorni dopo ricaduta", s_rs_t: "Resurrezione", s_rs_d: "1 Anno dopo ricaduta",
@@ -226,7 +226,7 @@ const trophyDict = {
         s_hs_t: "하이 스테이크", s_hs_d: "30일 클린 ($20+/일)", s_pp_t: "구두쇠", s_pp_d: "100일 클린 (<$2/일)",
         s_ei_t: "철의 메아리", s_ei_d: "1년 클린 후 메모", s_px_t: "불사조", s_px_d: "실수 후 30일",
         s_rb_t: "환생", s_rb_d: "실수 후 90일", s_rs_t: "부활", s_rs_d: "실수 후 1년",
-        s_dh_t: "다이아몬드 핸드", s_dh_d: "첫 시도에 1년", s_mo_t: "모놀리스", s_mo_d: "1000일, 실수 없음", s_vs_t: "침묵의 맹세", s_vs_d: "$0 싸움에서 1년"
+        s_dh_t: "다이а몬드 핸드", s_dh_d: "첫 시도에 1년", s_mo_t: "모놀리스", s_mo_d: "1000일, 실수 없음", s_vs_t: "침묵의 맹세", s_vs_d: "$0 싸움에서 1년"
     },
     "pl": {
         days_c: "Dni Czystości", saved: "Zaoszczędzono", urg_b: "Przycisk Pokusy", v_m: "Notatka Głosowa", v_ms: "Notatki Głosowe", s_p: "Modlitwa", w_p: "Post", w_ps: "Posty",
@@ -331,8 +331,23 @@ function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeSt
     const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
     const t = trophyDict[activeLang] || trophyDict['en'];
 
-    const addTrophy = (title, desc, icon, condition) => {
-        earnedTrophies.push({ title, desc, icon, earned: condition });
+    if (!state.unlockedTrophies) {
+        state.unlockedTrophies = [];
+    }
+
+    const addTrophy = (id, title, desc, icon, condition, isDynamic) => {
+        let earned = false;
+        if (isDynamic) {
+            earned = condition;
+        } else {
+            if (state.unlockedTrophies.includes(id)) {
+                earned = true;
+            } else if (condition) {
+                state.unlockedTrophies.push(id);
+                earned = true;
+            }
+        }
+        earnedTrophies.push({ id, title, desc, icon, earned });
     };
 
     const getHistoricalStreaks = (habit) => {
@@ -352,89 +367,89 @@ function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeSt
         return streaks;
     };
 
-    // 1. TIMELINE TROPHIES
+    // 1. TIMELINE TROPHIES (Dynamic based on current streak / rank)
     const timelineData = [
-        [1, t.t_1, "footprints"], [7, t.t_7, "calendar-check"], [14, t.t_14, "shield"],
-        [30, t.t_30, "swords"], [60, t.t_60, "navigation"], [90, t.t_90, "anvil"],
-        [180, t.t_180, "star"], [250, t.t_250, "crosshair"], [365, t.t_365, "sun"],
-        [500, t.t_500, "flag"], [730, t.t_730, "shield-check"], [1000, t.t_1000, "crown"],
-        [1825, t.t_1825, "sparkles"]
+        [1, "timeline_1", t.t_1, "footprints"], [7, "timeline_7", t.t_7, "calendar-check"], [14, "timeline_14", t.t_14, "shield"],
+        [30, "timeline_30", t.t_30, "swords"], [60, "timeline_60", t.t_60, "navigation"], [90, "timeline_90", t.t_90, "anvil"],
+        [180, "timeline_180", t.t_180, "star"], [250, "timeline_250", t.t_250, "crosshair"], [365, "timeline_365", t.t_365, "sun"],
+        [500, "timeline_500", t.t_500, "flag"], [730, "timeline_730", t.t_730, "shield-check"], [1000, "timeline_1000", t.t_1000, "crown"],
+        [1825, "timeline_1825", t.t_1825, "sparkles"]
     ];
-    timelineData.forEach(([days, title, icon]) => {
-        addTrophy(title, `${days} ${t.days_c}`, icon, currentMainStreak >= days);
+    timelineData.forEach(([days, id, title, icon]) => {
+        addTrophy(id, title, `${days} ${t.days_c}`, icon, currentMainStreak >= days, true);
     });
 
-    // 2. FINANCIAL WAR CHEST
+    // 2. FINANCIAL WAR CHEST (Persistent)
     const financeData = [
-        [10, t.f_10, "coins"], [50, t.f_50, "wallet"], [100, t.f_100, "piggy-bank"],
-        [500, t.f_500, "banknote"], [1000, t.f_1000, "gem"], [5000, t.f_5000, "castle"],
-        [10000, t.f_10000, "landmark"], [25000, t.f_25000, "building"], [50000, t.f_50000, "diamond"],
-        [100000, t.f_100000, "sparkles"]
+        [10, "finance_10", t.f_10, "coins"], [50, "finance_50", t.f_50, "wallet"], [100, "finance_100", t.f_100, "piggy-bank"],
+        [500, "finance_500", t.f_500, "banknote"], [1000, "finance_1000", t.f_1000, "gem"], [5000, "finance_5000", t.f_5000, "castle"],
+        [10000, "finance_10000", t.f_10000, "landmark"], [25000, "finance_25000", t.f_25000, "building"], [50000, "finance_50000", t.f_50000, "diamond"],
+        [100000, "finance_100000", t.f_100000, "sparkles"]
     ];
-    financeData.forEach(([amount, title, icon]) => {
-        addTrophy(title, `$${amount} ${t.saved}`, icon, totalSavedValue >= amount);
+    financeData.forEach(([amount, id, title, icon]) => {
+        addTrophy(id, title, `$${amount} ${t.saved}`, icon, totalSavedValue >= amount, false);
     });
 
-    // 3. THE URGE ENGINE
+    // 3. THE URGE ENGINE (Persistent)
     const urgeData = [
-        [1, t.u_1, "shield-alert"], [10, t.u_10, "swords"], [25, t.u_25, "bell-ring"],
-        [50, t.u_50, "shield-check"], [100, t.u_100, "eye"], [250, t.u_250, "target"],
-        [500, t.u_500, "zap"], [1000, t.u_1000, "brick-wall"]
+        [1, "urge_1", t.u_1, "shield-alert"], [10, "urge_10", t.u_10, "swords"], [25, "urge_25", t.u_25, "bell-ring"],
+        [50, "urge_50", t.u_50, "shield-check"], [100, "urge_100", t.u_100, "eye"], [250, "urge_250", t.u_250, "target"],
+        [500, "urge_500", t.u_500, "zap"], [1000, "urge_1000", t.u_1000, "brick-wall"]
     ];
-    urgeData.forEach(([count, title, icon]) => {
-        addTrophy(title, `${t.urg_b} ${count}x`, icon, state.urgeClicks >= count);
+    urgeData.forEach(([count, id, title, icon]) => {
+        addTrophy(id, title, `${t.urg_b} ${count}x`, icon, state.urgeClicks >= count, false);
     });
 
-    // 4. THE VAULT MEMOS
+    // 4. THE VAULT MEMOS (Persistent)
     const memoData = [
-        [1, t.m_1, "mic"], [5, t.m_5, "mic-vocal"], [15, t.m_15, "book"],
-        [30, t.m_30, "file-audio"], [50, t.m_50, "book-open"], [100, t.m_100, "archive"]
+        [1, "memo_1", t.m_1, "mic"], [5, "memo_5", t.m_5, "mic-vocal"], [15, "memo_15", t.m_15, "book"],
+        [30, "memo_30", t.m_30, "file-audio"], [50, "memo_50", t.m_50, "book-open"], [100, "memo_100", t.m_100, "archive"]
     ];
-    memoData.forEach(([count, title, icon]) => {
-        addTrophy(title, `${count} ${count > 1 ? t.v_ms : t.v_m}`, icon, state.voiceMemos >= count);
+    memoData.forEach(([count, id, title, icon]) => {
+        addTrophy(id, title, `${count} ${count > 1 ? t.v_ms : t.v_m}`, icon, state.voiceMemos >= count, false);
     });
 
-    // 5. SERENITY RITUAL
+    // 5. SERENITY RITUAL (Persistent)
     const ritualData = [
-        [1, t.r_1, "hand-heart"], [10, t.r_10, "book-open"], [50, t.r_50, "heart"],
-        [100, t.r_100, "church"], [365, t.r_365, "sun"]
+        [1, "ritual_1", t.r_1, "hand-heart"], [10, "ritual_10", t.r_10, "book-open"], [50, "ritual_50", t.r_50, "heart"],
+        [100, "ritual_100", t.r_100, "church"], [365, "ritual_365", t.r_365, "sun"]
     ];
-    ritualData.forEach(([count, title, icon]) => {
-        addTrophy(title, `${t.s_p} ${count}x`, icon, state.amenClicks >= count);
+    ritualData.forEach(([count, id, title, icon]) => {
+        addTrophy(id, title, `${t.s_p} ${count}x`, icon, state.amenClicks >= count, false);
     });
 
-    // 6. THE WALL OF WISDOM
+    // 6. THE WALL OF WISDOM (Persistent)
     const wallPostsCount = state.wallPosts || 0;
     const wallData = [
-        [1, t.w_1, "message-square"], [10, t.w_10, "users"], 
-        [25, t.w_25, "globe"], [100, t.w_100, "radio"]
+        [1, "wall_1", t.w_1, "message-square"], [10, "wall_10", t.w_10, "users"], 
+        [25, "wall_25", t.w_25, "globe"], [100, "wall_100", t.w_100, "radio"]
     ];
-    wallData.forEach(([count, title, icon]) => {
-        addTrophy(title, `${count} ${count > 1 ? t.w_ps : t.w_p}`, icon, wallPostsCount >= count);
+    wallData.forEach(([count, id, title, icon]) => {
+        addTrophy(id, title, `${count} ${count > 1 ? t.w_ps : t.w_p}`, icon, wallPostsCount >= count, false);
     });
 
-    // 7. SPECIAL CHALLENGES
-    addTrophy(t.s_du_t, t.s_du_d, "layers", activeStrugglesCount >= 2);
-    addTrophy(t.s_ze_t, t.s_ze_d, "cpu", activeStrugglesCount >= 5);
-    addTrophy(t.s_ju_t, t.s_ju_d, "shapes", activeStrugglesCount >= 3 && currentMainStreak >= 14);
-    addTrophy(t.s_nw_t, t.s_nw_d, "moon", state.midnightUrges >= 1);
-    addTrophy(t.s_nwm_t, t.s_nwm_d, "moon", state.midnightUrges > state.middayUrges && state.midnightUrges >= 10);
-    addTrophy(t.s_dd_t, t.s_dd_d, "sun", state.middayUrges >= 1);
-    addTrophy(t.s_qc_t, t.s_qc_d, "ghost", currentMainStreak >= 30 && state.urgeClicks === 0);
-    addTrophy(t.s_ev_t, t.s_ev_d, "megaphone", wallPostsCount > state.urgeClicks && wallPostsCount >= 10);
-    addTrophy(t.s_hs_t, t.s_hs_d, "flame", state.habits.some(h => h.costPerDay >= 20 && calculateStreak(h) >= 30));
-    addTrophy(t.s_pp_t, t.s_pp_d, "microscope", state.habits.some(h => h.costPerDay > 0 && h.costPerDay <= 2 && calculateStreak(h) >= 100));
-    addTrophy(t.s_ei_t, t.s_ei_d, "speaker", state.veteranMemos >= 1);
+    // 7. SPECIAL CHALLENGES (Persistent)
+    addTrophy("spec_dual", t.s_du_t, t.s_du_d, "layers", activeStrugglesCount >= 2, false);
+    addTrophy("spec_zen", t.s_ze_t, t.s_ze_d, "cpu", activeStrugglesCount >= 5, false);
+    addTrophy("spec_juggle", t.s_ju_t, t.s_ju_d, "shapes", activeStrugglesCount >= 3 && currentMainStreak >= 14, false);
+    addTrophy("spec_night_1", t.s_nw_t, t.s_nw_d, "moon", state.midnightUrges >= 1, false);
+    addTrophy("spec_night_10", t.s_nwm_t, t.s_nwm_d, "moon", state.midnightUrges > state.middayUrges && state.midnightUrges >= 10, false);
+    addTrophy("spec_day_1", t.s_dd_t, t.s_dd_d, "sun", state.middayUrges >= 1, false);
+    addTrophy("spec_quiet", t.s_qc_t, t.s_qc_d, "ghost", currentMainStreak >= 30 && state.urgeClicks === 0, false);
+    addTrophy("spec_evangelist", t.s_ev_t, t.s_ev_d, "megaphone", wallPostsCount > state.urgeClicks && wallPostsCount >= 10, false);
+    addTrophy("spec_high_stakes", t.s_hs_t, t.s_hs_d, "flame", state.habits.some(h => h.costPerDay >= 20 && calculateStreak(h) >= 30), false);
+    addTrophy("spec_penny", t.s_pp_t, t.s_pp_d, "microscope", state.habits.some(h => h.costPerDay > 0 && h.costPerDay <= 2 && calculateStreak(h) >= 100), false);
+    addTrophy("spec_iron", t.s_ei_t, t.s_ei_d, "speaker", state.veteranMemos >= 1, false);
 
-    // Bouncing back
-    addTrophy(t.s_px_t, t.s_px_d, "bird", state.habits.some(h => { const s = getHistoricalStreaks(h); return s.length > 1 && s.slice(1).some(x => x >= 30); }));
-    addTrophy(t.s_rb_t, t.s_rb_d, "bird", state.habits.some(h => h.slips.length > 0 && calculateStreak(h) >= 90));
-    addTrophy(t.s_rs_t, t.s_rs_d, "bird", state.habits.some(h => h.slips.length > 0 && calculateStreak(h) >= 365));
+    // Bouncing back (Persistent)
+    addTrophy("spec_phoenix", t.s_px_t, t.s_px_d, "bird", state.habits.some(h => { const s = getHistoricalStreaks(h); return s.length > 1 && s.slice(1).some(x => x >= 30); }), false);
+    addTrophy("spec_rebirth", t.s_rb_t, t.s_rb_d, "bird", state.habits.some(h => h.slips.length > 0 && calculateStreak(h) >= 90), false);
+    addTrophy("spec_resurrection", t.s_rs_t, t.s_rs_d, "bird", state.habits.some(h => h.slips.length > 0 && calculateStreak(h) >= 365), false);
 
-    // Perfection
-    addTrophy(t.s_dh_t, t.s_dh_d, "diamond", state.habits.some(h => { const s = getHistoricalStreaks(h); return s.length > 0 && s[0] >= 365; }));
-    addTrophy(t.s_mo_t, t.s_mo_d, "landmark", state.habits.some(h => h.slips.length === 0 && calculateStreak(h) >= 1000));
-    addTrophy(t.s_vs_t, t.s_vs_d, "wind", state.habits.some(h => h.costPerDay === 0 && calculateStreak(h) >= 365));
+    // Perfection (Persistent)
+    addTrophy("spec_diamond", t.s_dh_t, t.s_dh_d, "diamond", state.habits.some(h => { const s = getHistoricalStreaks(h); return s.length > 0 && s[0] >= 365; }), false);
+    addTrophy("spec_monolith", t.s_mo_t, t.s_mo_d, "landmark", state.habits.some(h => h.slips.length === 0 && calculateStreak(h) >= 1000), false);
+    addTrophy("spec_silence", t.s_vs_t, t.s_vs_d, "wind", state.habits.some(h => h.costPerDay === 0 && calculateStreak(h) >= 365), false);
 
     // Final sorting
     earnedTrophies.forEach((tr, i) => tr.orig = i);
