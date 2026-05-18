@@ -151,7 +151,8 @@ const translations = {
         "retire_warn_msg": "Removing this struggle may affect your profile. If this is your main struggle, your rank will be recalculated. If you have trophies earned from multiple active struggles, some may be lost. Are you sure you want to continue?",
         "retire_confirm_msg": "This action is permanent and cannot be undone. Are you absolutely sure you want to retire this struggle?",
         "settings_add_struggle": "Add New Struggle",
-        "settings_add_struggle_confirm": "Add Struggle"
+        "settings_add_struggle_confirm": "Add Struggle",
+        "retire_last_main_warn": "This is your only main struggle. Retiring it will reset your rank and main struggle timeline trophies to the initial state. Are you sure you want to do this?"
     },
 
     "es": {
@@ -301,7 +302,8 @@ const translations = {
         "retire_warn_msg": "Eliminar esta lucha puede afectar tu perfil. Si esta es tu lucha principal, tu rango será recalculado. Si tienes trofeos obtenidos por múltiples luchas activas, algunos pueden perderse. ¿Estás seguro de que deseas continuar?",
         "retire_confirm_msg": "Esta acción es permanente y no se puede deshacer. ¿Estás absolutamente seguro de que deseas retirar esta lucha?",
         "settings_add_struggle": "Agregar Nueva Lucha",
-        "settings_add_struggle_confirm": "Agregar Lucha"
+        "settings_add_struggle_confirm": "Agregar Lucha",
+        "retire_last_main_warn": "Esta es tu única lucha principal. Retirarla restablecerá tu rango y los trofeos de la línea de tiempo de la lucha principal al estado inicial. ¿Estás seguro de que quieres hacer esto?"
     },
 
     "fr": {
@@ -451,7 +453,8 @@ const translations = {
         "retire_warn_msg": "Supprimer cette lutte peut affecter votre profil. S'il s'agit de votre lutte principale, votre rang sera recalculé. Si vous avez des trophées obtenus grâce à plusieurs luttes actives, certains pourraient être perdus. Êtes-vous sûr de vouloir continuer ?",
         "retire_confirm_msg": "Cette action est permanente et irréversible. Êtes-vous absolument sûr de vouloir retirer cette lutte ?",
         "settings_add_struggle": "Ajouter une Nouvelle Lutte",
-        "settings_add_struggle_confirm": "Ajouter la Lutte"
+        "settings_add_struggle_confirm": "Ajouter la Lutte",
+        "retire_last_main_warn": "C'est votre seule lutte principale. La retirer réinitialisera votre rang et les trophées de la chronologie de la lutte principale à l'état initial. Êtes-vous sûr de vouloir faire cela ?"
     },
 
     "de": {
@@ -601,7 +604,8 @@ const translations = {
         "retire_warn_msg": "Das Entfernen dieses Kampfes kann dein Profil beeinflussen. Wenn dies dein Hauptkampf ist, wird dein Rang neu berechnet. Wenn du Trophäen aus mehreren aktiven Kämpfen hast, könnten einige verloren gehen. Bist du sicher, dass du fortfahren möchtest?",
         "retire_confirm_msg": "Diese Aktion ist dauerhaft und kann nicht rückgängig gemacht werden. Bist du absolut sicher, dass du diesen Kampf zurückziehen möchtest?",
         "settings_add_struggle": "Neuen Kampf Hinzufügen",
-        "settings_add_struggle_confirm": "Kampf Hinzufügen"
+        "settings_add_struggle_confirm": "Kampf Hinzufügen",
+        "retire_last_main_warn": "Dies ist Ihr einziger Hauptkampf. Wenn Sie ihn beenden, werden Ihr Rang und die Zeitleisten-Trophäen des Hauptkampfes auf den Anfangszustand zurückgesetzt. Sind Sie sicher, dass Sie das tun möchten?"
     },
 
     "zh": {
@@ -751,7 +755,8 @@ const translations = {
         "retire_warn_msg": "移除此挣扎可能会影响你的个人资料。如果这是你的主要挣扎，你的等级将被重新计算。如果你有多个活跃挣扎获得的奖杯，一些可能会丢失。你确定要继续吗？",
         "retire_confirm_msg": "此操作是永久的，不可撤销。你绝对确定要退出这个挣扎吗？",
         "settings_add_struggle": "添加新挣扎",
-        "settings_add_struggle_confirm": "添加挣扎"
+        "settings_add_struggle_confirm": "添加挣扎",
+        "retire_last_main_warn": "这是您唯一的主要挣扎。放弃它会将您的等级和主要挣扎的时间线奖杯重置为初始状态。您确定要这样做吗？"
     },
 
     "hi": {
@@ -901,7 +906,8 @@ const translations = {
         "retire_warn_msg": "इस संघर्ष को हटाने से आपकी प्रोफ़ाइल प्रभावित हो सकती है। यदि यह आपका मुख्य संघर्ष है, तो आपका रैंक पुनर्गणना किया जाएगा। यदि आपके पास कई सक्रिय संघर्षों से अर्जित ट्रॉफी हैं, तो कुछ खो सकती हैं। क्या आप सुनिश्चित हैं कि आप जारी रखना चाहते हैं?",
         "retire_confirm_msg": "यह क्रिया स्थायी है और पूर्ववत नहीं की जा सकती। क्या आप बिल्कुल सुनिश्चित हैं कि आप इस संघर्ष को सेवानिवृत्त करना चाहते हैं?",
         "settings_add_struggle": "नया संघर्ष जोड़ें",
-        "settings_add_struggle_confirm": "संघर्ष जोड़ें"
+        "settings_add_struggle_confirm": "संघर्ष जोड़ें",
+        "retire_last_main_warn": "यह आपका एकमात्र मुख्य संघर्ष है। इसे छोड़ने से आपका रैंक और मुख्य संघर्ष की समयरेखा ट्रॉफियां प्रारंभिक स्थिति में रीसेट हो जाएंगी। क्या आप निश्चित रूप से ऐसा करना चाहते हैं?"
     },
 
     "ar": {
@@ -1051,7 +1057,8 @@ const translations = {
         "retire_warn_msg": "قد تؤثر إزالة هذا الصراع على ملفك الشخصي. إذا كان هذا صراعك الرئيسي، فسيتم إعادة حساب رتبتك. إذا كان لديك جوائز مكتسبة من عدة صراعات نشطة، فقد يُفقد بعضها. هل أنت متأكد أنك تريد المتابعة؟",
         "retire_confirm_msg": "هذا الإجراء دائم ولا يمكن التراجع عنه. هل أنت متأكد تمامًا أنك تريد إزالة هذا الصراع؟",
         "settings_add_struggle": "إضافة صراع جديد",
-        "settings_add_struggle_confirm": "إضافة صراع"
+        "settings_add_struggle_confirm": "إضافة صراع",
+        "retire_last_main_warn": "هذا هو صراعك الرئيسي الوحيد. التخلي عنه سيعيد تعيين رتبتك وكؤوس الجدول الزمني للصراع الرئيسي إلى الحالة الأولية. هل أنت متأكد أنك تريد القيام بذلك؟"
     },
 
     "pt": {
@@ -1201,7 +1208,8 @@ const translations = {
         "retire_warn_msg": "Remover esta luta pode afetar seu perfil. Se esta for sua luta principal, seu rank será recalculado. Se você tem troféus obtidos de múltiplas lutas ativas, alguns podem ser perdidos. Tem certeza de que deseja continuar?",
         "retire_confirm_msg": "Esta ação é permanente e não pode ser desfeita. Tem absoluta certeza de que deseja aposentar esta luta?",
         "settings_add_struggle": "Adicionar Nova Luta",
-        "settings_add_struggle_confirm": "Adicionar Luta"
+        "settings_add_struggle_confirm": "Adicionar Luta",
+        "retire_last_main_warn": "Esta é a sua única luta principal. Retirá-la redefinirá sua classificação e os troféus da linha do tempo da luta principal para o estado inicial. Tem certeza de que deseja fazer isso?"
     },
 
     "ru": {
@@ -1351,7 +1359,8 @@ const translations = {
         "retire_warn_msg": "Удаление этой борьбы может повлиять на ваш профиль. Если это ваша основная борьба, ваш ранг будет пересчитан. Если у вас есть трофеи, полученные от нескольких активных борьб, некоторые могут быть потеряны. Вы уверены, что хотите продолжить?",
         "retire_confirm_msg": "Это действие необратимо. Вы абсолютно уверены, что хотите убрать эту борьбу?",
         "settings_add_struggle": "Добавить Новую Борьбу",
-        "settings_add_struggle_confirm": "Добавить Борьбу"
+        "settings_add_struggle_confirm": "Добавить Борьбу",
+        "retire_last_main_warn": "Это ваша единственная главная борьба. Ее прекращение сбросит ваш ранг и трофеи временной шкалы главной борьбы к начальному состоянию. Вы уверены, что хотите это сделать?"
     },
 
     "ja": {
@@ -1501,7 +1510,8 @@ const translations = {
         "retire_warn_msg": "この闘いを削除すると、プロフィールに影響を与える可能性があります。これがメインの闘いである場合、ランクが再計算されます。複数のアクティブな闘いから獲得したトロフィーがある場合、一部が失われる可能性があります。続行してもよろしいですか？",
         "retire_confirm_msg": "この操作は永久的で元に戻すことはできません。この闘いを撤退させることを本当に確信していますか？",
         "settings_add_struggle": "新しい闘いを追加",
-        "settings_add_struggle_confirm": "闘いを追加"
+        "settings_add_struggle_confirm": "闘いを追加",
+        "retire_last_main_warn": "これはあなたの唯一の主な闘いです。これを終了すると、ランクと主な闘いのタイムライントロフィーが初期状態にリセットされます。本当にこれを実行しますか？"
     }
 };
 

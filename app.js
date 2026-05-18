@@ -346,15 +346,16 @@ function renderDashboard() {
                     <button onclick="retireStruggle('${habit.id}')" class="text-[10px] uppercase font-bold text-slate-700 border border-slate-400 bg-white/50 px-3 py-2 rounded-full shadow-sm">${langData.dash_retire || 'Retire'}</button>
                 </div>
             </div>
-            <div class="bg-white/60 h-2 rounded-full overflow-hidden shadow-inner"><div class="bg-slate-700 h-full" style="width: ${calculateSuccessRate(habit)}%"></div></div>
+            <div class="bg-white/60 h-2 rounded-full overflow-hidden shadow-inner"><div class="bg-slate-700 h-full" style="width: ${calculateDailyProgress(habit)}%"></div></div>
         `;
         container.appendChild(div);
     });
 
     const mainHabits = state.habits.filter(h => h.isMain);
     let currentMainStreak = 0;
-    if (mainHabits.length > 0) currentMainStreak = Math.min(...mainHabits.map(h => calculateStreak(h)));
-    else if (state.habits.length > 0) currentMainStreak = Math.min(...state.habits.map(h => calculateStreak(h)));
+    if (mainHabits.length > 0) {
+        currentMainStreak = Math.max(...mainHabits.map(h => calculateStreak(h)));
+    }
 
     let currentRank = rankTiers[0]; let nextRank = rankTiers[1];
     for(let i=0; i<rankTiers.length; i++) {
@@ -380,6 +381,8 @@ function renderDashboard() {
     document.getElementById('total-saved').innerText = totalSavedValue.toLocaleString(activeLang, { style: 'currency', currency: currencyCode });
 
     const trophies = typeof generateAllTrophies === 'function' ? generateAllTrophies(state, currentMainStreak, totalSavedValue, activeStrugglesCount, calculateStreak) :[];
+    localStorage.setItem('steady_hand_state', JSON.stringify(state));
+
     document.getElementById('trophy-case').innerHTML = trophies.map(t => `
         <div class="flex-shrink-0 w-[84px] h-24 rounded-2xl bg-white/${t.earned ? '60' : '20'} border ${t.earned ? 'border-yellow-400/50 shadow-md' : 'border-white/30'} flex flex-col items-center justify-center p-2 text-center transition-all duration-500">
             <i data-lucide="${t.icon}" class="w-6 h-6 mb-1 ${t.earned ? 'text-yellow-600' : 'text-slate-400 opacity-50'}"></i>
@@ -711,6 +714,25 @@ function calculateSuccessRate(h) {
     const uniquePastSlipDays = new Set(pastSlips.map(s => getStartOfDay(s).getTime())).size;
     return Math.max(0, Math.min(100, ((t - uniquePastSlipDays) / t) * 100)); 
 }
+function calculateDailyProgress(habit) {
+    const today = new Date();
+    // Check if any slip occurred today (local calendar day)
+    const slipToday = habit.slips.some(slipStr => {
+        const slipDate = new Date(slipStr);
+        return slipDate.getFullYear() === today.getFullYear() &&
+               slipDate.getMonth() === today.getMonth() &&
+               slipDate.getDate() === today.getDate();
+    });
+    if (slipToday) return 0;
+    
+    // Calculate progress as the fraction of the day that has elapsed since midnight
+    const currentHour = today.getHours();
+    const currentMinute = today.getMinutes();
+    const currentSecond = today.getSeconds();
+    const elapsedMinutes = (currentHour * 60) + currentMinute + (currentSecond / 60);
+    const totalMinutesInDay = 24 * 60;
+    return (elapsedMinutes / totalMinutesInDay) * 100;
+}
 function logSlip(id) { 
     const h = state.habits.find(x=>x.id === id); 
     if(h) { 
@@ -725,6 +747,15 @@ function retireStruggle(id) {
     const langData = translations[activeLang] || translations['en'];
     const habit = state.habits.find(x => x.id === id);
     if (!habit) return;
+
+    // Last main struggle warning
+    if (habit.isMain) {
+        const mainStruggles = state.habits.filter(h => h.isMain);
+        if (mainStruggles.length === 1) {
+            const lastMainWarn = langData.retire_last_main_warn || "This is your only main struggle. Retiring it will reset your rank and main struggle timeline trophies to the initial state. Are you sure you want to do this?";
+            if (!confirm(lastMainWarn)) return;
+        }
+    }
 
     // First confirmation: warn about rank/trophy impact
     const warnMsg = langData.retire_warn_msg || "Removing this struggle may affect your profile. If this is your main struggle, your rank will be recalculated. If you have trophies earned from multiple active struggles, some may be lost. Are you sure you want to continue?";

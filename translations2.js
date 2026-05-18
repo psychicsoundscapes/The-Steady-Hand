@@ -1,4 +1,4 @@
-/**
+﻿/**
  * TSH Expansion Translation Dictionary
  * Contains Hebrew and major languages of heavily Christian populations: 
  * Tagalog (Philippines), Italian (Italy), Korean (South Korea), Polish (Poland), and Swahili (East Africa).
@@ -152,7 +152,8 @@ const translations2 = {
         "retire_warn_msg": "הסרת מאבק זה עלולה להשפיע על הפרופיל שלך. אם זה המאבק העיקרי שלך, הדירוג שלך יחושב מחדש. אם יש לך גביעים ממאבקים פעילים מרובים, חלקם עלולים לאבוד. האם אתה בטוח שברצונך להמשיך?",
         "retire_confirm_msg": "פעולה זו היא קבועה ולא ניתנת לביטול. האם אתה בטוח לחלוטין שאתה רוצה להסיר מאבק זה?",
         "settings_add_struggle": "הוסף מאבק חדש",
-        "settings_add_struggle_confirm": "הוסף מאבק"
+        "settings_add_struggle_confirm": "הוסף מאבק",
+        "retire_last_main_warn": "זה המאבק הראשי היחיד שלך. הסרתו תאפס את הדירוג שלך ואת גביעי ציר הזמן של המאבק הראשי למצב ההתחלתי. האם אתה בטוח שברצונך לעשות זאת?"
     },
 
     "tl": {
@@ -302,7 +303,8 @@ const translations2 = {
         "retire_warn_msg": "Ang pag-alis ng labanang ito ay maaaring makaapekto sa iyong profile. Kung ito ang iyong pangunahing laban, ang iyong ranggo ay muling kakalkulahin. Kung mayroon kang mga tropeo mula sa maraming aktibong laban, ang ilan ay maaaring mawala. Sigurado ka bang gusto mong magpatuloy?",
         "retire_confirm_msg": "Ang aksiyong ito ay permanente at hindi na mababawi. Talagang sigurado ka bang gusto mong i-retire ang labanang ito?",
         "settings_add_struggle": "Magdagdag ng Bagong Laban",
-        "settings_add_struggle_confirm": "Idagdag ang Laban"
+        "settings_add_struggle_confirm": "Idagdag ang Laban",
+        "retire_last_main_warn": "Ito ang iyong kaisa-isang pangunahing laban. Ang pag-retire nito ay magre-reset sa iyong ranggo at mga tropeo ng timeline ng pangunahing laban sa paunang estado. Sigurado ka bang gusto mong gawin ito?"
     },
 
     "it": {
@@ -452,7 +454,8 @@ const translations2 = {
         "retire_warn_msg": "La rimozione di questa lotta potrebbe influire sul tuo profilo. Se questa è la tua lotta principale, il tuo grado verrà ricalcolato. Se hai trofei guadagnati da più lotte attive, alcuni potrebbero andare persi. Sei sicuro di voler continuare?",
         "retire_confirm_msg": "Questa azione è permanente e non può essere annullata. Sei assolutamente sicuro di voler ritirare questa lotta?",
         "settings_add_struggle": "Aggiungi Nuova Lotta",
-        "settings_add_struggle_confirm": "Aggiungi Lotta"
+        "settings_add_struggle_confirm": "Aggiungi Lotta",
+        "retire_last_main_warn": "Questa è la tua unica lotta principale. Ritirarla ripristinerà il tuo grado e i trofei della linea temporale della lotta principale allo stato iniziale. Sei sicuro di volerlo fare?"
     },
 
     "ko": {
@@ -602,7 +605,8 @@ const translations2 = {
         "retire_warn_msg": "이 투쟁을 제거하면 프로필에 영향을 미칠 수 있습니다. 이것이 주요 투쟁인 경우 등급이 재계산됩니다. 여러 활성 투쟁에서 획득한 트로피가 있는 경우 일부가 손실될 수 있습니다. 계속하시겠습니까?",
         "retire_confirm_msg": "이 작업은 영구적이며 취소할 수 없습니다. 이 투쟁을 은퇴시키는 것이 확실합니까?",
         "settings_add_struggle": "새 투쟁 추가",
-        "settings_add_struggle_confirm": "투쟁 추가"
+        "settings_add_struggle_confirm": "투쟁 추가",
+        "retire_last_main_warn": "이것은 귀하의 유일한 주요 투쟁입니다. 이것을 은퇴시키면 등급과 주요 투쟁 타임라인 트로피가 초기 상태로 재설정됩니다. 정말로 이 작업을 수행하시겠습니까?"
     },
 
     "pl": {
@@ -752,7 +756,8 @@ const translations2 = {
         "retire_warn_msg": "Usunięcie tej walki może wpłynąć na twój profil. Jeśli to twoja główna walka, twój ranking zostanie przeliczony. Jeśli masz trofea zdobyte z wielu aktywnych walk, niektóre mogą zostać utracone. Czy na pewno chcesz kontynuować?",
         "retire_confirm_msg": "Ta akcja jest trwała i nie może być cofnięta. Czy jesteś absolutnie pewien, że chcesz wycofać tę walkę?",
         "settings_add_struggle": "Dodaj Nową Walkę",
-        "settings_add_struggle_confirm": "Dodaj Walkę"
+        "settings_add_struggle_confirm": "Dodaj Walkę",
+        "retire_last_main_warn": "To jest twoja jedyna główna walka. Wycofanie jej zresetuje twoją rangę i trofea osi czasu głównej walki do stanu początkowego. Czy na pewno chcesz to zrobić?"
     },
 
     "sw": {
@@ -902,7 +907,8 @@ const translations2 = {
         "retire_warn_msg": "Kuondoa pambano hili kunaweza kuathiri wasifu wako. Ikiwa hili ni pambano lako kuu, cheo chako kitahesabiwa upya. Ikiwa una nyara kutoka mapambano mengi hai, baadhi zinaweza kupotea. Je, una uhakika unataka kuendelea?",
         "retire_confirm_msg": "Hatua hii ni ya kudumu na haiwezi kutenduliwa. Je, una uhakika kabisa unataka kuondoa pambano hili?",
         "settings_add_struggle": "Ongeza Pambano Jipya",
-        "settings_add_struggle_confirm": "Ongeza Pambano"
+        "settings_add_struggle_confirm": "Ongeza Pambano",
+        "retire_last_main_warn": "Hili ndilo pambano lako kuu pekee. Kuliondoa kutaweka upya cheo chako na nyara za kalenda ya matukio ya pambano kuu kwenye hali ya awali. Je, una uhakika unataka kufanya hivi?"
     },
 
     "fa": {
@@ -1052,7 +1058,8 @@ const translations2 = {
         "retire_warn_msg": "حذف این مبارزه ممکن است بر پروفایل شما تأثیر بگذارد. اگر این مبارزه اصلی شماست، رتبه شما دوباره محاسبه می‌شود. اگر جوایزی از چند مبارزه فعال دارید، برخی ممکن است از دست بروند. آیا مطمئن هستید که می‌خواهید ادامه دهید?",
         "retire_confirm_msg": "این عمل دائمی است و قابل بازگشت نیست. آیا کاملاً مطمئن هستید که می‌خواهید این مبارزه را حذف کنید?",
         "settings_add_struggle": "افزودن مبارزه جدید",
-        "settings_add_struggle_confirm": "افزودن مبارزه"
+        "settings_add_struggle_confirm": "افزودن مبارزه",
+        "retire_last_main_warn": "این تنها مبارزه اصلی شماست. کنار گذاشتن آن، رتبه و جوایز جدول زمانی مبارزه اصلی شما را به حالت اولیه بازنشانی می‌کند. آیا مطمئن هستید که می‌خواهید این کار را انجام دهید؟"
     },
 
     "ms": {
@@ -1202,7 +1209,8 @@ const translations2 = {
         "retire_warn_msg": "Mengeluarkan perjuangan ini mungkin menjejaskan profil anda. Jika ini adalah perjuangan utama anda, pangkat anda akan dikira semula. Jika anda mempunyai trofi dari pelbagai perjuangan aktif, sesetengahnya mungkin hilang. Adakah anda pasti mahu meneruskan?",
         "retire_confirm_msg": "Tindakan ini kekal dan tidak boleh dibatalkan. Adakah anda benar-benar pasti mahu mengeluarkan perjuangan ini?",
         "settings_add_struggle": "Tambah Perjuangan Baharu",
-        "settings_add_struggle_confirm": "Tambah Perjuangan"
+        "settings_add_struggle_confirm": "Tambah Perjuangan",
+        "retire_last_main_warn": "Ini adalah satu-satunya perjuangan utama anda. Mengeluarkannya akan menetapkan semula pangkat anda dan trofi garis masa perjuangan utama ke keadaan awal. Adakah anda pasti mahu melakukan ini?"
     },
 
     "ur": {
@@ -1352,7 +1360,8 @@ const translations2 = {
         "retire_warn_msg": "اس جدوجہد کو ہٹانے سے آپ کی پروفائل متاثر ہو سکتی ہے۔ اگر یہ آپ کی بنیادی جدوجہد ہے تو آپ کا رینک دوبارہ شمار ہوگا۔ اگر آپ کے پاس متعدد فعال جدوجہد سے حاصل کردہ ٹرافیاں ہیں تو کچھ ضائع ہو سکتی ہیں۔ کیا آپ واقعی جاری رکھنا چاہتے ہیں؟",
         "retire_confirm_msg": "یہ عمل مستقل ہے اور واپس نہیں ہو سکتا۔ کیا آپ بالکل یقین سے اس جدوجہد کو ریٹائر کرنا چاہتے ہیں؟",
         "settings_add_struggle": "نئی جدوجہد شامل کریں",
-        "settings_add_struggle_confirm": "جدوجہد شامل کریں"
+        "settings_add_struggle_confirm": "جدوجہد شامل کریں",
+        "retire_last_main_warn": "یہ آپ کی واحد اہم جدوجہد ہے۔ اسے ختم کرنے سے آپ کا رینک اور اہم جدوجہد کی ٹائم لائن ٹرافیاں ابتدائی حالت میں ری سیٹ ہو جائیں گی۔ کیا آپ واقعی ایسا کرنا چاہتے ہیں؟"
     },
 
     "uk": {
@@ -1502,7 +1511,8 @@ const translations2 = {
         "retire_warn_msg": "Видалення цієї боротьби може вплинути на ваш профіль. Якщо це ваша основна боротьба, ваш ранг буде перераховано. Якщо у вас є трофеї від кількох активних боротьб, деякі можуть бути втрачені. Ви впевнені, що хочете продовжити?",
         "retire_confirm_msg": "Ця дія є постійною і не може бути скасована. Ви абсолютно впевнені, що хочете видалити цю боротьбу?",
         "settings_add_struggle": "Додати Нову Боротьбу",
-        "settings_add_struggle_confirm": "Додати Боротьбу"
+        "settings_add_struggle_confirm": "Додати Боротьбу",
+        "retire_last_main_warn": "Це ваша єдина головна боротьба. Її видалення скине ваш ранг і трофеї часової шкали головної боротьби до початкового стану. Ви впевнені, що хочете це зробити?"
     }
 };
 
