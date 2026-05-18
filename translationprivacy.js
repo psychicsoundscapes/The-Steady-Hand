@@ -194,8 +194,7 @@ const privacyTranslations = {
         "privacy_p3": "Unapochapisha ujumbe kwenye Ukuta, unatumwa kwenye seva yangu ili wengine waweze kuusoma. Wakati machapisho haya hayajulikani, anwani yako ya IP inachakatwa wakati wa usafirishaji. Siunganishi hili na data yako ya ndani kwa njia yoyote.",
         "privacy_h4": "Huduma za Wengine",
         "privacy_p4": "Natumia huduma chache za kawaida (Cloudflare, Google, Lucide) kuhakikisha programu inapakia haraka na inaonekana sawa. Watoa huduma hawa wanaweza kuona maelezo yako ya msingi ya muunganisho unapofungua programu.",
-        "privacy_btn": "Rudi Patakatifu"
-    },
+        "privacy_btn": "Rudi Patakatifu",
         "privacy_h4": "Huduma za Wengine",
         "privacy_p4": "Natumia huduma chache za kawaida (Cloudflare, Google, Lucide) kuhakikisha programu inapakia haraka na inaonekana sawa. Watoa huduma hawa wanaweza kuona maelezo yako ya msingi ya muunganisho unapofungua programu.",
         "privacy_btn": "Rudi Patakatifu"
