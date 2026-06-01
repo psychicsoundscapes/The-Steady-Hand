@@ -153,7 +153,10 @@ const translations2 = {
         "retire_confirm_msg": "פעולה זו היא קבועה ולא ניתנת לביטול. האם אתה בטוח לחלוטין שאתה רוצה להסיר מאבק זה?",
         "settings_add_struggle": "הוסף מאבק חדש",
         "settings_add_struggle_confirm": "הוסף מאבק",
-        "retire_last_main_warn": "זהו המאבק הראשי היחיד שלך. פרישה ממנו תאפס את הדרגה שלך ואת גביעי ציר הזמן של המאבק הראשי למצב הראשוני. האם אתה בטוח שברצונך לעשות זאת?"
+        "retire_last_main_warn": "זהו המאבק הראשי היחיד שלך. פרישה ממנו תאפס את הדרגה שלך ואת גביעי ציר הזמן של המאבק הראשי למצב הראשוני. האם אתה בטוח שברצונך לעשות זאת?",
+        "support_find_helpline": "מצא קו סיוע",
+        "support_global_title": "מדריך תמיכה עולמי",
+        "support_global_desc": "אם אתה מחוץ לארצות הברית וחווה משבר, אנא פנה לשירותי החירום המקומיים או השתמש במדריך העולמי כדי למצוא תמיכה חינמית וסודית במדינתך."
     },
 
     "tl": {
@@ -304,7 +307,10 @@ const translations2 = {
         "retire_confirm_msg": "Ang aksiyong ito ay permanente at hindi na mababawi. Talagang sigurado ka bang gusto mong i-retire ang labanang ito?",
         "settings_add_struggle": "Magdagdag ng Bagong Laban",
         "settings_add_struggle_confirm": "Idagdag ang Laban",
-        "retire_last_main_warn": "Ito ang iyong kaisa-isang pangunahing laban. Ang pag-retire nito ay magre-reset sa iyong ranggo at mga tropeo ng timeline ng pangunahing laban sa paunang estado. Sigurado ka bang gusto mong gawin ito?"
+        "retire_last_main_warn": "Ito ang iyong kaisa-isang pangunahing laban. Ang pag-retire nito ay magre-reset sa iyong ranggo at mga tropeo ng timeline ng pangunahing laban sa paunang estado. Sigurado ka bang gusto mong gawin ito?",
+        "support_find_helpline": "Maghanap ng Helpline",
+        "support_global_title": "Pandaigdigang Direktoryo ng Suporta",
+        "support_global_desc": "Kung ikaw ay nasa labas ng Estados Unidos at nakakaranas ng krisis, mangyaring makipag-ugnayan sa iyong mga lokal na serbisyong pang-emergency o gamitin ang pandaigdigang direktoryo upang makahanap ng libre, kumpidensyal na suporta sa iyong bansa."
     },
 
     "it": {
@@ -455,7 +461,10 @@ const translations2 = {
         "retire_confirm_msg": "Questa azione è permanente e non può essere annullata. Sei assolutamente sicuro di voler ritirare questa lotta?",
         "settings_add_struggle": "Aggiungi Nuova Lotta",
         "settings_add_struggle_confirm": "Aggiungi Lotta",
-        "retire_last_main_warn": "Questa è la tua unica lotta principale. Ritirarla ripristinerà il tuo grado e i trofei della linea temporale della lotta principale allo stato iniziale. Sei sicuro di volerlo fare?"
+        "retire_last_main_warn": "Questa è la tua unica lotta principale. Ritirarla ripristinerà il tuo grado e i trofei della linea temporale della lotta principale allo stato iniziale. Sei sicuro di volerlo fare?",
+        "support_find_helpline": "Trova una Linea di Aiuto",
+        "support_global_title": "Direttorio Globale di Supporto",
+        "support_global_desc": "Se ti trovi al di fuori degli Stati Uniti e stai vivendo una crisi, contatta i servizi di emergenza locali o utilizza il direttorio globale per trovare supporto gratuito e riservato nel tuo paese."
     },
 
     "ko": {
@@ -606,7 +615,10 @@ const translations2 = {
         "retire_confirm_msg": "이 작업은 영구적이며 취소할 수 없습니다. 이 투쟁을 은퇴시키는 것이 확실합니까?",
         "settings_add_struggle": "새 투쟁 추가",
         "settings_add_struggle_confirm": "투쟁 추가",
-        "retire_last_main_warn": "이것은 귀하의 유일한 주요 투쟁입니다. 이것을 은퇴시키면 등급과 주요 투쟁 타임라인 트로피가 초기 상태로 재설정됩니다. 정말로 이 작업을 수행하시겠습니까?"
+        "retire_last_main_warn": "이것은 귀하의 유일한 주요 투쟁입니다. 이것을 은퇴시키면 등급과 주요 투쟁 타임라인 트로피가 초기 상태로 재설정됩니다. 정말로 이 작업을 수행하시겠습니까?",
+        "support_find_helpline": "헬프라인 찾기",
+        "support_global_title": "글로벌 지원 디렉토리",
+        "support_global_desc": "미국 이외의 지역에서 위기를 겪고 계신 경우, 현지 응급 서비스에 연락하시거나 글로벌 디렉토리를 사용하여 귀하의 국가에서 제공되는 무료 기밀 지원을 찾으십시오."
     },
 
     "pl": {
@@ -757,7 +769,10 @@ const translations2 = {
         "retire_confirm_msg": "Ta akcja jest trwała i nie może być cofnięta. Czy jesteś absolutnie pewien, że chcesz wycofać tę walkę?",
         "settings_add_struggle": "Dodaj Nową Walkę",
         "settings_add_struggle_confirm": "Dodaj Walkę",
-        "retire_last_main_warn": "To jest twoja jedyna główna walka. Wycofanie jej zresetuje twoją rangę i trofea osi czasu głównej walki do stanu początkowego. Czy na pewno chcesz to zrobić?"
+        "retire_last_main_warn": "To jest twoja jedyna główna walka. Wycofanie jej zresetuje twoją rangę i trofea osi czasu głównej walki do stanu początkowego. Czy na pewno chcesz to zrobić?",
+        "support_find_helpline": "Znajdź Infolinię",
+        "support_global_title": "Globalny Katalog Wsparcia",
+        "support_global_desc": "Jeśli przebywasz poza Stanami Zjednoczonymi i przechodzisz kryzys, skontaktuj się z lokalnymi służbami ratowniczymi lub skorzystaj z globalnego katalogu, aby znaleźć bezpłatne, poufne wsparcie w swoim kraju."
     },
 
     "sw": {
@@ -908,7 +923,10 @@ const translations2 = {
         "retire_confirm_msg": "Hatua hii ni ya kudumu na haiwezi kutenduliwa. Je, una uhakika kabisa unataka kuondoa pambano hili?",
         "settings_add_struggle": "Ongeza Pambano Jipya",
         "settings_add_struggle_confirm": "Ongeza Pambano",
-        "retire_last_main_warn": "Hili ndilo pambano lako kuu pekee. Kuliondoa kutaweka upya cheo chako na nyara za kalenda ya matukio ya pambano kuu kwenye hali ya awali. Je, una uhakika unataka kufanya hivi?"
+        "retire_last_main_warn": "Hili ndilo pambano lako kuu pekee. Kuliondoa kutaweka upya cheo chako na nyara za kalenda ya matukio ya pambano kuu kwenye hali ya awali. Je, una uhakika unataka kufanya hivi?",
+        "support_find_helpline": "Tafuta Njia ya Msaada",
+        "support_global_title": "Saraka ya Msaada ya Ulimwengu",
+        "support_global_desc": "Ikiwa uko nje ya Marekani na unakabiliwa na mgogoro, tafadhali wasiliana na huduma za dharura za eneo lako au tumia saraka ya ulimwengu kupata msaada wa siri na wa bure katika nchi yako."
     },
 
     "fa": {
@@ -1059,7 +1077,10 @@ const translations2 = {
         "retire_confirm_msg": "این عمل دائمی است و قابل بازگشت نیست. آیا کاملاً مطمئن هستید که می‌خواهید این مبارزه را حذف کنید?",
         "settings_add_struggle": "افزودن مبارزه جدید",
         "settings_add_struggle_confirm": "افزودن مبارزه",
-        "retire_last_main_warn": "این تنها مبارزه اصلی شماست. کنار گذاشتن آن، رتبه و جوایز جدول زمانی مبارزه اصلی شما را به حالت اولیه بازنشانی می‌کند. آیا مطمئن هستید که می‌خواهید این کار را انجام دهید؟"
+        "retire_last_main_warn": "این تنها مبارزه اصلی شماست. کنار گذاشتن آن، رتبه و جوایز جدول زمانی مبارزه اصلی شما را به حالت اولیه بازنشانی می‌کند. آیا مطمئن هستید که می‌خواهید این کار را انجام دهید؟",
+        "support_find_helpline": "خط راهنما را پیدا کنید",
+        "support_global_title": "فهرست جهانی پشتیبانی",
+        "support_global_desc": "اگر خارج از ایالات متحده هستید و دچار بحران شده‌اید، لطفاً با خدمات اضطراری محلی خود تماس بگیرید یا از فهرست جهانی برای یافتن پشتیبانی رایگان و محرمانه در کشور خود استفاده کنید."
     },
 
     "ms": {
@@ -1210,7 +1231,10 @@ const translations2 = {
         "retire_confirm_msg": "Tindakan ini kekal dan tidak boleh dibatalkan. Adakah anda benar-benar pasti mahu mengeluarkan perjuangan ini?",
         "settings_add_struggle": "Tambah Perjuangan Baharu",
         "settings_add_struggle_confirm": "Tambah Perjuangan",
-        "retire_last_main_warn": "Ini adalah satu-satunya perjuangan utama anda. Mengeluarkannya akan menetapkan semula pangkat anda dan trofi garis masa perjuangan utama ke keadaan awal. Adakah anda pasti mahu melakukan ini?"
+        "retire_last_main_warn": "Ini adalah satu-satunya perjuangan utama anda. Mengeluarkannya akan menetapkan semula pangkat anda dan trofi garis masa perjuangan utama ke keadaan awal. Adakah anda pasti mahu melakukan ini?",
+        "support_find_helpline": "Cari Talian Bantuan",
+        "support_global_title": "Direktori Sokongan Global",
+        "support_global_desc": "Jika anda berada di luar Amerika Syarikat dan sedang mengalami krisis, sila hubungi perkhidmatan kecemasan tempatan anda atau gunakan direktori global untuk mencari sokongan percuma dan sulit di negara anda."
     },
 
     "ur": {
@@ -1361,7 +1385,10 @@ const translations2 = {
         "retire_confirm_msg": "یہ عمل مستقل ہے اور واپس نہیں ہو سکتا۔ کیا آپ بالکل یقین سے اس جدوجہد کو ریٹائر کرنا چاہتے ہیں؟",
         "settings_add_struggle": "نئی جدوجہد شامل کریں",
         "settings_add_struggle_confirm": "جدوجہد شامل کریں",
-        "retire_last_main_warn": "یہ آپ کی واحد اہم جدوجہد ہے۔ اسے ختم کرنے سے آپ کا رینک اور اہم جدوجہد کی ٹائم لائن ٹرافیاں ابتدائی حالت میں ری سیٹ ہو جائیں گی۔ کیا آپ واقعی ایسا کرنا چاہتے ہیں؟"
+        "retire_last_main_warn": "یہ آپ کی واحد اہم جدوجہد ہے۔ اسے ختم کرنے سے آپ کا رینک اور اہم جدوجہد کی ٹائم لائن ٹرافیاں ابتدائی حالت میں ری سیٹ ہو جائیں گی۔ کیا آپ واقعی ایسا کرنا چاہتے ہیں؟",
+        "support_find_helpline": "ہیلپ لائن تلاش کریں",
+        "support_global_title": "عالمی سپورٹ ڈائریکٹری",
+        "support_global_desc": "اگر آپ ریاستہائے متحدہ سے باہر ہیں اور کسی بحران کا شکار ہیں، تو براہ کرم اپنی مقامی ہنگامی خدمات سے رابطہ کریں یا اپنے ملک میں مفت، خفیہ مدد حاصل کرنے کے لیے عالمی ڈائریکٹری کا استعمال کریں۔"
     },
 
     "uk": {
@@ -1512,10 +1539,9 @@ const translations2 = {
         "retire_confirm_msg": "Ця дія є постійною і не може бути скасована. Ви абсолютно впевнені, що хочете видалити цю боротьбу?",
         "settings_add_struggle": "Додати Нову Боротьбу",
         "settings_add_struggle_confirm": "Додати Боротьбу",
-        "retire_last_main_warn": "Це ваша єдина головна боротьба. Її видалення скине ваш ранг і трофеї часової шкали головної боротьби до початкового стану. Ви впевнені, що хочете це зробити?"
+        "retire_last_main_warn": "Це ваша єдина головна боротьба. Її видалення скине ваш ранг і трофеї часової шкали головної боротьби до початкового стану. Ви впевнені, що хочете це зробити?",
+        "support_find_helpline": "Знайти Гарячу Лінію",
+        "support_global_title": "Глобальний довідник підтримки",
+        "support_global_desc": "Якщо ви перебуваєте за межами Сполучених Штатів і переживаєте кризу, будь ласка, зверніться до місцевих екстрених служб або скористайтеся глобальним довідником, щоб знайти безкоштовну конфіденційну підтримку у вашій країні."
     }
 };
-
-
-
-

@@ -828,8 +828,11 @@ function resetApp() {
     const langData = translations[activeLang] || translations['en'];
     if(confirm(langData.confirm_reset || "DELETE ALL DATA? This erases all progress and voice notes permanently.")) { 
         localStorage.clear(); 
-        indexedDB.deleteDatabase("TSH_Database"); 
-        window.location.reload(); 
+        const deleteRequest = indexedDB.deleteDatabase("TSH_Database");
+        // Wait for the deletion to complete before reloading to prevent race conditions in PWA mode
+        deleteRequest.onsuccess = () => window.location.reload();
+        deleteRequest.onerror = () => window.location.reload();
+        deleteRequest.onblocked = () => window.location.reload();
     } 
 }
 window.onload = init;

@@ -152,7 +152,10 @@ const translations = {
         "retire_confirm_msg": "This action is permanent and cannot be undone. Are you absolutely sure you want to retire this struggle?",
         "settings_add_struggle": "Add New Struggle",
         "settings_add_struggle_confirm": "Add Struggle",
-        "retire_last_main_warn": "This is your only main struggle. Retiring it will reset your rank and main struggle timeline trophies to the initial state. Are you sure you want to do this?"
+        "retire_last_main_warn": "This is your only main struggle. Retiring it will reset your rank and main struggle timeline trophies to the initial state. Are you sure you want to do this?",
+        "support_find_helpline": "Find A Helpline",
+        "support_global_title": "Global Support Directory",
+        "support_global_desc": "If you are outside the United States and experiencing a crisis, please contact your local emergency services or use the global directory to find free, confidential support in your country."
     },
 
     "es": {
@@ -303,7 +306,10 @@ const translations = {
         "retire_confirm_msg": "Esta acción es permanente y no se puede deshacer. ¿Estás absolutamente seguro de que deseas retirar esta lucha?",
         "settings_add_struggle": "Agregar Nueva Lucha",
         "settings_add_struggle_confirm": "Agregar Lucha",
-        "retire_last_main_warn": "Esta es tu única lucha principal. Retirarla restablecerá tu rango y los trofeos de la línea de tiempo de la lucha principal al estado inicial. ¿Estás seguro de que quieres hacer esto?"
+        "retire_last_main_warn": "Esta es tu única lucha principal. Retirarla restablecerá tu rango y los trofeos de la línea de tiempo de la lucha principal al estado inicial. ¿Estás seguro de que quieres hacer esto?",
+        "support_find_helpline": "Buscar una Línea de Ayuda",
+        "support_global_title": "Directorio Global de Apoyo",
+        "support_global_desc": "Si estás fuera de los Estados Unidos y estás experimentando una crisis, comunícate con los servicios de emergencia locales o usa el directorio global para encontrar apoyo gratuito y confidencial en tu país."
     },
 
     "fr": {
@@ -454,7 +460,10 @@ const translations = {
         "retire_confirm_msg": "Cette action est permanente et irréversible. Êtes-vous absolument sûr de vouloir retirer cette lutte ?",
         "settings_add_struggle": "Ajouter une Nouvelle Lutte",
         "settings_add_struggle_confirm": "Ajouter la Lutte",
-        "retire_last_main_warn": "C'est votre seule lutte principale. La retirer réinitialisera votre rang et les trophées de la chronologie de la lutte principale à l'état initial. Êtes-vous sûr de vouloir faire cela ?"
+        "retire_last_main_warn": "C'est votre seule lutte principale. La retirer réinitialisera votre rang et les trophées de la chronologie de la lutte principale à l'état initial. Êtes-vous sûr de vouloir faire cela ?",
+        "support_find_helpline": "Trouver une Ligne d'Aide",
+        "support_global_title": "Répertoire Mondial d'Aide",
+        "support_global_desc": "Si vous êtes en dehors des États-Unis et que vous vivez une crise, veuillez contacter vos services d'urgence locaux ou utiliser le répertoire mondial pour trouver un soutien gratuit et confidentiel dans votre pays."
     },
 
     "de": {
@@ -605,7 +614,10 @@ const translations = {
         "retire_confirm_msg": "Diese Aktion ist dauerhaft und kann nicht rückgängig gemacht werden. Bist du absolut sicher, dass du diesen Kampf zurückziehen möchtest?",
         "settings_add_struggle": "Neuen Kampf Hinzufügen",
         "settings_add_struggle_confirm": "Kampf Hinzufügen",
-        "retire_last_main_warn": "Dies ist Ihr einziger Hauptkampf. Wenn Sie ihn beenden, werden Ihr Rang und die Zeitleisten-Trophäen des Hauptkampfes auf den Anfangszustand zurückgesetzt. Sind Sie sicher, dass Sie das tun möchten?"
+        "retire_last_main_warn": "Dies ist Ihr einziger Hauptkampf. Wenn Sie ihn beenden, werden Ihr Rang und die Zeitleisten-Trophäen des Hauptkampfes auf den Anfangszustand zurückgesetzt. Sind Sie sicher, dass Sie das tun möchten?",
+        "support_find_helpline": "Eine Helpline Finden",
+        "support_global_title": "Globales Hilfeverzeichnis",
+        "support_global_desc": "Wenn Sie sich außerhalb der USA befinden und eine Krise erleben, wenden Sie sich bitte an Ihre örtlichen Notdienste oder nutzen Sie das globale Verzeichnis, um kostenlose, vertrauliche Unterstützung in Ihrem Land zu finden."
     },
 
     "zh": {
@@ -756,7 +768,10 @@ const translations = {
         "retire_confirm_msg": "此操作是永久的，不可撤销。你绝对确定要退出这个挣扎吗？",
         "settings_add_struggle": "添加新挣扎",
         "settings_add_struggle_confirm": "添加挣扎",
-        "retire_last_main_warn": "这是您唯一的主要挣扎。放弃它会将您的等级和主要挣扎的时间线奖杯重置为初始状态。您确定要这样做吗？"
+        "retire_last_main_warn": "这是您唯一的主要挣扎。放弃它会将您的等级和主要挣扎的时间线奖杯重置为初始状态。您确定要这样做吗？",
+        "support_find_helpline": "查找帮助热线",
+        "support_global_title": "全球支持目录",
+        "support_global_desc": "如果您在美国境外并遇到危机，请联系当地的紧急服务部门，或使用全球目录在您的国家寻找免费、保密的支持。"
     },
 
     "hi": {
@@ -907,7 +922,10 @@ const translations = {
         "retire_confirm_msg": "यह क्रिया स्थायी है और पूर्ववत नहीं की जा सकती। क्या आप बिल्कुल सुनिश्चित हैं कि आप इस संघर्ष को सेवानिवृत्त करना चाहते हैं?",
         "settings_add_struggle": "नया संघर्ष जोड़ें",
         "settings_add_struggle_confirm": "संघर्ष जोड़ें",
-        "retire_last_main_warn": "यह आपका एकमात्र मुख्य संघर्ष है। इसे छोड़ने से आपका रैंक और मुख्य संघर्ष की समयरेखा ट्रॉफियां प्रारंभिक स्थिति में रीसेट हो जाएंगी। क्या आप निश्चित रूप से ऐसा करना चाहते हैं?"
+        "retire_last_main_warn": "यह आपका एकमात्र मुख्य संघर्ष है। इसे छोड़ने से आपका रैंक और मुख्य संघर्ष की समयरेखा ट्रॉफियां प्रारंभिक स्थिति में रीसेट हो जाएंगी। क्या आप निश्चित रूप से ऐसा करना चाहते हैं?",
+        "support_find_helpline": "हेल्पलाइन खोजें",
+        "support_global_title": "वैश्विक सहायता निर्देशिका",
+        "support_global_desc": "यदि आप संयुक्त राज्य अमेरिका के बाहर हैं और संकट का सामना कर रहे हैं, तो कृपया अपनी स्थानीय आपातकालीन सेवाओं से संपर्क करें या अपने देश में मुफ्त, गोपनीय सहायता खोजने के लिए वैश्विक निर्देशिका का उपयोग करें।"
     },
 
     "ar": {
@@ -1058,7 +1076,10 @@ const translations = {
         "retire_confirm_msg": "هذا الإجراء دائم ولا يمكن التراجع عنه. هل أنت متأكد تمامًا أنك تريد إزالة هذا الصراع؟",
         "settings_add_struggle": "إضافة صراع جديد",
         "settings_add_struggle_confirm": "إضافة صراع",
-        "retire_last_main_warn": "هذا هو صراعك الرئيسي الوحيد. التخلي عنه سيعيد تعيين رتبتك وكؤوس الجدول الزمني للصراع الرئيسي إلى الحالة الأولية. هل أنت متأكد أنك تريد القيام بذلك؟"
+        "retire_last_main_warn": "هذا هو صراعك الرئيسي الوحيد. التخلي عنه سيعيد تعيين رتبتك وكؤوس الجدول الزمني للصراع الرئيسي إلى الحالة الأولية. هل أنت متأكد أنك تريد القيام بذلك؟",
+        "support_find_helpline": "ابحث عن خط المساعدة",
+        "support_global_title": "دليل الدعم العالمي",
+        "support_global_desc": "إذا كنت خارج الولايات المتحدة وتواجه أزمة، يرجى الاتصال بخدمات الطوارئ المحلية أو استخدام الدليل العالمي للعثور على دعم مجاني وسري في بلدك."
     },
 
     "pt": {
@@ -1209,7 +1230,10 @@ const translations = {
         "retire_confirm_msg": "Esta ação é permanente e não pode ser desfeita. Tem absoluta certeza de que deseja aposentar esta luta?",
         "settings_add_struggle": "Adicionar Nova Luta",
         "settings_add_struggle_confirm": "Adicionar Luta",
-        "retire_last_main_warn": "Esta é a sua única luta principal. Retirá-la redefinirá sua classificação e os troféus da linha do tempo da luta principal para o estado inicial. Tem certeza de que deseja fazer isso?"
+        "retire_last_main_warn": "Esta é a sua única luta principal. Retirá-la redefinirá sua classificação e os troféus da linha do tempo da luta principal para o estado inicial. Tem certeza de que deseja fazer isso?",
+        "support_find_helpline": "Encontrar Uma Linha de Ajuda",
+        "support_global_title": "Diretório Global de Apoio",
+        "support_global_desc": "Se você estiver fora dos Estados Unidos e estiver passando por uma crise, entre em contato com os serviços de emergência locais ou use o diretório global para encontrar suporte gratuito e confidencial em seu país."
     },
 
     "ru": {
@@ -1360,7 +1384,10 @@ const translations = {
         "retire_confirm_msg": "Это действие необратимо. Вы абсолютно уверены, что хотите убрать эту борьбу?",
         "settings_add_struggle": "Добавить Новую Борьбу",
         "settings_add_struggle_confirm": "Добавить Борьбу",
-        "retire_last_main_warn": "Это ваша единственная главная борьба. Ее прекращение сбросит ваш ранг и трофеи временной шкалы главной борьбы к начальному состоянию. Вы уверены, что хотите это сделать?"
+        "retire_last_main_warn": "Это ваша единственная главная борьба. Ее прекращение сбросит ваш ранг и трофеи временной шкалы главной борьбы к начальному состоянию. Вы уверены, что хотите это сделать?",
+        "support_find_helpline": "Найти Горячую Линию",
+        "support_global_title": "Глобальный Справочник Поддержки",
+        "support_global_desc": "Если вы находитесь за пределами США и переживаете кризис, пожалуйста, свяжитесь с местными экстренными службами или воспользуйтесь глобальным справочником, чтобы найти бесплатную конфиденциальную поддержку в вашей стране."
     },
 
     "ja": {
@@ -1511,7 +1538,10 @@ const translations = {
         "retire_confirm_msg": "この操作は永久的で元に戻すことはできません。この闘いを撤退させることを本当に確信していますか？",
         "settings_add_struggle": "新しい闘いを追加",
         "settings_add_struggle_confirm": "闘いを追加",
-        "retire_last_main_warn": "これはあなたの唯一の主な闘いです。これを終了すると、ランクと主な闘いのタイムライントロフィーが初期状態にリセットされます。本当にこれを実行しますか？"
+        "retire_last_main_warn": "これはあなたの唯一の主な闘いです。これを終了すると、ランクと主な闘いのタイムライントロフィーが初期状態にリセットされます。本当にこれを実行しますか？",
+        "support_find_helpline": "ヘルプラインを探す",
+        "support_global_title": "グローバルサポートディレクトリ",
+        "support_global_desc": "アメリカ国外にいて危機的な状況にある場合は、地元の緊急サービスに連絡するか、グローバルディレクトリを使用して、あなたの国で無料の機密サポートを見つけてください。"
     }
 };
 
