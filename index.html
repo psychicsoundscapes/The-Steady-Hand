@@ -15,7 +15,7 @@
     <link rel="manifest" href="manifest.json">
     <script src="https://unpkg.com/lucide@latest"></script>
     
-    <link rel="stylesheet" href="styles.css?v=11">
+    <link rel="stylesheet" href="styles.css?v=12">
     
     <style>
         @media (display-mode: standalone) {
@@ -29,11 +29,11 @@
         }
     </style>
     
-    <script src="translations.js?v=11" defer></script>
-    <script src="translations2.js?v=11" defer></script>
-    <script src="verses.js?v=11" defer></script>
-    <script src="trophies.js?v=11" defer></script>
-    <script src="app.js?v=11" defer></script>
+    <script src="translations.js?v=12" defer></script>
+    <script src="translations2.js?v=12" defer></script>
+    <script src="verses.js?v=12" defer></script>
+    <script src="trophies.js?v=12" defer></script>
+    <script src="app.js?v=12" defer></script>
 </head>
 <body>
 
@@ -219,8 +219,7 @@
                                    shadow-md text-slate-700 hover:bg-white/90 active:scale-95 transition-all">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
                         </button>
-                        <!-- Trophy scroll container -->
-                        <div id="trophy-case" class="flex gap-2 overflow-x-auto scroll-hide md:trophy-scrollbar pb-2 px-1 md:pb-4"></div>
+                        <div id="trophy-case" class="flex gap-2 overflow-x-auto scroll-hide pb-2 px-1"></div>
                         <!-- Right arrow (desktop only) -->
                         <button type="button" onclick="scrollTrophies(1)" aria-label="Scroll trophies right"
                             class="trophy-arrow trophy-arrow-right hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 z-10

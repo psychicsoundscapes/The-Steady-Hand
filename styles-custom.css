@@ -149,25 +149,27 @@ input::placeholder { color: #64748b !important; font-weight: 400; }
         padding: 0 2rem;
     }
 
-    /* Visible, styled scrollbar on desktop */
-    .trophy-scrollbar {
+    /* Visible, styled scrollbar directly on #trophy-case (desktop only) */
+    /* Overrides the mobile scroll-hide rules */
+    #trophy-case {
         scrollbar-width: thin;
         scrollbar-color: rgba(71, 85, 105, 0.35) transparent;
         overflow-x: auto !important;
+        padding-bottom: 1rem;
     }
-    .trophy-scrollbar::-webkit-scrollbar {
+    #trophy-case::-webkit-scrollbar {
         height: 6px;
         display: block;
     }
-    .trophy-scrollbar::-webkit-scrollbar-track {
+    #trophy-case::-webkit-scrollbar-track {
         background: rgba(255, 255, 255, 0.25);
         border-radius: 99px;
     }
-    .trophy-scrollbar::-webkit-scrollbar-thumb {
+    #trophy-case::-webkit-scrollbar-thumb {
         background: rgba(71, 85, 105, 0.35);
         border-radius: 99px;
     }
-    .trophy-scrollbar::-webkit-scrollbar-thumb:hover {
+    #trophy-case::-webkit-scrollbar-thumb:hover {
         background: rgba(71, 85, 105, 0.55);
     }
 
