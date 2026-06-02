@@ -15,7 +15,7 @@
     <link rel="manifest" href="manifest.json">
     <script src="https://unpkg.com/lucide@latest"></script>
     
-    <link rel="stylesheet" href="styles.css?v=10">
+    <link rel="stylesheet" href="styles.css?v=11">
     
     <style>
         @media (display-mode: standalone) {
@@ -29,16 +29,16 @@
         }
     </style>
     
-    <script src="translations.js?v=10" defer></script>
-    <script src="translations2.js?v=10" defer></script>
-    <script src="verses.js?v=10" defer></script>
-    <script src="trophies.js?v=10" defer></script>
-    <script src="app.js?v=10" defer></script>
+    <script src="translations.js?v=11" defer></script>
+    <script src="translations2.js?v=11" defer></script>
+    <script src="verses.js?v=11" defer></script>
+    <script src="trophies.js?v=11" defer></script>
+    <script src="app.js?v=11" defer></script>
 </head>
 <body>
 
     <div id="app-scroller">
-        <div id="app" class="max-w-md mx-auto min-h-[100dvh] relative flex flex-col pb-32">
+        <div id="app" class="max-w-md md:max-w-none mx-auto min-h-[100dvh] relative flex flex-col pb-32">
             
             <div id="screen-gateway" class="hidden fixed inset-0 h-[100dvh] w-full z-[100] bg-[#b4c7d9] overflow-y-auto">
                 <div class="min-h-full w-full flex flex-col items-center justify-center py-6 px-6 text-center">
@@ -171,7 +171,7 @@
                 </button>
             </div>
 
-            <main id="screen-main" class="hidden flex-1 px-6 pt-8 max-w-[360px] mx-auto w-full space-y-5">
+            <main id="screen-main" class="hidden flex-1 px-6 pt-8 max-w-[360px] md:max-w-3xl mx-auto w-full space-y-5">
                 <header class="flex justify-between items-center mt-2 mb-5">
                     <div class="flex items-center gap-3">
                         <img src="picture/tsh.PNG" class="w-8 h-8 rounded-full border border-white/50 shadow-sm">
@@ -206,11 +206,29 @@
                 </div>
 
                 <div>
-                    <h3 class="text-[9px] uppercase tracking-widest text-slate-700 font-bold mb-2 px-1 flex justify-between">
+                    <h3 class="text-[9px] uppercase tracking-widest text-slate-700 font-bold mb-2 px-1 flex justify-between items-center">
                         <span data-i18n="main_trophy_room">Trophy Room</span>
-                        <span data-i18n="main_scroll" class="text-slate-500 font-medium lowercase italic normal-case">Scroll ></span>
+                        <span data-i18n="main_scroll" class="text-slate-500 font-medium lowercase italic normal-case md:hidden">Scroll ></span>
                     </h3>
-                    <div id="trophy-case" class="flex gap-2 overflow-x-auto scroll-hide pb-2 px-1"></div>
+                    <!-- Trophy carousel wrapper -->
+                    <div class="trophy-carousel-wrapper relative">
+                        <!-- Left arrow (desktop only) -->
+                        <button type="button" onclick="scrollTrophies(-1)" aria-label="Scroll trophies left"
+                            class="trophy-arrow trophy-arrow-left hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 z-10
+                                   w-8 h-8 items-center justify-center rounded-full bg-white/70 border border-white/80
+                                   shadow-md text-slate-700 hover:bg-white/90 active:scale-95 transition-all">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        </button>
+                        <!-- Trophy scroll container -->
+                        <div id="trophy-case" class="flex gap-2 overflow-x-auto scroll-hide md:trophy-scrollbar pb-2 px-1 md:pb-4"></div>
+                        <!-- Right arrow (desktop only) -->
+                        <button type="button" onclick="scrollTrophies(1)" aria-label="Scroll trophies right"
+                            class="trophy-arrow trophy-arrow-right hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 z-10
+                                   w-8 h-8 items-center justify-center rounded-full bg-white/70 border border-white/80
+                                   shadow-md text-slate-700 hover:bg-white/90 active:scale-95 transition-all">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </button>
+                    </div>
                 </div>
 
                 <div id="dashboard-habits" class="space-y-3"></div>
@@ -440,7 +458,7 @@
 </div>
 
 <nav id="app-nav" class="hidden fixed bottom-0 left-0 right-0 w-full bg-white/60 backdrop-blur-2xl border-t border-white/60 z-[90] shadow-[0_-10px_30px_rgba(0,0,0,0.05)] pb-5 pt-3">
-    <div class="max-w-md mx-auto w-full flex items-center justify-around px-2">
+    <div class="max-w-md md:max-w-3xl mx-auto w-full flex items-center justify-around px-2">
         <button type="button" onclick="showScreen('main')" class="nav-link flex flex-col items-center gap-1 text-slate-500 w-20" data-nav="main">
 
                 <i data-lucide="layout-dashboard" class="w-6 h-6"></i>

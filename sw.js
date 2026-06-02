@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tsh-cache-v10';
+const CACHE_NAME = 'tsh-cache-v11';
 const ASSETS = [
   './',
   './index.html',

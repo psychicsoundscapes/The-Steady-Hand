@@ -826,6 +826,12 @@ function toggleAddStruggleForm() {
         document.getElementById('new-struggle-name').focus();
     }
 }
+function scrollTrophies(direction) {
+    const tc = document.getElementById('trophy-case');
+    if (!tc) return;
+    const scrollAmount = tc.clientWidth * 0.75;
+    tc.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+}
 function closeUrgeEngine() { document.getElementById('urge-overlay').classList.add('hidden'); }
 function toggleSettings() { document.getElementById('modal-settings').classList.toggle('hidden'); lucide.createIcons(); }
 function updateDate() { 

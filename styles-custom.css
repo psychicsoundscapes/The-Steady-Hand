@@ -121,3 +121,69 @@ input::placeholder { color: #64748b !important; font-weight: 400; }
     color: #1e293b !important;
     filter: drop-shadow(0 0 8px rgba(255,255,255,0.8));
 }
+
+/* =====================================================
+   DESKTOP / WIDER SCREEN ENHANCEMENTS (md: 768px+)
+   ===================================================== */
+
+@media (min-width: 768px) {
+
+    /* Cap the entire app at a comfortable reading width */
+    #app {
+        max-width: 900px !important;
+    }
+
+    /* Centre all main scrollable screens */
+    #screen-support,
+    #screen-vault,
+    #screen-wall {
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+    }
+
+    /* ---- Trophy Carousel ---- */
+    /* Give space for the absolute-positioned arrow buttons */
+    .trophy-carousel-wrapper {
+        padding: 0 2rem;
+    }
+
+    /* Visible, styled scrollbar on desktop */
+    .trophy-scrollbar {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(71, 85, 105, 0.35) transparent;
+        overflow-x: auto !important;
+    }
+    .trophy-scrollbar::-webkit-scrollbar {
+        height: 6px;
+        display: block;
+    }
+    .trophy-scrollbar::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.25);
+        border-radius: 99px;
+    }
+    .trophy-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(71, 85, 105, 0.35);
+        border-radius: 99px;
+    }
+    .trophy-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: rgba(71, 85, 105, 0.55);
+    }
+
+    /* Trophy cards slightly larger on desktop */
+    #trophy-case > div {
+        min-width: 96px !important;
+        height: 104px !important;
+    }
+
+    /* Arrow button hover glow */
+    .trophy-arrow:hover {
+        box-shadow: 0 4px 16px rgba(71, 85, 105, 0.2);
+    }
+}
+
+/* Ultra-wide safety cap */
+@media (min-width: 1280px) {
+    #app { max-width: 900px !important; }
+}
