@@ -1,19 +1,19 @@
-const CACHE_NAME = 'tsh-cache-v12';
+const CACHE_NAME = 'tsh-cache-v22';
 const ASSETS = [
-  //'./',
-  //'./index.html',
-  //'./app.js',
-  //'./styles.css',
-  //'./manifest.json',
-  //'./translations.js',
-  //'./translations2.js',
-  //'./translationprivacy.js',
-  //'./translationtos.js',
-  //'./verses.js',
-  //'./trophies.js',
-  //'./privacy.html',
-  //'./tos.html',
-  //'./picture/tsh.PNG'
+  './',
+  './index.html',
+  './app.js',
+  './styles.css',
+  './manifest.json',
+  './translations.js',
+  './translations2.js',
+  './translationprivacy.js',
+  './translationtos.js',
+  './verses.js',
+  './trophies.js',
+  './privacy.html',
+  './tos.html',
+  './picture/tsh.PNG'
 ];
 
 // Install event: cache assets
