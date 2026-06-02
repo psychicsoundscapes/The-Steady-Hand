@@ -329,7 +329,33 @@ const trophyDict = {
 function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeStrugglesCount, calculateStreak) {
     const earnedTrophies = [];
     const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
-    const t = trophyDict[activeLang] || trophyDict['en'];
+    const tRaw = trophyDict[activeLang] || trophyDict['en'];
+
+    // Resolve currency symbols and codes
+    const localCurrencySymbols = {
+        "en": "$", "es": "€", "fr": "€", "de": "€", "it": "€", 
+        "pt": "R$", "pl": "zł", "sw": "KSh", "tl": "₱", "ar": "د.إ", 
+        "he": "₪", "zh": "¥", "ja": "¥", "ko": "₩", "ru": "₽", "hi": "₹",
+        "ms": "RM", "fa": "﷼", "ur": "₨", "uk": "₴"
+    };
+    const localCurrencyCodes = {
+        "en": "USD", "es": "EUR", "fr": "EUR", "de": "EUR", "it": "EUR", 
+        "pt": "BRL", "pl": "PLN", "sw": "KES", "tl": "PHP", "ar": "AED", 
+        "he": "ILS", "zh": "CNY", "ja": "JPY", "ko": "KRW", "ru": "RUB", "hi": "INR",
+        "ms": "MYR", "fa": "IRR", "ur": "PKR", "uk": "UAH"
+    };
+    const currencySym = (typeof currencySymbols !== 'undefined' ? currencySymbols[activeLang] : localCurrencySymbols[activeLang]) || "$";
+    const currencyCode = (typeof currencyCodes !== 'undefined' ? currencyCodes[activeLang] : localCurrencyCodes[activeLang]) || "USD";
+
+    // Deep copy and replace "$" in translation strings with currencySym
+    const t = {};
+    for (const key in tRaw) {
+        if (typeof tRaw[key] === 'string') {
+            t[key] = tRaw[key].replace(/\$/g, currencySym);
+        } else {
+            t[key] = tRaw[key];
+        }
+    }
 
     if (!state.unlockedTrophies) {
         state.unlockedTrophies = [];
@@ -387,7 +413,13 @@ function generateAllTrophies(state, currentMainStreak, totalSavedValue, activeSt
         [100000, "finance_100000", t.f_100000, "sparkles"]
     ];
     financeData.forEach(([amount, id, title, icon]) => {
-        addTrophy(id, title, `$${amount} ${t.saved}`, icon, totalSavedValue >= amount, false);
+        let formattedAmount;
+        try {
+            formattedAmount = amount.toLocaleString(activeLang, { style: 'currency', currency: currencyCode, maximumFractionDigits: 0 });
+        } catch (e) {
+            formattedAmount = `${currencySym}${amount}`;
+        }
+        addTrophy(id, title, `${formattedAmount} ${t.saved}`, icon, totalSavedValue >= amount, false);
     });
 
     // 3. THE URGE ENGINE (Persistent)
