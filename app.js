@@ -167,6 +167,7 @@ function init() {
     renderSafetyContact();
 
     const refreshDashboardIfVisible = () => {
+        if (window.isResetting) return;
         if (!document.getElementById('screen-main').classList.contains('hidden')) {
             updateDate();
             renderDashboard();
@@ -835,6 +836,9 @@ function resetApp() {
     const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
     const langData = translations[activeLang] || translations['en'];
     if(confirm(langData.confirm_reset || "DELETE ALL DATA? This erases all progress and voice notes permanently.")) { 
+        window.isResetting = true;
+        const mainScreen = document.getElementById('screen-main');
+        if (mainScreen) mainScreen.classList.add('hidden');
         localStorage.clear(); 
         if (db) {
             db.close();
