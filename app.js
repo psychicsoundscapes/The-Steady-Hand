@@ -828,6 +828,9 @@ function resetApp() {
     const langData = translations[activeLang] || translations['en'];
     if(confirm(langData.confirm_reset || "DELETE ALL DATA? This erases all progress and voice notes permanently.")) { 
         localStorage.clear(); 
+        if (db) {
+            db.close();
+        }
         const deleteRequest = indexedDB.deleteDatabase("TSH_Database");
         // Wait for the deletion to complete before reloading to prevent race conditions in PWA mode
         deleteRequest.onsuccess = () => window.location.reload();
