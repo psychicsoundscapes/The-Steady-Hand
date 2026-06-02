@@ -63,7 +63,7 @@ self.addEventListener('fetch', (e) => {
       })
       .catch(() => {
         // Fallback to cache if network fails
-        return caches.match(e.request);
+        return caches.match(e.request, { ignoreSearch: true });
       })
   );
 });
