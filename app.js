@@ -89,6 +89,9 @@ dbRequest.onupgradeneeded = (e) => {
 
 dbRequest.onsuccess = (e) => { 
     db = e.target.result; 
+    db.onversionchange = () => {
+        db.close();
+    };
     if(document.getElementById('vault-list')) loadVault();
 };
 
@@ -170,6 +173,11 @@ function init() {
         }
     };
     window.addEventListener('focus', refreshDashboardIfVisible);
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'steady_hand_state' && !e.newValue) {
+            window.location.reload();
+        }
+    });
     setInterval(refreshDashboardIfVisible, 60000); 
 }
 
@@ -832,10 +840,13 @@ function resetApp() {
             db.close();
         }
         const deleteRequest = indexedDB.deleteDatabase("TSH_Database");
-        // Wait for the deletion to complete before reloading to prevent race conditions in PWA mode
         deleteRequest.onsuccess = () => window.location.reload();
         deleteRequest.onerror = () => window.location.reload();
-        deleteRequest.onblocked = () => window.location.reload();
+        deleteRequest.onblocked = () => {
+            console.warn("Database deletion blocked.");
+            alert(langData.alert_reset_blocked || "Reset is blocked by other tabs. Please close all other tabs of this app, then refresh.");
+            window.location.reload();
+        };
     } 
 }
 window.onload = init;
