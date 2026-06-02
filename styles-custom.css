@@ -1,0 +1,124 @@
+:root {
+    --soft-blue: #b4c7d9;
+    --sage-green: #b5ba8b;
+    --deep-slate: #1e293b;
+    --muted-slate: #475569;
+}
+
+html, body {
+    height: 100vh;
+    min-height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    background-color: #b4c7d9;
+    background-image: linear-gradient(180deg, #b4c7d9 0%, #cbd9e0 40%, #c4cdbc 70%, #b5ba8b 100%);
+    background-attachment: fixed;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--deep-slate);
+}
+
+#app-scroller {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Fixes iOS PWA scroll/tap locking on fixed screens */
+[id^="screen-"] {
+    -webkit-overflow-scrolling: touch;
+}
+
+.font-cinzel { font-family: 'Cinzel', serif; }
+
+.dark-gradient {
+    background: linear-gradient(180deg, #1e293b 0%, #334155 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 1px 2px rgba(255,255,255,0.5));
+}
+
+.card-glass {
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.08);
+    color: var(--deep-slate);
+}
+
+.wall-text-collapsed {
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.amen-pulse {
+    animation: pulse-ring 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-ring {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,255,255,0.6); }
+    50% { transform: scale(1.03); box-shadow: 0 0 25px 12px rgba(255,255,255,0); }
+}
+
+.scroll-hide::-webkit-scrollbar { display: none; }
+.scroll-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+.tutorial-overlay {
+    background: rgba(180, 199, 217, 0.95);
+    backdrop-filter: blur(10px);
+}
+
+.logo-glow {
+    filter: drop-shadow(0 4px 12px rgba(255, 255, 255, 0.8));
+    background: rgba(255,255,255,0.2);
+}
+
+/* =========================================================
+   APPLE iOS BUG FIX
+   Forces the keyboard to open on inputs inside a PWA
+ ========================================================= */
+input, textarea, select {
+    -webkit-user-select: auto !important;
+    user-select: auto !important;
+    -webkit-touch-callout: default !important;
+    touch-action: manipulation !important;
+    pointer-events: auto !important;
+}
+
+/* Ensure the wrapper doesn't block touch events */
+#app-scroller, [id^="screen-"] {
+    -webkit-user-select: auto;
+    user-select: auto;
+}
+
+input:not([type="checkbox"]) {
+    background: rgba(255, 255, 255, 0.65) !important;
+    color: #0f172a !important;
+    border: 1px solid rgba(255, 255, 255, 0.8) !important;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+input:not([type="checkbox"]):focus {
+    background: rgba(255, 255, 255, 0.9) !important;
+    border-color: #64748b !important;
+    outline: none;
+}
+
+input::placeholder { color: #64748b !important; font-weight: 400; }
+
+.nav-active {
+    color: #1e293b !important;
+    filter: drop-shadow(0 0 8px rgba(255,255,255,0.8));
+}
