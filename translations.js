@@ -1,8 +1,3 @@
-/**
- * TSH Master Translation Dictionary
- * Contains all static UI text for the top 10 global languages.
- */
-
 const translations = {
     "en": {
         "alert_vault_unavailable": "The Vault is unavailable right now, so this recording could not be saved.",
@@ -49,6 +44,13 @@ const translations = {
         "main_support_btn": "Support & Lifelines",
         "support_title": "Lifelines",
         "support_subtitle": "You are never fighting alone.",
+        "support_select_country_label": "Select Your Country / Region",
+        "support_region_us": "United States",
+        "support_region_ca": "Canada",
+        "support_region_uk": "United Kingdom",
+        "support_region_au": "Australia",
+        "support_region_nz": "New Zealand",
+        "support_region_intl": "International / Other Countries",
         "support_dial_title": "Personal Safety Dial",
         "support_dial_desc": "Set a direct line to your sponsor, family member, or trusted friend.",
         "support_ph_name": "Name (e.g. Sponsor John)",
@@ -159,7 +161,6 @@ const translations = {
         "support_global_title": "Global Support Directory",
         "support_global_desc": "If you are outside the United States and experiencing a crisis, please contact your local emergency services or use the global directory to find free, confidential support in your country."
     },
-
     "es": {
         "alert_vault_unavailable": "La Bóveda no está disponible en este momento, por lo que esta grabación no se pudo guardar.",
         "alert_reset_blocked": "El reinicio está bloqueado por otras pestañas. Cierra todas las demás pestañas de esta aplicación y luego actualiza.",
@@ -313,9 +314,15 @@ const translations = {
         "retire_last_main_warn": "Esta es tu única lucha principal. Retirarla restablecerá tu rango y los trofeos de la línea de tiempo de la lucha principal al estado inicial. ¿Estás seguro de que quieres hacer esto?",
         "support_find_helpline": "Buscar una Línea de Ayuda",
         "support_global_title": "Directorio Global de Apoyo",
-        "support_global_desc": "Si estás fuera de los Estados Unidos y estás experimentando una crisis, comunícate con los servicios de emergencia locales o usa el directorio global para encontrar apoyo gratuito y confidencial en tu país."
+        "support_global_desc": "Si estás fuera de los Estados Unidos y estás experimentando una crisis, comunícate con los servicios de emergencia locales o usa el directorio global para encontrar apoyo gratuito y confidencial en tu país.",
+        "support_select_country_label": "Selecciona tu país / región",
+        "support_region_us": "Estados Unidos",
+        "support_region_ca": "Canadá",
+        "support_region_uk": "Reino Unido",
+        "support_region_au": "Australia",
+        "support_region_nz": "Nueva Zelanda",
+        "support_region_intl": "Internacional / Otros Países"
     },
-
     "fr": {
         "alert_vault_unavailable": "Le Coffre est actuellement indisponible, cet enregistrement n'a donc pas pu être sauvegardé.",
         "alert_reset_blocked": "La réinitialisation est bloquée par d'autres onglets. Veuillez fermer tous les autres onglets de cette application, puis actualiser.",
@@ -469,9 +476,15 @@ const translations = {
         "retire_last_main_warn": "C'est votre seule lutte principale. La retirer réinitialisera votre rang et les trophées de la chronologie de la lutte principale à l'état initial. Êtes-vous sûr de vouloir faire cela ?",
         "support_find_helpline": "Trouver une Ligne d'Aide",
         "support_global_title": "Répertoire Mondial d'Aide",
-        "support_global_desc": "Si vous êtes en dehors des États-Unis et que vous vivez une crise, veuillez contacter vos services d'urgence locaux ou utiliser le répertoire mondial pour trouver un soutien gratuit et confidentiel dans votre pays."
+        "support_global_desc": "Si vous êtes en dehors des États-Unis et que vous vivez une crise, veuillez contacter vos services d'urgence locaux ou utiliser le répertoire mondial pour trouver un soutien gratuit et confidentiel dans votre pays.",
+        "support_select_country_label": "Sélectionnez votre pays / région",
+        "support_region_us": "États-Unis",
+        "support_region_ca": "Canada",
+        "support_region_uk": "Royaume-Uni",
+        "support_region_au": "Australie",
+        "support_region_nz": "Nouvelle-Zélande",
+        "support_region_intl": "International / Autres Pays"
     },
-
     "de": {
         "alert_vault_unavailable": "Der Tresor ist derzeit nicht verfügbar, sodass diese Aufnahme nicht gespeichert werden konnte.",
         "alert_reset_blocked": "Das Zurücksetzen wird durch andere Tabs blockiert. Bitte schließe alle anderen Tabs dieser App und aktualisiere dann.",
@@ -625,9 +638,15 @@ const translations = {
         "retire_last_main_warn": "Dies ist Ihr einziger Hauptkampf. Wenn Sie ihn beenden, werden Ihr Rang und die Zeitleisten-Trophäen des Hauptkampfes auf den Anfangszustand zurückgesetzt. Sind Sie sicher, dass Sie das tun möchten?",
         "support_find_helpline": "Eine Helpline Finden",
         "support_global_title": "Globales Hilfeverzeichnis",
-        "support_global_desc": "Wenn Sie sich außerhalb der USA befinden und eine Krise erleben, wenden Sie sich bitte an Ihre örtlichen Notdienste oder nutzen Sie das globale Verzeichnis, um kostenlose, vertrauliche Unterstützung in Ihrem Land zu finden."
+        "support_global_desc": "Wenn Sie sich außerhalb der USA befinden und eine Krise erleben, wenden Sie sich bitte an Ihre örtlichen Notdienste oder nutzen Sie das globale Verzeichnis, um kostenlose, vertrauliche Unterstützung in Ihrem Land zu finden.",
+        "support_select_country_label": "Wählen Sie Ihr Land / Ihre Region",
+        "support_region_us": "Vereinigte Staaten",
+        "support_region_ca": "Kanada",
+        "support_region_uk": "Vereinigtes Königreich",
+        "support_region_au": "Australien",
+        "support_region_nz": "Neuseeland",
+        "support_region_intl": "International / Andere Länder"
     },
-
     "zh": {
         "alert_vault_unavailable": "保管库目前不可用，因此无法保存此录音。",
         "alert_reset_blocked": "重置被其他标签页阻止。请关闭此应用的所有其他标签页，然后刷新。",
@@ -781,9 +800,15 @@ const translations = {
         "retire_last_main_warn": "这是您唯一的主要挣扎。放弃它会将您的等级和主要挣扎的时间线奖杯重置为初始状态。您确定要这样做吗？",
         "support_find_helpline": "查找帮助热线",
         "support_global_title": "全球支持目录",
-        "support_global_desc": "如果您在美国境外并遇到危机，请联系当地的紧急服务部门，或使用全球目录在您的国家寻找免费、保密的支持。"
+        "support_global_desc": "如果您在美国境外并遇到危机，请联系当地的紧急服务部门，或使用全球目录在您的国家寻找免费、保密的支持。",
+        "support_select_country_label": "选择您的国家/地区",
+        "support_region_us": "美国",
+        "support_region_ca": "加拿大",
+        "support_region_uk": "英国",
+        "support_region_au": "澳大利亚",
+        "support_region_nz": "新西兰",
+        "support_region_intl": "国际 / 其他国家"
     },
-
     "hi": {
         "alert_vault_unavailable": "वॉल्ट अभी उपलब्ध नहीं है, इसलिए यह रिकॉर्डिंग सहेजी नहीं जा सकी।",
         "alert_reset_blocked": "रीसेट अन्य टैब द्वारा अवरुद्ध है। कृपया इस ऐप के सभी अन्य टैब बंद करें, फिर रीफ़्रेश करें।",
@@ -937,9 +962,15 @@ const translations = {
         "retire_last_main_warn": "यह आपका एकमात्र मुख्य संघर्ष है। इसे छोड़ने से आपका रैंक और मुख्य संघर्ष की समयरेखा ट्रॉफियां प्रारंभिक स्थिति में रीसेट हो जाएंगी। क्या आप निश्चित रूप से ऐसा करना चाहते हैं?",
         "support_find_helpline": "हेल्पलाइन खोजें",
         "support_global_title": "वैश्विक सहायता निर्देशिका",
-        "support_global_desc": "यदि आप संयुक्त राज्य अमेरिका के बाहर हैं और संकट का सामना कर रहे हैं, तो कृपया अपनी स्थानीय आपातकालीन सेवाओं से संपर्क करें या अपने देश में मुफ्त, गोपनीय सहायता खोजने के लिए वैश्विक निर्देशिका का उपयोग करें।"
+        "support_global_desc": "यदि आप संयुक्त राज्य अमेरिका के बाहर हैं और संकट का सामना कर रहे हैं, तो कृपया अपनी स्थानीय आपातकालीन सेवाओं से संपर्क करें या अपने देश में मुफ्त, गोपनीय सहायता खोजने के लिए वैश्विक निर्देशिका का उपयोग करें।",
+        "support_select_country_label": "अपना देश / क्षेत्र चुनें",
+        "support_region_us": "संयुक्त राज्य अमेरिका",
+        "support_region_ca": "कनाडा",
+        "support_region_uk": "यूनाइटेड किंगडम",
+        "support_region_au": "ऑस्ट्रेलिया",
+        "support_region_nz": "न्यूजीलैंड",
+        "support_region_intl": "अंतर्राष्ट्रीय / अन्य देश"
     },
-
     "ar": {
         "alert_vault_unavailable": "الخزنة غير متاحة حاليًا، لذا تعذر حفظ هذا التسجيل.",
         "alert_reset_blocked": "إعادة التعيين محظورة بواسطة علامات تبويب أخرى. يرجى إغلاق جميع علامات التبويب الأخرى لهذا التطبيق، ثم التحديث.",
@@ -1093,9 +1124,15 @@ const translations = {
         "retire_last_main_warn": "هذا هو صراعك الرئيسي الوحيد. التخلي عنه سيعيد تعيين رتبتك وكؤوس الجدول الزمني للصراع الرئيسي إلى الحالة الأولية. هل أنت متأكد أنك تريد القيام بذلك؟",
         "support_find_helpline": "ابحث عن خط المساعدة",
         "support_global_title": "دليل الدعم العالمي",
-        "support_global_desc": "إذا كنت خارج الولايات المتحدة وتواجه أزمة، يرجى الاتصال بخدمات الطوارئ المحلية أو استخدام الدليل العالمي للعثور على دعم مجاني وسري في بلدك."
+        "support_global_desc": "إذا كنت خارج الولايات المتحدة وتواجه أزمة، يرجى الاتصال بخدمات الطوارئ المحلية أو استخدام الدليل العالمي للعثور على دعم مجاني وسري في بلدك.",
+        "support_select_country_label": "اختر بلدك / منطقتك",
+        "support_region_us": "الولايات المتحدة",
+        "support_region_ca": "كندا",
+        "support_region_uk": "المملكة المتحدة",
+        "support_region_au": "أستراليا",
+        "support_region_nz": "نيوزيلندا",
+        "support_region_intl": "دولي / دول أخرى"
     },
-
     "pt": {
         "alert_vault_unavailable": "O Cofre está indisponível no momento, então esta gravação não pôde ser salva.",
         "alert_reset_blocked": "A redefinição está bloqueada por outras abas. Feche todas as outras abas deste aplicativo e atualize.",
@@ -1249,9 +1286,15 @@ const translations = {
         "retire_last_main_warn": "Esta é a sua única luta principal. Retirá-la redefinirá sua classificação e os troféus da linha do tempo da luta principal para o estado inicial. Tem certeza de que deseja fazer isso?",
         "support_find_helpline": "Encontrar Uma Linha de Ajuda",
         "support_global_title": "Diretório Global de Apoio",
-        "support_global_desc": "Se você estiver fora dos Estados Unidos e estiver passando por uma crise, entre em contato com os serviços de emergência locais ou use o diretório global para encontrar suporte gratuito e confidencial em seu país."
+        "support_global_desc": "Se você estiver fora dos Estados Unidos e estiver passando por uma crise, entre em contato com os serviços de emergência locais ou use o diretório global para encontrar suporte gratuito e confidencial em seu país.",
+        "support_select_country_label": "Selecione seu país / região",
+        "support_region_us": "Estados Unidos",
+        "support_region_ca": "Canadá",
+        "support_region_uk": "Reino Unido",
+        "support_region_au": "Austrália",
+        "support_region_nz": "Nova Zelândia",
+        "support_region_intl": "Internacional / Outros Países"
     },
-
     "ru": {
         "alert_vault_unavailable": "Хранилище сейчас недоступно, поэтому эту запись не удалось сохранить.",
         "alert_reset_blocked": "Сброс заблокирован другими вкладками. Закройте все остальные вкладки этого приложения, затем обновите страницу.",
@@ -1405,9 +1448,15 @@ const translations = {
         "retire_last_main_warn": "Это ваша единственная главная борьба. Ее прекращение сбросит ваш ранг и трофеи временной шкалы главной борьбы к начальному состоянию. Вы уверены, что хотите это сделать?",
         "support_find_helpline": "Найти Горячую Линию",
         "support_global_title": "Глобальный Справочник Поддержки",
-        "support_global_desc": "Если вы находитесь за пределами США и переживаете кризис, пожалуйста, свяжитесь с местными экстренными службами или воспользуйтесь глобальным справочником, чтобы найти бесплатную конфиденциальную поддержку в вашей стране."
+        "support_global_desc": "Если вы находитесь за пределами США и переживаете кризис, пожалуйста, свяжитесь с местными экстренными службами или воспользуйтесь глобальным справочником, чтобы найти бесплатную конфиденциальную поддержку в вашей стране.",
+        "support_select_country_label": "Выберите вашу страну / регион",
+        "support_region_us": "Соединенные Штаты",
+        "support_region_ca": "Канада",
+        "support_region_uk": "Великобритания",
+        "support_region_au": "Австралия",
+        "support_region_nz": "Новая Зеландия",
+        "support_region_intl": "Международный / Другие страны"
     },
-
     "ja": {
         "alert_vault_unavailable": "現在ボールトが利用できないため、この録音を保存できませんでした。",
         "alert_reset_blocked": "リセットは他のタブによってブロックされています。このアプリの他のすべてのタブを閉じてから、更新してください。",
@@ -1561,7 +1610,14 @@ const translations = {
         "retire_last_main_warn": "これはあなたの唯一の主な闘いです。これを終了すると、ランクと主な闘いのタイムライントロフィーが初期状態にリセットされます。本当にこれを実行しますか？",
         "support_find_helpline": "ヘルプラインを探す",
         "support_global_title": "グローバルサポートディレクトリ",
-        "support_global_desc": "アメリカ国外にいて危機的な状況にある場合は、地元の緊急サービスに連絡するか、グローバルディレクトリを使用して、あなたの国で無料の機密サポートを見つけてください。"
+        "support_global_desc": "アメリカ国外にいて危機的な状況にある場合は、地元の緊急サービスに連絡するか、グローバルディレクトリを使用して、あなたの国で無料の機密サポートを見つけてください。",
+        "support_select_country_label": "国・地域を選択してください",
+        "support_region_us": "アメリカ合衆国",
+        "support_region_ca": "カナダ",
+        "support_region_uk": "イギリス",
+        "support_region_au": "オーストラリア",
+        "support_region_nz": "ニュージーランド",
+        "support_region_intl": "国際 / その他の国"
     }
 };
 

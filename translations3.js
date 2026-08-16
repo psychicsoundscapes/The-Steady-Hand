@@ -1,9 +1,3 @@
-/**
- * TSH Translations - Extended Language Pack
- * Adds additional languages beyond translations.js / translations2.js.
- * Merged into `translations` at runtime by app.js (same pattern as translations2).
- */
-
 const translations3 = {
     "nl": {
         "alert_vault_unavailable": "De Kluis is momenteel niet beschikbaar, dus deze opname kon niet worden opgeslagen.",
@@ -158,7 +152,14 @@ const translations3 = {
         "retire_last_main_warn": "Dit is je enige hoofdworsteling. Deze met pensioen sturen reset je rang en hoofdworsteling-tijdlijntrofeeën naar de beginstand. Weet je zeker dat je dit wilt doen?",
         "support_find_helpline": "Vind Een Hulplijn",
         "support_global_title": "Wereldwijde Steungids",
-        "support_global_desc": "Als je buiten de Verenigde Staten bent en een crisis ervaart, neem dan contact op met je lokale hulpdiensten of gebruik de wereldwijde gids om gratis, vertrouwelijke steun in jouw land te vinden."
+        "support_global_desc": "Als je buiten de Verenigde Staten bent en een crisis ervaart, neem dan contact op met je lokale hulpdiensten of gebruik de wereldwijde gids om gratis, vertrouwelijke steun in jouw land te vinden.",
+        "support_select_country_label": "Selecteer uw land / regio",
+        "support_region_us": "Verenigde Staten",
+        "support_region_ca": "Canada",
+        "support_region_uk": "Verenigd Koninkrijk",
+        "support_region_au": "Australië",
+        "support_region_nz": "Nieuw-Zeeland",
+        "support_region_intl": "Internationaal / Andere landen"
     },
     "sv": {
         "alert_vault_unavailable": "Valvet är inte tillgängligt just nu, så den här inspelningen kunde inte sparas.",
@@ -313,7 +314,14 @@ const translations3 = {
         "retire_last_main_warn": "Det här är din enda huvudkamp. Att avsluta den återställer din rang och dina huvudkamp-tidslinjetroféer till ursprungsläget. Är du säker på att du vill göra det här?",
         "support_find_helpline": "Hitta en Hjälplinje",
         "support_global_title": "Global Stödkatalog",
-        "support_global_desc": "Om du befinner dig utanför USA och upplever en kris, kontakta din lokala räddningstjänst eller använd den globala katalogen för att hitta gratis, konfidentiellt stöd i ditt land."
+        "support_global_desc": "Om du befinner dig utanför USA och upplever en kris, kontakta din lokala räddningstjänst eller använd den globala katalogen för att hitta gratis, konfidentiellt stöd i ditt land.",
+        "support_select_country_label": "Välj ditt land / din region",
+        "support_region_us": "USA",
+        "support_region_ca": "Kanada",
+        "support_region_uk": "Storbritannien",
+        "support_region_au": "Australien",
+        "support_region_nz": "Nya Zeeland",
+        "support_region_intl": "Internationellt / Andra länder"
     },
     "el": {
         "alert_vault_unavailable": "Το Θησαυροφυλάκιο δεν είναι διαθέσιμο αυτή τη στιγμή, επομένως αυτή η εγγραφή δεν ήταν δυνατό να αποθηκευτεί.",
@@ -468,7 +476,14 @@ const translations3 = {
         "retire_last_main_warn": "Αυτός είναι ο μοναδικός σου κύριος αγώνας. Η απόσυρσή του θα επαναφέρει τη βαθμίδα σου και τα τρόπαια χρονογραμμής κύριου αγώνα στην αρχική κατάσταση. Είσαι σίγουρος ότι θέλεις να το κάνεις αυτό;",
         "support_find_helpline": "Βρες μια Γραμμή Βοήθειας",
         "support_global_title": "Παγκόσμιος Κατάλογος Στήριξης",
-        "support_global_desc": "Αν βρίσκεσαι εκτός Ηνωμένων Πολιτειών και αντιμετωπίζεις μια κρίση, επικοινώνησε με τις τοπικές υπηρεσίες έκτακτης ανάγκης ή χρησιμοποίησε τον παγκόσμιο κατάλογο για να βρεις δωρεάν, εμπιστευτική στήριξη στη χώρα σου."
+        "support_global_desc": "Αν βρίσκεσαι εκτός Ηνωμένων Πολιτειών και αντιμετωπίζεις μια κρίση, επικοινώνησε με τις τοπικές υπηρεσίες έκτακτης ανάγκης ή χρησιμοποίησε τον παγκόσμιο κατάλογο για να βρεις δωρεάν, εμπιστευτική στήριξη στη χώρα σου.",
+        "support_select_country_label": "Επιλέξτε τη χώρα / περιοχή σας",
+        "support_region_us": "Ηνωμένες Πολιτείες",
+        "support_region_ca": "Καναδάς",
+        "support_region_uk": "Ηνωμένο Βασίλειο",
+        "support_region_au": "Αυστραλία",
+        "support_region_nz": "Νέα Ζηλανδία",
+        "support_region_intl": "Διεθνές / Άλλες χώρες"
     },
     "ro": {
         "alert_vault_unavailable": "Seiful nu este disponibil momentan, așa că această înregistrare nu a putut fi salvată.",
@@ -623,7 +638,14 @@ const translations3 = {
         "retire_last_main_warn": "Aceasta este singura ta luptă principală. Retragerea ei îți va reseta rangul și trofeele de cronologie ale luptei principale la starea inițială. Ești sigur că vrei să faci asta?",
         "support_find_helpline": "Găsește o Linie de Asistență",
         "support_global_title": "Director Global de Sprijin",
-        "support_global_desc": "Dacă te afli în afara Statelor Unite și treci printr-o criză, te rugăm să contactezi serviciile locale de urgență sau să folosești directorul global pentru a găsi sprijin gratuit și confidențial în țara ta."
+        "support_global_desc": "Dacă te afli în afara Statelor Unite și treci printr-o criză, te rugăm să contactezi serviciile locale de urgență sau să folosești directorul global pentru a găsi sprijin gratuit și confidențial în țara ta.",
+        "support_select_country_label": "Selectați țara / regiunea dvs.",
+        "support_region_us": "Statele Unite",
+        "support_region_ca": "Canada",
+        "support_region_uk": "Regatul Unit",
+        "support_region_au": "Australia",
+        "support_region_nz": "Noua Zeelandă",
+        "support_region_intl": "Internațional / Alte țări"
     },
     "cs": {
         "alert_vault_unavailable": "Trezor je nyní nedostupný, takže tuto nahrávku nebylo možné uložit.",
@@ -778,7 +800,14 @@ const translations3 = {
         "retire_last_main_warn": "Toto je tvůj jediný hlavní boj. Jeho ukončení resetuje tvou hodnost a trofeje časové osy hlavního boje do počátečního stavu. Jsi si jistý, že to chceš udělat?",
         "support_find_helpline": "Najít Linku Pomoci",
         "support_global_title": "Celosvětový Adresář Podpory",
-        "support_global_desc": "Pokud se nacházíš mimo Spojené státy a procházíš krizí, obrať se prosím na místní záchranné služby nebo použij celosvětový adresář k nalezení bezplatné, důvěrné podpory ve tvé zemi."
+        "support_global_desc": "Pokud se nacházíš mimo Spojené státy a procházíš krizí, obrať se prosím na místní záchranné služby nebo použij celosvětový adresář k nalezení bezplatné, důvěrné podpory ve tvé zemi.",
+        "support_select_country_label": "Vyberte svou zemi / oblast",
+        "support_region_us": "Spojené státy",
+        "support_region_ca": "Kanada",
+        "support_region_uk": "Velká Británie",
+        "support_region_au": "Austrálie",
+        "support_region_nz": "Nový Zéland",
+        "support_region_intl": "Mezinárodní / Ostatní země"
     },
     "tr": {
         "alert_vault_unavailable": "Kasa şu anda kullanılamıyor, bu yüzden bu kayıt kaydedilemedi.",
@@ -933,7 +962,14 @@ const translations3 = {
         "retire_last_main_warn": "Bu senin tek ana mücadelen. Onu emekliye ayırmak, rütbeni ve ana mücadele zaman çizelgesi kupalarını başlangıç durumuna sıfırlayacak. Bunu yapmak istediğinden emin misin?",
         "support_find_helpline": "Bir Yardım Hattı Bul",
         "support_global_title": "Küresel Destek Rehberi",
-        "support_global_desc": "Amerika Birleşik Devletleri dışındaysan ve bir krizle karşı karşıyaysan, lütfen yerel acil servislerinle iletişime geç veya ülkende ücretsiz, gizli destek bulmak için küresel rehberi kullan."
+        "support_global_desc": "Amerika Birleşik Devletleri dışındaysan ve bir krizle karşı karşıyaysan, lütfen yerel acil servislerinle iletişime geç veya ülkende ücretsiz, gizli destek bulmak için küresel rehberi kullan.",
+        "support_select_country_label": "Ülkenizi / Bölgenizi Seçin",
+        "support_region_us": "Amerika Birleşik Devletleri",
+        "support_region_ca": "Kanada",
+        "support_region_uk": "Birleşik Krallık",
+        "support_region_au": "Avustralya",
+        "support_region_nz": "Yeni Zelanda",
+        "support_region_intl": "Uluslararası / Diğer Ülkeler"
     },
     "vi": {
         "alert_vault_unavailable": "Kho Lưu Trữ hiện không khả dụng, vì vậy bản ghi âm này không thể được lưu.",
@@ -1088,7 +1124,14 @@ const translations3 = {
         "retire_last_main_warn": "Đây là khó khăn chính duy nhất của bạn. Việc dừng theo dõi nó sẽ đặt lại cấp bậc và các cúp dòng thời gian khó khăn chính của bạn về trạng thái ban đầu. Bạn có chắc chắn muốn làm điều này không?",
         "support_find_helpline": "Tìm Đường Dây Hỗ Trợ",
         "support_global_title": "Danh Bạ Hỗ Trợ Toàn Cầu",
-        "support_global_desc": "Nếu bạn đang ở ngoài Hoa Kỳ và gặp khủng hoảng, vui lòng liên hệ dịch vụ khẩn cấp tại địa phương hoặc sử dụng danh bạ toàn cầu để tìm hỗ trợ miễn phí, bảo mật tại quốc gia của bạn."
+        "support_global_desc": "Nếu bạn đang ở ngoài Hoa Kỳ và gặp khủng hoảng, vui lòng liên hệ dịch vụ khẩn cấp tại địa phương hoặc sử dụng danh bạ toàn cầu để tìm hỗ trợ miễn phí, bảo mật tại quốc gia của bạn.",
+        "support_select_country_label": "Chọn quốc gia / khu vực của bạn",
+        "support_region_us": "Hoa Kỳ",
+        "support_region_ca": "Canada",
+        "support_region_uk": "Vương quốc Anh",
+        "support_region_au": "Úc",
+        "support_region_nz": "New Zealand",
+        "support_region_intl": "Quốc tế / Các quốc gia khác"
     },
     "th": {
         "alert_vault_unavailable": "ห้องนิรภัยไม่สามารถใช้งานได้ในขณะนี้ ดังนั้นจึงไม่สามารถบันทึกการบันทึกเสียงนี้ได้",
@@ -1243,7 +1286,14 @@ const translations3 = {
         "retire_last_main_warn": "นี่คือการต่อสู้หลักเพียงอย่างเดียวของคุณ การยกเลิกจะรีเซ็ตอันดับและถ้วยรางวัลไทม์ไลน์การต่อสู้หลักของคุณกลับสู่สถานะเริ่มต้น คุณแน่ใจหรือไม่ว่าต้องการทำเช่นนี้?",
         "support_find_helpline": "ค้นหาสายด่วน",
         "support_global_title": "ไดเรกทอรีสนับสนุนระดับโลก",
-        "support_global_desc": "หากคุณอยู่นอกสหรัฐอเมริกาและกำลังประสบวิกฤต โปรดติดต่อบริการฉุกเฉินในพื้นที่ของคุณหรือใช้ไดเรกทอรีระดับโลกเพื่อค้นหาการสนับสนุนฟรีและเป็นความลับในประเทศของคุณ"
+        "support_global_desc": "หากคุณอยู่นอกสหรัฐอเมริกาและกำลังประสบวิกฤต โปรดติดต่อบริการฉุกเฉินในพื้นที่ของคุณหรือใช้ไดเรกทอรีระดับโลกเพื่อค้นหาการสนับสนุนฟรีและเป็นความลับในประเทศของคุณ",
+        "support_select_country_label": "เลือกประเทศ / ภูมิภาคของคุณ",
+        "support_region_us": "สหรัฐอเมริกา",
+        "support_region_ca": "แคนาดา",
+        "support_region_uk": "สหราชอาณาจักร",
+        "support_region_au": "ออสเตรเลีย",
+        "support_region_nz": "นิวซีแลนด์",
+        "support_region_intl": "นานาชาติ / ประเทศอื่นๆ"
     },
     "id": {
         "alert_vault_unavailable": "Brankas saat ini tidak tersedia, jadi rekaman ini tidak dapat disimpan.",
@@ -1398,7 +1448,14 @@ const translations3 = {
         "retire_last_main_warn": "Ini adalah satu-satunya perjuangan utamamu. Menghentikannya akan mengatur ulang peringkat dan trofi garis waktu perjuangan utamamu ke keadaan awal. Apakah kamu yakin ingin melakukan ini?",
         "support_find_helpline": "Temukan Jalur Bantuan",
         "support_global_title": "Direktori Dukungan Global",
-        "support_global_desc": "Jika kamu berada di luar Amerika Serikat dan mengalami krisis, silakan hubungi layanan darurat setempat atau gunakan direktori global untuk menemukan dukungan gratis dan rahasia di negaramu."
+        "support_global_desc": "Jika kamu berada di luar Amerika Serikat dan mengalami krisis, silakan hubungi layanan darurat setempat atau gunakan direktori global untuk menemukan dukungan gratis dan rahasia di negaramu.",
+        "support_select_country_label": "Pilih Negara / Wilayah Anda",
+        "support_region_us": "Amerika Serikat",
+        "support_region_ca": "Kanada",
+        "support_region_uk": "Inggris Raya",
+        "support_region_au": "Australia",
+        "support_region_nz": "Selandia Baru",
+        "support_region_intl": "Internasional / Negara Lain"
     },
     "bn": {
         "alert_vault_unavailable": "ভল্ট এই মুহূর্তে অনুপলব্ধ, তাই এই রেকর্ডিংটি সংরক্ষণ করা যায়নি।",
@@ -1553,7 +1610,14 @@ const translations3 = {
         "retire_last_main_warn": "এটি তোমার একমাত্র প্রধান সংগ্রাম। এটি বাদ দিলে তোমার র‍্যাঙ্ক এবং প্রধান সংগ্রামের টাইমলাইন ট্রফি প্রাথমিক অবস্থায় ফিরে যাবে। তুমি কি নিশ্চিত যে এটি করতে চাও?",
         "support_find_helpline": "একটি সহায়তা লাইন খুঁজুন",
         "support_global_title": "বৈশ্বিক সহায়তা নির্দেশিকা",
-        "support_global_desc": "যদি তুমি যুক্তরাষ্ট্রের বাইরে থাকো এবং একটি সংকটের সম্মুখীন হও, তাহলে দয়া করে তোমার স্থানীয় জরুরি পরিষেবার সাথে যোগাযোগ করো অথবা তোমার দেশে বিনামূল্যে, গোপনীয় সহায়তা খুঁজে পেতে বৈশ্বিক নির্দেশিকা ব্যবহার করো।"
+        "support_global_desc": "যদি তুমি যুক্তরাষ্ট্রের বাইরে থাকো এবং একটি সংকটের সম্মুখীন হও, তাহলে দয়া করে তোমার স্থানীয় জরুরি পরিষেবার সাথে যোগাযোগ করো অথবা তোমার দেশে বিনামূল্যে, গোপনীয় সহায়তা খুঁজে পেতে বৈশ্বিক নির্দেশিকা ব্যবহার করো।",
+        "support_select_country_label": "আপনার দেশ / অঞ্চল নির্বাচন করুন",
+        "support_region_us": "মার্কিন যুক্তরাষ্ট্র",
+        "support_region_ca": "কানাডা",
+        "support_region_uk": "যুক্তরাজ্য",
+        "support_region_au": "অস্ট্রেলিয়া",
+        "support_region_nz": "নিউজিল্যান্ড",
+        "support_region_intl": "আন্তর্জাতিক / অন্যান্য দেশ"
     },
     "ta": {
         "alert_vault_unavailable": "பெட்டகம் இப்போது கிடைக்கவில்லை, எனவே இந்தப் பதிவைச் சேமிக்க முடியவில்லை.",
@@ -1708,7 +1772,14 @@ const translations3 = {
         "retire_last_main_warn": "இது உங்கள் ஒரே முதன்மைப் போராட்டம். இதை நிறுத்துவது உங்கள் தரவரிசையையும் முதன்மைப் போராட்ட காலவரிசைக் கோப்பைகளையும் ஆரம்ப நிலைக்கு மீட்டமைக்கும். இதைச் செய்ய விரும்புகிறீர்கள் என உறுதியாக உள்ளீர்களா?",
         "support_find_helpline": "ஒரு உதவிக் கோட்டைக் கண்டறியவும்",
         "support_global_title": "உலகளாவிய ஆதரவு அடைவு",
-        "support_global_desc": "நீங்கள் அமெரிக்காவிற்கு வெளியே இருந்து ஒரு நெருக்கடியை எதிர்கொண்டால், தயவுசெய்து உங்கள் உள்ளூர் அவசர சேவைகளைத் தொடர்பு கொள்ளுங்கள் அல்லது உங்கள் நாட்டில் இலவச, ரகசியமான ஆதரவைக் கண்டறிய உலகளாவிய அடைவைப் பயன்படுத்துங்கள்."
+        "support_global_desc": "நீங்கள் அமெரிக்காவிற்கு வெளியே இருந்து ஒரு நெருக்கடியை எதிர்கொண்டால், தயவுசெய்து உங்கள் உள்ளூர் அவசர சேவைகளைத் தொடர்பு கொள்ளுங்கள் அல்லது உங்கள் நாட்டில் இலவச, ரகசியமான ஆதரவைக் கண்டறிய உலகளாவிய அடைவைப் பயன்படுத்துங்கள்.",
+        "support_select_country_label": "உங்கள் நாடு / பிராந்தியத்தைத் தேர்ந்தெடுக்கவும்",
+        "support_region_us": "அமெரிக்கா",
+        "support_region_ca": "கனடா",
+        "support_region_uk": "ஐக்கிய இராச்சியம்",
+        "support_region_au": "ஆஸ்திரேலியா",
+        "support_region_nz": "நியூசிலாந்து",
+        "support_region_intl": "சர்வதேசம் / பிற நாடுகள்"
     },
     "am": {
         "alert_vault_unavailable": "ካዝናው በአሁኑ ጊዜ አይገኝም፣ ስለዚህ ይህ ቅጂ ሊቀመጥ አልቻለም።",
@@ -1863,7 +1934,14 @@ const translations3 = {
         "retire_last_main_warn": "ይህ ብቸኛው ዋና ትግልህ ነው። እሱን ማቆም ደረጃህን እና የዋና ትግል የጊዜ መስመር ዋንጫዎችን ወደ መጀመሪያው ሁኔታ ይመልሳል። ይህን ማድረግ እንደምትፈልግ እርግጠኛ ነህ?",
         "support_find_helpline": "የድጋፍ መስመር ፈልግ",
         "support_global_title": "ዓለም አቀፍ የድጋፍ ማውጫ",
-        "support_global_desc": "ከዩናይትድ ስቴትስ ውጭ ከሆንክ እና ቀውስ እያጋጠመህ ከሆነ፣ እባክህ የአካባቢህን የአደጋ ጊዜ አገልግሎቶች አግኝ ወይም በአገርህ ውስጥ ነጻ፣ ሚስጥራዊ ድጋፍ ለማግኘት ዓለም አቀፉን ማውጫ ተጠቀም።"
+        "support_global_desc": "ከዩናይትድ ስቴትስ ውጭ ከሆንክ እና ቀውስ እያጋጠመህ ከሆነ፣ እባክህ የአካባቢህን የአደጋ ጊዜ አገልግሎቶች አግኝ ወይም በአገርህ ውስጥ ነጻ፣ ሚስጥራዊ ድጋፍ ለማግኘት ዓለም አቀፉን ማውጫ ተጠቀም።",
+        "support_select_country_label": "አገርዎን / ክልልዎን ይምረጡ",
+        "support_region_us": "አሜሪካ",
+        "support_region_ca": "ካናዳ",
+        "support_region_uk": "ዩናይትድ ኪንግደም",
+        "support_region_au": "አውስትራሊያ",
+        "support_region_nz": "ኒው ዚላንድ",
+        "support_region_intl": "አለምአቀፍ / ሌሎች አገሮች"
     },
     "ha": {
         "alert_vault_unavailable": "Ma'ajiya ba ta samuwa a yanzu, don haka ba a iya adana wannan rikodin ba.",
@@ -2018,7 +2096,14 @@ const translations3 = {
         "retire_last_main_warn": "Wannan ita ce kaɗai babbar famarka. Dainawa da ita zai sake saita matsayinka da kyaututtukan layin lokaci na babbar fama zuwa yanayin farko. Ka tabbata kana son yin haka?",
         "support_find_helpline": "Nemo Layin Taimako",
         "support_global_title": "Jerin Taimako na Duniya",
-        "support_global_desc": "Idan kana waje da Amurka kuma kana fuskantar rikici, don Allah tuntuɓi hukumomin gaggawa na yankinka ko yi amfani da jerin taimako na duniya domin nemo tallafi kyauta, na sirri, a ƙasarka."
+        "support_global_desc": "Idan kana waje da Amurka kuma kana fuskantar rikici, don Allah tuntuɓi hukumomin gaggawa na yankinka ko yi amfani da jerin taimako na duniya domin nemo tallafi kyauta, na sirri, a ƙasarka.",
+        "support_select_country_label": "Zaɓi Ƙasarku / Yankinku",
+        "support_region_us": "Amurka",
+        "support_region_ca": "Kanada",
+        "support_region_uk": "Birtaniya",
+        "support_region_au": "Ostareliya",
+        "support_region_nz": "New Zealand",
+        "support_region_intl": "Na Duniya / Sauran Kasashe"
     },
     "yo": {
         "alert_vault_unavailable": "Àpótí Ìṣúra kò sí lọ́wọ́lọ́wọ́, nítorí náà a kò lè fi ìrèkọ̀ọ̀ yìí pamọ́.",
@@ -2173,7 +2258,14 @@ const translations3 = {
         "retire_last_main_warn": "Èyí ni ìjà pàtàkì rẹ kan ṣoṣo. Dídá a dúró máa tún ipò rẹ àti àwọn ẹ̀bùn ìlà-àkókò ìjà pàtàkì rẹ ṣe padà sí ipò ìpilẹ̀ṣẹ̀. Ṣé o dá ọ lójú pé o fẹ́ ṣe èyí?",
         "support_find_helpline": "Wá Ìlà Ìrànlọ́wọ́ Kan",
         "support_global_title": "Àkójọ Àtìlẹ́yìn Àgbáyé",
-        "support_global_desc": "Bí o bá wà lóde Amẹ́ríkà tí o sì ń dojú kọ ìdààmú, jọ̀wọ́ kàn sí àwọn iṣẹ́ pàjáwìrì àdúgbò rẹ tàbí lo àkójọ àgbáyé láti wá àtìlẹ́yìn ọ̀fẹ́, tí a fi pamọ́, ní orílẹ̀-èdè rẹ."
+        "support_global_desc": "Bí o bá wà lóde Amẹ́ríkà tí o sì ń dojú kọ ìdààmú, jọ̀wọ́ kàn sí àwọn iṣẹ́ pàjáwìrì àdúgbò rẹ tàbí lo àkójọ àgbáyé láti wá àtìlẹ́yìn ọ̀fẹ́, tí a fi pamọ́, ní orílẹ̀-èdè rẹ.",
+        "support_select_country_label": "Yan Orilẹ-ede / Agbegbe Rẹ",
+        "support_region_us": "Amẹ́ríkà",
+        "support_region_ca": "Kánádà",
+        "support_region_uk": "Ilu Ọba",
+        "support_region_au": "Australia",
+        "support_region_nz": "Niu Silandi",
+        "support_region_intl": "Agbaye / Awọn orilẹ-ede Miiran"
     },
     "zu": {
         "alert_vault_unavailable": "I-Vault ayitholakali njengamanje, ngakho lokhu kurekhodwa akukwazanga ukugcinwa.",
@@ -2328,6 +2420,13 @@ const translations3 = {
         "retire_last_main_warn": "Lona ngumzabalazo wakho oyinhloko kuphela. Ukuwuyeka kuzosetha kabusha izinga lakho nezindondo zomugqa wesikhathi womzabalazo oyinhloko ziye esimweni sakuqala. Uqinisekile ukuthi ufuna ukwenza lokhu?",
         "support_find_helpline": "Thola Umugqa Wosizo",
         "support_global_title": "Ikhathalogi Yokwesekwa Yomhlaba Wonke",
-        "support_global_desc": "Uma ungaphandle kwe-United States futhi ubhekene nesimo esiphuthumayo, sicela uxhumane nezinsizakalo eziphuthumayo zendawo yakho noma usebenzise ikhathalogi yomhlaba wonke ukuze uthole ukwesekwa mahhala, okuyimfihlo, ezweni lakini."
+        "support_global_desc": "Uma ungaphandle kwe-United States futhi ubhekene nesimo esiphuthumayo, sicela uxhumane nezinsizakalo eziphuthumayo zendawo yakho noma usebenzise ikhathalogi yomhlaba wonke ukuze uthole ukwesekwa mahhala, okuyimfihlo, ezweni lakini.",
+        "support_select_country_label": "Khetha Izwe / Isifunda Sakho",
+        "support_region_us": "I-United States",
+        "support_region_ca": "I-Canada",
+        "support_region_uk": "I-United Kingdom",
+        "support_region_au": "I-Australia",
+        "support_region_nz": "I-New Zealand",
+        "support_region_intl": "Umhlaba Wonke / Ezinye Izwe"
     }
 };

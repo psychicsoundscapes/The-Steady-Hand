@@ -1,9 +1,3 @@
-/**
- * TSH Expansion Translation Dictionary
- * Contains Hebrew and major languages of heavily Christian populations: 
- * Tagalog (Philippines), Italian (Italy), Korean (South Korea), Polish (Poland), and Swahili (East Africa).
- */
-
 const translations2 = {
     "he": {
         "alert_vault_unavailable": "הכספת אינה זמינה כרגע, ולכן לא ניתן היה לשמור את ההקלטה הזו.",
@@ -158,9 +152,15 @@ const translations2 = {
         "retire_last_main_warn": "זהו המאבק הראשי היחיד שלך. פרישה ממנו תאפס את הדרגה שלך ואת גביעי ציר הזמן של המאבק הראשי למצב הראשוני. האם אתה בטוח שברצונך לעשות זאת?",
         "support_find_helpline": "מצא קו סיוע",
         "support_global_title": "מדריך תמיכה עולמי",
-        "support_global_desc": "אם אתה מחוץ לארצות הברית וחווה משבר, אנא פנה לשירותי החירום המקומיים או השתמש במדריך העולמי כדי למצוא תמיכה חינמית וסודית במדינתך."
+        "support_global_desc": "אם אתה מחוץ לארצות הברית וחווה משבר, אנא פנה לשירותי החירום המקומיים או השתמש במדריך העולמי כדי למצוא תמיכה חינמית וסודית במדינתך.",
+        "support_select_country_label": "בחר את המדינה / האזור שלך",
+        "support_region_us": "ארצות הברית",
+        "support_region_ca": "קנדה",
+        "support_region_uk": "הממלכה המאוחדת",
+        "support_region_au": "אוסטרליה",
+        "support_region_nz": "ניו זילנד",
+        "support_region_intl": "בינלאומי / מדינות אחרות"
     },
-
     "tl": {
         "alert_vault_unavailable": "Hindi available ang Vault ngayon, kaya hindi na-save ang recording na ito.",
         "alert_reset_blocked": "Naka-block ang reset ng ibang tabs. Pakisara ang lahat ng ibang tabs ng app na ito, pagkatapos ay i-refresh.",
@@ -314,9 +314,15 @@ const translations2 = {
         "retire_last_main_warn": "Ito ang iyong kaisa-isang pangunahing laban. Ang pag-retire nito ay magre-reset sa iyong ranggo at mga tropeo ng timeline ng pangunahing laban sa paunang estado. Sigurado ka bang gusto mong gawin ito?",
         "support_find_helpline": "Maghanap ng Helpline",
         "support_global_title": "Pandaigdigang Direktoryo ng Suporta",
-        "support_global_desc": "Kung ikaw ay nasa labas ng Estados Unidos at nakakaranas ng krisis, mangyaring makipag-ugnayan sa iyong mga lokal na serbisyong pang-emergency o gamitin ang pandaigdigang direktoryo upang makahanap ng libre, kumpidensyal na suporta sa iyong bansa."
+        "support_global_desc": "Kung ikaw ay nasa labas ng Estados Unidos at nakakaranas ng krisis, mangyaring makipag-ugnayan sa iyong mga lokal na serbisyong pang-emergency o gamitin ang pandaigdigang direktoryo upang makahanap ng libre, kumpidensyal na suporta sa iyong bansa.",
+        "support_select_country_label": "Piliin ang Iyong Bansa / Rehiyon",
+        "support_region_us": "Estados Unidos",
+        "support_region_ca": "Canada",
+        "support_region_uk": "United Kingdom",
+        "support_region_au": "Australia",
+        "support_region_nz": "New Zealand",
+        "support_region_intl": "Pandaigdigan / Ibang Bansa"
     },
-
     "it": {
         "alert_vault_unavailable": "Il Caveau non è al momento disponibile, quindi questa registrazione non è stata salvata.",
         "alert_reset_blocked": "Il ripristino è bloccato da altre schede. Chiudi tutte le altre schede di questa app, quindi aggiorna.",
@@ -470,9 +476,15 @@ const translations2 = {
         "retire_last_main_warn": "Questa è la tua unica lotta principale. Ritirarla ripristinerà il tuo grado e i trofei della linea temporale della lotta principale allo stato iniziale. Sei sicuro di volerlo fare?",
         "support_find_helpline": "Trova una Linea di Aiuto",
         "support_global_title": "Direttorio Globale di Supporto",
-        "support_global_desc": "Se ti trovi al di fuori degli Stati Uniti e stai vivendo una crisi, contatta i servizi di emergenza locali o utilizza il direttorio globale per trovare supporto gratuito e riservato nel tuo paese."
+        "support_global_desc": "Se ti trovi al di fuori degli Stati Uniti e stai vivendo una crisi, contatta i servizi di emergenza locali o utilizza il direttorio globale per trovare supporto gratuito e riservato nel tuo paese.",
+        "support_select_country_label": "Seleziona il tuo paese / regione",
+        "support_region_us": "Stati Uniti",
+        "support_region_ca": "Canada",
+        "support_region_uk": "Regno Unito",
+        "support_region_au": "Australia",
+        "support_region_nz": "Nuova Zelanda",
+        "support_region_intl": "Internazionale / Altri Paesi"
     },
-
     "ko": {
         "alert_vault_unavailable": "지금은 보관함을 사용할 수 없어 이 녹음을 저장하지 못했습니다.",
         "alert_reset_blocked": "다른 탭에 의해 재설정이 차단되었습니다. 이 앱의 다른 모든 탭을 닫은 후 새로고침하세요.",
@@ -626,9 +638,15 @@ const translations2 = {
         "retire_last_main_warn": "이것은 귀하의 유일한 주요 투쟁입니다. 이것을 은퇴시키면 등급과 주요 투쟁 타임라인 트로피가 초기 상태로 재설정됩니다. 정말로 이 작업을 수행하시겠습니까?",
         "support_find_helpline": "헬프라인 찾기",
         "support_global_title": "글로벌 지원 디렉토리",
-        "support_global_desc": "미국 이외의 지역에서 위기를 겪고 계신 경우, 현지 응급 서비스에 연락하시거나 글로벌 디렉토리를 사용하여 귀하의 국가에서 제공되는 무료 기밀 지원을 찾으십시오."
+        "support_global_desc": "미국 이외의 지역에서 위기를 겪고 계신 경우, 현지 응급 서비스에 연락하시거나 글로벌 디렉토리를 사용하여 귀하의 국가에서 제공되는 무료 기밀 지원을 찾으십시오.",
+        "support_select_country_label": "국가 / 지역 선택",
+        "support_region_us": "미국",
+        "support_region_ca": "캐나다",
+        "support_region_uk": "영국",
+        "support_region_au": "호주",
+        "support_region_nz": "뉴질랜드",
+        "support_region_intl": "국제 / 기타 국가"
     },
-
     "pl": {
         "alert_vault_unavailable": "Skarbiec jest teraz niedostępny, więc tego nagrania nie udało się zapisać.",
         "alert_reset_blocked": "Resetowanie jest zablokowane przez inne karty. Zamknij wszystkie inne karty tej aplikacji, a następnie odśwież.",
@@ -782,9 +800,15 @@ const translations2 = {
         "retire_last_main_warn": "To jest twoja jedyna główna walka. Wycofanie jej zresetuje twoją rangę i trofea osi czasu głównej walki do stanu początkowego. Czy na pewno chcesz to zrobić?",
         "support_find_helpline": "Znajdź Infolinię",
         "support_global_title": "Globalny Katalog Wsparcia",
-        "support_global_desc": "Jeśli przebywasz poza Stanami Zjednoczonymi i przechodzisz kryzys, skontaktuj się z lokalnymi służbami ratowniczymi lub skorzystaj z globalnego katalogu, aby znaleźć bezpłatne, poufne wsparcie w swoim kraju."
+        "support_global_desc": "Jeśli przebywasz poza Stanami Zjednoczonymi i przechodzisz kryzys, skontaktuj się z lokalnymi służbami ratowniczymi lub skorzystaj z globalnego katalogu, aby znaleźć bezpłatne, poufne wsparcie w swoim kraju.",
+        "support_select_country_label": "Wybierz swój kraj / region",
+        "support_region_us": "Stany Zjednoczone",
+        "support_region_ca": "Kanada",
+        "support_region_uk": "Wielka Brytania",
+        "support_region_au": "Australia",
+        "support_region_nz": "Nowa Zelandia",
+        "support_region_intl": "Międzynarodowy / Inne kraje"
     },
-
     "sw": {
         "alert_vault_unavailable": "Hifadhi haipatikani kwa sasa, hivyo rekodi hii haikuweza kuhifadhiwa.",
         "alert_reset_blocked": "Kuweka upya kumezuiwa na vichupo vingine. Tafadhali funga vichupo vingine vyote vya programu hii, kisha onyesha upya.",
@@ -938,9 +962,15 @@ const translations2 = {
         "retire_last_main_warn": "Hili ndilo pambano lako kuu pekee. Kuliondoa kutaweka upya cheo chako na nyara za kalenda ya matukio ya pambano kuu kwenye hali ya awali. Je, una uhakika unataka kufanya hivi?",
         "support_find_helpline": "Tafuta Njia ya Msaada",
         "support_global_title": "Saraka ya Msaada ya Ulimwengu",
-        "support_global_desc": "Ikiwa uko nje ya Marekani na unakabiliwa na mgogoro, tafadhali wasiliana na huduma za dharura za eneo lako au tumia saraka ya ulimwengu kupata msaada wa siri na wa bure katika nchi yako."
+        "support_global_desc": "Ikiwa uko nje ya Marekani na unakabiliwa na mgogoro, tafadhali wasiliana na huduma za dharura za eneo lako au tumia saraka ya ulimwengu kupata msaada wa siri na wa bure katika nchi yako.",
+        "support_select_country_label": "Chagua Nchi / Eneo Lako",
+        "support_region_us": "Marekani",
+        "support_region_ca": "Kanada",
+        "support_region_uk": "Uingereza",
+        "support_region_au": "Australia",
+        "support_region_nz": "Nyuzilandi",
+        "support_region_intl": "Kimataifa / Nchi Nyingine"
     },
-
     "fa": {
         "alert_vault_unavailable": "خزانه در حال حاضر در دسترس نیست، بنابراین این ضبط ذخیره نشد.",
         "alert_reset_blocked": "بازنشانی توسط تب‌های دیگر مسدود شده است. لطفاً همه تب‌های دیگر این برنامه را ببندید، سپس صفحه را تازه‌سازی کنید.",
@@ -1094,9 +1124,15 @@ const translations2 = {
         "retire_last_main_warn": "این تنها مبارزه اصلی شماست. کنار گذاشتن آن، رتبه و جوایز جدول زمانی مبارزه اصلی شما را به حالت اولیه بازنشانی می‌کند. آیا مطمئن هستید که می‌خواهید این کار را انجام دهید؟",
         "support_find_helpline": "خط راهنما را پیدا کنید",
         "support_global_title": "فهرست جهانی پشتیبانی",
-        "support_global_desc": "اگر خارج از ایالات متحده هستید و دچار بحران شده‌اید، لطفاً با خدمات اضطراری محلی خود تماس بگیرید یا از فهرست جهانی برای یافتن پشتیبانی رایگان و محرمانه در کشور خود استفاده کنید."
+        "support_global_desc": "اگر خارج از ایالات متحده هستید و دچار بحران شده‌اید، لطفاً با خدمات اضطراری محلی خود تماس بگیرید یا از فهرست جهانی برای یافتن پشتیبانی رایگان و محرمانه در کشور خود استفاده کنید.",
+        "support_select_country_label": "کشور / منطقه خود را انتخاب کنید",
+        "support_region_us": "ایالات متحده",
+        "support_region_ca": "کانادا",
+        "support_region_uk": "بریتانیا",
+        "support_region_au": "استرالیا",
+        "support_region_nz": "نیوزیلند",
+        "support_region_intl": "بین‌المللی / سایر کشورها"
     },
-
     "ms": {
         "alert_vault_unavailable": "Vault tidak tersedia sekarang, jadi rakaman ini tidak dapat disimpan.",
         "alert_reset_blocked": "Set semula disekat oleh tab lain. Sila tutup semua tab lain aplikasi ini, kemudian muat semula.",
@@ -1250,9 +1286,15 @@ const translations2 = {
         "retire_last_main_warn": "Ini adalah satu-satunya perjuangan utama anda. Mengeluarkannya akan menetapkan semula pangkat anda dan trofi garis masa perjuangan utama ke keadaan awal. Adakah anda pasti mahu melakukan ini?",
         "support_find_helpline": "Cari Talian Bantuan",
         "support_global_title": "Direktori Sokongan Global",
-        "support_global_desc": "Jika anda berada di luar Amerika Syarikat dan sedang mengalami krisis, sila hubungi perkhidmatan kecemasan tempatan anda atau gunakan direktori global untuk mencari sokongan percuma dan sulit di negara anda."
+        "support_global_desc": "Jika anda berada di luar Amerika Syarikat dan sedang mengalami krisis, sila hubungi perkhidmatan kecemasan tempatan anda atau gunakan direktori global untuk mencari sokongan percuma dan sulit di negara anda.",
+        "support_select_country_label": "Pilih Negara / Wilayah Anda",
+        "support_region_us": "Amerika Syarikat",
+        "support_region_ca": "Kanada",
+        "support_region_uk": "United Kingdom",
+        "support_region_au": "Australia",
+        "support_region_nz": "New Zealand",
+        "support_region_intl": "Antarabangsa / Negara Lain"
     },
-
     "ur": {
         "alert_vault_unavailable": "والٹ ابھی دستیاب نہیں ہے، اس لیے یہ ریکارڈنگ محفوظ نہیں ہو سکی۔",
         "alert_reset_blocked": "دوسرے ٹیبز کی وجہ سے ری سیٹ مسدود ہے۔ براہ کرم اس ایپ کے تمام دوسرے ٹیبز بند کریں، پھر ریفریش کریں۔",
@@ -1406,9 +1448,15 @@ const translations2 = {
         "retire_last_main_warn": "یہ آپ کی واحد اہم جدوجہد ہے۔ اسے ختم کرنے سے آپ کا رینک اور اہم جدوجہد کی ٹائم لائن ٹرافیاں ابتدائی حالت میں ری سیٹ ہو جائیں گی۔ کیا آپ واقعی ایسا کرنا چاہتے ہیں؟",
         "support_find_helpline": "ہیلپ لائن تلاش کریں",
         "support_global_title": "عالمی سپورٹ ڈائریکٹری",
-        "support_global_desc": "اگر آپ ریاستہائے متحدہ سے باہر ہیں اور کسی بحران کا شکار ہیں، تو براہ کرم اپنی مقامی ہنگامی خدمات سے رابطہ کریں یا اپنے ملک میں مفت، خفیہ مدد حاصل کرنے کے لیے عالمی ڈائریکٹری کا استعمال کریں۔"
+        "support_global_desc": "اگر آپ ریاستہائے متحدہ سے باہر ہیں اور کسی بحران کا شکار ہیں، تو براہ کرم اپنی مقامی ہنگامی خدمات سے رابطہ کریں یا اپنے ملک میں مفت، خفیہ مدد حاصل کرنے کے لیے عالمی ڈائریکٹری کا استعمال کریں۔",
+        "support_select_country_label": "اپنا ملک / خطہ منتخب کریں",
+        "support_region_us": "ریاستہائے متحدہ",
+        "support_region_ca": "کینیڈا",
+        "support_region_uk": "برطانیہ",
+        "support_region_au": "آسٹریلیا",
+        "support_region_nz": "نیوزی لینڈ",
+        "support_region_intl": "بین الاقوامی / دیگر ممالک"
     },
-
     "uk": {
         "alert_vault_unavailable": "Сховище зараз недоступне, тому цей запис не вдалося зберегти.",
         "alert_reset_blocked": "Скидання заблоковано іншими вкладками. Будь ласка, закрийте всі інші вкладки цього застосунку, а потім оновіть сторінку.",
@@ -1562,6 +1610,13 @@ const translations2 = {
         "retire_last_main_warn": "Це ваша єдина головна боротьба. Її видалення скине ваш ранг і трофеї часової шкали головної боротьби до початкового стану. Ви впевнені, що хочете це зробити?",
         "support_find_helpline": "Знайти Гарячу Лінію",
         "support_global_title": "Глобальний довідник підтримки",
-        "support_global_desc": "Якщо ви перебуваєте за межами Сполучених Штатів і переживаєте кризу, будь ласка, зверніться до місцевих екстрених служб або скористайтеся глобальним довідником, щоб знайти безкоштовну конфіденційну підтримку у вашій країні."
+        "support_global_desc": "Якщо ви перебуваєте за межами Сполучених Штатів і переживаєте кризу, будь ласка, зверніться до місцевих екстрених служб або скористайтеся глобальним довідником, щоб знайти безкоштовну конфіденційну підтримку у вашій країні.",
+        "support_select_country_label": "Оберіть вашу країну / регіон",
+        "support_region_us": "Сполучені Штати",
+        "support_region_ca": "Канада",
+        "support_region_uk": "Велика Британія",
+        "support_region_au": "Австралія",
+        "support_region_nz": "Нова Зеландія",
+        "support_region_intl": "Міжнародний / Інші країни"
     }
 };

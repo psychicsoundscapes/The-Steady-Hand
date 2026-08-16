@@ -90,21 +90,47 @@ export async function onRequestGet({ request, env }) {
             return Response.json({ error: "Message not found" }, { status: 404 });
         }
 
-        const translatedText = msg.language === targetLang
-            ? msg.text
-            : (await env.AI.run('@cf/meta/m2m100-1.2b', {
+        let translatedText = msg.text;
+        let isSuccessfulTranslation = true;
+
+        if (msg.language !== targetLang) {
+            const aiPayload = {
                 text: msg.text,
                 target_lang: targetLang
-            })).translated_text || msg.text;
+            };
+            if (msg.language && isSupportedLanguage(msg.language)) {
+                aiPayload.source_lang = msg.language;
+            }
 
+            const aiResult = await env.AI.run('@cf/meta/m2m100-1.2b', aiPayload);
+            const candidate = aiResult && typeof aiResult.translated_text === 'string'
+                ? aiResult.translated_text.trim()
+                : '';
+
+            // Guard against model repetition loops/hallucinations (e.g. "iiiiii...", "......")
+            const isDegenerate = candidate && /(.)\1{7,}/.test(candidate);
+
+            if (candidate && !isDegenerate) {
+                translatedText = candidate;
+            } else {
+                console.warn('Degenerate or empty translation result:', { messageId, source: msg.language, target: targetLang, candidate });
+                translatedText = msg.text;
+                isSuccessfulTranslation = false;
+            }
+        }
+
+        const cacheControl = isSuccessfulTranslation ? 'public, max-age=2592000' : 'no-store';
         const response = Response.json(
             { translatedText, sourceLanguage: msg.language },
-            { headers: { 'Cache-Control': 'public, max-age=2592000' } }
+            { headers: { 'Cache-Control': cacheControl } }
         );
-        try {
-            await cache.put(request, response.clone());
-        } catch (error) {
-            console.warn('Translation cache write failed:', error);
+
+        if (isSuccessfulTranslation) {
+            try {
+                await cache.put(request, response.clone());
+            } catch (error) {
+                console.warn('Translation cache write failed:', error);
+            }
         }
         return response;
 

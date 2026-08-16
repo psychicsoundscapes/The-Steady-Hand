@@ -96,14 +96,271 @@ function applyTranslations() {
         select.value = activeLang;
     });
 
-    // Language does not reliably identify a person's country. Always show both
-    // local US resources and the global directory so people can choose safely.
-    const regionalLifelines = document.getElementById('regional-lifelines');
-    const intlLifelines = document.getElementById('intl-lifelines');
-    
-    if (regionalLifelines) regionalLifelines.classList.remove('hidden');
-    if (intlLifelines) intlLifelines.classList.remove('hidden');
+    // Localize Country Selector Dropdown
+    const countrySelect = document.getElementById('support-country-select');
+    if (countrySelect) {
+        Array.from(countrySelect.options).forEach(opt => {
+            const meta = countryNames[opt.value];
+            if (meta) {
+                const dict = localizedCountryDictionary[opt.value];
+                const localizedName = (dict && dict[activeLang]) || langData[meta.key] || fallbackData[meta.key] || meta.default;
+                opt.textContent = `${meta.flag} ${localizedName}`;
+            }
+        });
+        const labelEl = document.querySelector('label[for="support-country-select"] [data-i18n="support_select_country_label"]');
+        if (labelEl) {
+            const dict = localizedCountryDictionary['support_select_country_label'];
+            labelEl.textContent = (dict && dict[activeLang]) || langData.support_select_country_label || fallbackData.support_select_country_label || "Select Your Country / Region";
+        }
+    }
 
+    renderLifelines();
+    renderIcons();
+}
+
+// --- Country / Regional Lifelines Data & Dynamic Renderer ---
+const localizedCountryDictionary = {
+    "support_select_country_label": {
+        "en": "Select Your Country / Region", "es": "Selecciona tu país / región", "fr": "Sélectionnez votre pays / région",
+        "de": "Wählen Sie Ihr Land / Ihre Region", "it": "Seleziona il tuo paese / regione", "pt": "Selecione seu país / região",
+        "ru": "Выберите вашу страну / регион", "zh": "选择您的国家/地区", "ja": "国・地域を選択してください",
+        "ko": "국가 / 지역 선택", "ar": "اختر بلدك / منطقتك", "he": "בחר את המדינה / האזור שלך",
+        "hi": "अपना देश / क्षेत्र चुनें", "tl": "Piliin ang Iyong Bansa / Rehiyon", "pl": "Wybierz swój kraj / region",
+        "nl": "Selecteer uw land / regio", "sv": "Välj ditt land / din region", "el": "Επιλέξτε τη χώρα / περιοχή σας",
+        "ro": "Selectați țara / regiunea dvs.", "cs": "Vyberte svou zemi / oblast", "tr": "Ülkenizi / Bölgenizi Seçin",
+        "vi": "Chọn quốc gia / khu vực của bạn", "th": "เลือกประเทศ / ภูมิภาคของคุณ", "id": "Pilih Negara / Wilayah Anda",
+        "ms": "Pilih Negara / Wilayah Anda", "fa": "کشور / منطقه خود را انتخاب کنید", "ur": "اپنا ملک / خطہ منتخب کریں",
+        "uk": "Оберіть вашу країну / регіон", "bn": "আপনার দেশ / অঞ্চল নির্বাচন করুন", "ta": "உங்கள் நாடு / பிராந்தியத்தைத் தேர்ந்தெடுக்கவும்",
+        "sw": "Chagua Nchi / Eneo Lako", "am": "አገርዎን / ክልልዎን ይምረጡ", "ha": "Zaɓi Ƙasarku / Yankinku",
+        "yo": "Yan Orilẹ-ede / Agbegbe Rẹ", "zu": "Khetha Izwe / Isifunda Sakho"
+    },
+    "us": {
+        "en": "United States", "es": "Estados Unidos", "fr": "États-Unis", "de": "Vereinigte Staaten", "it": "Stati Uniti",
+        "pt": "Estados Unidos", "ru": "Соединенные Штаты", "zh": "美国", "ja": "アメリカ合衆国", "ko": "미국",
+        "ar": "الولايات المتحدة", "he": "ארצות הברית", "hi": "संयुक्त राज्य अमेरिका", "tl": "Estados Unidos",
+        "pl": "Stany Zjednoczone", "nl": "Verenigde Staten", "sv": "USA", "el": "Ηνωμένες Πολιτείες", "ro": "Statele Unite",
+        "cs": "Spojené státy", "tr": "Amerika Birleşik Devletleri", "vi": "Hoa Kỳ", "th": "สหรัฐอเมริกา",
+        "id": "Amerika Serikat", "ms": "Amerika Syarikat", "fa": "ایالات متحده", "ur": "ریاستہائے متحدہ",
+        "uk": "Сполучені Штати", "bn": "মার্কিন যুক্তরাষ্ট্র", "ta": "அமெரிக்கா", "sw": "Marekani",
+        "am": "አሜሪካ", "ha": "Amurka", "yo": "Amẹ́ríkà", "zu": "I-United States"
+    },
+    "ca": {
+        "en": "Canada", "es": "Canadá", "fr": "Canada", "de": "Kanada", "it": "Canada", "pt": "Canadá",
+        "ru": "Канада", "zh": "加拿大", "ja": "カナダ", "ko": "캐나다", "ar": "كندا", "he": "קנדה",
+        "hi": "कनाडा", "tl": "Canada", "pl": "Kanada", "nl": "Canada", "sv": "Kanada", "el": "Καναδάς",
+        "ro": "Canada", "cs": "Kanada", "tr": "Kanada", "vi": "Canada", "th": "แคนาดา", "id": "Kanada",
+        "ms": "Kanada", "fa": "کانادا", "ur": "کینیڈا", "uk": "Канада", "bn": "কানাডা", "ta": "கனடா",
+        "sw": "Kanada", "am": "ካናዳ", "ha": "Kanada", "yo": "Kánádà", "zu": "I-Canada"
+    },
+    "uk": {
+        "en": "United Kingdom", "es": "Reino Unido", "fr": "Royaume-Uni", "de": "Vereinigtes Königreich", "it": "Regno Unito",
+        "pt": "Reino Unido", "ru": "Великобритания", "zh": "英国", "ja": "イギリス", "ko": "영국",
+        "ar": "المملكة المتحدة", "he": "הממלכה המאוחדת", "hi": "यूनाइटेड किंगडम", "tl": "United Kingdom",
+        "pl": "Wielka Brytania", "nl": "Verenigd Koninkrijk", "sv": "Storbritannien", "el": "Ηνωμένο Βασίλειο",
+        "ro": "Regatul Unit", "cs": "Velká Británie", "tr": "Birleşik Krallık", "vi": "Vương quốc Anh",
+        "th": "สหราชอาณาจักร", "id": "Inggris Raya", "ms": "United Kingdom", "fa": "بریتانیا", "ur": "برطانیہ",
+        "uk": "Велика Британія", "bn": "যুক্তরাজ্য", "ta": "ஐக்கிய இராச்சியம்", "sw": "Uingereza",
+        "am": "ዩናይትድ ኪንግደም", "ha": "Birtaniya", "yo": "Ilu Ọba", "zu": "I-United Kingdom"
+    },
+    "au": {
+        "en": "Australia", "es": "Australia", "fr": "Australie", "de": "Australien", "it": "Australia", "pt": "Austrália",
+        "ru": "Австралия", "zh": "澳大利亚", "ja": "オーストラリア", "ko": "호주", "ar": "أستراليا", "he": "אוסטרליה",
+        "hi": "ऑस्ट्रेलिया", "tl": "Australia", "pl": "Australia", "nl": "Australië", "sv": "Australien", "el": "Αυστραλία",
+        "ro": "Australia", "cs": "Austrálie", "tr": "Avustralya", "vi": "Úc", "th": "ออสเตรเลีย", "id": "Australia",
+        "ms": "Australia", "fa": "استرالیا", "ur": "آسٹریلیا", "uk": "Австралія", "bn": "অস্ট্রেলিয়া",
+        "ta": "ஆஸ்திரேலியா", "sw": "Australia", "am": "አውስትራሊያ", "ha": "Ostareliya", "yo": "Australia", "zu": "I-Australia"
+    },
+    "nz": {
+        "en": "New Zealand", "es": "Nueva Zelanda", "fr": "Nouvelle-Zélande", "de": "Neuseeland", "it": "Nuova Zelanda",
+        "pt": "Nova Zelândia", "ru": "Новая Зеландия", "zh": "新西兰", "ja": "ニュージーランド", "ko": "뉴질랜드",
+        "ar": "نيوزيلندا", "he": "ניו זילנד", "hi": "न्यूजीलैंड", "tl": "New Zealand", "pl": "Nowa Zelandia",
+        "nl": "Nieuw-Zeeland", "sv": "Nya Zeeland", "el": "Νέα Ζηλανδία", "ro": "Noua Zeelandă", "cs": "Nový Zéland",
+        "tr": "Yeni Zelanda", "vi": "New Zealand", "th": "นิวซีแลนด์", "id": "Selandia Baru", "ms": "New Zealand",
+        "fa": "نیوزیلند", "ur": "نیوزی لینڈ", "uk": "Нова Зеландія", "bn": "নিউজিল্যান্ড", "ta": "நியூசிலாந்து",
+        "sw": "Nyuzilandi", "am": "ኒው ዚላንድ", "ha": "New Zealand", "yo": "Niu Silandi", "zu": "I-New Zealand"
+    },
+    "intl": {
+        "en": "International / Other Countries", "es": "Internacional / Otros Países", "fr": "International / Autres Pays",
+        "de": "International / Andere Länder", "it": "Internazionale / Altri Paesi", "pt": "Internacional / Outros Países",
+        "ru": "Международный / Другие страны", "zh": "国际 / 其他国家", "ja": "国際 / その他の国", "ko": "국제 / 기타 국가",
+        "ar": "دولي / دول أخرى", "he": "בינלאומי / מדינות אחרות", "hi": "अंतर्राष्ट्रीय / अन्य देश",
+        "tl": "Pandaigdigan / Ibang Bansa", "pl": "Międzynarodowy / Inne krae", "nl": "Internationaal / Andere landen",
+        "sv": "Internationellt / Andra länder", "el": "Διεθνές / Άλλες χώρες", "ro": "Internațional / Alte țări",
+        "cs": "Mezinárodní / Ostatní země", "tr": "Uluslararası / Diğer Ülkeler", "vi": "Quốc tế / Các quốc gia khác",
+        "th": "นานาชาติ / ประเทศอื่นๆ", "id": "Internasional / Negara Lain", "ms": "Antarabangsa / Negara Lain",
+        "fa": "بین‌المللی / سایر کشورها", "ur": "بین الاقوامی / دیگر ممالک", "uk": "Міжнародний / Інші країни",
+        "bn": "আন্তর্জাতিক / অন্যান্য দেশ", "ta": "சர்வதேசம் / பிற நாடுகள்", "sw": "Kimataifa / Nchi Nyingine",
+        "am": "አለምአቀፍ / ሌሎች አገሮች", "ha": "Na Duniya / Sauran Kasashe", "yo": "Agbaye / Awọn orilẹ-ede Miiran",
+        "zu": "Umhlaba Wonke / Ezinye Izwe"
+    }
+};
+
+const countryNames = {
+    "us": { flag: "🇺🇸", key: "support_region_us", default: "United States" },
+    "ca": { flag: "🇨🇦", key: "support_region_ca", default: "Canada" },
+    "uk": { flag: "🇬🇧", key: "support_region_uk", default: "United Kingdom" },
+    "au": { flag: "🇦🇺", key: "support_region_au", default: "Australia" },
+    "nz": { flag: "🇳🇿", key: "support_region_nz", default: "New Zealand" },
+    "intl": { flag: "🌍", key: "support_region_intl", default: "International / Other Countries" }
+};
+
+const regionalLifelinesData = {
+    "us": [
+        { title: "988 Suicide & Crisis Lifeline", desc: "A free, 24/7, confidential crisis line for suicidal thoughts, emotional distress, panic, or addiction crises.", call: "988", text: "988" },
+        { title: "SAMHSA National Helpline", desc: "A free, 24/7, confidential hotline for those facing drug or alcohol addiction and mental health challenges.", call: "8006624357", text: "8006624357" },
+        { title: "National Drug Helpline", desc: "A free, 24/7 hotline offering guidance for individuals struggling with drug or alcohol addiction.", call: "8442890879", text: "8442890879" },
+        { title: "Narcotics Anonymous", desc: "A support line to help find NA meetings and provide encouragement. Available via phone call only.", call: "8187739999", callLabel: "Call Helpline" },
+        { title: "Alcoholics Anonymous", desc: "A support line to help find AA meetings and regional information. Available via phone call only.", call: "2128703400", callLabel: "Call AA Office" },
+        { title: "Never Use Alone", desc: "A free, 24/7 hotline for individuals using drugs alone to ensure they remain safe. Available via phone call only.", call: "8004843731", callLabel: "Call Support" },
+        { title: "Crisis Text Line", desc: "A free, 24/7 text-based crisis support service for emotional distress. Available via text only.", text: "741741", textBody: "HOME", textLabel: "Text HOME to 741741" },
+        { title: "Billy Graham Prayer Line", desc: "A free, 24/7 Christian prayer and spiritual support hotline. Available via phone call only.", call: "8883882683", callLabel: "Call for Prayer" },
+        { title: "Joel Osteen Ministries", desc: "A free, 24/7 Christian prayer hotline providing spiritual guidance. Available via phone call only.", call: "8885675635", callLabel: "Call for Prayer" },
+        { title: "Christian Care Ministry", desc: "A free Christian support line for prayer and encouragement. Available via phone call only.", call: "8005255683", callLabel: "Call for Support" },
+        { title: "Silent Unity Prayer Line", desc: "A free, 24/7 prayer hotline offering emotional and spiritual support. Available via phone call only.", call: "8169692000", callLabel: "Call for Prayer" },
+        { title: "SAMHSA Text Support", desc: "A free text-based service for automated treatment resources. Available via text only.", text: "435748", textBody: "HELP", textLabel: "Text HELP to 435748" }
+    ],
+    "ca": [
+        { title: "988 Suicide Crisis Helpline", desc: "A free, 24/7 bilingual (English & French) crisis service across Canada for anyone in emotional distress or thoughts of suicide.", call: "988", text: "988" },
+        { title: "Wellness Together Canada", desc: "Free, confidential 24/7 mental health and substance use support funded by Health Canada.", call: "18665850445", text: "741741", textBody: "WELLNESS", textLabel: "Text WELLNESS to 741741" },
+        { title: "Hope for Wellness Helpline", desc: "24/7 culturally competent mental health counselling and crisis intervention for all Indigenous people across Canada.", call: "18552423310", callLabel: "Call Helpline" },
+        { title: "Canadian Centre on Substance Use and Addiction", desc: "National resources, regional directories, and evidence-based addiction support tools.", link: "https://www.ccsa.ca/", linkLabel: "Visit CCSA Directory" }
+    ],
+    "uk": [
+        { title: "NHS Mental Health Services", desc: "24/7 urgent mental health helpline support across the UK for immediate advice and medical assessment.", call: "111", callLabel: "Call NHS 111" },
+        { title: "Samaritans UK", desc: "Free, confidential 24/7 emotional support for anyone struggling to cope, feeling alone, or in crisis.", call: "116123", callLabel: "Call 116 123" },
+        { title: "FRANK Drug Helpline", desc: "Free, confidential 24/7 friendly advice, information, and support regarding drugs and alcohol.", call: "03001236600", text: "82111", textBody: "FRANK", textLabel: "Text 82111" },
+        { title: "SHOUT Crisis Text Line", desc: "Free, 24/7 confidential crisis text support service for anyone in the UK in immediate distress.", text: "85258", textBody: "SHOUT", textLabel: "Text SHOUT to 85258" },
+        { title: "Alcoholics Anonymous Great Britain", desc: "National helpline offering advice, meeting directories, and mutual support across the UK.", call: "08009177650", callLabel: "Call AA Helpline" }
+    ],
+    "au": [
+        { title: "Lifeline Australia", desc: "24/7 free crisis support and suicide prevention services across Australia.", call: "131114", text: "0477131114", textLabel: "Text 0477 13 11 14" },
+        { title: "Beyond Blue", desc: "24/7 mental health information, support line, and referral services for anxiety, depression, and crisis.", call: "1300224636", callLabel: "Call 1300 22 4636" },
+        { title: "National Alcohol and Other Drug Hotline", desc: "Free, confidential 24/7 advice, support, and referral for individuals struggling with alcohol and drug dependencies.", call: "1800250015", callLabel: "Call 1800 250 015" },
+        { title: "DirectLine Addiction Support", desc: "Confidential alcohol and drug counselling, advice, and referral service available 24/7.", call: "1800888236", callLabel: "Call DirectLine" }
+    ],
+    "nz": [
+        { title: "1737 Need to Talk?", desc: "Free, 24/7 confidential mental health, anxiety, and addiction support by trained counsellors across New Zealand.", call: "1737", text: "1737" },
+        { title: "Alcohol Drug Helpline NZ", desc: "Free, confidential 24/7 advice and support for anyone concerned about their own or another person's alcohol or drug use.", call: "0800787797", text: "8681", textLabel: "Text 8681" },
+        { title: "Lifeline Aotearoa", desc: "24/7 community crisis and suicide prevention helpline.", call: "0800543354", text: "4357", textBody: "HELP", textLabel: "Text HELP to 4357" }
+    ],
+    "intl": [
+        {
+            title: "Universal Emergency Numbers",
+            desc: "If you are in immediate physical danger or a life-threatening crisis, please dial your local emergency services immediately: 112 (European Union, UK & many global networks), 911 (North America), 999 (UK/Commonwealth), or 000 (Australia).",
+            isNotice: true
+        },
+        {
+            title: "Global 12-Step & Peer Fellowships",
+            desc: "Access free online meetings, local chapter directories, and 24/7 peer support worldwide.",
+            links: [
+                { name: "Find NA Meetings Worldwide", url: "https://m.na.org/" },
+                { name: "Find AA Meetings Worldwide", url: "https://www.aa.org/find-aa" }
+            ]
+        }
+    ]
+};
+
+function onSupportCountryChange(region) {
+    localStorage.setItem('tsh_support_region', region);
+    renderLifelines(region);
+}
+
+function renderLifelines(selectedRegion) {
+    const container = document.getElementById('regional-lifelines');
+    if (!container) return;
+
+    const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
+    const langData = typeof translations !== 'undefined' ? (translations[activeLang] || translations['en']) : {};
+    const fallbackData = typeof translations !== 'undefined' ? translations['en'] : {};
+
+    const savedRegion = localStorage.getItem('tsh_support_region');
+    const defaultRegion = activeLang === 'en' ? 'us' : 'intl';
+    const region = selectedRegion || savedRegion || defaultRegion;
+
+    const selectEl = document.getElementById('support-country-select');
+    if (selectEl && selectEl.value !== region) {
+        selectEl.value = region;
+    }
+
+    const items = regionalLifelinesData[region] || regionalLifelinesData['intl'];
+    let html = '';
+
+    items.forEach(item => {
+        if (item.isNotice) {
+            html += `
+                <div class="card-glass p-5 border-yellow-400/50">
+                    <h3 class="text-sm font-bold text-slate-800 mb-1">${escapeHTML(item.title)}</h3>
+                    <p class="text-[10px] text-slate-600 leading-relaxed font-medium">${escapeHTML(item.desc)}</p>
+                </div>
+            `;
+            return;
+        }
+
+        if (item.links) {
+            const linksHtml = item.links.map(l => `
+                <a href="${escapeHTML(l.url)}" target="_blank" rel="noopener" class="w-full bg-white/80 text-slate-800 py-2.5 px-4 rounded-xl flex items-center justify-between font-bold text-[10px] uppercase tracking-widest border border-white shadow-sm hover:bg-white transition-colors">
+                    <span>${escapeHTML(l.name)}</span>
+                    <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-600"></i>
+                </a>
+            `).join('');
+            html += `
+                <div class="card-glass p-5 space-y-3">
+                    <h3 class="text-sm font-bold text-slate-800 mb-1">${escapeHTML(item.title)}</h3>
+                    <p class="text-[10px] text-slate-600 leading-relaxed font-medium mb-3">${escapeHTML(item.desc)}</p>
+                    <div class="space-y-2">${linksHtml}</div>
+                </div>
+            `;
+            return;
+        }
+
+        const callBtn = item.call ? `
+            <a href="tel:${escapeHTML(item.call)}" class="flex-1 bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md active:scale-95 transition-transform">
+                <i data-lucide="phone" class="w-3 h-3"></i> ${escapeHTML(item.callLabel || langData.support_call || "Call")}
+            </a>
+        ` : '';
+
+        const textHref = item.textBody ? `sms:${escapeHTML(item.text)}?body=${encodeURIComponent(item.textBody)}` : `sms:${escapeHTML(item.text || '')}`;
+        const textBtn = item.text ? `
+            <a href="${textHref}" class="flex-1 bg-white/80 text-slate-800 py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest border border-white shadow-md active:scale-95 transition-transform">
+                <i data-lucide="message-circle" class="w-3 h-3"></i> ${escapeHTML(item.textLabel || langData.support_text || "Text")}
+            </a>
+        ` : '';
+
+        const singleLink = item.link ? `
+            <a href="${escapeHTML(item.link)}" target="_blank" rel="noopener" class="w-full bg-white/80 text-slate-800 py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest border border-white shadow-md active:scale-95 transition-transform">
+                <i data-lucide="external-link" class="w-3 h-3"></i> ${escapeHTML(item.linkLabel || "Learn More")}
+            </a>
+        ` : '';
+
+        const actionButtons = (callBtn && textBtn) 
+            ? `<div class="flex gap-2">${callBtn}${textBtn}</div>` 
+            : (callBtn || textBtn || singleLink);
+
+        html += `
+            <div class="card-glass p-5">
+                <h3 class="text-sm font-bold text-slate-800 mb-1">${escapeHTML(item.title)}</h3>
+                <p class="text-[10px] text-slate-600 mb-4 leading-relaxed font-medium">${escapeHTML(item.desc)}</p>
+                ${actionButtons}
+            </div>
+        `;
+    });
+
+    // Always include the Global Directory (Find A Helpline) card as universal backup
+    const globalTitle = langData.support_global_title || fallbackData.support_global_title || "Global Support Directory";
+    const globalDesc = langData.support_global_desc || fallbackData.support_global_desc || "If you are outside these regions or experiencing a crisis, please contact your local emergency services or use the global directory to find free, confidential support in your country.";
+    const globalBtn = langData.support_find_helpline || fallbackData.support_find_helpline || "Find A Helpline";
+
+    html += `
+        <div class="card-glass p-5 border-yellow-400/50 mt-6">
+            <h3 class="text-sm font-bold text-slate-800 mb-1">${escapeHTML(globalTitle)}</h3>
+            <p class="text-[10px] text-slate-600 leading-relaxed font-medium mb-4">${escapeHTML(globalDesc)}</p>
+            <a href="https://findahelpline.com/" target="_blank" rel="noopener" class="w-full bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md active:scale-95 transition-transform">
+                <i data-lucide="globe" class="w-4 h-4"></i> ${escapeHTML(globalBtn)}
+            </a>
+        </div>
+    `;
+
+    container.innerHTML = html;
     renderIcons();
 }
 
@@ -260,7 +517,10 @@ function showScreen(screen) {
     
     if (screen === 'vault') loadVault();
     if (screen === 'wall') loadWallMessages();
-    if (screen === 'support') renderSafetyContact();
+    if (screen === 'support') {
+        renderSafetyContact();
+        renderLifelines();
+    }
     if (screen === 'main') {
         updateDate(); renderDashboard();
         if (state.tutorialStep === 0 || state.tutorialStep === undefined) startTutorial();
