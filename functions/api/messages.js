@@ -20,7 +20,7 @@ export async function onRequestGet({ request, env }) {
         ).bind(msgId).first();
         
         if (!msg) {
-            return new Response("Message not found", { status: 404 });
+            return Response.json({ error: "Message not found" }, { status: 404 });
         }
 
         // Run the specific text through Cloudflare Workers AI
@@ -35,7 +35,7 @@ export async function onRequestGet({ request, env }) {
 
     } catch (e) {
         console.error("Worker Error:", e);
-        return new Response("Error processing request", { status: 500 });
+        return Response.json({ error: "Error processing request" }, { status: 500 });
     }
 }
 
@@ -45,17 +45,19 @@ export async function onRequestPost({ request, env }) {
         
         // Validation: Ensure text exists (Empty strings rejected), but UNCAPPED length
         if (!text || text.trim() === '') {
-            return new Response("Invalid message", { status: 400 });
+            return Response.json({ error: "Invalid message" }, { status: 400 });
         }
 
         const msgLang = language || 'en';
 
-        // Insert the message into the D1 Database
-        await env.DB.prepare("INSERT INTO messages (text, language) VALUES (?, ?)").bind(text, msgLang).run();
-        
-        return Response.json({ success: true });
+        // Insert the message into the D1 Database and report back its new id,
+        // so the client can make the just-posted message tappable/translatable
+        // like every other message on the wall.
+        const result = await env.DB.prepare("INSERT INTO messages (text, language) VALUES (?, ?)").bind(text, msgLang).run();
+
+        return Response.json({ success: true, id: result.meta.last_row_id });
     } catch (e) {
         console.error("Worker Error:", e);
-        return new Response("Error saving message", { status: 500 });
+        return Response.json({ error: "Error saving message" }, { status: 500 });
     }
 }
