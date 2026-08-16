@@ -2,9 +2,16 @@
 const WORKER_API_URL = "/api/messages";
 
 // --- i18n Merge & Translation Engine ---
-if (typeof translations !== 'undefined' && typeof translations2 !== 'undefined') {
-    for (const lang in translations2) {
-        translations[lang] = translations2[lang];
+if (typeof translations !== 'undefined') {
+    if (typeof translations2 !== 'undefined') {
+        for (const lang in translations2) {
+            translations[lang] = translations2[lang];
+        }
+    }
+    if (typeof translations3 !== 'undefined') {
+        for (const lang in translations3) {
+            translations[lang] = translations3[lang];
+        }
     }
 }
 
@@ -19,7 +26,17 @@ const languageFingerprints = {
     "pl": ["jest", "bylo", "oraz", "dla", "przez", "przy"],
     "sw": ["na", "wa", "kwa", "katika", "ni", "ya"],
     "tl": ["ang", "mga", "ng", "sa", "ay", "na"],
-    "ms": ["yang", "dan", "di", "untuk", "dengan", "itu"]
+    "ms": ["yang", "dan", "di", "untuk", "dengan", "itu"],
+    "nl": ["de", "het", "een", "van", "en", "voor"],
+    "sv": ["och", "det", "att", "för", "med", "som"],
+    "ro": ["și", "care", "pentru", "este", "cu", "din"],
+    "cs": ["že", "před", "může", "jsem", "bude", "jako"],
+    "tr": ["ve", "bir", "bu", "için", "ile", "olan"],
+    "vi": ["và", "của", "là", "cho", "với", "những"],
+    "id": ["dan", "yang", "untuk", "dengan", "ini", "adalah"],
+    "ha": ["da", "amma", "wannan", "domin", "kuma", "ba"],
+    "yo": ["àti", "fún", "pẹ̀lú", "nítorí", "ṣùgbọ́n", "yìí"],
+    "zu": ["futhi", "kodwa", "ngoba", "uma", "lena", "kule"]
 };
 
 // --- Currency Mappings ---
@@ -27,14 +44,20 @@ const currencyCodes = {
     "en": "USD", "es": "EUR", "fr": "EUR", "de": "EUR", "it": "EUR", 
     "pt": "BRL", "pl": "PLN", "sw": "KES", "tl": "PHP", "ar": "AED", 
     "he": "ILS", "zh": "CNY", "ja": "JPY", "ko": "KRW", "ru": "RUB", "hi": "INR",
-    "ms": "MYR", "fa": "IRR", "ur": "PKR", "uk": "UAH"
+    "ms": "MYR", "fa": "IRR", "ur": "PKR", "uk": "UAH",
+    "nl": "EUR", "sv": "SEK", "el": "EUR", "ro": "RON", "cs": "CZK",
+    "tr": "TRY", "vi": "VND", "th": "THB", "id": "IDR", "bn": "BDT",
+    "ta": "INR", "am": "ETB", "ha": "NGN", "yo": "NGN", "zu": "ZAR"
 };
 
 const currencySymbols = {
     "en": "$", "es": "€", "fr": "€", "de": "€", "it": "€", 
     "pt": "R$", "pl": "zł", "sw": "KSh", "tl": "₱", "ar": "د.إ", 
     "he": "₪", "zh": "¥", "ja": "¥", "ko": "₩", "ru": "₽", "hi": "₹",
-    "ms": "RM", "fa": "﷼", "ur": "₨", "uk": "₴"
+    "ms": "RM", "fa": "﷼", "ur": "₨", "uk": "₴",
+    "nl": "€", "sv": "kr", "el": "€", "ro": "lei", "cs": "Kč",
+    "tr": "₺", "vi": "₫", "th": "฿", "id": "Rp", "bn": "৳",
+    "ta": "₹", "am": "Br", "ha": "₦", "yo": "₦", "zu": "R"
 };
 
 function changeLanguage(langCode) {
@@ -93,6 +116,10 @@ dbRequest.onsuccess = (e) => {
         db.close();
     };
     if(document.getElementById('vault-list')) loadVault();
+};
+
+dbRequest.onerror = (e) => {
+    console.error("Failed to open TSH_Database:", e.target.error);
 };
 
 let state = { 
@@ -277,13 +304,17 @@ async function saveInitialSetup() {
     const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
     const langData = translations[activeLang] || translations['en'];
     if (habitEls.length === 0) return alert(langData.alert_setup_empty || "Please add at least one struggle to forge your shield.");
-    state.habits =[];
+    const newHabits =[];
     habitEls.forEach(el => {
-        const name = el.querySelector('.habit-name').value;
+        const name = el.querySelector('.habit-name').value.trim();
         const cost = el.querySelector('.habit-cost').value || 0;
         const isMain = el.querySelector('.habit-main').checked;
-        if (name) state.habits.push({ id: 'h_' + Date.now() + Math.random(), name, costPerDay: parseFloat(cost) || 0, startDate: new Date().toISOString(), slips:[], isMain });
+        if (name) newHabits.push({ id: 'h_' + Date.now() + Math.random(), name, costPerDay: parseFloat(cost) || 0, startDate: new Date().toISOString(), slips:[], isMain });
     });
+    // Rows existed, but every name field was left blank - don't silently finish
+    // setup with zero struggles tracked.
+    if (newHabits.length === 0) return alert(langData.alert_setup_empty || "Please add at least one struggle to forge your shield.");
+    state.habits = newHabits;
     state.setupComplete = true; state.tutorialStep = 0;
     localStorage.setItem('steady_hand_state', JSON.stringify(state));
     showScreen('gateway'); renderDashboard();
@@ -415,6 +446,12 @@ async function startRecording() {
         mediaRecorder.ondataavailable = e => { if(e.data.size > 0) chunks.push(e.data); };
         mediaRecorder.onstop = () => {
             if (chunks.length === 0) return;
+            if (!db) {
+                const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
+                const langData = translations[activeLang] || translations['en'];
+                alert(langData.alert_vault_unavailable || "The Vault is unavailable right now, so this recording could not be saved.");
+                return;
+            }
             const mimeType = mediaRecorder.mimeType || '';
             const b = new Blob(chunks, mimeType ? { type: mimeType } : undefined);
             const t = db.transaction(["videos"], "readwrite");
@@ -594,7 +631,7 @@ async function loadWallMessages(append = false) {
         // Map the messages (Removed character limits and "Read More" button entirely)
         const messagesHTML = messages.map(m => `
             <div class="card-glass p-4 border-white/30 wall-message select-none transition-transform" data-id="${escapeHTML(String(m.id))}">
-                <div class="cursor-pointer active:scale-[0.98] transition-transform" onclick="handleMessageTap(this.parentElement, ${m.id})">
+                <div class="cursor-pointer active:scale-[0.98] transition-transform" onclick="handleMessageTap(this, ${m.id})">
                     <p class="text-sm text-slate-800 font-medium leading-relaxed msg-body whitespace-pre-wrap">"${escapeHTML(m.text)}"</p>
                 </div>
                 <p class="text-[8px] text-slate-500 uppercase tracking-widest font-bold mt-3 text-right pointer-events-none">- Anonymous</p>
@@ -626,7 +663,7 @@ async function loadWallMessages(append = false) {
 }
 
 function isAlreadyInLanguage(text, targetLang) {
-    const scripts = { "ar": /[\u0600-\u06FF]/, "he": /[\u0590-\u05FF]/, "zh": /[\u4e00-\u9fa5]/, "ja": /[\u3040-\u30ff]/, "ko": /[\uac00-\ud7af]/, "ru": /[\u0400-\u04FF]/, "hi": /[\u0900-\u097F]/, "fa": /[\u0600-\u06FF]/, "ur": /[\u0600-\u06FF]/, "uk": /[\u0400-\u04FF]/ };
+    const scripts = { "ar": /[\u0600-\u06FF]/, "he": /[\u0590-\u05FF]/, "zh": /[\u4e00-\u9fa5]/, "ja": /[\u3040-\u30ff]/, "ko": /[\uac00-\ud7af]/, "ru": /[\u0400-\u04FF]/, "hi": /[\u0900-\u097F]/, "fa": /[\u0600-\u06FF]/, "ur": /[\u0600-\u06FF]/, "uk": /[\u0400-\u04FF]/, "el": /[\u0370-\u03FF]/, "th": /[\u0E00-\u0E7F]/, "bn": /[\u0980-\u09FF]/, "ta": /[\u0B80-\u0BFF]/, "am": /[\u1200-\u137F]/ };
     for (const [lang, regex] of Object.entries(scripts)) { if (regex.test(text)) return targetLang === lang; }
     if (languageFingerprints[targetLang]) {
         const words = text.toLowerCase().replace(/[.,/#!$%^&*;:{}=\-_`~()]/g,"").split(/\s+/);
@@ -646,9 +683,12 @@ async function handleMessageTap(element, msgId) {
     textEl.classList.add('animate-pulse'); textEl.innerText = "...";
     try {
         const res = await fetch(`${WORKER_API_URL}?id=${msgId}&lang=${activeLang}`);
+        if (!res.ok) throw new Error("Translation request failed");
         const data = await res.json();
+        if (!data.translatedText) throw new Error("No translation returned");
         textEl.innerText = `"${data.translatedText}"`;
         textEl.classList.remove('animate-pulse');
+        // Translation succeeded: this message no longer needs to respond to taps.
         element.onclick = null; element.classList.remove('cursor-pointer');
     } catch (e) { textEl.innerText = `"${originalText}"`; textEl.classList.remove('animate-pulse'); }
 }
@@ -667,29 +707,44 @@ async function postToWall() {
         placeholder.remove();
     }
     
-    // Instantly show the user's uncapped message at the top
+    // Instantly show the user's uncapped message at the top. It mirrors the
+    // same structure loadWallMessages() uses (wall-message/msg-body) so it can
+    // be wired up for tap-to-translate below once we know its real id.
     const newMsgHTML = `
-        <div class="card-glass p-4 border-yellow-400/50 shadow-md">
-            <p class="text-sm text-slate-800 font-medium leading-relaxed whitespace-pre-wrap">"${escapeHTML(text)}"</p>
+        <div class="card-glass p-4 border-yellow-400/50 shadow-md wall-message select-none transition-transform">
+            <div class="transition-transform">
+                <p class="text-sm text-slate-800 font-medium leading-relaxed msg-body whitespace-pre-wrap">"${escapeHTML(text)}"</p>
+            </div>
             <p class="text-[8px] text-yellow-600 uppercase tracking-widest font-bold mt-3 text-right">- You</p>
         </div>
     `;
     
     feed.insertAdjacentHTML('afterbegin', newMsgHTML);
+    const newMsgEl = feed.firstElementChild;
 
     state.wallPosts = (state.wallPosts || 0) + 1;
     localStorage.setItem('steady_hand_state', JSON.stringify(state));
 
     const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
+    const langData = translations[activeLang] || translations['en'];
     try {
-        await fetch(WORKER_API_URL, {
+        const res = await fetch(WORKER_API_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ text, language: activeLang })
         });
+        if (!res.ok) throw new Error("Failed to save message");
+        const data = await res.json();
+
+        // Now that the message has a real id, make it tappable/translatable
+        // just like every other message on the wall.
+        if (newMsgEl && data && data.id) {
+            newMsgEl.dataset.id = data.id;
+            const tapTarget = newMsgEl.querySelector('.msg-body').parentElement;
+            tapTarget.classList.add('cursor-pointer', 'active:scale-[0.98]');
+            tapTarget.onclick = () => handleMessageTap(tapTarget, data.id);
+        }
     } catch(e) {
-        const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
-        const langData = translations[activeLang] || translations['en'];
         alert(langData.alert_wall_fail || "Failed to permanently save message to the global wall.");
     }
 }

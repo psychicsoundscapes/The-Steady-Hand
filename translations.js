@@ -5,6 +5,8 @@
 
 const translations = {
     "en": {
+        "alert_vault_unavailable": "The Vault is unavailable right now, so this recording could not be saved.",
+        "alert_reset_blocked": "Reset is blocked by other tabs. Please close all other tabs of this app, then refresh.",
         "app_title": "The Steady Hand",
         "gateway_ritual_title": "Serenity Ritual",
         "gateway_prayer": "\"God, grant me the serenity to accept the things I cannot change, courage to change the things I can, and wisdom to know the difference.\"",
@@ -159,6 +161,8 @@ const translations = {
     },
 
     "es": {
+        "alert_vault_unavailable": "La Bóveda no está disponible en este momento, por lo que esta grabación no se pudo guardar.",
+        "alert_reset_blocked": "El reinicio está bloqueado por otras pestañas. Cierra todas las demás pestañas de esta aplicación y luego actualiza.",
         "app_title": "La Mano Firme",
         "gateway_ritual_title": "Ritual de Serenidad",
         "gateway_prayer": "\"Dios, concédeme la serenidad para aceptar las cosas que no puedo cambiar, el valor para cambiar las cosas que puedo, y la sabiduría para reconocer la diferencia.\"",
@@ -313,6 +317,8 @@ const translations = {
     },
 
     "fr": {
+        "alert_vault_unavailable": "Le Coffre est actuellement indisponible, cet enregistrement n'a donc pas pu être sauvegardé.",
+        "alert_reset_blocked": "La réinitialisation est bloquée par d'autres onglets. Veuillez fermer tous les autres onglets de cette application, puis actualiser.",
         "app_title": "La Main Ferme",
         "gateway_ritual_title": "Rituel de Sérénité",
         "gateway_prayer": "\"Mon Dieu, donnez-moi la sérénité d'accepter les choses que je ne puis changer, le courage de changer les choses que je peux, et la sagesse d'en connaître la différence.\"",
@@ -467,6 +473,8 @@ const translations = {
     },
 
     "de": {
+        "alert_vault_unavailable": "Der Tresor ist derzeit nicht verfügbar, sodass diese Aufnahme nicht gespeichert werden konnte.",
+        "alert_reset_blocked": "Das Zurücksetzen wird durch andere Tabs blockiert. Bitte schließe alle anderen Tabs dieser App und aktualisiere dann.",
         "app_title": "Die Ruhige Hand",
         "gateway_ritual_title": "Gelassenheitsritual",
         "gateway_prayer": "\"Gott, gib mir die Gelassenheit, Dinge hinzunehmen, die ich nicht ändern kann, den Mut, Dinge zu ändern, die ich ändern kann, und die Weisheit, das eine vom anderen zu unterscheiden.\"",
@@ -621,6 +629,8 @@ const translations = {
     },
 
     "zh": {
+        "alert_vault_unavailable": "保管库目前不可用，因此无法保存此录音。",
+        "alert_reset_blocked": "重置被其他标签页阻止。请关闭此应用的所有其他标签页，然后刷新。",
         "app_title": "稳固之手",
         "gateway_ritual_title": "宁静仪式",
         "gateway_prayer": "“上帝，请赐予我平静，去接受我无法改变的事物；赐予我勇气，去改变我能改变的事物；并赐予我智慧，去分辨这两者的不同。”",
@@ -775,6 +785,8 @@ const translations = {
     },
 
     "hi": {
+        "alert_vault_unavailable": "वॉल्ट अभी उपलब्ध नहीं है, इसलिए यह रिकॉर्डिंग सहेजी नहीं जा सकी।",
+        "alert_reset_blocked": "रीसेट अन्य टैब द्वारा अवरुद्ध है। कृपया इस ऐप के सभी अन्य टैब बंद करें, फिर रीफ़्रेश करें।",
         "app_title": "द स्टेडी हैंड",
         "gateway_ritual_title": "शांति अनुष्ठान",
         "gateway_prayer": "\"हे ईश्वर, मुझे उन चीजों को स्वीकार करने की शांति दें जिन्हें मैं बदल नहीं सकता, जिन चीजों को मैं बदल सकता हूं उन्हें बदलने का साहस दें, और अंतर जानने की बुद्धिमत्ता दें।\"",
@@ -929,6 +941,8 @@ const translations = {
     },
 
     "ar": {
+        "alert_vault_unavailable": "الخزنة غير متاحة حاليًا، لذا تعذر حفظ هذا التسجيل.",
+        "alert_reset_blocked": "إعادة التعيين محظورة بواسطة علامات تبويب أخرى. يرجى إغلاق جميع علامات التبويب الأخرى لهذا التطبيق، ثم التحديث.",
         "app_title": "اليد الثابتة",
         "gateway_ritual_title": "طقوس السكينة",
         "gateway_prayer": "\"يا الله، امنحني السكينة لأتقبل الأشياء التي لا أستطيع تغييرها، والشجاعة لتغيير الأشياء التي أستطيعها، والحكمة لمعرفة الفرق.\"",
@@ -1083,6 +1097,8 @@ const translations = {
     },
 
     "pt": {
+        "alert_vault_unavailable": "O Cofre está indisponível no momento, então esta gravação não pôde ser salva.",
+        "alert_reset_blocked": "A redefinição está bloqueada por outras abas. Feche todas as outras abas deste aplicativo e atualize.",
         "app_title": "A Mão Firme",
         "gateway_ritual_title": "Ritual de Serenidade",
         "gateway_prayer": "\"Deus, conceda-me a serenidade para aceitar as coisas que não posso mudar, a coragem para mudar as coisas que posso, e a sabedoria para saber a diferença.\"",
@@ -1237,6 +1253,8 @@ const translations = {
     },
 
     "ru": {
+        "alert_vault_unavailable": "Хранилище сейчас недоступно, поэтому эту запись не удалось сохранить.",
+        "alert_reset_blocked": "Сброс заблокирован другими вкладками. Закройте все остальные вкладки этого приложения, затем обновите страницу.",
         "app_title": "Твердая Рука",
         "gateway_ritual_title": "Ритуал Безмятежности",
         "gateway_prayer": "\"Боже, дай мне разум и душевный покой принять то, что я не в силах изменить, мужество изменить то, что могу, и мудрость отличить одно от другого.\"",
@@ -1391,6 +1409,8 @@ const translations = {
     },
 
     "ja": {
+        "alert_vault_unavailable": "現在ボールトが利用できないため、この録音を保存できませんでした。",
+        "alert_reset_blocked": "リセットは他のタブによってブロックされています。このアプリの他のすべてのタブを閉じてから、更新してください。",
         "app_title": "The Steady Hand",
         "gateway_ritual_title": "静寂の儀式",
         "gateway_prayer": "「神よ、変えられないものを受け入れる静けさを、変えられるものを変える勇気を、そしてその違いを見分ける知恵を私にお与えください。」",

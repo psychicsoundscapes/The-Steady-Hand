@@ -6,6 +6,8 @@
 
 const translations2 = {
     "he": {
+        "alert_vault_unavailable": "הכספת אינה זמינה כרגע, ולכן לא ניתן היה לשמור את ההקלטה הזו.",
+        "alert_reset_blocked": "האיפוס חסום על ידי כרטיסיות אחרות. סגור את כל שאר הכרטיסיות של אפליקציה זו, ולאחר מכן רענן.",
         "app_title": "היד היציבה",
         "gateway_ritual_title": "טקס שלווה",
         "gateway_prayer": "\"אלי, תן בי את השלווה לקבל את הדברים שאין ביכולתי לשנותם, אומץ לשנות את הדברים אשר ביכולתי, ותבונה להבחין בין השניים.\"",
@@ -160,6 +162,8 @@ const translations2 = {
     },
 
     "tl": {
+        "alert_vault_unavailable": "Hindi available ang Vault ngayon, kaya hindi na-save ang recording na ito.",
+        "alert_reset_blocked": "Naka-block ang reset ng ibang tabs. Pakisara ang lahat ng ibang tabs ng app na ito, pagkatapos ay i-refresh.",
         "app_title": "Ang Matatag na Kamay",
         "gateway_ritual_title": "Ritwal ng Kapayapaan",
         "gateway_prayer": "\"Panginoon, pagkakalooban Mo po ako ng katahimikan upang tanggapin ang mga bagay na hindi ko mababago, tapang upang baguhin ang mga bagay na aking magagawa, at karunungan upang malaman ang pagkakaiba.\"",
@@ -314,6 +318,8 @@ const translations2 = {
     },
 
     "it": {
+        "alert_vault_unavailable": "Il Caveau non è al momento disponibile, quindi questa registrazione non è stata salvata.",
+        "alert_reset_blocked": "Il ripristino è bloccato da altre schede. Chiudi tutte le altre schede di questa app, quindi aggiorna.",
         "app_title": "La Mano Ferma",
         "gateway_ritual_title": "Rituale di Serenità",
         "gateway_prayer": "\"Dio, concedimi la serenità di accettare le cose che non posso cambiare, il coraggio di cambiare quelle che posso, e la saggezza per conoscerne la differenza.\"",
@@ -468,6 +474,8 @@ const translations2 = {
     },
 
     "ko": {
+        "alert_vault_unavailable": "지금은 보관함을 사용할 수 없어 이 녹음을 저장하지 못했습니다.",
+        "alert_reset_blocked": "다른 탭에 의해 재설정이 차단되었습니다. 이 앱의 다른 모든 탭을 닫은 후 새로고침하세요.",
         "app_title": "단호한 손",
         "gateway_ritual_title": "평온의 의식",
         "gateway_prayer": "\"하나님, 제가 바꿀 수 없는 것을 받아들이는 평온함을, 바꿀 수 있는 것을 바꾸는 용기를, 그리고 그 차이를 분별하는 지혜를 주시옵소서.\"",
@@ -622,6 +630,8 @@ const translations2 = {
     },
 
     "pl": {
+        "alert_vault_unavailable": "Skarbiec jest teraz niedostępny, więc tego nagrania nie udało się zapisać.",
+        "alert_reset_blocked": "Resetowanie jest zablokowane przez inne karty. Zamknij wszystkie inne karty tej aplikacji, a następnie odśwież.",
         "app_title": "Pewna Dłoń",
         "gateway_ritual_title": "Rytuał Spokoju",
         "gateway_prayer": "\"Boże, użycz mi pogody ducha, abym godził się z tym, czego nie mogę zmienić, odwagi, abym zmieniał to, co mogę zmienić, i mądrości, abym odróżniał jedno od drugiego.\"",
@@ -776,6 +786,8 @@ const translations2 = {
     },
 
     "sw": {
+        "alert_vault_unavailable": "Hifadhi haipatikani kwa sasa, hivyo rekodi hii haikuweza kuhifadhiwa.",
+        "alert_reset_blocked": "Kuweka upya kumezuiwa na vichupo vingine. Tafadhali funga vichupo vingine vyote vya programu hii, kisha onyesha upya.",
         "app_title": "Mkono Imara",
         "gateway_ritual_title": "Ibada ya Utulivu",
         "gateway_prayer": "\"Mungu, nipe utulivu wa kukubali mambo nisiyoweza kubadilisha, ujasiri wa kubadilisha mambo ninayoweza, na hekima ya kujua tofauti.\"",
@@ -930,6 +942,8 @@ const translations2 = {
     },
 
     "fa": {
+        "alert_vault_unavailable": "خزانه در حال حاضر در دسترس نیست، بنابراین این ضبط ذخیره نشد.",
+        "alert_reset_blocked": "بازنشانی توسط تب‌های دیگر مسدود شده است. لطفاً همه تب‌های دیگر این برنامه را ببندید، سپس صفحه را تازه‌سازی کنید.",
         "app_title": "دست استوار",
         "gateway_ritual_title": "مراسم آرامش",
         "gateway_prayer": "\"خداوندا، آرامشی عطا فرما تا بپذیرم آنچه را که نمی‌توانم تغییر دهم، شهامتی تا تغییر دهم آنچه را که می‌توانم، و خردی تا تفاوت این دو را بدانم.\"",
@@ -1084,6 +1098,8 @@ const translations2 = {
     },
 
     "ms": {
+        "alert_vault_unavailable": "Vault tidak tersedia sekarang, jadi rakaman ini tidak dapat disimpan.",
+        "alert_reset_blocked": "Set semula disekat oleh tab lain. Sila tutup semua tab lain aplikasi ini, kemudian muat semula.",
         "app_title": "Tangan Yang Teguh",
         "gateway_ritual_title": "Ritual Ketenangan",
         "gateway_prayer": "\"Tuhan, berikanlah aku ketenangan untuk menerima perkara yang tidak dapat aku ubah, keberanian untuk mengubah perkara yang aku mampu, dan kebijaksanaan untuk mengetahui perbezaannya.\"",
@@ -1238,6 +1254,8 @@ const translations2 = {
     },
 
     "ur": {
+        "alert_vault_unavailable": "والٹ ابھی دستیاب نہیں ہے، اس لیے یہ ریکارڈنگ محفوظ نہیں ہو سکی۔",
+        "alert_reset_blocked": "دوسرے ٹیبز کی وجہ سے ری سیٹ مسدود ہے۔ براہ کرم اس ایپ کے تمام دوسرے ٹیبز بند کریں، پھر ریفریش کریں۔",
         "app_title": "مستقل ہاتھ",
         "gateway_ritual_title": "رسمِ سکون",
         "gateway_prayer": "\"خداوندا، مجھے وہ سکون عطا فرما کہ میں ان چیزوں کو قبول کر سکوں جنہیں میں بدل نہیں سکتا، وہ ہمت دے کہ جنہیں میں بدل سکتا ہوں انہیں بدل دوں، اور ان دونوں میں فرق جاننے کی حکمت عطا فرما۔\"",
@@ -1392,6 +1410,8 @@ const translations2 = {
     },
 
     "uk": {
+        "alert_vault_unavailable": "Сховище зараз недоступне, тому цей запис не вдалося зберегти.",
+        "alert_reset_blocked": "Скидання заблоковано іншими вкладками. Будь ласка, закрийте всі інші вкладки цього застосунку, а потім оновіть сторінку.",
         "app_title": "Тверда Рука",
         "gateway_ritual_title": "Ритуал Спокою",
         "gateway_prayer": "\"Боже, дай мені спокій прийняти те, що я не можу змінити, мужність змінити те, що можу, і мудрість відрізнити одне від іншого.\"",
