@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tsh-cache-v22';
+const CACHE_NAME = 'tsh-cache-v24';
 const ASSETS = [
   './',
   './index.html',
@@ -7,10 +7,12 @@ const ASSETS = [
   './manifest.json',
   './translations.js',
   './translations2.js',
+  './translations3.js',
   './translationprivacy.js',
   './translationtos.js',
   './verses.js',
   './trophies.js',
+  './vendor/lucide-0.468.0.js',
   './privacy.html',
   './tos.html',
   './picture/tsh.PNG'
@@ -45,7 +47,7 @@ self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
   
   // Do not intercept or cache API requests to the Cloudflare Worker
-  if (url.pathname.startsWith('/api/')) {
+  if (url.pathname.startsWith('/api/') || e.request.method !== 'GET') {
     return;
   }
 
@@ -55,15 +57,16 @@ self.addEventListener('fetch', (e) => {
         // If valid response, clone and update cache
         if (response && response.status === 200 && response.type === 'basic') {
           const responseToCache = response.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(e.request, responseToCache);
-          });
+          caches.open(CACHE_NAME).then((cache) => cache.put(e.request, responseToCache)).catch(() => {});
         }
         return response;
       })
-      .catch(() => {
+      .catch(async () => {
         // Fallback to cache if network fails
-        return caches.match(e.request, { ignoreSearch: true });
+        const cachedResponse = await caches.match(e.request, { ignoreSearch: true });
+        if (cachedResponse) return cachedResponse;
+        if (e.request.mode === 'navigate') return caches.match('./index.html');
+        return Response.error();
       })
   );
 });

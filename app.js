@@ -65,6 +65,12 @@ function changeLanguage(langCode) {
     window.location.reload();
 }
 
+function renderIcons() {
+    if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+    }
+}
+
 function applyTranslations() {
     if (typeof translations === 'undefined') return;
     
@@ -90,15 +96,15 @@ function applyTranslations() {
         select.value = activeLang;
     });
 
-    // SMART LIFELINES: Hide US numbers if the user is not in English mode
-    const isEnglish = activeLang === 'en';
+    // Language does not reliably identify a person's country. Always show both
+    // local US resources and the global directory so people can choose safely.
     const regionalLifelines = document.getElementById('regional-lifelines');
     const intlLifelines = document.getElementById('intl-lifelines');
     
-    if (regionalLifelines) regionalLifelines.classList.toggle('hidden', !isEnglish);
-    if (intlLifelines) intlLifelines.classList.toggle('hidden', isEnglish);
+    if (regionalLifelines) regionalLifelines.classList.remove('hidden');
+    if (intlLifelines) intlLifelines.classList.remove('hidden');
 
-    if (typeof lucide !== 'undefined') lucide.createIcons();
+    renderIcons();
 }
 
 // --- Core State & DB ---
@@ -115,11 +121,18 @@ dbRequest.onsuccess = (e) => {
     db.onversionchange = () => {
         db.close();
     };
+    const recordButton = document.getElementById('btn-start-record');
+    if (recordButton) {
+        recordButton.disabled = false;
+        recordButton.classList.remove('opacity-50', 'pointer-events-none');
+    }
     if(document.getElementById('vault-list')) loadVault();
 };
 
 dbRequest.onerror = (e) => {
     console.error("Failed to open TSH_Database:", e.target.error);
+    const recordButton = document.getElementById('btn-start-record');
+    if (recordButton) recordButton.disabled = true;
 };
 
 let state = { 
@@ -157,8 +170,30 @@ function escapeHTML(str) {
     }[tag] || tag));
 }
 
+function normalizeStoredState() {
+    if (!Array.isArray(state.habits)) {
+        state.habits = [];
+        return;
+    }
+
+    const today = getDayNumber(new Date());
+    state.habits = state.habits.filter(habit => habit && typeof habit === 'object').map(habit => {
+        habit.name = typeof habit.name === 'string' ? habit.name : '';
+        habit.costPerDay = Number.isFinite(Number(habit.costPerDay)) ? Number(habit.costPerDay) : 0;
+        habit.startDate = getDayNumber(habit.startDate) === null ? new Date().toISOString() : habit.startDate;
+        habit.slips = (Array.isArray(habit.slips) ? habit.slips : [])
+            .filter(slip => {
+                const day = getDayNumber(slip);
+                return day !== null && day <= today;
+            })
+            .sort((first, second) => getDayNumber(first) - getDayNumber(second));
+        if (habit.isMain === undefined) habit.isMain = true;
+        return habit;
+    });
+}
+
 function init() {
-    lucide.createIcons();
+    renderIcons();
     let savedState = localStorage.getItem('steady_hand_state');
     
     if (savedState) {
@@ -173,7 +208,7 @@ function init() {
             state.veteranMemos = state.veteranMemos || 0;
             state.wallPosts = state.wallPosts || 0;
             state.safetyContact = state.safetyContact || { name: "", phone: "" };
-            state.habits.forEach(h => { if(h.isMain === undefined) h.isMain = true; });
+            normalizeStoredState();
         } catch(e) {
             localStorage.removeItem('steady_hand_state');
             savedState = null;
@@ -231,7 +266,7 @@ function showScreen(screen) {
         if (state.tutorialStep === 0 || state.tutorialStep === undefined) startTutorial();
     }
     
-    lucide.createIcons();
+    renderIcons();
     setTimeout(() => { window.scrollTo({ top: 0, behavior: 'instant' }); if (targetEl) targetEl.scrollTop = 0; }, 10);
 }
 
@@ -260,7 +295,7 @@ function nextTutorialStep() {
     const iconEl = document.getElementById('tut-icon');
     if (iconEl) {
         iconEl.setAttribute('data-lucide', step.icon);
-        lucide.createIcons(); // Re-render the new icon
+        renderIcons(); // Re-render the new icon
     }
     
     state.tutorialStep++;
@@ -296,7 +331,7 @@ function addHabitField() {
         </div>
     `;
     container.appendChild(div);
-    lucide.createIcons();
+    renderIcons();
 }
 
 async function saveInitialSetup() {
@@ -430,11 +465,45 @@ function renderDashboard() {
             <p class="text-[6px] uppercase tracking-widest ${t.earned ? 'text-slate-600' : 'text-slate-400'} mt-1">${escapeHTML(t.desc)}</p>
         </div>
     `).join('');
-    lucide.createIcons();
+    renderIcons();
 }
 
 let mediaRecorder; let chunks =[]; let audioStream;
+const vaultObjectUrls = new Set();
+let urgeAudioUrl = null;
+
+function releaseVaultObjectUrls() {
+    vaultObjectUrls.forEach(url => URL.revokeObjectURL(url));
+    vaultObjectUrls.clear();
+}
+
+function releaseUrgeAudioUrl() {
+    if (urgeAudioUrl) URL.revokeObjectURL(urgeAudioUrl);
+    urgeAudioUrl = null;
+}
+
+function offerRecordingDownload(blob) {
+    if (!blob) return;
+    const shouldDownload = confirm("This recording could not be saved. Download a copy now so it is not lost?");
+    if (!shouldDownload) return;
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `the-steady-hand-recording-${new Date().toISOString()}.webm`;
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
 async function startRecording() {
+    if (!db) {
+        alert("The Vault is still preparing. Please try again in a moment.");
+        return;
+    }
+
     try {
         const s = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
         audioStream = s;
@@ -454,22 +523,44 @@ async function startRecording() {
             }
             const mimeType = mediaRecorder.mimeType || '';
             const b = new Blob(chunks, mimeType ? { type: mimeType } : undefined);
-            const t = db.transaction(["videos"], "readwrite");
-            t.objectStore("videos").add({ blob: b, date: new Date().toISOString() });
-            
-            const mainHabits = state.habits.filter(h => h.isMain);
-            const currentMainStreak = mainHabits.length > 0 ? Math.min(...mainHabits.map(h => calculateStreak(h))) : 0;
-            if (currentMainStreak >= 365) state.veteranMemos = (state.veteranMemos || 0) + 1;
+            try {
+                const t = db.transaction(["videos"], "readwrite");
+                t.objectStore("videos").add({ blob: b, date: new Date().toISOString() });
 
-            state.voiceMemos = (state.voiceMemos || 0) + 1;
-            localStorage.setItem('steady_hand_state', JSON.stringify(state));
-            t.oncomplete = () => { loadVault(); renderDashboard(); };
+                let didReportSaveFailure = false;
+                const saveFailed = () => {
+                    if (didReportSaveFailure) return;
+                    didReportSaveFailure = true;
+                    const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
+                    const langData = translations[activeLang] || translations['en'];
+                    alert(langData.alert_vault_save_failed || "This recording could not be saved. Please free device storage and try again.");
+                    offerRecordingDownload(b);
+                };
+                t.onerror = saveFailed;
+                t.onabort = saveFailed;
+                t.oncomplete = () => {
+                    const mainHabits = state.habits.filter(h => h.isMain);
+                    const currentMainStreak = mainHabits.length > 0 ? Math.min(...mainHabits.map(h => calculateStreak(h))) : 0;
+                    if (currentMainStreak >= 365) state.veteranMemos = (state.veteranMemos || 0) + 1;
+                    state.voiceMemos = (state.voiceMemos || 0) + 1;
+                    localStorage.setItem('steady_hand_state', JSON.stringify(state));
+                    loadVault();
+                    renderDashboard();
+                };
+            } catch (error) {
+                const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
+                const langData = translations[activeLang] || translations['en'];
+                alert(langData.alert_vault_save_failed || "This recording could not be saved. Please free device storage and try again.");
+                offerRecordingDownload(b);
+            }
         };
         
         mediaRecorder.start();
         document.getElementById('btn-start-record').classList.add('hidden');
         document.getElementById('btn-stop-record').classList.remove('hidden');
     } catch (err) { 
+        if (audioStream) audioStream.getTracks().forEach(track => track.stop());
+        audioStream = null;
         const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
         const langData = translations[activeLang] || translations['en'];
         alert(langData.alert_mic_error || "Microphone access required for the Vault."); 
@@ -477,9 +568,10 @@ async function startRecording() {
 }
 
 function stopRecording() {
-    if(!mediaRecorder) return;
+    if(!mediaRecorder || mediaRecorder.state === 'inactive') return;
     mediaRecorder.stop();
     if(audioStream) audioStream.getTracks().forEach(t => t.stop());
+    audioStream = null;
     document.getElementById('record-placeholder').classList.remove('hidden');
     document.getElementById('recording-active').classList.add('hidden');
     document.getElementById('recording-active').classList.remove('flex');
@@ -489,7 +581,9 @@ function stopRecording() {
 
 function loadVault() {
     if(!db) return;
-    const c = document.getElementById('vault-list'); c.innerHTML = '';
+    const c = document.getElementById('vault-list');
+    releaseVaultObjectUrls();
+    c.innerHTML = '';
     db.transaction("videos", "readonly").objectStore("videos").openCursor(null, 'prev').onsuccess = e => {
         const cur = e.target.result;
         if(cur) {
@@ -498,6 +592,7 @@ function loadVault() {
             const langData = translations[activeLang] || translations['en'];
 
             const url = URL.createObjectURL(cur.value.blob);
+            vaultObjectUrls.add(url);
             const d = document.createElement('div'); d.className = 'card-glass p-4 relative';
             d.innerHTML = `
                 <div class="flex items-center gap-3 mb-4 bg-white/50 p-2 rounded-xl border border-white/60 shadow-inner">
@@ -510,7 +605,7 @@ function loadVault() {
             c.appendChild(d); cur.continue();
         }
     };
-    setTimeout(() => lucide.createIcons(), 50);
+    setTimeout(renderIcons, 50);
 }
 
 function deleteVideo(id) { 
@@ -521,6 +616,7 @@ function deleteVideo(id) {
 
 let lastUrgeType = null; let lastVerseIndex = -1; let lastAudioId = -1;
 async function triggerUrgeEngine() {
+    releaseUrgeAudioUrl();
     const currentHour = new Date().getHours();
     if (currentHour >= 0 && currentHour < 4) state.midnightUrges = (state.midnightUrges || 0) + 1;
     else if (currentHour >= 11 && currentHour <= 14) state.middayUrges = (state.middayUrges || 0) + 1;
@@ -559,6 +655,7 @@ async function triggerUrgeEngine() {
         }
         lastAudioId = audioMatch.id;
         const url = URL.createObjectURL(audioMatch.blob);
+        urgeAudioUrl = url;
         c.innerHTML = `
             <i data-lucide="mic" class="w-16 h-16 text-slate-700 drop-shadow-sm mx-auto mb-6"></i>
             <h2 class="font-cinzel text-slate-800 mb-6 uppercase font-bold tracking-widest text-xl">${langData.urge_listen_strength || "Listen to Your Strength"}</h2>
@@ -586,7 +683,7 @@ async function triggerUrgeEngine() {
                 <p class="text-[10px] text-slate-700 uppercase tracking-widest font-bold">${langData.urge_breathe_60 || "Breathe for 60 seconds."}</p>
             </div>`;
     }
-    setTimeout(() => lucide.createIcons(), 50);
+    setTimeout(renderIcons, 50);
 }
 
 // --- WALL OF WISDOM LOGIC ---
@@ -628,13 +725,17 @@ async function loadWallMessages(append = false) {
             return;
         }
 
-        // Map the messages (Removed character limits and "Read More" button entirely)
+        // The API returns each post's source language. This is more reliable than
+        // guessing from its text when deciding whether a translation is needed.
         const messagesHTML = messages.map(m => `
-            <div class="card-glass p-4 border-white/30 wall-message select-none transition-transform" data-id="${escapeHTML(String(m.id))}">
+            <div class="card-glass p-4 border-white/30 wall-message select-none transition-transform" data-id="${escapeHTML(String(m.id))}" data-language="${escapeHTML(String(m.language || 'en'))}">
                 <div class="cursor-pointer active:scale-[0.98] transition-transform" onclick="handleMessageTap(this, ${m.id})">
                     <p class="text-sm text-slate-800 font-medium leading-relaxed msg-body whitespace-pre-wrap">"${escapeHTML(m.text)}"</p>
                 </div>
-                <p class="text-[8px] text-slate-500 uppercase tracking-widest font-bold mt-3 text-right pointer-events-none">- Anonymous</p>
+                <div class="flex items-center justify-between mt-3">
+                    <button type="button" onclick="reportWallMessage(${m.id}, this)" class="text-[8px] text-slate-500 uppercase tracking-widest font-bold underline">Report</button>
+                    <p class="text-[8px] text-slate-500 uppercase tracking-widest font-bold pointer-events-none">- Anonymous</p>
+                </div>
             </div>
         `).join('');
 
@@ -672,14 +773,42 @@ function isAlreadyInLanguage(text, targetLang) {
     return false;
 }
 
+function getReportToken() {
+    const storedToken = localStorage.getItem('tsh_report_token');
+    if (storedToken) return storedToken;
+    const generatedToken = typeof crypto !== 'undefined' && crypto.randomUUID
+        ? crypto.randomUUID().replaceAll('-', '')
+        : `report${Date.now()}${Math.random().toString(36).slice(2)}`;
+    localStorage.setItem('tsh_report_token', generatedToken);
+    return generatedToken;
+}
+
+async function reportWallMessage(messageId, button) {
+    if (!confirm('Report this post for review?')) return;
+    button.disabled = true;
+    try {
+        const res = await fetch('/api/reports', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ messageId, reporterToken: getReportToken() })
+        });
+        if (!res.ok) throw new Error('Report request failed');
+        button.textContent = 'Reported';
+        button.classList.remove('text-slate-500');
+        button.classList.add('text-green-700');
+    } catch (error) {
+        button.disabled = false;
+        alert('Reporting is temporarily unavailable. Please try again later.');
+    }
+}
+
 async function handleMessageTap(element, msgId) {
     const textEl = element.querySelector('.msg-body');
     const originalText = textEl.innerText.replace(/"/g, '');
     const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
-    if (isAlreadyInLanguage(originalText, activeLang)) {
-        if (element.getAttribute('data-attempted')) return;
-        element.setAttribute('data-attempted', 'true');
-    }
+    const messageEl = element.closest('.wall-message');
+    const sourceLang = messageEl ? messageEl.dataset.language : '';
+    if (sourceLang === activeLang || (!sourceLang && isAlreadyInLanguage(originalText, activeLang))) return;
     textEl.classList.add('animate-pulse'); textEl.innerText = "...";
     try {
         const res = await fetch(`${WORKER_API_URL}?id=${msgId}&lang=${activeLang}`);
@@ -697,6 +826,7 @@ async function postToWall() {
     const input = document.getElementById('wall-input');
     const text = input.value.trim();
     if(!text) return;
+    const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
 
     input.value = '';
     
@@ -707,27 +837,23 @@ async function postToWall() {
         placeholder.remove();
     }
     
-    // Instantly show the user's uncapped message at the top. It mirrors the
-    // same structure loadWallMessages() uses (wall-message/msg-body) so it can
-    // be wired up for tap-to-translate below once we know its real id.
+    // Show a clearly temporary card while the server saves the post. It only
+    // becomes a published post (and counts toward progress) after success.
     const newMsgHTML = `
-        <div class="card-glass p-4 border-yellow-400/50 shadow-md wall-message select-none transition-transform">
+        <div class="card-glass p-4 border-yellow-400/50 shadow-md wall-message select-none transition-transform" data-language="${activeLang}">
             <div class="transition-transform">
                 <p class="text-sm text-slate-800 font-medium leading-relaxed msg-body whitespace-pre-wrap">"${escapeHTML(text)}"</p>
             </div>
-            <p class="text-[8px] text-yellow-600 uppercase tracking-widest font-bold mt-3 text-right">- You</p>
+            <p class="wall-post-status text-[8px] text-yellow-600 uppercase tracking-widest font-bold mt-3 text-right">Sending…</p>
         </div>
     `;
     
     feed.insertAdjacentHTML('afterbegin', newMsgHTML);
     const newMsgEl = feed.firstElementChild;
 
-    state.wallPosts = (state.wallPosts || 0) + 1;
-    localStorage.setItem('steady_hand_state', JSON.stringify(state));
-
-    const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
     const langData = translations[activeLang] || translations['en'];
     try {
+        // TODO: include Turnstile token in body when widget is active (see CLOUDFLARE_SETUP.md step 3)
         const res = await fetch(WORKER_API_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -743,39 +869,57 @@ async function postToWall() {
             const tapTarget = newMsgEl.querySelector('.msg-body').parentElement;
             tapTarget.classList.add('cursor-pointer', 'active:scale-[0.98]');
             tapTarget.onclick = () => handleMessageTap(tapTarget, data.id);
+            const status = newMsgEl.querySelector('.wall-post-status');
+            status.innerText = '- You';
+            status.classList.remove('text-yellow-600');
+            status.classList.add('text-slate-500');
+            state.wallPosts = (state.wallPosts || 0) + 1;
+            localStorage.setItem('steady_hand_state', JSON.stringify(state));
         }
     } catch(e) {
+        const status = newMsgEl.querySelector('.wall-post-status');
+        newMsgEl.classList.remove('border-yellow-400/50');
+        newMsgEl.classList.add('border-red-300');
+        status.innerText = 'Not posted — try again';
+        status.classList.remove('text-yellow-600');
+        status.classList.add('text-red-600');
         alert(langData.alert_wall_fail || "Failed to permanently save message to the global wall.");
     }
 }
 
 // --- UTILITIES ---
-function getStartOfDay(dateStr) { const d = new Date(dateStr); d.setHours(0, 0, 0, 0); return d; }
+function getDayNumber(dateValue) {
+    const date = new Date(dateValue);
+    if (Number.isNaN(date.getTime())) return null;
+    return Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) / 86400000;
+}
+function getValidSlipDays(habit, today) {
+    const slips = Array.isArray(habit.slips) ? habit.slips : [];
+    return new Set(slips.map(getDayNumber).filter(day => day !== null && day <= today));
+}
 function calculateTotalCleanDays(habit) {
-    const today = getStartOfDay(new Date());
-    const start = getStartOfDay(habit.startDate);
-    const totalDaysElapsed = Math.round(Math.max(0, today - start) / 86400000); 
-    const pastSlips = habit.slips.filter(s => getStartOfDay(s).getTime() < today.getTime());
-    const uniquePastSlipDays = new Set(pastSlips.map(s => getStartOfDay(s).getTime())).size;
+    const today = getDayNumber(new Date());
+    const start = getDayNumber(habit.startDate);
+    if (start === null) return 0;
+    const totalDaysElapsed = Math.max(0, today - start);
+    const uniquePastSlipDays = [...getValidSlipDays(habit, today)].filter(day => day < today).length;
     return Math.max(0, totalDaysElapsed - uniquePastSlipDays);
 }
 function calculateStreak(habit) { 
-    const today = getStartOfDay(new Date());
-    let streakStart;
-    if (habit.slips.length > 0) {
-        const lastSlipDate = getStartOfDay(habit.slips[habit.slips.length - 1]);
-        streakStart = new Date(lastSlipDate.getTime() + 86400000);
-    } else {
-        streakStart = getStartOfDay(habit.startDate);
-    }
-    return Math.max(0, Math.round((today - streakStart) / 86400000));
+    const today = getDayNumber(new Date());
+    const start = getDayNumber(habit.startDate);
+    if (start === null) return 0;
+    const slipDays = getValidSlipDays(habit, today);
+    const lastSlipDay = slipDays.size ? Math.max(...slipDays) : null;
+    const streakStart = lastSlipDay === null ? start : lastSlipDay + 1;
+    return Math.max(0, today - streakStart);
 }
 function calculateSuccessRate(h) { 
-    const today = getStartOfDay(new Date());
-    const start = getStartOfDay(h.startDate);
-    const t = Math.max(1, Math.round(Math.abs(today - start) / 86400000)); 
-    const pastSlips = h.slips.filter(s => getStartOfDay(s).getTime() < today.getTime());
-    const uniquePastSlipDays = new Set(pastSlips.map(s => getStartOfDay(s).getTime())).size;
+    const today = getDayNumber(new Date());
+    const start = getDayNumber(h.startDate);
+    if (start === null) return 0;
+    const t = Math.max(1, today - start);
+    const uniquePastSlipDays = [...getValidSlipDays(h, today)].filter(day => day < today).length;
     return Math.max(0, Math.min(100, ((t - uniquePastSlipDays) / t) * 100)); 
 }
 function calculateDailyProgress(habit) {
@@ -797,12 +941,43 @@ function calculateDailyProgress(habit) {
     const totalMinutesInDay = 24 * 60;
     return (elapsedMinutes / totalMinutesInDay) * 100;
 }
+
+function showSlipUndo(habit, slipTimestamp) {
+    const existingToast = document.getElementById('slip-undo-toast');
+    if (existingToast) existingToast.remove();
+
+    const toast = document.createElement('div');
+    toast.id = 'slip-undo-toast';
+    toast.className = 'fixed bottom-24 left-1/2 -translate-x-1/2 z-[600] bg-slate-800 text-white px-4 py-3 rounded-xl shadow-xl flex items-center gap-3 text-xs font-bold';
+    toast.textContent = 'Slip recorded.';
+
+    const undoButton = document.createElement('button');
+    undoButton.type = 'button';
+    undoButton.className = 'bg-white text-slate-800 px-3 py-1.5 rounded-lg uppercase text-[10px] tracking-widest';
+    undoButton.textContent = 'Undo';
+    undoButton.onclick = () => {
+        const index = habit.slips.lastIndexOf(slipTimestamp);
+        if (index !== -1) habit.slips.splice(index, 1);
+        localStorage.setItem('steady_hand_state', JSON.stringify(state));
+        renderDashboard();
+        toast.remove();
+    };
+    toast.appendChild(undoButton);
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 10_000);
+}
+
 function logSlip(id) { 
     const h = state.habits.find(x=>x.id === id); 
     if(h) { 
-        h.slips.push(new Date().toISOString()); 
+        const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
+        const langData = translations[activeLang] || translations['en'];
+        if (!confirm(langData.confirm_log_slip || "Record a slip for today? This will update your streak.")) return;
+        const slipTimestamp = new Date().toISOString();
+        h.slips.push(slipTimestamp);
         localStorage.setItem('steady_hand_state', JSON.stringify(state)); 
         renderDashboard(); 
+        showSlipUndo(h, slipTimestamp);
     } 
 }
 
@@ -887,8 +1062,12 @@ function scrollTrophies(direction) {
     const scrollAmount = tc.clientWidth * 0.75;
     tc.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
 }
-function closeUrgeEngine() { document.getElementById('urge-overlay').classList.add('hidden'); }
-function toggleSettings() { document.getElementById('modal-settings').classList.toggle('hidden'); lucide.createIcons(); }
+function closeUrgeEngine() {
+    document.getElementById('urge-overlay').classList.add('hidden');
+    document.getElementById('urge-content').innerHTML = '';
+    releaseUrgeAudioUrl();
+}
+function toggleSettings() { document.getElementById('modal-settings').classList.toggle('hidden'); renderIcons(); }
 function updateDate() { 
     const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
     document.getElementById('date-display').innerText = new Date().toLocaleDateString(activeLang, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }); 
@@ -898,19 +1077,25 @@ function resetApp() {
     const langData = translations[activeLang] || translations['en'];
     if(confirm(langData.confirm_reset || "DELETE ALL DATA? This erases all progress and voice notes permanently.")) { 
         window.isResetting = true;
-        const mainScreen = document.getElementById('screen-main');
-        if (mainScreen) mainScreen.classList.add('hidden');
-        localStorage.clear(); 
         if (db) {
             db.close();
         }
         const deleteRequest = indexedDB.deleteDatabase("TSH_Database");
-        deleteRequest.onsuccess = () => window.location.reload();
-        deleteRequest.onerror = () => window.location.reload();
+        deleteRequest.onsuccess = () => {
+            // Only erase state after IndexedDB confirms that recordings are gone.
+            localStorage.removeItem('steady_hand_state');
+            window.location.reload();
+        };
+        deleteRequest.onerror = () => {
+            window.isResetting = false;
+            alert(langData.alert_reset_failed || "Reset failed. Your data has not been erased.");
+            // Do NOT reload — data is untouched; user stays on the current page.
+        };
         deleteRequest.onblocked = () => {
+            window.isResetting = false;
             console.warn("Database deletion blocked.");
             alert(langData.alert_reset_blocked || "Reset is blocked by other tabs. Please close all other tabs of this app, then refresh.");
-            window.location.reload();
+            // Do NOT reload — tell the user to close other tabs and retry manually.
         };
     } 
 }

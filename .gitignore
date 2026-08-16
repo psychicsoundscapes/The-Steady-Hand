@@ -1,2 +1,7 @@
 tailwindcss.exe
 .gemini/
+BUG_AUDIT.md
+CLOUDFLARE_SETUP.md
+wrangler.example.toml
+migrations/
+*.md
