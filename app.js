@@ -206,55 +206,153 @@ const countryNames = {
 
 const regionalLifelinesData = {
     "us": [
-        { title: "988 Suicide & Crisis Lifeline", desc: "A free, 24/7, confidential crisis line for suicidal thoughts, emotional distress, panic, or addiction crises.", call: "988", text: "988" },
-        { title: "SAMHSA National Helpline", desc: "A free, 24/7, confidential hotline for those facing drug or alcohol addiction and mental health challenges.", call: "8006624357", text: "8006624357" },
-        { title: "National Drug Helpline", desc: "A free, 24/7 hotline offering guidance for individuals struggling with drug or alcohol addiction.", call: "8442890879", text: "8442890879" },
-        { title: "Narcotics Anonymous", desc: "A support line to help find NA meetings and provide encouragement. Available via phone call only.", call: "8187739999", callLabel: "Call Helpline" },
-        { title: "Alcoholics Anonymous", desc: "A support line to help find AA meetings and regional information. Available via phone call only.", call: "2128703400", callLabel: "Call AA Office" },
-        { title: "Never Use Alone", desc: "A free, 24/7 hotline for individuals using drugs alone to ensure they remain safe. Available via phone call only.", call: "8004843731", callLabel: "Call Support" },
-        { title: "Crisis Text Line", desc: "A free, 24/7 text-based crisis support service for emotional distress. Available via text only.", text: "741741", textBody: "HOME", textLabel: "Text HOME to 741741" },
-        { title: "Billy Graham Prayer Line", desc: "A free, 24/7 Christian prayer and spiritual support hotline. Available via phone call only.", call: "8883882683", callLabel: "Call for Prayer" },
-        { title: "Joel Osteen Ministries", desc: "A free, 24/7 Christian prayer hotline providing spiritual guidance. Available via phone call only.", call: "8885675635", callLabel: "Call for Prayer" },
-        { title: "Christian Care Ministry", desc: "A free Christian support line for prayer and encouragement. Available via phone call only.", call: "8005255683", callLabel: "Call for Support" },
-        { title: "Silent Unity Prayer Line", desc: "A free, 24/7 prayer hotline offering emotional and spiritual support. Available via phone call only.", call: "8169692000", callLabel: "Call for Prayer" },
-        { title: "SAMHSA Text Support", desc: "A free text-based service for automated treatment resources. Available via text only.", text: "435748", textBody: "HELP", textLabel: "Text HELP to 435748" }
+        { titleKey: "support_988_title", descKey: "support_988_desc", title: "988 Suicide & Crisis Lifeline", desc: "A free, 24/7, confidential crisis line for suicidal thoughts, emotional distress, panic, or addiction crises.", call: "988", text: "988" },
+        { titleKey: "support_samhsa_title", descKey: "support_samhsa_desc", title: "SAMHSA National Helpline", desc: "A free, 24/7, confidential hotline for those facing drug or alcohol addiction and mental health challenges.", call: "8006624357", text: "8006624357" },
+        { titleKey: "support_ndh_title", descKey: "support_ndh_desc", title: "National Drug Helpline", desc: "A free, 24/7 hotline offering guidance for individuals struggling with drug or alcohol addiction.", call: "8442890879", text: "8442890879" },
+        { titleKey: "support_na_title", descKey: "support_na_desc", title: "Narcotics Anonymous", desc: "A support line to help find NA meetings and provide encouragement. Available via phone call only.", call: "8187739999", callLabelKey: "support_call_helpline", callLabel: "Call Helpline" },
+        { titleKey: "support_aa_title", descKey: "support_aa_desc", title: "Alcoholics Anonymous", desc: "A support line to help find AA meetings and regional information. Available via phone call only.", call: "2128703400", callLabelKey: "support_call_aa", callLabel: "Call AA Office" },
+        { titleKey: "support_nua_title", descKey: "support_nua_desc", title: "Never Use Alone", desc: "A free, 24/7 hotline for individuals using drugs alone to ensure they remain safe. Available via phone call only.", call: "8004843731", callLabelKey: "support_call_support", callLabel: "Call Support" },
+        { titleKey: "support_ctl_title", descKey: "support_ctl_desc", title: "Crisis Text Line", desc: "A free, 24/7 text-based crisis support service for emotional distress. Available via text only.", text: "741741", textBody: "HOME", textLabelKey: "support_text_home", textLabel: "Text HOME to 741741" },
+        { titleKey: "support_bg_title", descKey: "support_bg_desc", title: "Billy Graham Prayer Line", desc: "A free, 24/7 Christian prayer and spiritual support hotline. Available via phone call only.", call: "8883882683", callLabelKey: "support_call_prayer", callLabel: "Call for Prayer" },
+        { titleKey: "support_jo_title", descKey: "support_jo_desc", title: "Joel Osteen Ministries", desc: "A free, 24/7 Christian prayer hotline providing spiritual guidance. Available via phone call only.", call: "8885675635", callLabelKey: "support_call_prayer", callLabel: "Call for Prayer" },
+        { titleKey: "support_ccm_title", descKey: "support_ccm_desc", title: "Christian Care Ministry", desc: "A free Christian support line for prayer and encouragement. Available via phone call only.", call: "8005255683", callLabelKey: "support_call_for_support", callLabel: "Call for Support" },
+        { titleKey: "support_su_title", descKey: "support_su_desc", title: "Silent Unity Prayer Line", desc: "A free, 24/7 prayer hotline offering emotional and spiritual support. Available via phone call only.", call: "8169692000", callLabelKey: "support_call_prayer", callLabel: "Call for Prayer" },
+        { titleKey: "support_samhsa_text_title", descKey: "support_samhsa_text_desc", title: "SAMHSA Text Support", desc: "A free text-based service for automated treatment resources. Available via text only.", text: "435748", textBody: "HELP", textLabelKey: "support_text_help", textLabel: "Text HELP to 435748" }
     ],
     "ca": [
-        { title: "988 Suicide Crisis Helpline", desc: "A free, 24/7 bilingual (English & French) crisis service across Canada for anyone in emotional distress or thoughts of suicide.", call: "988", text: "988" },
-        { title: "Wellness Together Canada", desc: "Free, confidential 24/7 mental health and substance use support funded by Health Canada.", call: "18665850445", text: "741741", textBody: "WELLNESS", textLabel: "Text WELLNESS to 741741" },
-        { title: "Hope for Wellness Helpline", desc: "24/7 culturally competent mental health counselling and crisis intervention for all Indigenous people across Canada.", call: "18552423310", callLabel: "Call Helpline" },
-        { title: "Canadian Centre on Substance Use and Addiction", desc: "National resources, regional directories, and evidence-based addiction support tools.", link: "https://www.ccsa.ca/", linkLabel: "Visit CCSA Directory" }
+        {
+            titleKey: "support_ca_988_title", descKey: "support_ca_988_desc",
+            title: "988 Suicide Crisis Helpline",
+            desc: "A free, 24/7 bilingual (English & French) crisis service across Canada for anyone in emotional distress or thoughts of suicide.",
+            call: "988", text: "988",
+            serviceLanguages: [{ code: "fr", inSystem: true }]
+        },
+        {
+            titleKey: "support_ca_hfw_title", descKey: "support_ca_hfw_desc",
+            title: "Hope for Wellness Helpline",
+            desc: "24/7 culturally competent mental health counselling and crisis intervention for all Indigenous people across Canada. English and French are always available; Cree, Ojibway, and Inuktitut speakers can request a counsellor in their language, subject to availability.",
+            call: "18552423310", callLabelKey: "support_call_helpline", callLabel: "Call Helpline",
+            serviceLanguages: [{ code: "fr", inSystem: true }]
+        },
+        {
+            titleKey: "support_ca_ccsa_title", descKey: "support_ca_ccsa_desc",
+            title: "Canadian Centre on Substance Use and Addiction",
+            desc: "National resources, regional directories, and evidence-based addiction support tools.",
+            link: "https://www.ccsa.ca/", linkLabelKey: "support_visit_ccsa", linkLabel: "Visit CCSA Directory"
+        },
+        {
+            titleKey: "support_ca_211_title", descKey: "support_ca_211_desc",
+            title: "211 Canada",
+            desc: "Free, confidential 24/7 helpline connecting you to community, social, and mental health services near you, with interpretation available in over 150 languages.",
+            call: "211", text: "211",
+            callLabelKey: "support_call_211", callLabel: "Call 211",
+            textLabelKey: "support_text_211", textLabel: "Text 211",
+            interpreterNoteKey: "support_ca_211_desc"
+        }
     ],
     "uk": [
-        { title: "NHS Mental Health Services", desc: "24/7 urgent mental health helpline support across the UK for immediate advice and medical assessment.", call: "111", callLabel: "Call NHS 111" },
-        { title: "Samaritans UK", desc: "Free, confidential 24/7 emotional support for anyone struggling to cope, feeling alone, or in crisis.", call: "116123", callLabel: "Call 116 123" },
-        { title: "FRANK Drug Helpline", desc: "Free, confidential 24/7 friendly advice, information, and support regarding drugs and alcohol.", call: "03001236600", text: "82111", textBody: "FRANK", textLabel: "Text 82111" },
-        { title: "SHOUT Crisis Text Line", desc: "Free, 24/7 confidential crisis text support service for anyone in the UK in immediate distress.", text: "85258", textBody: "SHOUT", textLabel: "Text SHOUT to 85258" },
-        { title: "Alcoholics Anonymous Great Britain", desc: "National helpline offering advice, meeting directories, and mutual support across the UK.", call: "08009177650", callLabel: "Call AA Helpline" }
+        {
+            titleKey: "support_uk_nhs_title", descKey: "support_uk_nhs_desc",
+            title: "NHS Mental Health Services",
+            desc: "24/7 urgent mental health helpline support across the UK for immediate advice and medical assessment. A free phone interpreter is available in any language — just ask when you call.",
+            call: "111", callLabelKey: "support_call_nhs", callLabel: "Call NHS 111"
+        },
+        {
+            titleKey: "support_uk_sam_title", descKey: "support_uk_sam_desc",
+            title: "Samaritans UK",
+            desc: "Free, confidential 24/7 emotional support for anyone struggling to cope, feeling alone, or in crisis.",
+            call: "116123", callLabelKey: "support_call_116123", callLabel: "Call 116 123",
+            altLanguageNoteKey: "support_uk_sam_welsh_note",
+            altLanguageNameKey: "support_lang_welsh"
+        },
+        {
+            titleKey: "support_uk_frank_title", descKey: "support_uk_frank_desc",
+            title: "FRANK Drug Helpline",
+            desc: "Free, confidential 24/7 friendly advice, information, and support regarding drugs and alcohol.",
+            call: "03001236600", text: "82111", textBody: "FRANK",
+            textLabelKey: "support_text_82111", textLabel: "Text 82111"
+        },
+        {
+            titleKey: "support_uk_shout_title", descKey: "support_uk_shout_desc",
+            title: "SHOUT Crisis Text Line",
+            desc: "Free, 24/7 confidential crisis text support service for anyone in the UK in immediate distress.",
+            text: "85258", textBody: "SHOUT",
+            textLabelKey: "support_text_shout", textLabel: "Text SHOUT to 85258"
+        },
+        {
+            titleKey: "support_uk_aa_title", descKey: "support_uk_aa_desc",
+            title: "Alcoholics Anonymous Great Britain",
+            desc: "National helpline offering advice, meeting directories, and mutual support across the UK.",
+            call: "08009177650", callLabelKey: "support_call_aa_helpline", callLabel: "Call AA Helpline"
+        }
     ],
     "au": [
-        { title: "Lifeline Australia", desc: "24/7 free crisis support and suicide prevention services across Australia.", call: "131114", text: "0477131114", textLabel: "Text 0477 13 11 14" },
-        { title: "Beyond Blue", desc: "24/7 mental health information, support line, and referral services for anxiety, depression, and crisis.", call: "1300224636", callLabel: "Call 1300 22 4636" },
-        { title: "National Alcohol and Other Drug Hotline", desc: "Free, confidential 24/7 advice, support, and referral for individuals struggling with alcohol and drug dependencies.", call: "1800250015", callLabel: "Call 1800 250 015" },
-        { title: "DirectLine Addiction Support", desc: "Confidential alcohol and drug counselling, advice, and referral service available 24/7.", call: "1800888236", callLabel: "Call DirectLine" }
+        {
+            titleKey: "support_au_lifeline_title", descKey: "support_au_lifeline_desc",
+            title: "Lifeline Australia",
+            desc: "24/7 free crisis support and suicide prevention services across Australia.",
+            call: "131114", text: "0477131114",
+            textLabelKey: "support_text_0477", textLabel: "Text 0477 13 11 14",
+            interpreterNoteKey: "support_au_tis_note"
+        },
+        {
+            titleKey: "support_au_bb_title", descKey: "support_au_bb_desc",
+            title: "Beyond Blue",
+            desc: "24/7 mental health information, support line, and referral services for anxiety, depression, and crisis.",
+            call: "1300224636", callLabelKey: "support_call_1300", callLabel: "Call 1300 22 4636",
+            interpreterNoteKey: "support_au_tis_note"
+        },
+        {
+            titleKey: "support_au_naodh_title", descKey: "support_au_naodh_desc",
+            title: "National Alcohol and Other Drug Hotline",
+            desc: "Free, confidential 24/7 advice, support, and referral for individuals struggling with alcohol and drug dependencies.",
+            call: "1800250015", callLabelKey: "support_call_1800_250", callLabel: "Call 1800 250 015",
+            interpreterNoteKey: "support_au_tis_note"
+        },
+        {
+            titleKey: "support_au_dl_title", descKey: "support_au_dl_desc",
+            title: "DirectLine Addiction Support",
+            desc: "Confidential alcohol and drug counselling, advice, and referral service available 24/7.",
+            call: "1800888236", callLabelKey: "support_call_directline", callLabel: "Call DirectLine",
+            interpreterNoteKey: "support_au_tis_note"
+        }
     ],
     "nz": [
-        { title: "1737 Need to Talk?", desc: "Free, 24/7 confidential mental health, anxiety, and addiction support by trained counsellors across New Zealand.", call: "1737", text: "1737" },
-        { title: "Alcohol Drug Helpline NZ", desc: "Free, confidential 24/7 advice and support for anyone concerned about their own or another person's alcohol or drug use.", call: "0800787797", text: "8681", textLabel: "Text 8681" },
-        { title: "Lifeline Aotearoa", desc: "24/7 community crisis and suicide prevention helpline.", call: "0800543354", text: "4357", textBody: "HELP", textLabel: "Text HELP to 4357" }
+        {
+            titleKey: "support_nz_1737_title", descKey: "support_nz_1737_desc",
+            title: "1737 Need to Talk?",
+            desc: "Free, 24/7 confidential mental health, anxiety, and addiction support by trained counsellors across New Zealand. Support is mainly in English; ask if a counsellor who speaks your language is available.",
+            call: "1737", text: "1737"
+        },
+        {
+            titleKey: "support_nz_adh_title", descKey: "support_nz_adh_desc",
+            title: "Alcohol Drug Helpline NZ",
+            desc: "Free, confidential 24/7 advice and support for anyone concerned about their own or another person's alcohol or drug use.",
+            call: "0800787797", text: "8681",
+            textLabelKey: "support_text_8681", textLabel: "Text 8681"
+        },
+        {
+            titleKey: "support_nz_ll_title", descKey: "support_nz_ll_desc",
+            title: "Lifeline Aotearoa",
+            desc: "24/7 community crisis and suicide prevention helpline.",
+            call: "0800543354", text: "4357", textBody: "HELP",
+            textLabelKey: "support_text_help_4357", textLabel: "Text HELP to 4357"
+        }
     ],
     "intl": [
         {
+            titleKey: "support_intl_uen_title", descKey: "support_intl_uen_desc",
             title: "Universal Emergency Numbers",
             desc: "If you are in immediate physical danger or a life-threatening crisis, please dial your local emergency services immediately: 112 (European Union, UK & many global networks), 911 (North America), 999 (UK/Commonwealth), or 000 (Australia).",
             isNotice: true
         },
         {
+            titleKey: "support_intl_g12s_title", descKey: "support_intl_g12s_desc",
             title: "Global 12-Step & Peer Fellowships",
             desc: "Access free online meetings, local chapter directories, and 24/7 peer support worldwide.",
             links: [
-                { name: "Find NA Meetings Worldwide", url: "https://m.na.org/" },
-                { name: "Find AA Meetings Worldwide", url: "https://www.aa.org/find-aa" }
+                { nameKey: "support_find_na", name: "Find NA Meetings Worldwide", url: "https://m.na.org/" },
+                { nameKey: "support_find_aa", name: "Find AA Meetings Worldwide", url: "https://www.aa.org/find-aa" }
             ]
         }
     ]
@@ -265,90 +363,233 @@ function onSupportCountryChange(region) {
     renderLifelines(region);
 }
 
+const TSH_LANG_NAME_KEYS = {
+    fr: "support_lang_french"
+};
+
+// Resolves a translated string by key, checking the existing `translations`
+// object first (US/global strings), then the new `lifelinesTranslations`
+// object, falling back to English in each, then to a literal default.
+function tshResolveText(key, literalDefault, langCode) {
+    if (!key) return literalDefault;
+    const lang = langCode || (typeof currentLang !== "undefined" ? currentLang : "en");
+    const fromTranslations = (typeof translations !== "undefined" && translations[lang] && translations[lang][key]) || null;
+    if (fromTranslations) return fromTranslations;
+    const fromLifelines = (typeof lifelinesTranslations !== "undefined" && lifelinesTranslations[lang] && lifelinesTranslations[lang][key]) || null;
+    if (fromLifelines) return fromLifelines;
+    if (lang !== "en") {
+        const enT = (typeof translations !== "undefined" && translations.en && translations.en[key]) || null;
+        if (enT) return enT;
+        const enL = (typeof lifelinesTranslations !== "undefined" && lifelinesTranslations.en && lifelinesTranslations.en[key]) || null;
+        if (enL) return enL;
+    }
+    return literalDefault;
+}
+
+// Renders just the title/description/action-buttons for one card, in a
+// given language. Called both for the initial render and whenever a
+// language-toggle checkbox changes.
+function tshLifelineCardInner(item, langCode) {
+    const t = tshResolveText(item.titleKey, item.title, langCode);
+    const d = tshResolveText(item.descKey, item.desc, langCode);
+    const callLabelText = tshResolveText(item.callLabelKey, item.callLabel, langCode) || tshResolveText("support_call", "Call", langCode);
+    const textLabelText = tshResolveText(item.textLabelKey, item.textLabel, langCode) || tshResolveText("support_text", "Text", langCode);
+    const linkLabelText = tshResolveText(item.linkLabelKey, item.linkLabel, langCode) || "Learn More";
+
+    const callBtn = item.call ? `
+        <a href="tel:${escapeHTML(item.call)}" class="flex-1 bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md active:scale-95 transition-transform">
+            <i data-lucide="phone" class="w-3 h-3"></i> ${escapeHTML(callLabelText)}
+        </a>
+    ` : "";
+
+    const textHref = item.textBody ? `sms:${escapeHTML(item.text)}?body=${encodeURIComponent(item.textBody)}` : `sms:${escapeHTML(item.text || "")}`;
+    const textBtn = item.text ? `
+        <a href="${textHref}" class="flex-1 bg-white/80 text-slate-800 py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest border border-white shadow-md active:scale-95 transition-transform">
+            <i data-lucide="message-circle" class="w-3 h-3"></i> ${escapeHTML(textLabelText)}
+        </a>
+    ` : "";
+
+    const singleLink = item.link ? `
+        <a href="${escapeHTML(item.link)}" target="_blank" rel="noopener" class="w-full bg-white/80 text-slate-800 py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest border border-white shadow-md active:scale-95 transition-transform">
+            <i data-lucide="external-link" class="w-3 h-3"></i> ${escapeHTML(linkLabelText)}
+        </a>
+    ` : "";
+
+    const actionButtons = (callBtn && textBtn) ? `<div class="flex gap-2">${callBtn}${textBtn}</div>` : (callBtn || textBtn || singleLink);
+
+    // When a card is being shown in a language other than the app's active
+    // language (i.e. the user just told us they speak it), lead with a
+    // small confirmation line, itself written in that language.
+    const activeLang = typeof currentLang !== "undefined" ? currentLang : "en";
+    let confirmation = "";
+    if (langCode !== activeLang && TSH_LANG_NAME_KEYS[langCode]) {
+        const langName = tshResolveText(TSH_LANG_NAME_KEYS[langCode], langCode, langCode);
+        const template = tshResolveText("support_this_service_in_lang", "Good news — this service can help you in {lang}.", langCode);
+        confirmation = `<p class="text-[10px] font-semibold text-emerald-700 mb-2">✓ ${escapeHTML(template.replace("{lang}", langName))}</p>`;
+    }
+
+    return `
+        ${confirmation}
+        <h3 class="text-sm font-bold text-slate-800 mb-1">${escapeHTML(t)}</h3>
+        <p class="text-[10px] text-slate-600 mb-4 leading-relaxed font-medium">${escapeHTML(d)}</p>
+        ${actionButtons}
+    `;
+}
+
+// Renders the full card: the swappable content area from tshLifelineCardInner,
+// plus any language-access checkboxes/notes below it that stay put across
+// language toggles.
+function tshLifelineCardShell(item, cardId, activeLang) {
+    let extras = "";
+
+    // Case 1: a real second staffed language that IS one of the app's 35
+    // languages — checkbox re-renders the card for real, no extra translation needed.
+    if (item.serviceLanguages && item.serviceLanguages.length) {
+        item.serviceLanguages.forEach(sl => {
+            if (sl.code === activeLang || !sl.inSystem) return;
+            const nameKey = TSH_LANG_NAME_KEYS[sl.code];
+            if (!nameKey) return;
+            const langName = tshResolveText(nameKey, sl.code, activeLang);
+            const template = tshResolveText("support_i_speak", "I speak {lang}", activeLang);
+            const label = template.replace("{lang}", langName);
+            extras += `
+                <label class="flex items-center gap-2 mt-3 text-[10px] text-slate-600 font-medium cursor-pointer select-none">
+                    <input type="checkbox" class="tsh-lifeline-lang-toggle w-3.5 h-3.5" data-card-id="${cardId}" data-lang-code="${sl.code}" />
+                    ${escapeHTML(label)}
+                </label>
+            `;
+        });
+    }
+
+    // Case 2: a real dedicated line in a language outside the app's 35
+    // (e.g. Welsh) — checkbox reveals a translated note instead of faking a
+    // full translation in a language we can't vouch for.
+    if (item.altLanguageNoteKey && item.altLanguageNameKey) {
+        const langName = tshResolveText(item.altLanguageNameKey, "", activeLang);
+        const template = tshResolveText("support_i_speak", "I speak {lang}", activeLang);
+        const label = template.replace("{lang}", langName);
+        const noteText = tshResolveText(item.altLanguageNoteKey, "", activeLang);
+        const noteId = `${cardId}-note`;
+        extras += `
+            <label class="flex items-center gap-2 mt-3 text-[10px] text-slate-600 font-medium cursor-pointer select-none">
+                <input type="checkbox" class="tsh-lifeline-note-toggle w-3.5 h-3.5" data-note-id="${noteId}" />
+                ${escapeHTML(label)}
+            </label>
+            <p id="${noteId}" class="hidden mt-2 text-[10px] text-slate-600 bg-white/60 rounded-lg p-2 leading-relaxed">${escapeHTML(noteText)}</p>
+        `;
+    }
+
+    // Case 3: a generic any-language interpreter service — always shown,
+    // no checkbox, since it isn't limited to one specific language.
+    if (item.interpreterNoteKey) {
+        const noteText = tshResolveText(item.interpreterNoteKey, "", activeLang);
+        if (noteText) {
+            extras += `<p class="mt-3 text-[10px] text-slate-500 leading-relaxed">🌐 ${escapeHTML(noteText)}</p>`;
+        }
+    }
+
+    return `
+        <div class="card-glass p-5" id="${cardId}">
+            <div id="${cardId}-content">${tshLifelineCardInner(item, activeLang)}</div>
+            ${extras}
+        </div>
+    `;
+}
+
+// Attaches change listeners to any checkboxes rendered above. Must run
+// AFTER container.innerHTML has been set, since the elements don't exist
+// before that.
+function tshLifelineAttachListeners() {
+    document.querySelectorAll(".tsh-lifeline-lang-toggle").forEach(cb => {
+        cb.addEventListener("change", function () {
+            const cardId = this.dataset.cardId;
+            const entry = window.__tshLifelineRegistry && window.__tshLifelineRegistry[cardId];
+            if (!entry) return;
+            const activeLang = typeof currentLang !== "undefined" ? currentLang : "en";
+            const targetLang = this.checked ? this.dataset.langCode : activeLang;
+            const contentEl = document.getElementById(`${cardId}-content`);
+            if (contentEl) {
+                contentEl.innerHTML = tshLifelineCardInner(entry.item, targetLang);
+                renderIcons();
+            }
+        });
+    });
+
+    document.querySelectorAll(".tsh-lifeline-note-toggle").forEach(cb => {
+        cb.addEventListener("change", function () {
+            const noteEl = document.getElementById(this.dataset.noteId);
+            if (noteEl) noteEl.classList.toggle("hidden", !this.checked);
+        });
+    });
+}
+
 function renderLifelines(selectedRegion) {
-    const container = document.getElementById('regional-lifelines');
+    const container = document.getElementById("regional-lifelines");
     if (!container) return;
 
-    const activeLang = typeof currentLang !== 'undefined' ? currentLang : 'en';
-    const langData = typeof translations !== 'undefined' ? (translations[activeLang] || translations['en']) : {};
-    const fallbackData = typeof translations !== 'undefined' ? translations['en'] : {};
+    const activeLang = typeof currentLang !== "undefined" ? currentLang : "en";
 
-    const savedRegion = localStorage.getItem('tsh_support_region');
-    const defaultRegion = activeLang === 'en' ? 'us' : 'intl';
+    const savedRegion = localStorage.getItem("tsh_support_region");
+    const defaultRegion = activeLang === "en" ? "us" : "intl";
     const region = selectedRegion || savedRegion || defaultRegion;
 
-    const selectEl = document.getElementById('support-country-select');
+    const selectEl = document.getElementById("support-country-select");
     if (selectEl && selectEl.value !== region) {
         selectEl.value = region;
     }
 
-    const items = regionalLifelinesData[region] || regionalLifelinesData['intl'];
-    let html = '';
+    const items = regionalLifelinesData[region] || regionalLifelinesData["intl"];
 
-    items.forEach(item => {
+    // Fresh registry each render so checkbox listeners always find the
+    // current region's items by card id.
+    window.__tshLifelineRegistry = {};
+    const registry = window.__tshLifelineRegistry;
+
+    let html = "";
+
+    items.forEach((item, idx) => {
+        const cardId = `lifeline-${region}-${idx}`;
+        registry[cardId] = { item };
+
         if (item.isNotice) {
+            const t = tshResolveText(item.titleKey, item.title, activeLang);
+            const d = tshResolveText(item.descKey, item.desc, activeLang);
             html += `
                 <div class="card-glass p-5 border-yellow-400/50">
-                    <h3 class="text-sm font-bold text-slate-800 mb-1">${escapeHTML(item.title)}</h3>
-                    <p class="text-[10px] text-slate-600 leading-relaxed font-medium">${escapeHTML(item.desc)}</p>
+                    <h3 class="text-sm font-bold text-slate-800 mb-1">${escapeHTML(t)}</h3>
+                    <p class="text-[10px] text-slate-600 leading-relaxed font-medium">${escapeHTML(d)}</p>
                 </div>
             `;
             return;
         }
 
         if (item.links) {
-            const linksHtml = item.links.map(l => `
+            const t = tshResolveText(item.titleKey, item.title, activeLang);
+            const d = tshResolveText(item.descKey, item.desc, activeLang);
+            const linksHtml = item.links.map(l => {
+                const linkName = tshResolveText(l.nameKey, l.name, activeLang);
+                return `
                 <a href="${escapeHTML(l.url)}" target="_blank" rel="noopener" class="w-full bg-white/80 text-slate-800 py-2.5 px-4 rounded-xl flex items-center justify-between font-bold text-[10px] uppercase tracking-widest border border-white shadow-sm hover:bg-white transition-colors">
-                    <span>${escapeHTML(l.name)}</span>
+                    <span>${escapeHTML(linkName)}</span>
                     <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-600"></i>
-                </a>
-            `).join('');
+                </a>`;
+            }).join("");
             html += `
                 <div class="card-glass p-5 space-y-3">
-                    <h3 class="text-sm font-bold text-slate-800 mb-1">${escapeHTML(item.title)}</h3>
-                    <p class="text-[10px] text-slate-600 leading-relaxed font-medium mb-3">${escapeHTML(item.desc)}</p>
+                    <h3 class="text-sm font-bold text-slate-800 mb-1">${escapeHTML(t)}</h3>
+                    <p class="text-[10px] text-slate-600 leading-relaxed font-medium mb-3">${escapeHTML(d)}</p>
                     <div class="space-y-2">${linksHtml}</div>
                 </div>
             `;
             return;
         }
 
-        const callBtn = item.call ? `
-            <a href="tel:${escapeHTML(item.call)}" class="flex-1 bg-slate-800 text-white py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest shadow-md active:scale-95 transition-transform">
-                <i data-lucide="phone" class="w-3 h-3"></i> ${escapeHTML(item.callLabel || langData.support_call || "Call")}
-            </a>
-        ` : '';
-
-        const textHref = item.textBody ? `sms:${escapeHTML(item.text)}?body=${encodeURIComponent(item.textBody)}` : `sms:${escapeHTML(item.text || '')}`;
-        const textBtn = item.text ? `
-            <a href="${textHref}" class="flex-1 bg-white/80 text-slate-800 py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest border border-white shadow-md active:scale-95 transition-transform">
-                <i data-lucide="message-circle" class="w-3 h-3"></i> ${escapeHTML(item.textLabel || langData.support_text || "Text")}
-            </a>
-        ` : '';
-
-        const singleLink = item.link ? `
-            <a href="${escapeHTML(item.link)}" target="_blank" rel="noopener" class="w-full bg-white/80 text-slate-800 py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-[10px] uppercase tracking-widest border border-white shadow-md active:scale-95 transition-transform">
-                <i data-lucide="external-link" class="w-3 h-3"></i> ${escapeHTML(item.linkLabel || "Learn More")}
-            </a>
-        ` : '';
-
-        const actionButtons = (callBtn && textBtn) 
-            ? `<div class="flex gap-2">${callBtn}${textBtn}</div>` 
-            : (callBtn || textBtn || singleLink);
-
-        html += `
-            <div class="card-glass p-5">
-                <h3 class="text-sm font-bold text-slate-800 mb-1">${escapeHTML(item.title)}</h3>
-                <p class="text-[10px] text-slate-600 mb-4 leading-relaxed font-medium">${escapeHTML(item.desc)}</p>
-                ${actionButtons}
-            </div>
-        `;
+        html += tshLifelineCardShell(item, cardId, activeLang);
     });
 
-    // Always include the Global Directory (Find A Helpline) card as universal backup
-    const globalTitle = langData.support_global_title || fallbackData.support_global_title || "Global Support Directory";
-    const globalDesc = langData.support_global_desc || fallbackData.support_global_desc || "If you are outside these regions or experiencing a crisis, please contact your local emergency services or use the global directory to find free, confidential support in your country.";
-    const globalBtn = langData.support_find_helpline || fallbackData.support_find_helpline || "Find A Helpline";
+    const globalTitle = tshResolveText("support_global_title", "Global Support Directory", activeLang);
+    const globalDesc = tshResolveText("support_global_desc", "If you are outside these regions or experiencing a crisis, please contact your local emergency services or use the global directory to find free, confidential support in your country.", activeLang);
+    const globalBtn = tshResolveText("support_find_helpline", "Find A Helpline", activeLang);
 
     html += `
         <div class="card-glass p-5 border-yellow-400/50 mt-6">
@@ -362,6 +603,7 @@ function renderLifelines(selectedRegion) {
 
     container.innerHTML = html;
     renderIcons();
+    tshLifelineAttachListeners();
 }
 
 // --- Core State & DB ---
